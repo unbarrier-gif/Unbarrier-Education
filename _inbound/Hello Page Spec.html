@@ -1,0 +1,528 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>/hello — Page Spec for Claude Code</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 960px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5.5vw,3.4rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; font-size: 1rem; line-height: 1.75; margin: 0 0 2rem; max-width: 740px; color: var(--text); }
+
+  section.block { padding: 2.4rem 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; margin: 1.1rem 0 0.4rem; color: var(--text); }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 8px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; white-space: pre; }
+
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.danger { background: rgba(227,161,176,0.06); border: 1px solid rgba(227,161,176,0.3); border-left: 3px solid var(--pink-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.danger h4 { color: var(--pink-mist); }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+
+  /* ── /hello mockup styles ─────────────────────────────────── */
+  .mock-frame { max-width: 420px; margin: 1.5rem auto; background: var(--amethyst-deep); border: 1px solid rgba(255,255,255,0.1); border-radius: 26px; padding: 32px 22px; box-shadow: 0 30px 60px rgba(0,0,0,0.4); }
+  .mock-frame .brand { font-family: "Comfortaa"; font-weight: 700; font-size: 0.95rem; color: var(--text); margin: 0 0 22px; display: flex; align-items: center; gap: 8px; }
+  .mock-frame .brand .dot { width: 22px; height: 22px; border-radius: 6px; background: var(--spring-green); display: inline-block; }
+  .mock-frame h2.hero { font-family: "Outfit"; font-weight: 800; font-size: 2rem; line-height: 1.05; letter-spacing: -0.025em; margin: 0 0 14px; color: var(--text); }
+  .mock-frame h2.hero em { font-style: normal; color: var(--spring-green); }
+  .mock-frame p.bio { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.6; color: var(--text-muted); margin: 0 0 26px; }
+  .mock-frame .section-label { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 22px 0 10px; }
+  .cta-card { display: block; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; padding: 16px 18px; text-decoration: none; color: var(--text); margin-bottom: 10px; transition: all 0.15s ease; }
+  .cta-card:hover { background: rgba(255,255,255,0.07); border-color: rgba(56,255,153,0.4); }
+  .cta-card .cta-title { font-family: "Outfit"; font-weight: 700; font-size: 0.95rem; color: var(--text); margin: 0 0 3px; }
+  .cta-card .cta-meta { font-family: "Comfortaa"; font-size: 0.78rem; color: var(--text-muted); margin: 0; }
+  .cta-card.green .cta-title { color: var(--spring-green); }
+  .cta-card.orchid .cta-title { color: var(--orchid-mist); }
+  .cta-card.aqua .cta-title { color: var(--pearl-aqua); }
+  .cta-card.orange .cta-title { color: var(--princeton-orange); }
+  .signup-band { background: rgba(255,194,3,0.08); border: 1px solid rgba(255,194,3,0.3); border-radius: 14px; padding: 18px; margin: 22px 0 14px; }
+  .signup-band h3 { font-family: "Outfit"; font-weight: 700; font-size: 0.95rem; color: var(--school-bus-yellow); margin: 0 0 6px; }
+  .signup-band p { font-family: "Comfortaa"; font-size: 0.78rem; color: var(--text-muted); margin: 0 0 12px; }
+  .signup-band input { width: 100%; padding: 10px 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: var(--text); font-family: "Comfortaa"; font-size: 0.85rem; margin-bottom: 8px; }
+  .signup-band button { width: 100%; padding: 11px; background: var(--school-bus-yellow); color: var(--amethyst); border: none; border-radius: 8px; font-family: "Outfit"; font-weight: 700; font-size: 0.88rem; cursor: pointer; }
+  .say-hi-band { background: rgba(219,125,204,0.06); border: 1px solid rgba(219,125,204,0.25); border-radius: 14px; padding: 18px; margin: 14px 0; }
+  .say-hi-band h3 { font-family: "Outfit"; font-weight: 700; font-size: 0.95rem; color: var(--orchid-mist); margin: 0 0 6px; }
+  .say-hi-band textarea { width: 100%; padding: 10px 12px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.15); border-radius: 8px; color: var(--text); font-family: "Comfortaa"; font-size: 0.85rem; min-height: 60px; margin-bottom: 8px; resize: vertical; }
+  .footer-line { font-family: "Comfortaa"; font-size: 0.74rem; color: var(--text-faint); text-align: center; margin: 24px 0 0; line-height: 1.6; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">/hello page spec · for Claude Code · 26 Apr 2026 · v1.0</p>
+<h1>Build <code>/hello</code> —<br/><em>one mobile-first page.</em></h1>
+<p class="lede">This is the page on the back of the Cardiff flyer (Wed 29 Apr). QR scan → here. Three jobs in priority order: <b>(1) bio</b>, <b>(2) next sessions</b>, <b>(3) newsletter opt-in</b>. Plus a "say hi" form. Ships to <code>unbarrier.me/hello</code> via Vercel from <code>unbarrier-gif/Unbarrier-Education</code> on the <code>main</code> branch.</p>
+
+<!-- 01 SCOPE -->
+<section class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Scope &amp; non-goals</p>
+  <h2>What ships, what doesn't.</h2>
+  <h4>In scope (Wed 29 Apr Cardiff)</h4>
+  <ul class="plan">
+    <li>Single page at <code>/hello</code> — mobile-first, also looks right on desktop</li>
+    <li>Hero (1-sentence bio) + 4 CTA cards + MailerLite opt-in + "say hi" form + footer</li>
+    <li>One API route: <code>POST /api/say-hi</code> (forwards to inbox + adds to MailerLite group)</li>
+    <li>Plausible analytics with named events on each CTA click</li>
+    <li>SEO basics: title, description, OG image (use <code>/assets/og-hello.png</code> placeholder)</li>
+  </ul>
+  <h4>Out of scope (Phase 2)</h4>
+  <ul class="plan">
+    <li>Homepage <code>/</code>, <code>/loop-breakers</code>, <code>/blog</code> — not this PR</li>
+    <li>TidyCal embedded inline — Phase 1 is link-out only</li>
+    <li>Dynamic "next 3 sessions" from TidyCal API — Phase 2</li>
+    <li>Resource library, sketchnote gallery, Founding Member landing</li>
+  </ul>
+</section>
+
+<!-- 02 STACK -->
+<section class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Stack &amp; conventions</p>
+  <h2>Next.js 14 · App Router · TypeScript.</h2>
+  <table>
+    <tbody>
+      <tr><td><b>Framework</b></td><td>Next.js 14, App Router, TypeScript strict mode</td></tr>
+      <tr><td><b>Styling</b></td><td>CSS Modules + global tokens. Copy <code>colors_and_type.css</code> from this project to <code>app/globals.css</code> verbatim. Use the CSS custom properties — don't re-invent.</td></tr>
+      <tr><td><b>Fonts</b></td><td>Outfit + Comfortaa via <code>next/font/google</code>. Variable fonts. <code>font-display: swap</code>.</td></tr>
+      <tr><td><b>Forms</b></td><td>React Server Components for the page; client component only for the form. Native <code>&lt;form action={serverAction}&gt;</code> — no React Hook Form.</td></tr>
+      <tr><td><b>Validation</b></td><td>Zod for the say-hi payload.</td></tr>
+      <tr><td><b>Email forward</b></td><td>Resend (<code>resend.com</code>) — add <code>RESEND_API_KEY</code> to env. Free tier covers our volume.</td></tr>
+      <tr><td><b>Analytics</b></td><td>Plausible script, <code>data-domain="unbarrier.me"</code>. Custom events via <code>window.plausible(name)</code>.</td></tr>
+      <tr><td><b>Deployment</b></td><td>Vercel auto-deploys on push to <code>main</code>. PRs get preview URLs.</td></tr>
+      <tr><td><b>Linting</b></td><td>ESLint + Prettier (Next.js defaults). Husky pre-commit optional.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- 03 FILE LAYOUT -->
+<section class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · File layout</p>
+  <h2>Exactly these files. Nothing more.</h2>
+<pre>unbarrier-education/
+├── app/
+│   ├── layout.tsx              # root layout — fonts, Plausible script, &lt;html lang="en-GB"&gt;
+│   ├── globals.css             # paste of colors_and_type.css (verbatim)
+│   ├── page.tsx                # placeholder for / — returns &lt;Redirect to="/hello" /&gt; for Phase 1
+│   ├── hello/
+│   │   └── page.tsx            # the actual page (Server Component)
+│   └── api/
+│       └── say-hi/
+│           └── route.ts        # POST handler
+├── components/
+│   ├── HelloHero.tsx
+│   ├── CtaCard.tsx
+│   ├── NewsletterBand.tsx      # client component (form)
+│   ├── SayHiForm.tsx           # client component (form)
+│   └── Footer.tsx
+├── lib/
+│   ├── mailerlite.ts           # POST helper for adding subscribers
+│   ├── resend.ts               # email forward helper
+│   └── tidycal.ts              # exports the 3 booking URLs from env
+├── public/
+│   ├── assets/
+│   │   ├── nici-portrait.jpg   # placeholder for now — Nici sends real one Mon
+│   │   └── og-hello.png        # 1200×630 OG image — placeholder OK
+│   └── favicon.ico
+├── .env.example                # documents required env vars (no secrets)
+├── .env.local                  # local dev — gitignored
+├── next.config.js
+├── tsconfig.json
+├── package.json
+└── README.md</pre>
+</section>
+
+<!-- 04 PAGE STRUCTURE -->
+<section class="block" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Page structure (top to bottom)</p>
+  <h2>Five sections. In this exact order.</h2>
+
+  <ol class="plan">
+    <li><b>Hero</b> — wordmark + 1-sentence bio + Nici portrait (small, top-right on mobile)</li>
+    <li><b>4× CTA cards</b> — Tuesday Loop Breakers · Wed Guest Stage · 1:1 with Nici · Schools &amp; orgs</li>
+    <li><b>Newsletter band</b> — MailerLite opt-in (email field + button)</li>
+    <li><b>Say hi band</b> — single textarea + email → forwards to <code>hello@unbarrier.me</code></li>
+    <li><b>Footer</b> — links to <code>/legal/privacy</code>, <code>/legal/terms</code>, copyright line</li>
+  </ol>
+
+  <h3>Mockup (use as visual reference — don't copy code, rebuild in React)</h3>
+  <div class="mock-frame">
+    <div class="brand"><span class="dot"></span> unbarrier.me</div>
+    <h2 class="hero">designed for <em>difference.</em></h2>
+    <p class="bio">I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through. <b>Loop Breakers</b> is where we get unstuck together.</p>
+
+    <p class="section-label">Next sessions</p>
+    <a class="cta-card green" href="#">
+      <p class="cta-title">→ Tuesday Loop Breakers</p>
+      <p class="cta-meta">90 min · £10 · weekly · vision &amp; launch</p>
+    </a>
+    <a class="cta-card orchid" href="#">
+      <p class="cta-title">→ Wed Guest Stage · Sketch-noting</p>
+      <p class="cta-meta">20 May · with Nicki Hambleton · £15</p>
+    </a>
+    <a class="cta-card aqua" href="#">
+      <p class="cta-title">→ 1:1 with Nici · Accessible Coaching</p>
+      <p class="cta-meta">monthly · subscription</p>
+    </a>
+    <a class="cta-card orange" href="#">
+      <p class="cta-title">→ Schools &amp; organisations</p>
+      <p class="cta-meta">audit · access · voice — get in touch</p>
+    </a>
+
+    <div class="signup-band">
+      <h3>One note from me, once a month.</h3>
+      <p>Maybe less. Never more. Unsubscribe anytime.</p>
+      <input type="email" placeholder="your email" />
+      <button>Sign me up</button>
+    </div>
+
+    <div class="say-hi-band">
+      <h3>Just say hi.</h3>
+      <p style="font-family:Comfortaa;font-size:0.78rem;color:var(--text-muted);margin:0 0 10px">No agenda. Drop a line.</p>
+      <input type="email" placeholder="your email" />
+      <textarea placeholder="what's on your mind?"></textarea>
+      <button style="background:var(--orchid-mist)">Send</button>
+    </div>
+
+    <p class="footer-line">unbarrier.me · Unbarrier Education Ltd · Registered in England &amp; Wales · privacy · terms</p>
+  </div>
+</section>
+
+<!-- 05 COPY -->
+<section class="block" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Exact copy</p>
+  <h2>Use this verbatim. Nici can edit later via repo PR.</h2>
+
+  <h4>Hero headline</h4>
+  <pre>designed for difference.</pre>
+
+  <h4>Hero bio (1 sentence)</h4>
+  <pre>I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through. Loop Breakers is where we get unstuck together.</pre>
+
+  <h4>CTA card 1 — Tuesday Loop Breakers</h4>
+  <pre>Title:  Tuesday Loop Breakers
+Meta:   90 min · £10 · weekly · vision &amp; launch
+Link:   process.env.NEXT_PUBLIC_TIDYCAL_TUESDAY
+        (= https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch)</pre>
+
+  <h4>CTA card 2 — Wed Guest Stage</h4>
+  <pre>Title:  Wed Guest Stage · Sketch-noting
+Meta:   20 May · with Nicki Hambleton · £15 · 90 min
+Link:   process.env.NEXT_PUBLIC_TIDYCAL_GUEST
+        (= https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking)</pre>
+
+  <h4>CTA card 3 — 1:1 with Nici</h4>
+  <pre>Title:  1:1 with Nici · Accessible Coaching
+Meta:   monthly subscription · 1 hour
+Link:   process.env.NEXT_PUBLIC_TIDYCAL_COACHING
+        (= https://tidycal.com/nici/accessible-coaching-monthly)</pre>
+
+  <h4>CTA card 4 — Schools &amp; orgs</h4>
+  <pre>Title:  Schools &amp; organisations
+Meta:   audit · access · voice — get in touch
+Link:   mailto:hello@unbarrier.me?subject=Schools%20%26%20orgs</pre>
+
+  <h4>Newsletter band</h4>
+  <pre>Heading: One note from me, once a month.
+Sub:     Maybe less. Never more. Unsubscribe anytime.
+Button:  Sign me up
+Confirm: Welcome. Check your inbox.
+Error:   Something glitched. Try again or just say hi below.</pre>
+
+  <h4>Say-hi band</h4>
+  <pre>Heading: Just say hi.
+Sub:     No agenda. Drop a line. I read every one.
+Email placeholder:    your email
+Message placeholder:  what's on your mind?
+Button:  Send
+Confirm: Thanks — got it. I'll reply within 2 working days.
+Error:   Couldn't send that. Email me directly: hello@unbarrier.me</pre>
+
+  <h4>Footer line</h4>
+  <pre>unbarrier.me · Unbarrier Education Ltd · Registered in England &amp; Wales (Co. No. [pending])
+[privacy] · [terms] · © 2026</pre>
+</section>
+
+<!-- 06 BEHAVIOUR -->
+<section class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · Behaviour &amp; events</p>
+  <h2>Plausible events &amp; form flows.</h2>
+
+  <h4>Plausible custom events</h4>
+  <table>
+    <thead><tr><th>Trigger</th><th>Event name</th><th>Props</th></tr></thead>
+    <tbody>
+      <tr><td>CTA card click (any of 4)</td><td><code>cta_click</code></td><td><code>{ card: "tuesday" | "guest" | "coaching" | "schools" }</code></td></tr>
+      <tr><td>Newsletter form submit (success)</td><td><code>newsletter_signup</code></td><td>—</td></tr>
+      <tr><td>Say-hi form submit (success)</td><td><code>say_hi_sent</code></td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p>Use Plausible's recommended snippet with <code>script.outbound-links.tagged-events.js</code>. CTA cards have <code>target="_blank" rel="noopener"</code> and use Plausible outbound auto-tracking <em>and</em> the manual <code>cta_click</code> event for redundancy.</p>
+
+  <h4>Newsletter form (POST direct to MailerLite)</h4>
+  <pre>POST https://connect.mailerlite.com/api/subscribers
+Authorization: Bearer ${MAILERLITE_API_KEY}
+Content-Type: application/json
+Accept: application/json
+
+{
+  "email": "...",
+  "groups": ["${MAILERLITE_GROUP_ID}"],   // 185831469000688733
+  "status": "active"
+}
+
+→ on 2xx: show "Welcome. Check your inbox." + fire newsletter_signup
+→ on 422 (already subscribed): show same success message (don't leak state)
+→ on 4xx/5xx: show error copy</pre>
+
+  <h4>Say-hi form (POST to /api/say-hi)</h4>
+  <pre>Body schema (Zod):
+  {
+    email:    z.string().email(),
+    message:  z.string().min(1).max(2000),
+    honeypot: z.string().max(0)   // hidden field, must be empty
+  }
+
+Server action:
+  1. Validate with Zod → 400 on fail
+  2. Drop if honeypot non-empty → 200 fake-success (don't tip off bots)
+  3. Add subscriber to MailerLite group (same call as above; ignore 422)
+  4. Send email via Resend:
+       to:      process.env.SAY_HI_FORWARD_TO   // hello@unbarrier.me
+       from:    "say-hi@unbarrier.me"
+       subject: `[say hi] ${email}`
+       text:    `From: ${email}\n\n${message}`
+  5. Return { ok: true } → client shows confirm copy + fires say_hi_sent</pre>
+
+  <div class="box warn">
+    <h4>Rate limiting</h4>
+    Add a simple in-memory rate limit on <code>/api/say-hi</code> — max 5 requests per IP per hour. Use a Map; clear on server restart is fine for Phase 1. Vercel Edge Config or Upstash if it ever gets abused — Phase 2.
+  </div>
+</section>
+
+<!-- 07 ENV -->
+<section class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Environment variables</p>
+  <h2>Already in Vercel. Mirror to <code>.env.example</code>.</h2>
+<pre># MailerLite
+MAILERLITE_API_KEY=                 # set in Vercel — do not commit
+MAILERLITE_GROUP_ID=185831469000688733
+
+# TidyCal booking links (public — NEXT_PUBLIC_ prefix)
+NEXT_PUBLIC_TIDYCAL_TUESDAY=https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch
+NEXT_PUBLIC_TIDYCAL_GUEST=https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking
+NEXT_PUBLIC_TIDYCAL_COACHING=https://tidycal.com/nici/accessible-coaching-monthly
+
+# Email forward
+RESEND_API_KEY=                     # add this — sign up free at resend.com
+SAY_HI_FORWARD_TO=hello@unbarrier.me
+
+# Analytics
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=unbarrier.me</pre>
+  <div class="box good">
+    <h4>Resend setup (5 min)</h4>
+    Sign up at <a href="https://resend.com" target="_blank">resend.com</a> → verify <code>unbarrier.me</code> domain (adds 2 TXT records to Bluehost — Resend tells you exactly which) → grab API key → paste into Vercel as <code>RESEND_API_KEY</code>. Free tier = 3,000 emails/mo, plenty.
+  </div>
+</section>
+
+<!-- 08 ACCESSIBILITY -->
+<section class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Accessibility (non-negotiable)</p>
+  <h2>This is Unbarrier. The page must clear WCAG 2.1 AA.</h2>
+  <ul class="plan">
+    <li><b>Semantic HTML</b> — <code>&lt;main&gt;</code>, <code>&lt;section&gt;</code>, <code>&lt;h1&gt;</code> exactly once, headings in order, landmarks named</li>
+    <li><b>Contrast</b> — every text-on-background combo ≥ 4.5:1. The palette in <code>colors_and_type.css</code> is built for this; don't change opacities below <code>--text-muted</code> for body copy</li>
+    <li><b>Focus rings</b> — keep <code>:focus-visible</code> from globals.css; never set <code>outline: none</code></li>
+    <li><b>Forms</b> — every <code>&lt;input&gt;</code> has a real <code>&lt;label&gt;</code> (visible or sr-only). Errors announced via <code>aria-live="polite"</code></li>
+    <li><b>Touch targets</b> — minimum 44×44px for every CTA card and button (mobile-first; Cardiff visitors will be on phones)</li>
+    <li><b>Motion</b> — respect <code>prefers-reduced-motion</code> on any transitions</li>
+    <li><b>Lighthouse</b> — must score ≥ 95 Accessibility before merge</li>
+  </ul>
+</section>
+
+<!-- 09 ACCEPTANCE -->
+<section class="block" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Acceptance criteria</p>
+  <h2>How we know it's done.</h2>
+  <ul class="plan">
+    <li>☐ <code>https://unbarrier-me.vercel.app/hello</code> renders the full page on mobile (375px) and desktop (1280px)</li>
+    <li>☐ All 4 CTA cards link to correct TidyCal URLs and open in new tab</li>
+    <li>☐ Newsletter form successfully adds a test email to the <code>loop-breakers</code> group in MailerLite (Nici verifies in dashboard)</li>
+    <li>☐ Say-hi form forwards a test message to <code>hello@unbarrier.me</code> and the email arrives within 60s</li>
+    <li>☐ Plausible dashboard shows <code>cta_click</code>, <code>newsletter_signup</code>, <code>say_hi_sent</code> events firing in real-time</li>
+    <li>☐ Lighthouse: Accessibility ≥ 95, Performance ≥ 90 on mobile</li>
+    <li>☐ <code>/</code> redirects to <code>/hello</code> (Phase 1 only — homepage comes Phase 2)</li>
+    <li>☐ 404 page exists and is on-brand (use <code>app/not-found.tsx</code>)</li>
+    <li>☐ <code>README.md</code> documents: how to run locally, how to deploy, env var list</li>
+    <li>☐ All env vars confirmed in Vercel and the page builds green</li>
+  </ul>
+</section>
+
+<!-- 10 PR FLOW -->
+<section class="block" style="--accent: var(--pink-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · How Claude Code should ship this</p>
+  <h2>One PR. Branch <code>feat/hello</code>. Squash-merge.</h2>
+  <ol class="plan">
+    <li>Branch off <code>main</code> as <code>feat/hello</code></li>
+    <li>Scaffold Next.js 14 app (skip Tailwind — we use CSS Modules + tokens)</li>
+    <li>Commit in logical chunks: <code>chore: scaffold</code> → <code>feat: design tokens</code> → <code>feat: layout + fonts</code> → <code>feat: hello page</code> → <code>feat: api/say-hi</code> → <code>chore: env example + readme</code></li>
+    <li>Open PR to <code>main</code>. Vercel auto-deploys preview. Drop the preview URL in the PR description.</li>
+    <li>Nici + Claude (me, the design Claude) QA on phone + laptop</li>
+    <li>On approval: squash-merge → Vercel ships to <code>unbarrier-me.vercel.app</code></li>
+    <li>Domain swap: <b>old project</b> Settings → Domains → remove <code>unbarrier.me</code>; <b>new project</b> Settings → Domains → add <code>unbarrier.me</code> + <code>www.unbarrier.me</code>. ~60 sec.</li>
+    <li>Smoke test live <code>unbarrier.me/hello</code>. Done.</li>
+  </ol>
+
+  <div class="box lock">
+    <h4>The QR rule (from Source of Truth §09b)</h4>
+    The Cardiff flyer QR code points to <b><code>unbarrier.me/hello</code></b>. Not the homepage. Not a redirect. Not UTM'd. Once shipped, the URL never changes — if a flyer is ever wrong, the flyer is wrong, never the URL.
+  </div>
+</section>
+
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<!-- 11 · STEP 2 — DESIGN PASS + WIRE THE LINKS                              -->
+<!-- ─────────────────────────────────────────────────────────────────────── -->
+<section class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Step 2 · Design pass &amp; live links</p>
+  <h2>What's wrong on <code>feat/hello</code> right now — and the fix.</h2>
+  <p style="font-family:Comfortaa; font-size:0.94rem; color:var(--text); margin: 0 0 1rem; line-height:1.75;">The page renders, but it doesn't <b>read</b> as Unbarrier yet. Three problems from the live preview: (1) the hero needs to be quieter and more confident — type-only, no illustration, just the wordmark + headline + bio, (2) every section is a grey rounded rectangle on amethyst — there's no visual rhythm, no accent system per card, (3) the CTA cards link to <code>#</code> placeholders. Step 2 fixes all three. <b>No new sections, no new copy</b> — same structure, properly designed and wired.</p>
+
+  <div class="box danger">
+    <h4>Status of links right now (live preview)</h4>
+    All four CTA cards have <code>href="#"</code>. Newsletter button posts but doesn't route. Footer <code>privacy</code> / <code>terms</code> 404. None of these can ship to Cardiff like this — the QR scan would land on a page where nothing works.
+  </div>
+
+  <div class="box lock">
+    <h4>Hero direction — locked decision</h4>
+    The <code>/hello</code> hero is <b>type-only</b>. No triangular spotlight illustration. No "bring the joy" Cherry Bomb moment. No magenta circle. No portrait. Just: small green logo dot + <code>unbarrier.me</code> wordmark · headline · one-paragraph bio. This is a handheld page reached by QR — quiet and confident beats decorative. The bring-the-joy moment lives on the homepage, not here.
+  </div>
+
+  <h3>11.1 — Hero: type-only, confident, no illustration</h3>
+  <ul class="plan">
+    <li><b>Wordmark row</b> at the top: a 22×22px <code>border-radius: 6px</code> Spring Green square (<code>#38ff99</code>) followed by the lowercase wordmark <code>unbarrier.me</code> in Comfortaa 700, ~1.4rem, white. 12px gap between dot and wordmark. Sits 0 above the headline.</li>
+    <li><b>Headline:</b> <code>designed for difference.</code> — Outfit 800, <code>font-size: clamp(2.4rem, 8vw, 3.6rem)</code>, <code>line-height: 1.05</code>, <code>letter-spacing: -0.025em</code>. White by default; wrap <code>difference.</code> in an <code>&lt;em&gt;</code> set to <code>font-style: normal; color: var(--spring-green)</code>. The full stop stays inside the green span.</li>
+    <li><b>Bio paragraph:</b> Comfortaa 400, ~1rem, <code>line-height: 1.7</code>, <code>color: var(--text-muted)</code>. The words <b>Loop Breakers</b> are bolded and white (<code>color: var(--text); font-weight: 700</code>) — only those two words. <code>max-width: 42ch</code> so the line breaks feel deliberate on mobile.</li>
+    <li><b>No illustration on this route.</b> Do not import any PNG hero asset for <code>/hello</code>. Do not render glow orbs in the hero — the page is calm by design.</li>
+    <li><b>Spacing:</b> wordmark → headline 28px · headline → bio 20px · bio → "NEXT SESSIONS" eyebrow 44px.</li>
+    <li><b>No eyebrow above the headline.</b> Earlier drafts had <code>INCLUSION · DIGITAL ACCESS · STUDENT VOICE</code> — drop it. Wordmark is enough.</li>
+  </ul>
+
+  <h3>11.2 — CTA cards: one accent each, hover lift, real links</h3>
+  <p style="font-family:Comfortaa; font-size:0.92rem; color:var(--text-muted); margin: 0 0 1rem;">Right now all four cards look identical. The brand rule is <b>one accent per card</b> — the colour signals the section. Below is the exact mapping.</p>
+  <table>
+    <thead><tr><th>Card</th><th>Accent</th><th>Border-left</th><th>Live link (href)</th></tr></thead>
+    <tbody>
+      <tr><td>Tuesday Loop Breakers</td><td>Spring Green <code>#38ff99</code></td><td>3px solid</td><td><code>{process.env.NEXT_PUBLIC_TIDYCAL_TUESDAY}</code></td></tr>
+      <tr><td>Wed Guest Stage · Sketch-noting</td><td>Orchid Mist <code>#db7dcc</code></td><td>3px solid</td><td><code>{process.env.NEXT_PUBLIC_TIDYCAL_GUEST}</code></td></tr>
+      <tr><td>1:1 with Nici · Coaching</td><td>Pearl Aqua <code>#69d9d1</code></td><td>3px solid</td><td><code>{process.env.NEXT_PUBLIC_TIDYCAL_COACHING}</code></td></tr>
+      <tr><td>Schools &amp; organisations</td><td>Princeton Orange <code>#ff8a1c</code></td><td>3px solid</td><td><code>mailto:hello@unbarrier.me?subject=Schools%20%26%20orgs</code></td></tr>
+    </tbody>
+  </table>
+  <ul class="plan">
+    <li><b>Card chrome:</b> <code>background: rgba(255,255,255,0.03)</code> · <code>border: 1px solid rgba(255,255,255,0.08)</code> · <code>border-left: 3px solid var(--accent)</code> · <code>border-radius: 14px</code> · <code>padding: 18px 22px</code>.</li>
+    <li><b>Title:</b> Outfit 700, 1rem, <code>color: var(--accent)</code>. <b>Meta line:</b> Comfortaa 0.82rem, <code>var(--text-muted)</code>.</li>
+    <li><b>Arrow:</b> the <code>→</code> sits before the title, same colour as the title. House style, see design-system guide.</li>
+    <li><b>Hover:</b> 200ms ease — <code>background: var(--accent)0e</code> (5% alpha), <code>border-color: var(--accent)70</code> (~44% alpha). No transform, no scale.</li>
+    <li><b>Targets:</b> external bookings → <code>target="_blank" rel="noopener"</code>. Mailto stays same-tab.</li>
+    <li><b>"Next sessions" eyebrow:</b> Outfit 700, 0.72rem, 0.14em uppercase, <code>color: var(--school-bus-yellow)</code>. Sits 24px above the first card. (Yellow because this is the "what's available" / payoff strip.)</li>
+  </ul>
+
+  <h3>11.3 — Newsletter band: yellow accent, real glow</h3>
+  <ul class="plan">
+    <li><b>Container:</b> <code>background: linear-gradient(135deg, rgba(255,194,3,0.10), rgba(255,194,3,0.04))</code> · <code>border: 1.5px solid rgba(255,194,3,0.3)</code> · <code>border-radius: 18px</code> · <code>padding: 28px</code>.</li>
+    <li><b>Heading:</b> Outfit 800, <code>clamp(1.5rem, 3vw, 2rem)</code>, <code>letter-spacing: -0.025em</code>, white. Sub: Comfortaa, <code>var(--text-muted)</code>.</li>
+    <li><b>Input:</b> dark amethyst (<code>rgba(0,0,0,0.3)</code>), 1.5px <code>rgba(255,255,255,0.12)</code> border, 12px radius, 14px vertical padding. Focus ring: <code>0 0 0 3px rgba(255,194,3,0.25)</code>.</li>
+    <li><b>Button:</b> School Bus Yellow background, amethyst text, Outfit 700, 100px radius (pill), <code>padding: 12px 22px</code>. Hover: <code>opacity: 0.88</code>, no colour shift.</li>
+    <li><b>Layout:</b> input + button in a single row on ≥520px (<code>display: flex; gap: 10px</code>); stacked below.</li>
+  </ul>
+
+  <h3>11.4 — Say-hi band: orchid accent, calmer treatment</h3>
+  <ul class="plan">
+    <li><b>Container:</b> <code>background: rgba(219,125,204,0.06)</code> · <code>border: 1px solid rgba(219,125,204,0.25)</code> · <code>border-radius: 18px</code> · <code>padding: 28px</code>. Softer than the yellow newsletter band — this is the "no agenda" moment, deliberately quiet.</li>
+    <li><b>Heading "Just say hi."</b> — Outfit 800, same scale as newsletter heading, white. Sub copy <code>var(--text-muted)</code>.</li>
+    <li><b>Email + textarea:</b> stack vertically. Same input chrome as newsletter, focus ring uses orchid: <code>0 0 0 3px rgba(219,125,204,0.25)</code>.</li>
+    <li><b>Send button:</b> Spring Green background (matches the existing live preview's button — keep it), amethyst text, pill, right-aligned. <code>min-width: 120px</code>.</li>
+    <li><b>Honeypot:</b> hidden <code>&lt;input name="website"&gt;</code> with <code>tabindex="-1"</code>, <code>aria-hidden="true"</code>, <code>position: absolute; left: -9999px</code>. Already in spec §06 — confirm it's actually rendered.</li>
+  </ul>
+
+  <h3>11.5 — Section rhythm + glow orbs</h3>
+  <ul class="plan">
+    <li><b>Vertical rhythm:</b> <code>clamp(3rem, 6vw, 5rem)</code> between bands. Currently they're touching.</li>
+    <li><b>Section bar:</b> 2px linear-gradient accent→transparent at the top of each band — 80px wide, left-aligned. Colour matches the band's accent. (Yellow for newsletter, orchid for say-hi.)</li>
+    <li><b>Background glows:</b> two more <code>&lt;Glow&gt;</code>s lower on the page — yellow orb behind newsletter, orchid orb behind say-hi. <code>filter: blur(160px); opacity: 0.08</code>.</li>
+    <li><b>Max-width:</b> the page max-width should be 720px on this route (it's a reading/handheld page, not a landing). Anything wider feels too corporate for the "say hi" tone.</li>
+  </ul>
+
+  <h3>11.6 — Footer: real links, real co. number</h3>
+  <ul class="plan">
+    <li><b>Co. number is known</b> — <code>16603630</code>. Replace the live "(Co. No. 16603630)" line; current copy is right but the wrapping looks broken on the screenshot. Use a non-breaking space inside "Co.&nbsp;No.&nbsp;16603630".</li>
+    <li><b>Privacy / Terms must resolve.</b> Phase 1 should already have shipped <code>/legal/privacy</code> and <code>/legal/terms</code> from <code>Legal Pages v1.html</code>. If not — add them in this same Step 2 PR. They are not optional for a public page that captures email.</li>
+    <li><b>Hover state:</b> footer links fade from <code>var(--text-muted)</code> → <code>var(--spring-green)</code> on hover, 150ms.</li>
+  </ul>
+
+  <h3>11.7 — Wire the analytics events that the spec already required</h3>
+  <p style="font-family:Comfortaa; font-size:0.92rem; color:var(--text-muted); margin: 0 0 0.6rem;">§06 calls for <code>cta_click</code>, <code>newsletter_signup</code>, <code>say_hi_sent</code>. Confirm in the Step 2 PR that all three fire in the Plausible dashboard from a real device (not just curl). Until that's verified, this step isn't done.</p>
+
+  <div class="box good">
+    <h4>Step 2 acceptance — the short version</h4>
+    <ol style="margin: 6px 0 0 18px; padding: 0;">
+      <li>Hero is type-only: green dot + <code>unbarrier.me</code> wordmark · "designed for <em>difference.</em>" · bio. No illustration, no Cherry Bomb, no magenta circle.</li>
+      <li>Each CTA card has its assigned accent border-left + accent-coloured title.</li>
+      <li>All four CTA <code>href</code>s resolve — three open TidyCal in a new tab, one opens mail.</li>
+      <li>Newsletter band reads yellow; say-hi band reads orchid; vertical rhythm clearly separates them.</li>
+      <li><code>/legal/privacy</code> and <code>/legal/terms</code> render real pages.</li>
+      <li>Three Plausible events visible in the dashboard from a phone test.</li>
+      <li>Lighthouse a11y still ≥95 after the redesign (re-run; the colour pairs are tested but verify).</li>
+    </ol>
+  </div>
+
+  <div class="box lock">
+    <h4>What Step 2 deliberately does NOT touch</h4>
+    Page structure (5 sections in the same order). Copy. API routes. MailerLite wiring. Stack choices. Step 2 is a <b>visual + linking pass only</b> — every change above is CSS, asset, or <code>href</code>. If a Step 2 PR adds a new component or changes the section order, push back.
+  </div>
+</section>
+
+<footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Comfortaa'; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7;">
+  <p><b>/hello Page Spec v1.2 · 26 April 2026</b> · v1.1 + hero locked as type-only (no triangular illustration, no Cherry Bomb) · derived from Loop Breakers Source of Truth §09b</p>
+  <p>Hand to Claude Code: paste this doc + Source of Truth + Repo Setup Guide. Repo: <code>github.com/unbarrier-gif/Unbarrier-Education</code>. Branch: <code>feat/hello-step-2</code> → PR to <code>main</code>.</p>
+</footer>
+
+</main>
+</body>
+</html>

@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loop Breakers · Source of Truth · Unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 7rem; }
+
+  /* HEADER */
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,6vw,3.8rem); letter-spacing: -0.028em; line-height: 1.04; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--school-bus-yellow); }
+  .lede { font-family: "Comfortaa"; color: var(--text); font-size: 1.05rem; line-height: 1.8; margin: 0 0 0.6rem; max-width: 760px; }
+  .lede-sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin: 0 0 0; max-width: 760px; }
+
+  /* CANONICAL BANNER */
+  .canon {
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+    padding: 22px 28px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,194,3,0.10), rgba(56,255,153,0.05));
+    border: 1.5px solid rgba(255,194,3,0.35);
+    margin: 2rem 0 3rem;
+  }
+  .canon .stamp {
+    font-family: "Outfit"; font-weight: 800; font-size: 0.7rem;
+    color: var(--school-bus-yellow); letter-spacing: 0.16em; text-transform: uppercase;
+    padding: 8px 16px; border: 1.5px solid var(--school-bus-yellow); border-radius: 100px;
+    line-height: 1; white-space: nowrap;
+  }
+  .canon p { font-family: "Comfortaa"; font-size: 0.95rem; color: var(--text); margin: 0; line-height: 1.6; }
+  .canon p b { color: var(--school-bus-yellow); }
+
+  /* TOC */
+  .toc { margin: 0 0 3rem; padding: 18px 24px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+  .toc h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin: 0 0 10px; }
+  .toc ol { padding: 0; margin: 0; list-style: none; counter-reset: toc; column-count: 2; column-gap: 32px; }
+  .toc li { counter-increment: toc; padding: 4px 0; font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.6; break-inside: avoid; }
+  .toc li::before { content: counter(toc, decimal-leading-zero) " · "; color: var(--text-faint); font-family: "Outfit"; font-weight: 700; }
+  .toc a { color: var(--text); text-decoration: none; border-bottom: 1px dotted transparent; }
+  .toc a:hover { color: var(--school-bus-yellow); border-bottom-color: var(--school-bus-yellow); }
+  @media (max-width: 720px) { .toc ol { column-count: 1; } }
+
+  /* SECTIONS */
+  section.block { padding: 2.4rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--school-bus-yellow)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--school-bus-yellow)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.6rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.5rem; color: var(--text); letter-spacing: -0.01em; }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+
+  /* CANONICAL FACT CARDS */
+  .fact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1.2rem 0; }
+  @media (max-width: 720px) { .fact-grid { grid-template-columns: 1fr; } }
+  .fact {
+    padding: 18px 22px; border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--c, var(--school-bus-yellow));
+  }
+  .fact .key {
+    font-family: "Outfit"; font-size: 9.5px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--c, var(--school-bus-yellow)); margin: 0 0 8px;
+  }
+  .fact .val {
+    font-family: "Outfit"; font-weight: 800; font-size: 1.4rem;
+    color: var(--text); letter-spacing: -0.02em; line-height: 1.15;
+    margin: 0 0 6px;
+  }
+  .fact .note {
+    font-family: "Comfortaa"; font-size: 0.82rem; color: var(--text-muted);
+    line-height: 1.5; margin: 0;
+  }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+  td.num { font-family: "Outfit"; font-weight: 700; color: var(--text); }
+  td.accent { color: var(--school-bus-yellow); font-weight: 700; }
+  td.accent-green { color: var(--spring-green); font-weight: 700; }
+
+  /* CALLOUTS */
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); margin: 14px 0; line-height: 1.7; }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.review { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.do-not { background: rgba(227,161,176,0.06); border: 1px solid rgba(227,161,176,0.3); border-left: 3px solid var(--pink-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.review h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.do-not h4 { color: var(--pink-mist); }
+
+  /* COPY BLOCKS — exact strings to use */
+  .copy {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.82rem; line-height: 1.7;
+    background: var(--amethyst-deep); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px; padding: 14px 18px;
+    color: var(--text); margin: 8px 0 16px;
+    white-space: pre-wrap;
+  }
+  .copy-label {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-subtle); margin: 14px 0 6px;
+  }
+
+  /* DOC INDEX TABLE */
+  .docs-table th, .docs-table td { font-size: 0.84rem; }
+  .docs-table .status {
+    display: inline-block; padding: 2px 9px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase; line-height: 1.5;
+  }
+  .status.live { background: rgba(56,255,153,0.15); color: var(--spring-green); border: 1px solid rgba(56,255,153,0.3); }
+  .status.snapshot { background: rgba(105,217,209,0.15); color: var(--pearl-aqua); border: 1px solid rgba(105,217,209,0.3); }
+  .status.archive { background: rgba(240,235,229,0.08); color: var(--text-faint); border: 1px solid rgba(255,255,255,0.08); }
+  .status.derived { background: rgba(255,194,3,0.12); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.25); }
+
+  /* CHANGE LOG */
+  .changelog { margin: 1rem 0 0; padding: 0; list-style: none; }
+  .changelog li {
+    display: grid; grid-template-columns: 100px 1fr; gap: 16px;
+    padding: 12px 0; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .changelog li:first-child { border-top: none; }
+  .changelog .date { font-family: "Outfit"; font-weight: 700; font-size: 0.82rem; color: var(--school-bus-yellow); letter-spacing: 0.02em; }
+  .changelog .what { font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.65; color: var(--text); }
+  .changelog .what small { display: block; color: var(--text-muted); font-size: 0.78rem; line-height: 1.55; margin-top: 3px; }
+
+  /* FOOTER */
+  footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<!-- ═══════════ HEADER ═══════════ -->
+<p class="doc-eyebrow">Loop Breakers · Internal · v1.2</p>
+<h1>Source of <em>Truth.</em></h1>
+<p class="lede">The canonical numbers, dates, capacities, names, and copy lines for Loop Breakers.</p>
+<p class="lede-sub">Every other document — public website, guest host kit, Phase 1 plan, MailerLite, codebase prototypes — must reflect what's on this page. When two docs disagree, this one wins. When a number changes, change it here first, then sweep the rest.</p>
+
+<div class="canon">
+  <span class="stamp">Canonical · v1.2 · 26 Apr 2026</span>
+  <p>If a number, date, or copy line on the live site, in a kit, or in an email differs from what's on this page — <b>this page is right and the other thing is wrong.</b> Update the other thing, log the change in §11.</p>
+</div>
+
+<!-- ═══════════ TOC ═══════════ -->
+<nav class="toc">
+  <h4>What's locked here</h4>
+  <ol>
+    <li><a href="#products">The three products</a></li>
+    <li><a href="#pricing">Pricing — flat &amp; sliding</a></li>
+    <li><a href="#capacity">Capacity caps</a></li>
+    <li><a href="#dates">Dates &amp; cadence</a></li>
+    <li><a href="#audience">Audience phrasing</a></li>
+    <li><a href="#bio">Nici's bio &amp; permission lines</a></li>
+    <li><a href="#guests">Guest hosts &amp; fee ladder</a></li>
+    <li><a href="#brand">Brand basics — name, domain, footer</a></li>
+    <li><a href="#docs">Document index — what's live, what's snapshot</a></li>
+    <li><a href="#review">Review triggers — when to revisit</a></li>
+    <li><a href="#hello">/hello — the lead capture page</a></li>
+    <li><a href="#stack">The stack — tools we use</a></li>
+    <li><a href="#log">Change log</a></li>
+  </ol>
+</nav>
+
+<!-- ═══════════ 01 PRODUCTS ═══════════ -->
+<section class="block" id="products" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · The three products</p>
+  <h2>Three distinct rooms. Three distinct prices. Don't blur them.</h2>
+
+  <p>Loop Breakers is <b>three</b> products under one banner. They have different formats, capacities, prices, and emotional registers. They're not interchangeable, and copy that conflates them weakens all three.</p>
+
+  <div class="fact-grid">
+    <div class="fact" style="--c: var(--orchid-mist)">
+      <p class="key">Tuesday Loop Breakers — the regular room</p>
+      <p class="val">Small, slow, held</p>
+      <p class="note">Hosted by Nici. 90 min. <b>10 seats hard cap.</b> Online (Google Meet). Tuesday mornings. The accessible weekly floor — the room you can afford to keep coming back to.</p>
+    </div>
+    <div class="fact" style="--c: var(--princeton-orange)">
+      <p class="key">Wednesday Guest Stage — the premium room</p>
+      <p class="val">Bigger, themed, expert-led</p>
+      <p class="note">Hosted by a guest practitioner. 90 min. <b>Up to 40 seats.</b> Online (Zoom or Meet). Off-cadence Wednesdays. The expert is the value — talk + held Q&amp;A, not small-group coaching.</p>
+    </div>
+    <div class="fact" style="--c: var(--spring-green)">
+      <p class="key">Accessible Coaching — the held one-to-one</p>
+      <p class="val">Sustained, weekly, low-friction</p>
+      <p class="note">1:1 with Nici. <b>2 sessions per week + WhatsApp voice/text in between.</b> <b>From £55/month</b>, set per client at intake. <b>3–5 clients max, ever.</b> 6-month sequence then review. Sessions can be moved month to month — if it's consistent we look at why, no shame. <b>Per-client TidyCal page</b> at <code>/[firstname]-coaching</code>, unlisted. Still part of the Loop Breakers community. Gemma is the first client (£55/mo template).</p>
+    </div>
+  </div>
+
+  <div class="box do-not">
+    <h4>Do not blur</h4>
+    Don't say "Loop Breakers, sometimes with guest hosts." Say <b>"Loop Breakers (Tuesdays, with Nici), Guest Stage (Wednesdays, with invited practitioners), and Accessible Coaching (1:1 sustained, with Nici)."</b> Three products. Three pages. Three booking flows. Accessible Coaching is <em>not</em> the same as a one-off 1:1 — see §02.
+  </div>
+</section>
+
+<!-- ═══════════ 02 PRICING ═══════════ -->
+<section class="block" id="pricing" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Pricing</p>
+  <h2>£10 Tuesday · £25 Wednesday · £55/mo Accessible Coaching · sliding where it matters.</h2>
+
+  <table>
+    <thead>
+      <tr><th>Product</th><th>Standard</th><th>Sliding scale</th><th>Notes</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><b>Tuesday Loop Breakers</b><br/><small style="color:var(--text-muted)">Regular, with Nici</small></td>
+        <td class="accent">£10</td>
+        <td class="num">£5 access seat<br/><small style="color:var(--text-muted)">on request, no questions</small></td>
+        <td>Flat £10 standard. Held at this price <b>until Phase 3 review</b> (20+ regulars, weekly cadence). The £10 floor <em>is</em> the access promise — protected.</td>
+      </tr>
+      <tr>
+        <td><b>Wednesday Guest Stage</b><br/><small style="color:var(--text-muted)">Premium, guest-led</small></td>
+        <td class="accent-green">£25</td>
+        <td class="num">£15 / £25 / £40<br/><small style="color:var(--text-muted)">attendee picks at checkout</small></td>
+        <td>Sliding from £15 (access) → £40 (paying-it-forward). Standard sticker = £25. Gives access without diluting the headline.</td>
+      </tr>
+      <tr>
+        <td><b>Accessible Coaching</b><br/><small style="color:var(--text-muted)">Sustained 1:1 subscription</small></td>
+        <td class="accent">From £55/mo</td>
+        <td class="num">—<br/><small style="color:var(--text-muted)">set per client at intake</small></td>
+        <td><b>2 sessions per week + WhatsApp voice/text between sessions.</b> 6-month minimum sequence then review. Sessions can be moved month to month — ND life is non-linear. <b>3–5 clients max at any time.</b> Held capacity, not advertised — invitation only after a discovery conversation. £55/mo is the Gemma template (Phase 1 floor); price set per client at intake based on shape of need. Per-client TidyCal page at <code>/[firstname]-coaching</code>, unlisted.</td>
+      </tr>
+      <tr>
+        <td><b>1:1 session with Nici</b><br/><small style="color:var(--text-muted)">One-off, booked separately</small></td>
+        <td class="accent">£120</td>
+        <td>—</td>
+        <td>One hour. One-off, not subscription. Booked via TidyCal. Stripe payment captured at booking. <b>Distinct from Accessible Coaching</b> — this is for people who need a single decision-point conversation, not sustained support.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box lock">
+    <h4>Locked until Phase 3 review</h4>
+    Tuesday £10 does not move until Loop Breakers reaches <b>20+ regulars on a weekly cadence</b> (Phase 3 trigger). Even then, the £5 access seat stays. Wednesday £25 sliding scale is reviewed at Phase 2 trigger (10+ regulars on Tuesday).
+  </div>
+
+  <h3>Why £10 / £25 / £55 — and not £15 / £20 / £45</h3>
+  <p>Because the products do different jobs. <b>Tuesday</b> is the <em>weekly room</em> — what makes it work is people <em>keep coming</em>, and £10 is the price that lets that happen for someone with ADHD-tax inconsistent income. <b>Wednesday</b> is the <em>event room</em> — paying for a named expert's time and prep — and £25 is honest about the value of that. <b>Accessible Coaching</b> is the <em>held one-to-one</em> — £55/month for two weekly sessions plus WhatsApp between them is below market for sustained 1:1 work, deliberately, because the people who need it most are often the ones who can least afford it. Capping at 3–5 clients is what makes that price possible without it eating Nici alive.</p>
+</section>
+
+<!-- ═══════════ 03 CAPACITY ═══════════ -->
+<section class="block" id="capacity" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Capacity caps</p>
+  <h2>10 hard. 40 soft. No exceptions on the 10.</h2>
+
+  <div class="fact-grid">
+    <div class="fact" style="--c: var(--orchid-mist)">
+      <p class="key">Tuesday — hard cap</p>
+      <p class="val">10 seats</p>
+      <p class="note">Including Nici. Booking closes at 10. Waitlist after that. <b>Do not bend this</b> — the small-room feel is the product. Eleven people is a different room.</p>
+    </div>
+    <div class="fact" style="--c: var(--princeton-orange)">
+      <p class="key">Wednesday — soft cap</p>
+      <p class="val">Up to 40 seats</p>
+      <p class="note">"Up to 40." Could be 6, could be 35. Format works at any size — guest gives talk, takes held questions. Don't promise the host a full room. Don't promise the audience a small one.</p>
+    </div>
+  </div>
+
+  <div class="box review">
+    <h4>The 10 isn't arbitrary</h4>
+    Eight is the comfortable working number. Ten is the "we sold out, plus one or two, still feels held" number. Twelve is too many — you stop being able to remember who's saying what, and the implicit invitation to speak gets diluted. <b>10 is the wall.</b>
+  </div>
+</section>
+
+<!-- ═══════════ 04 DATES ═══════════ -->
+<section class="block" id="dates" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Dates &amp; cadence</p>
+  <h2>Tuesdays 10:30am. Wednesdays when the guest is in.</h2>
+
+  <h3>Phase 1 — May to early July 2026</h3>
+  <table>
+    <thead><tr><th>Date</th><th>Day</th><th>Time</th><th>Product</th><th>Host</th></tr></thead>
+    <tbody>
+      <tr><td class="num">5 May</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici · <b>first session</b></td></tr>
+      <tr><td class="num">12 May</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">19 May</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">20 May</td><td>Wednesday</td><td>10:30</td><td><b>Guest Stage</b></td><td>Nicki Hambleton · <em>first guest</em></td></tr>
+      <tr><td class="num">26 May</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">2 Jun</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">9 Jun</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">16 Jun</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">23 Jun</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">30 Jun</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+      <tr><td class="num">7 Jul</td><td>Tuesday</td><td>10:30</td><td>Loop Breakers</td><td>Nici</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box review">
+    <h4>The 5 May launch is the only date that matters in April</h4>
+    Everything else can slip a week. <b>5 May 10:30am cannot.</b> It's the marker the rest of the system is built around. If you're not ready by 4 May Monday evening, postpone to 12 May — but never to "next week sometime."
+  </div>
+
+  <h3>Cadence rules</h3>
+  <ul class="plan">
+    <li><b>Tuesday Loop Breakers</b> — every Tuesday 10:30am. No exceptions in Phase 1, even if numbers are low.</li>
+    <li><b>Wednesday Guest Stages</b> — irregular, by guest availability. Not weekly. Aim for one per month in Phase 1, then assess.</li>
+    <li><b>Bank holidays</b> — Tuesday session still runs unless the bank holiday falls on a Tuesday itself. Then shift to Wednesday with a clear explanation; never skip.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ 05 AUDIENCE ═══════════ -->
+<section class="block" id="audience" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Audience phrasing</p>
+  <h2>All stages welcome. No diagnosis required.</h2>
+
+  <p>Loop Breakers is for <b>neurodivergent women running their own small businesses</b>. The audience is broad in diagnostic stage and tight in life stage:</p>
+
+  <p class="copy-label">Use this phrasing — verbatim or close</p>
+  <div class="copy">Diagnosed early, late, self-diagnosed, undiagnosed-but-curious — ADHD, autistic, AuDHD, dyslexic, dyscalculic, the whole spectrum. All stages welcome. No diagnosis required.</div>
+
+  <p class="copy-label">Use this for "who's in the room"</p>
+  <div class="copy">Founders, educators, writers, parents, designers, therapists, consultants — people with ideas that have been waiting. All neurodivergent (ADHD, autistic, dyslexic, AuDHD or somewhere in that terrain). All stages welcome. All warm, smart, and slightly tired of productivity advice.</div>
+
+  <div class="box do-not">
+    <h4>Do not say</h4>
+    <ul class="plan" style="margin: 6px 0 0;">
+      <li>"Late-diagnosed adults" as the headline audience description — too narrow, excludes early-diagnosed people like Nici herself.</li>
+      <li>"Women only" as a hard rule — phrasing is "for neurodivergent women" because that's who books and who the room is built for, but bookings aren't gender-policed.</li>
+      <li>"Coaches and consultants only" — the room includes makers, teachers gone independent, parents, anyone running something for themselves.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ 06 BIO ═══════════ -->
+<section class="block" id="bio" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · Nici's bio &amp; permission lines</p>
+  <h2>The reframe is the brand.</h2>
+
+  <p>Nici is <b>not</b> late-diagnosed. Diagnosed dyslexic at 10; ADHD, dyscalculia, and Auditory Processing Disorder at 20. This matters because it's the truth, and because it reframes the whole "neurodivergent founder" cliché — Nici has known her brain her whole adult life. What was missing was <em>how to build around it</em>. That's what Loop Breakers teaches.</p>
+
+  <p class="copy-label">Micro-bio — one line, for signatures, footers, flyers</p>
+  <div class="copy">I'm Nici — diagnosed dyslexic at 10, ADHD &amp; dyscalculia at 20, still looping. These are the sessions I wish I'd had.</div>
+
+  <p class="copy-label">Short bio — for session pages, about footer</p>
+  <div class="copy">I'm Nici. I've spent years circling ideas I couldn't quite land — until I built the kind of room I wished I'd had. Loop Breakers is that room. I run most sessions; a few rotate to other neurodivergent practitioners who bring their own frameworks.</div>
+
+  <p class="copy-label">Reframe — for about page, brand story, media</p>
+  <div class="copy">I'm not late-diagnosed — I've known I think differently since I was ten. What I didn't know, for years, was how to build around it.
+
+Dyslexia at 10. ADHD, dyscalculia, and Auditory Processing Disorder at 20. So I went into adulthood with a label and no system — and spent two decades looping on the same handful of good ideas.
+
+Loop Breakers is the room I needed. The one that doesn't ask you to be a different kind of brain.</div>
+
+  <div class="box lock">
+    <h4>The reframe is the brand position</h4>
+    "Diagnosed since ten. Still looping." This is the line that separates Loop Breakers from every other "neurodivergent founder" coaching offer. Don't soften it. Don't generalise it back to "late-diagnosed." Use it.
+  </div>
+</section>
+
+<!-- ═══════════ 07 GUESTS ═══════════ -->
+<section class="block" id="guests" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Guest hosts &amp; fee ladder</p>
+  <h2>Three-phase fee model. Written down. Honoured.</h2>
+
+  <table>
+    <thead><tr><th>Phase</th><th>Trigger</th><th>Guest fee</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>Phase 1</b></td>
+        <td>Now → 10 Tuesday regulars</td>
+        <td class="accent">£75 flat per session</td>
+        <td>Wednesday Guest Stage at £25 standard. Even 3 attendees at £25 covers the £75 fee. Unbarrier covers any shortfall.</td>
+      </tr>
+      <tr>
+        <td><b>Phase 2</b></td>
+        <td>10+ regulars · Q3 2026 est.</td>
+        <td class="accent">£125 flat per session</td>
+        <td>Triggered when Tuesday Loop Breakers moves to monthly subscription model.</td>
+      </tr>
+      <tr>
+        <td><b>Phase 3</b></td>
+        <td>20+ regulars · weekly cadence</td>
+        <td class="accent-green">£200 base + 50% of revenue above base</td>
+        <td>Renegotiated in writing with each guest before reaching this phase. No moving goalposts.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <div class="box lock">
+    <h4>Two guarantees, locked</h4>
+    <ol class="plan" style="margin: 6px 0 0;">
+      <li><b>Paid within 7 days</b> of session, by bank transfer.</li>
+      <li><b>Phase trigger is measurable.</b> The regular count is a public number. No moving goalposts.</li>
+    </ol>
+  </div>
+
+  <h3>First guest — Nicki Hambleton</h3>
+  <p><b>Wed 20 May 2026, 10:30 BST.</b> Off-cadence Wednesday. Guest Stage format. Up to 40 seats. £25 sliding. Nicki paid £75 flat for this session (Phase 1).</p>
+</section>
+
+<!-- ═══════════ 08 BRAND BASICS ═══════════ -->
+<section class="block" id="brand" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Brand basics</p>
+  <h2>The hierarchy, the domain, the footer line.</h2>
+
+  <p>The hierarchy goes: <b>legal entity</b> → <b>trading name</b> (lives at the domain) → <b>products</b>. <code>unbarrier.me</code> is where the brand lives — it's the <em>address</em>, not a separate sub-brand.</p>
+
+  <div class="fact-grid">
+    <div class="fact" style="--c: var(--spring-green)">
+      <p class="key">Legal entity</p>
+      <p class="val">Unbarrier Education Ltd</p>
+      <p class="note">Companies House <b>16603630</b>. Used on contracts, invoices, footers, legal pages. ICO registration in progress.</p>
+    </div>
+    <div class="fact" style="--c: var(--mint)">
+      <p class="key">Trading name &amp; domain</p>
+      <p class="val">Unbarrier <span style="color: var(--text-muted); font-weight: 400;">·</span> <code style="color: var(--mint); font-size: 0.7em;">unbarrier.me</code></p>
+      <p class="note">The public-facing brand. The website. What people remember. <em>Not</em> a sub-brand — the trading face of Unbarrier Education Ltd.</p>
+    </div>
+    <div class="fact" style="--c: var(--school-bus-yellow)">
+      <p class="key">Sub-brand 1</p>
+      <p class="val">Loop Breakers</p>
+      <p class="note">Tuesday weekly group room. Lives at <code>unbarrier.me/loop-breakers</code>. Two capital letters, no hyphen, no apostrophe.</p>
+    </div>
+    <div class="fact" style="--c: var(--princeton-orange)">
+      <p class="key">Sub-brand 2</p>
+      <p class="val">Guest Stage</p>
+      <p class="val" style="font-size: 0.55em; opacity: 0.7;">(loop breakers · guest stage)</p>
+      <p class="note">Wednesday off-cadence guest sessions. Lives at <code>unbarrier.me/guest-stage</code>. Always credit the named guest practitioner.</p>
+    </div>
+    <div class="fact" style="--c: var(--spring-green)">
+      <p class="key">Sub-brand 3</p>
+      <p class="val">Accessible Coaching</p>
+      <p class="note">Sustained 1:1 subscription. From £55/mo (Gemma template), set per client at intake. 3–5 clients max. Sentence case. <em>Not</em> "Accessibility Coaching" — the work is in making coaching itself accessible to ND life.</p>
+    </div>
+    <div class="fact" style="--c: var(--orchid-mist)">
+      <p class="key">Founder name</p>
+      <p class="val">Nici Foote</p>
+      <p class="note">Pronounced "Nicky." Email signs as "Nici." Not "Nicky." Not "Nicki" (that's the guest host — different person, different spelling).</p>
+    </div>
+    <div class="fact" style="--c: var(--pearl-aqua)">
+      <p class="key">Guest host name</p>
+      <p class="val">Nicki Hambleton</p>
+      <p class="note">Spelt with a "ki." Apple Distinguished Educator. Confused with "Nici" surprisingly often — keep the spellings distinct in writing.</p>
+    </div>
+  </div>
+
+  <p class="copy-label">Footer line — site, emails, signatures</p>
+  <div class="copy">From the desk of Nici Foote · Unbarrier Education Ltd · Companies House 16603630</div>
+</section>
+
+<!-- ═══════════ 09 DOC INDEX ═══════════ -->
+<section class="block" id="docs" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Document index</p>
+  <h2>What's live. What's a snapshot. What's archive.</h2>
+
+  <p>This index says what every doc in the project is for, and what its relationship to this Source of Truth is.</p>
+
+  <table class="docs-table">
+    <thead><tr><th>File</th><th>Role</th><th>Status</th></tr></thead>
+    <tbody>
+      <tr><td><b>Loop Breakers - Source of Truth.html</b></td><td>This doc. Canonical reference.</td><td><span class="status live">Live · canonical</span></td></tr>
+      <tr><td><code>loop-breakers/sessions/SessionsData.jsx</code></td><td>The session data shown on the public Sessions page.</td><td><span class="status derived">Derived · sync to §02 §03 §04</span></td></tr>
+      <tr><td><b>Phase 1 - Cardiff Launch Plan.html</b></td><td>Operational plan for May–Jul 2026 launch.</td><td><span class="status derived">Derived · sync to §02 §04</span></td></tr>
+      <tr><td><b>Loop Breakers - Audience Clarity.html</b></td><td>Strategy doc — who the audience is, why.</td><td><span class="status derived">Derived · sync to §05 §03</span></td></tr>
+      <tr><td><b>Loop Breakers Messaging System.html</b></td><td>Voice, tone, copy lines, frames A/B/C.</td><td><span class="status derived">Derived · sync to §05 §06</span></td></tr>
+      <tr><td><b>Guest Host Kit - for Nicki.html</b></td><td>The combined kit doc Nicki receives.</td><td><span class="status derived">Derived · sync to §02 §03 §07</span></td></tr>
+      <tr><td><code>loop-breakers/guest-host-kit/index.html</code></td><td>The hub of the modular kit.</td><td><span class="status derived">Derived · sync to §02 §03 §07</span></td></tr>
+      <tr><td><code>loop-breakers/guest-host-kit/Nicki Hambleton - Personal Intro.html</code></td><td>Personal letter to Nicki specifically.</td><td><span class="status derived">Derived · sync to §02 §03 §05 §07</span></td></tr>
+      <tr><td><b>Task List.html</b></td><td>What's done, what's in flight, who owns it.</td><td><span class="status derived">Derived · sync to §02 §07</span></td></tr>
+      <tr><td><b>Google Appointment Schedule Setup.html</b></td><td>How to wire booking in Google Workspace.</td><td><span class="status derived">Derived · sync to §02 §05 §06</span></td></tr>
+      <tr><td><b>Newsletter - Opt-in and Welcome.html</b></td><td>MailerLite email sequence.</td><td><span class="status live">Live</span></td></tr>
+      <tr><td><b>Kit Setup Pack.html</b> · <b>MailerLite Setup Pack.html</b></td><td>How-to docs for setting up the stack.</td><td><span class="status live">Live</span></td></tr>
+      <tr><td><b>Claude Code Master Brief.html</b></td><td>Full spec for the website rebuild handoff.</td><td><span class="status derived">Derived · sync to §02 §04 §08</span></td></tr>
+      <tr><td><b>Handover Plan - Claude Code.html</b></td><td>The active handover plan for Claude Code.</td><td><span class="status live">Live</span></td></tr>
+      <tr><td><b>Legal Pages v1.html</b> · <b>Legal Pages v1 - for Rob.html</b></td><td>Privacy, terms, cookies, accessibility.</td><td><span class="status live">Live · pending Rob's review</span></td></tr>
+      <tr><td><b>Business Description - for Rob.html</b></td><td>Briefing doc sent to Rob (legal counsel).</td><td><span class="status snapshot">Snapshot · sent · don't edit</span></td></tr>
+      <tr><td><b>Email to Rob - Legal Review.html</b> · <b>Reply to Rob - Legal Review.html</b></td><td>Email correspondence with Rob.</td><td><span class="status snapshot">Snapshot · sent · don't edit</span></td></tr>
+      <tr><td><code>archive/Cardiff Flyer v2 - Print Ready.html</code></td><td>Printed Cardiff flyer (was £45).</td><td><span class="status archive">Archive · printed Apr 2026</span></td></tr>
+      <tr><td><code>archive/Cardiff Flyer v3 - Press Ready.html</code></td><td>Printed Cardiff flyer v3 (was £45).</td><td><span class="status archive">Archive · printed Apr 2026</span></td></tr>
+      <tr><td><code>archive/Audit - Handoff Readiness.html</code></td><td>Snapshot audit before pricing pivot.</td><td><span class="status archive">Archive · superseded</span></td></tr>
+      <tr><td><code>archive/Handover Plan - Claude Code v1.html</code></td><td>First version of handover plan.</td><td><span class="status archive">Archive · superseded</span></td></tr>
+      <tr><td><code>src/pages/LandingPage.tsx</code> · <code>ui_kits/loop-breakers/LBPackages.jsx</code> · <code>preview/components-pricing-cards.html</code></td><td>Codebase prototypes — feed into Claude Code rebuild.</td><td><span class="status derived">Derived · sync to §02</span></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box review">
+    <h4>How to read the statuses</h4>
+    <ul class="plan" style="margin:6px 0 0;">
+      <li><b>Live · canonical</b> — this doc. The one place of truth.</li>
+      <li><b>Live</b> — current, in-use, no sync conflict.</li>
+      <li><b>Derived</b> — must reflect canonical. If §02 changes, every "Derived · sync to §02" doc gets updated.</li>
+      <li><b>Snapshot</b> — sent or printed at a moment in time. Do <em>not</em> edit retroactively. If facts have changed, send an addendum, don't rewrite history.</li>
+      <li><b>Archive</b> — superseded. Kept for record, never relied on.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ 09b /HELLO ═══════════ -->
+<section class="block" id="hello" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09b · /hello — the lead capture page</p>
+  <h2>One page. Mobile-first. The QR-scan landing.</h2>
+
+  <p><b>Address:</b> <code>unbarrier.me/hello</code>. <b>Purpose:</b> the page on the back of the Cardiff flyer (Wed 29 Apr) and the canonical mobile entry point for every Loop Breakers lead going forward. Three jobs, in this order:</p>
+
+  <ol class="plan">
+    <li><b>Bio</b> — one sentence from Nici. Voice, not corporate.</li>
+    <li><b>Next session callout</b> — surface the next Tuesday Loop Breakers + next Guest Stage with TidyCal links.</li>
+    <li><b>Newsletter opt-in</b> — MailerLite, single field, the promise from §02 of the Handover Plan ("One note from me, once a month. Maybe less. Never more.").</li>
+  </ol>
+
+  <h3>What ships Wed 29 Apr (Cardiff hard deadline)</h3>
+  <ul class="plan">
+    <li>Hero · 1 sentence bio</li>
+    <li>Four CTA cards: <b>Tuesday Loop Breakers</b>, <b>Wednesday Guest Stage</b>, <b>1:1 with Nici</b>, <b>Audit / access / voice (schools &amp; orgs)</b></li>
+    <li>"Just say hi" form (single email field + textarea) → inbox + MailerLite</li>
+    <li>MailerLite opt-in band</li>
+    <li>TidyCal link-out from each card (<code>target="_blank"</code>)</li>
+    <li>Plausible <code>session_book_click</code> event on each TidyCal link</li>
+    <li>Footer line per §08</li>
+  </ul>
+
+  <h3>Phase 2 (post-Cardiff)</h3>
+  <ul class="plan">
+    <li>TidyCal embedded inline (not link-out)</li>
+    <li>Dynamic "next 3 sessions" feed from TidyCal API</li>
+    <li>Optional <code>/hello/swipe</code> — 4-step decision swipe (build only if Cardiff click data justifies)</li>
+    <li>Resource library / sketchnote gallery</li>
+    <li>Founding Member landing (opens after Nicki's 20 May session)</li>
+  </ul>
+
+  <div class="box lock">
+    <h4>The QR rule</h4>
+    The Cardiff flyer QR code points to <b><code>unbarrier.me/hello</code></b>. Not the homepage. Not a redirect. Not UTM'd. If the flyer is wrong, the flyer is wrong — never change <code>/hello</code> to match a misprinted QR.
+  </div>
+</section>
+
+<!-- ═══════════ 09c STACK ═══════════ -->
+<section class="block" id="stack" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09c · The stack</p>
+  <h2>One tool per slot. Locked.</h2>
+
+  <table>
+    <thead><tr><th>Slot</th><th>Tool</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Booking</b> (all 3 products + 1:1)</td><td class="accent-green">TidyCal</td><td>Single tool, Stripe-gated payment. Per-product page + per-client unlisted page for Accessible Coaching. <em>Not</em> Google Appointment Schedule. <em>Not</em> Cal.com.</td></tr>
+      <tr><td><b>Payments</b></td><td class="accent-green">Stripe</td><td>Account <code>acct_1TI98cDd2uGyLE5a</code>. Reconciles to Xero natively.</td></tr>
+      <tr><td><b>Newsletter / lifecycle email</b></td><td class="accent-green">MailerLite</td><td>Single tool. <em>Not</em> ConvertKit (sweep any reference to ConvertKit out of derived docs).</td></tr>
+      <tr><td><b>Video</b></td><td class="accent-green">Google Meet</td><td>Auto-generated with the Google Calendar event TidyCal creates.</td></tr>
+      <tr><td><b>Calendar</b></td><td class="accent-green">Google Calendar</td><td>TidyCal writes to it. Source of truth for Nici's availability.</td></tr>
+      <tr><td><b>Email (Nici)</b></td><td class="accent-green">Google Workspace</td><td><code>hello@unbarrier.me</code> + <code>nici@unbarrier.me</code>.</td></tr>
+      <tr><td><b>Accounting</b></td><td class="accent-green">Xero</td><td>Stripe → Xero direct.</td></tr>
+      <tr><td><b>Analytics</b></td><td class="accent-green">Plausible</td><td>Cookieless. No cookie banner needed. ~£9/mo.</td></tr>
+      <tr><td><b>Post-session chat</b></td><td class="accent-green">WhatsApp group</td><td>Moderated, 30-day access for paid attendees.</td></tr>
+      <tr><td><b>Hosting</b></td><td class="accent-green">Vercel</td><td>GitHub-connected. Preview per PR. Domain via Bluehost DNS.</td></tr>
+      <tr><td><b>Repo</b></td><td class="accent-green">GitHub · Unbarrier-Education org</td><td>Single Next.js app, not a Turborepo monorepo (revised from v3 plan).</td></tr>
+      <tr><td><b>Domain &amp; DNS</b></td><td class="accent-green">Bluehost</td><td><code>unbarrier.me</code>. CNAME / A records to Vercel for <code>unbarrier.me</code> and <code>www</code>.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box do-not">
+    <h4>Tools we are NOT using</h4>
+    ConvertKit (replaced by MailerLite). Cal.com (replaced by TidyCal). Google Appointment Schedule (replaced by TidyCal). Resend (Stripe + Google Workspace + MailerLite cover all transactional flow). A Turborepo monorepo (single Next.js app is enough).
+  </div>
+</section>
+
+<!-- ═══════════ 10 REVIEW TRIGGERS ═══════════ -->
+<section class="block" id="review" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · Review triggers</p>
+  <h2>When to revisit this doc.</h2>
+
+  <ul class="plan">
+    <li><b>Phase 2 trigger</b> — when Tuesday Loop Breakers reaches 10 weekly regulars. Revisit: §02 (Wednesday £25 → likely £35), §07 (guest fee Phase 1 → Phase 2).</li>
+    <li><b>Phase 3 trigger</b> — when Tuesday reaches 20+ regulars on weekly cadence. Revisit: §02 (Tuesday £10 → first time it moves), §07 (Phase 2 → Phase 3 base+rev-share).</li>
+    <li><b>New guest host signed</b> — revisit §07. Add their name, fee, first session date. Make sure their personal letter exists in <code>loop-breakers/guest-host-kit/</code>.</li>
+    <li><b>Domain change, company name change, ICO registration confirmed</b> — revisit §08.</li>
+    <li><b>Bookings pattern shifts</b> (e.g. Wednesday Guest Stages start drawing 50+ requests) — revisit §03 capacity.</li>
+    <li><b>Diagnostic story changes</b> (e.g. you decide to pursue an autism assessment) — revisit §06.</li>
+  </ul>
+
+  <div class="box warn">
+    <h4>One-strike rule</h4>
+    If anyone — Nici, a VA, a future hire, Claude Code — finds a number on a public-facing surface that contradicts this doc, that's a bug. Fix the public-facing thing. Update §11 below. <b>Never edit this doc to match the bug.</b>
+  </div>
+</section>
+
+<!-- ═══════════ 11 CHANGE LOG ═══════════ -->
+<section class="block" id="log" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Change log</p>
+  <h2>What changed, when, and why.</h2>
+
+  <ul class="changelog">
+    <li>
+      <span class="date">26 Apr 2026</span>
+      <span class="what"><b>v1.2.</b><small>Added §09b <b>/hello</b> as a canonical page (purpose: bio + next session + newsletter; QR target for Cardiff Wed 29 Apr; mobile-first lead-capture going forward). Added §09c <b>The stack</b> — locked TidyCal as single booking tool across all products, MailerLite as newsletter (replaces ConvertKit reference in older docs), Bluehost for DNS, Vercel for hosting, single Next.js app on GitHub (revised from Turborepo plan). Archived <code>Handover Plan - Claude Code.html</code> (v3, 23 Apr) → <code>archive/Handover Plan - Claude Code v3.html</code>; new v4 written.</small></span>
+    </li>
+    <li>
+      <span class="date">25 Apr 2026 · evening</span>
+      <span class="what"><b>v1.1.</b><small>Added <b>Accessible Coaching</b> as a third product (§55/month, 2 sessions/week + WhatsApp, 3–5 clients max, 6-month sequence with monthly move-allowance, Gemma is first client — still part of Loop Breakers community). Restructured §08 brand hierarchy: Unbarrier Education Ltd (legal) → Unbarrier @ unbarrier.me (trading name, not a sub-brand) → Loop Breakers / Guest Stage / Accessible Coaching (sub-brands). Clarified that the one-off £120 1:1 is distinct from Accessible Coaching.</small></span>
+    </li>
+    <li>
+      <span class="date">25 Apr 2026</span>
+      <span class="what"><b>v1.0 created.</b><small>Locked the two-product model (Tuesday £10 / Wednesday £25), the 10/40 capacities, the 5 May launch date, the "diagnosed early" bio reframe, and the three-phase guest fee ladder. Archived 4 stale docs. Synced 8 derived docs.</small></span>
+    </li>
+  </ul>
+
+  <p style="margin-top: 1.4rem; font-style: italic; color: var(--text-faint); font-size: 0.85rem;">Every future change to a canonical fact lands here first, with a date and a reason.</p>
+</section>
+
+<footer>
+  <p><b>Loop Breakers — Source of Truth · v1.2 · 26 April 2026</b></p>
+  <p>Maintained by: Nici Foote · Unbarrier Education Ltd · Companies House 16603630</p>
+</footer>
+
+</main>
+</body>
+</html>

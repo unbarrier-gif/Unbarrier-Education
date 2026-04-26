@@ -1,0 +1,357 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Task List · Unbarrier Launch</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 680px; }
+
+  .group { padding: 2rem 0 2.2rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  .group > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .g-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.4rem,3vw,1.9rem); letter-spacing: -0.025em; line-height: 1.15; margin: 0 0 1rem; }
+
+  .task {
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
+    gap: 14px;
+    align-items: start;
+    padding: 16px 18px;
+    border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 10px;
+  }
+  .task .box {
+    width: 20px; height: 20px; border-radius: 5px;
+    border: 1.5px solid rgba(255,255,255,0.25);
+    margin-top: 2px;
+  }
+  .task.done .box {
+    background: var(--spring-green); border-color: var(--spring-green);
+    position: relative;
+  }
+  .task.done .box::after {
+    content: "✓"; position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    color: var(--amethyst); font-weight: 800; font-size: 14px;
+  }
+  .task.block .box {
+    border-color: var(--princeton-orange);
+    background: rgba(255,138,28,0.15);
+  }
+  .task.me .box {
+    border-color: var(--orchid-mist);
+    background: rgba(219,125,204,0.15);
+  }
+  .task-title {
+    font-family: "Outfit"; font-weight: 700; font-size: 0.98rem;
+    color: var(--text); margin: 0 0 4px; letter-spacing: -0.005em;
+  }
+  .task.done .task-title {
+    color: var(--text-subtle); text-decoration: line-through;
+  }
+  .task-body {
+    font-family: "Comfortaa"; font-size: 0.85rem; line-height: 1.65;
+    color: var(--text-muted); margin: 0;
+  }
+  .task-body b { color: var(--text); }
+  .task-meta {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--text-subtle); text-align: right;
+    white-space: nowrap;
+  }
+  .tag {
+    display: inline-block;
+    padding: 2px 8px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-left: 6px;
+  }
+  .tag-nici { background: rgba(219,125,204,0.15); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.3); }
+  .tag-claude { background: rgba(105,217,209,0.15); color: var(--pearl-aqua); border: 1px solid rgba(105,217,209,0.3); }
+  .tag-cc { background: rgba(255,194,3,0.15); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.3); }
+
+  .legend {
+    display: flex; gap: 16px; flex-wrap: wrap;
+    padding: 14px 18px; border-radius: 12px;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid rgba(255,255,255,0.06);
+    margin: 0 0 2rem;
+    font-family: "Comfortaa"; font-size: 0.78rem; color: var(--text-muted);
+  }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .legend .sw { width: 12px; height: 12px; border-radius: 3px; }
+
+  .recco {
+    padding: 18px 22px; border-radius: 14px;
+    background: linear-gradient(135deg, rgba(56,255,153,0.06), rgba(219,125,204,0.04));
+    border: 1.5px solid rgba(56,255,153,0.3);
+    font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7;
+    color: var(--text); margin: 0 0 14px;
+  }
+  .recco b { color: var(--spring-green); }
+  .recco h3 { font-family: "Outfit"; font-weight: 700; font-size: 1rem; margin: 0 0 8px; color: var(--spring-green); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Unbarrier launch · task list · 24 Apr 2026</p>
+<h1>What's on the list,<br/><span style="color:var(--spring-green)">in plain view.</span></h1>
+<p class="sub">One document, grouped by theme, ordered roughly by when you'll hit each one. Your tasks in pink, mine in aqua, engineering (Claude Code) in yellow. Completed items stay struck through so we can see momentum.</p>
+
+<div class="legend">
+  <span><span class="sw" style="background:rgba(219,125,204,0.15); border:1.5px solid var(--orchid-mist);"></span> You</span>
+  <span><span class="sw" style="background:rgba(105,217,209,0.15); border:1.5px solid var(--pearl-aqua);"></span> Me (design / copy)</span>
+  <span><span class="sw" style="background:rgba(255,194,3,0.15); border:1.5px solid var(--school-bus-yellow);"></span> Claude Code (engineering)</span>
+  <span><span class="sw" style="background:var(--spring-green);"></span> Done</span>
+</div>
+
+<!-- ══════════ BOOKING STACK ══════════ -->
+<section class="group" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="g-eyebrow">01 · Booking stack</p>
+  <h2>Booking — link-out with a styled bridge</h2>
+
+  <div class="recco">
+    <h3>If not embed, what?</h3>
+    <b>Link-out, wrapped in a branded interstitial.</b> When someone clicks "Book" on a session, they land on <code>/book/[session-id]</code> on your site — a small, styled page in your brand ("You're heading to Google Calendar to pick a time · takes 30 seconds · click to continue"). Then the CTA link-outs to Google Appointment Schedule. Keeps brand moment, keeps accessibility, stays fast. <b>Cost: £0.</b> Claude Code builds the interstitial in Phase 2.
+    <br/><br/>
+    <b>Paid alternatives if you ever want full embed-without-the-cost:</b>
+    <ul style="margin:6px 0 0; padding-left:1.2rem;">
+      <li><b>Cal.com</b> — £12/mo, EU-hosted, accessible, theme-able to your brand, embeds cleanly. Best upgrade path later.</li>
+      <li><b>SavvyCal</b> — $12/mo, nicer UX, less accessibility focus.</li>
+      <li><b>TidyCal</b> — $39 lifetime, cheap but rougher.</li>
+    </ul>
+    Ship on Google Appointment Schedule + styled bridge. Migrate to Cal.com if/when you outgrow it.
+  </div>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Confirm booking decision <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Decided: <b>link-out</b> to Google Appointment Schedule. No interstitial in v1 — direct link from session CTAs. Revisit if testing shows it feels jarring.</p></div>
+    <p class="task-meta">Decided ✓</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Set up Google Appointment Schedule booking pages <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Full settings + copy in <code>Google Appointment Schedule Setup.html</code>. Five pages: Loop Breakers group, Loop Breakers 1:1, three discovery calls (audit, voice, access). ~50 min total.</p></div>
+    <p class="task-meta">50 min</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Create three Stripe Payment Links <span class="tag tag-nici">You</span></p>
+      <p class="task-body">One for Tuesday Loop Breakers <b>£10</b> (with £5 access-seat variant link), one for Wednesday Guest Stage <b>£25 sliding</b> (£15 / £25 / £40 — three separate links or one with price selector), one for Loop Breakers 1:1 <b>£120</b>. Paste each URL into the matching booking page's confirmation email. Discovery calls are free — no payment link needed.</p></div>
+    <p class="task-meta">15 min</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Send me the 5 booking URLs + 2 Stripe links <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Once setup is done, paste all URLs in chat. I'll hand them to Claude Code as link-out targets for the sessions page.</p></div>
+    <p class="task-meta">2 min</p>
+  </div>
+</section>
+
+<!-- ══════════ ANALYTICS & INFRA ══════════ -->
+<section class="group" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="g-eyebrow">02 · Analytics &amp; infrastructure</p>
+  <h2>Plausible + Vercel + APIs</h2>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Sign up for Plausible <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Done. Script tag ready: ID <code>pa-12FVpN15LCqmGSuHVLah-</code>. Will be added to both apps' <code>&lt;head&gt;</code> by Claude Code in Phase 1.</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Set up Plausible goals <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Dashboard → Goals → add three: <code>newsletter_subscribe</code>, <code>session_book_click</code>, <code>contact_submit</code>.</p></div>
+    <p class="task-meta">5 min</p>
+  </div>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Create Vercel account + connect GitHub <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Done. Will connect to the new monorepo project when Claude Code creates it.</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Generate MailerLite API token <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Done in MailerLite. Keep it in your password manager until the Vercel project exists — don't paste it anywhere yet.</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+
+  <div class="task block"><span class="box"></span>
+    <div><p class="task-title">Add Vercel env vars <span class="tag tag-nici">You</span></p>
+      <p class="task-body"><b>Blocked on monorepo existing.</b> When Claude Code creates <code>apps/main</code> and deploys it to Vercel, add three vars there (not on Loop Breakers — the API route lives on the main site only, Loop Breakers cross-domain POSTs to it): <code>MAILERLITE_API_TOKEN</code>, <code>MAILERLITE_GROUP_ID</code>, <code>NEXT_PUBLIC_PLAUSIBLE_DOMAIN=unbarrier.me</code>. Scope: Production + Preview.</p></div>
+    <p class="task-meta">Wait for repo</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Wire Plausible script into app layout <span class="tag tag-cc">Claude Code</span></p>
+      <p class="task-body">Phase 1 foundation work.</p></div>
+    <p class="task-meta">Phase 1</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Wire /api/subscribe route to MailerLite <span class="tag tag-cc">Claude Code</span></p>
+      <p class="task-body">Spec in <code>Claude Code Wiring - Newsletter.html</code>. Phase 2.</p></div>
+    <p class="task-meta">Phase 2</p>
+  </div>
+</section>
+
+<!-- ══════════ CONTENT ══════════ -->
+<section class="group" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="g-eyebrow">03 · Content &amp; community</p>
+  <h2>Guest Host Kit · blog posts · /hello</h2>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Guest Host Kit one-pager <span class="tag tag-claude">Me</span></p>
+      <p class="task-body">Done. <code>loop-breakers/guest-host-kit/</code> — main kit + personal intros for Nicki &amp; Gemma. <b>£75 flat fee per session in Phase 1</b> (rises to £125 at Phase 2, £200 + 50% rev-share at Phase 3). Forward when ready.</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Send Guest Host Kit to Gemma + Nicki <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Two personal intros + the main kit. Bundle as standalone HTML if you want to email as attachment.</p></div>
+    <p class="task-meta">15 min</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Transcript → blog post #1 <span class="tag tag-claude">Me draft · You edit</span></p>
+      <p class="task-body">Convert the Neurodivergent Coaching Strategy transcript (Otter, ~16k chars) into a long-form piece. I draft; you rewrite anything that doesn't sound like you. 2–3 hours.</p></div>
+    <p class="task-meta">2–3 hrs</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Transcript → blog post #2 <span class="tag tag-claude">Me draft · You edit</span></p>
+      <p class="task-body">ADHD Business Launch Session transcript → second post. Serves "ADHD founder" keyword target in SEO plan.</p></div>
+    <p class="task-meta">2–3 hrs</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">/hello contact page design <span class="tag tag-claude">Me</span></p>
+      <p class="task-body">Single-field lead capture + three session-type quick-links. Lower priority until launch traffic starts.</p></div>
+    <p class="task-meta">1 hr</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Edit Uncountable Strength blog draft <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Existing draft flagged "lush, needs my input." Parked until you're ready.</p></div>
+    <p class="task-meta">Your pace</p>
+  </div>
+</section>
+
+<!-- ══════════ LEGAL ══════════ -->
+<section class="group" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="g-eyebrow">04 · Legal &amp; compliance</p>
+  <h2>Review drafts, solicitor pass</h2>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Review Legal Pages v1 drafts <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Sent to Rob (barrister) for informal eyeballs. <code>Legal Pages v1 - for Rob.html</code> as single-file attachment.</p></div>
+    <p class="task-meta">Sent ✓</p>
+  </div>
+
+  <div class="task block"><span class="box"></span>
+    <div><p class="task-title">Formal commercial review via Rob's referral <span class="tag tag-nici">You</span></p>
+      <p class="task-body"><b>Awaiting quote.</b> Rob obtaining quote from his commercial lawyers — 15% referral fee passed to you as discount. Expected £340–£765 range. Gives PI insurance cover. Decide once quoted.</p></div>
+    <p class="task-meta">Wait</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Apply Rob's feedback <span class="tag tag-nici">You / Me</span></p>
+      <p class="task-body">When he comes back: I rewrite anything he flags, you approve, we produce v2 for the formal reviewer.</p></div>
+    <p class="task-meta">Wait for Rob</p>
+  </div>
+</section>
+
+<!-- ══════════ REPO / CUTOVER ══════════ -->
+<section class="group" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="g-eyebrow">05 · Repo &amp; cutover</p>
+  <h2>Monorepo migration, old repo archive</h2>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Decide old repo archive timing <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Decided: Week 2+ after production cutover. Read-only archive, not deleted. Preserves rollback insurance for two weeks, then prevents stale-code confusion.</p></div>
+    <p class="task-meta">Decided ✓</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Grant Claude Code repo access <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Both existing private repos + the new monorepo when it's created.</p></div>
+    <p class="task-meta">5 min</p>
+  </div>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Build Turborepo monorepo <span class="tag tag-cc">Claude Code</span></p>
+      <p class="task-body">Spec in <code>Claude Code Master Brief.html</code> §03. Phase 1.</p></div>
+    <p class="task-meta">Phase 1</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Archive old repos (Week 2+) <span class="tag tag-nici">You</span></p>
+      <p class="task-body">Two weeks after production cutover confirmed. GitHub → repo settings → Archive repository button.</p></div>
+    <p class="task-meta">2 min, later</p>
+  </div>
+</section>
+
+<!-- ══════════ ALREADY DONE ══════════ -->
+<section class="group" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="g-eyebrow">06 · Done</p>
+  <h2>What's already in the bag</h2>
+
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Audit &amp; readiness assessment</p>
+      <p class="task-body"><code>Audit - Handoff Readiness.html</code></p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Claude Code Master Brief</p>
+      <p class="task-body"><code>Claude Code Master Brief.html</code> — 11 sections, 3 phases</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Newsletter design + MailerLite setup + test</p>
+      <p class="task-body">Three opt-in variants designed. Form live (ID 185568935471482009). Domain verified. Automation tested end-to-end.</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Claude Code Newsletter wiring spec</p>
+      <p class="task-body"><code>Claude Code Wiring - Newsletter.html</code> — endpoints, env vars, /subscribe page</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Loop Breakers Sessions Menu</p>
+      <p class="task-body"><code>loop-breakers/sessions/index.html</code> + SessionsMenu component</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Legal Pages v1 drafts</p>
+      <p class="task-body"><code>Legal Pages v1.html</code> — Privacy v2, Cookies v2, Terms v1</p></div>
+    <p class="task-meta">Done ✓</p>
+  </div>
+  <div class="task done"><span class="box"></span>
+    <div><p class="task-title">Kit Setup Pack (archived reference)</p>
+      <p class="task-body">Kept for future reference if we ever swap platforms.</p></div>
+    <p class="task-meta">Archived ✓</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

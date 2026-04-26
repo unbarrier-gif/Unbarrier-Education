@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code Kickoff — paste into CC to start the build</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5.5vw,3.4rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; font-size: 1rem; line-height: 1.75; margin: 0 0 2rem; max-width: 720px; color: var(--text); }
+  section.block { padding: 2.4rem 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 8px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre.cc-prompt { background: #0f0420; border: 2px solid var(--spring-green); border-radius: 14px; padding: 22px 26px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; color: var(--text); line-height: 1.7; margin: 12px 0 18px; white-space: pre-wrap; word-break: break-word; box-shadow: 0 0 30px rgba(56,255,153,0.15); }
+  pre.cc-prompt b { color: var(--spring-green); }
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">Claude Code kickoff · 26 Apr 2026 · paste below into CC</p>
+<h1>Hand to <em>Claude Code.</em></h1>
+<p class="lede">Open Claude Code in the <code>Unbarrier-Education</code> repo. Paste the prompt below as your first message. Attach the three reference docs listed at the bottom. Claude Code does the rest.</p>
+
+<!-- 01 PASTE THIS -->
+<section class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · The kickoff prompt — paste into Claude Code</p>
+  <h2>One message to start.</h2>
+
+<pre class="cc-prompt">Hi Claude Code. You're building <b>unbarrier.me/hello</b> — a single mobile-first lead-capture page on the back of a Cardiff conference flyer that's printed and scanning <b>Wednesday 29 April 2026</b>. Hard deadline, three days from now.
+
+<b>Repo:</b> github.com/unbarrier-gif/Unbarrier-Education (currently empty, default branch <b>main</b>)
+<b>Deploy target:</b> Vercel project "unbarrier-me" already linked. Auto-deploys on push.
+<b>Domain:</b> unbarrier.me (DNS already points at Vercel; domain swap from old project will happen after merge)
+
+<b>Stack (locked):</b>
+- Next.js 14, App Router, TypeScript strict
+- CSS Modules + design tokens (NO Tailwind)
+- next/font/google for Outfit + Comfortaa (variable fonts)
+- Resend for transactional email
+- MailerLite for newsletter (REST API, direct fetch — no SDK)
+- Plausible analytics (script tag, custom events via window.plausible)
+- Zod for validation
+
+<b>Three reference docs are attached:</b>
+1. <b>Hello Page Spec.html</b> — the full build brief. Sections 03 (file layout), 04 (page structure), 05 (exact copy), 06 (behaviour), 09 (acceptance criteria) are normative. Build to those.
+2. <b>Loop Breakers - Source of Truth.html</b> — business context. §09b describes /hello, §09c locks the stack. Read for context, ship from the spec.
+3. <b>colors_and_type.css</b> — design tokens. Copy verbatim into <code>app/globals.css</code>. Do not modify the values; reference them via <code>var(--token)</code>.
+
+<b>Branch + PR flow:</b>
+- Branch: <code>feat/hello</code> off <code>main</code>
+- Logical commits (scaffold → tokens → layout → page → API → readme)
+- Open PR to <code>main</code>; Vercel auto-deploys preview
+- Drop the preview URL in the PR description so we can QA on phone
+
+<b>Env vars (already set in Vercel; mirror to .env.example):</b>
+- MAILERLITE_API_KEY
+- MAILERLITE_GROUP_ID = 185831469000688733
+- NEXT_PUBLIC_PLAUSIBLE_DOMAIN = unbarrier.me
+- NEXT_PUBLIC_TIDYCAL_TUESDAY  = https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch
+- NEXT_PUBLIC_TIDYCAL_GUEST    = https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking
+- NEXT_PUBLIC_TIDYCAL_COACHING = https://tidycal.com/nici/accessible-coaching-monthly
+- RESEND_API_KEY
+- SAY_HI_FORWARD_TO = hello@unbarrier.me
+
+<b>Critical constraints:</b>
+- Mobile-first (375px), works to desktop (1280px+)
+- WCAG 2.1 AA — Lighthouse Accessibility ≥ 95
+- All 4 CTAs link out to TidyCal in new tab (Phase 1 = link-out, NOT embedded)
+- Newsletter form POSTs direct to MailerLite from a Server Action (the API key never reaches the client)
+- Say-hi form: Server Action → Zod validate → honeypot check → add to MailerLite group + send via Resend → return ok
+- Resend domain unbarrier.me is verified — send <code>from: 'say-hi@unbarrier.me'</code>
+- The root page <code>/</code> for Phase 1 = redirect to <code>/hello</code> (we'll build the homepage in Phase 2)
+
+<b>Order of operations:</b>
+1. Confirm you've read all three attached docs and ask any clarifying questions BEFORE writing code
+2. Scaffold Next.js 14 (TS, App Router, no Tailwind, no src/ directory, ESLint yes)
+3. Drop in design tokens + fonts
+4. Build the page top-to-bottom per Spec §04
+5. Build /api/say-hi per Spec §06
+6. Add README + .env.example
+7. Commit, push, open PR, paste preview URL
+
+When the preview is up, ping me with the URL and a short summary of what you built. We'll QA together.
+
+Cardiff is Wednesday. Speed > polish on first pass; we can iterate via follow-up PRs.</pre>
+
+  <div class="box good">
+    <h4>What you do</h4>
+    Open Claude Code in the <code>Unbarrier-Education</code> repo → start a new conversation → paste the prompt above as your first message → attach the 3 reference files (drag &amp; drop or via the attach button). That's it. CC will read, ask any questions, then build.
+  </div>
+</section>
+
+<!-- 02 ATTACH THESE -->
+<section class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Files to attach to the CC message</p>
+  <h2>Three files. From this design project.</h2>
+  <ol class="plan">
+    <li><b>Hello Page Spec.html</b> — the build brief</li>
+    <li><b>Loop Breakers - Source of Truth.html</b> — business context</li>
+    <li><b>colors_and_type.css</b> — design tokens</li>
+  </ol>
+  <div class="box warn">
+    <h4>Optional but useful</h4>
+    Also attach <code>Repo Setup Guide.html</code> if Claude Code asks anything about Vercel / DNS / deploy. Most of that's environmental and CC won't need to touch it — but having it on hand stops a "what's the deploy target?" question stalling things.
+  </div>
+</section>
+
+<!-- 03 WHAT TO EXPECT -->
+<section class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · What to expect from CC</p>
+  <h2>Roughly this rhythm.</h2>
+  <ol class="plan">
+    <li><b>0–5 min:</b> CC reads the docs, asks clarifying questions (or doesn't — the spec is thorough)</li>
+    <li><b>5–15 min:</b> Scaffolds Next.js, drops in tokens + fonts, commits</li>
+    <li><b>15–40 min:</b> Builds the page, the API route, README, env example. Multiple commits.</li>
+    <li><b>40–50 min:</b> Pushes branch, opens PR, Vercel auto-deploys preview</li>
+    <li><b>~50 min:</b> CC pings you with the preview URL: something like <code>unbarrier-me-git-feat-hello-unbarrier-gif.vercel.app</code></li>
+  </ol>
+  <p>If CC takes much longer than that, something's stuck — drop the preview URL in here when it's ready and I'll QA alongside you.</p>
+</section>
+
+<!-- 04 WHEN PREVIEW IS UP -->
+<section class="block" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · When the preview URL lands</p>
+  <h2>Send it to me. We QA together.</h2>
+  <p>I'll run through Spec §09 acceptance criteria — open the URL on phone + desktop, click every CTA, submit a test newsletter signup (use a real test email), submit a say-hi form (you'll get the test email at hello@unbarrier.me), watch Plausible for events.</p>
+  <p>If anything's off, we'll write a punch-list and CC fixes in the same PR. When it's clean, you squash-merge → main → Vercel ships to <code>unbarrier-me.vercel.app</code> → we do the 60-second domain swap → live on <code>unbarrier.me/hello</code>.</p>
+
+  <div class="box lock">
+    <h4>Vision subdomain — note for later</h4>
+    <code>vision.unbarrier.me</code> is being archived. After /hello ships, we'll add a Vercel redirect from <code>vision.unbarrier.me/*</code> → <code>unbarrier.me/hello</code> so any old links/QRs in circulation still land somewhere useful. <b>Not Phase 1.</b> Add to Phase 2 backlog.
+  </div>
+</section>
+
+<footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Comfortaa'; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7;">
+  <p><b>Claude Code Kickoff · 26 April 2026</b> · runs alongside Hello Page Spec v1.0 + Source of Truth v1.2</p>
+</footer>
+
+</main>
+</body>
+</html>

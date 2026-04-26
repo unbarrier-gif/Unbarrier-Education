@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Email to Rob · Legal review ask</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 720px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.8rem,4vw,2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 2rem; }
+
+  .email-card {
+    background: #fff;
+    border-radius: 14px;
+    padding: 32px 36px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    font-family: "Comfortaa", sans-serif;
+    color: #333;
+    margin: 0 0 1.5rem;
+  }
+  .email-meta {
+    padding: 0 0 18px 0;
+    border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 22px;
+    font-size: 0.85rem;
+  }
+  .email-meta dl { margin: 0; display: grid; grid-template-columns: 70px 1fr; gap: 6px 16px; }
+  .email-meta dt { color: #888; font-weight: 600; }
+  .email-meta dd { margin: 0; color: #222; }
+  .email-subject { font-family: "Outfit"; font-weight: 700; font-size: 1.1rem; margin: 18px 0 0 !important; color: #111 !important; }
+
+  .email-body { font-size: 0.95rem; line-height: 1.8; color: #2a2a2a !important; }
+  .email-body p { margin: 0 0 1.1rem; color: #2a2a2a !important; }
+  .email-body .sign { margin-top: 1.5rem; }
+  .email-body code { color: #111 !important; }
+
+  .note-row {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 2rem 0 0;
+  }
+  .note {
+    padding: 18px 22px; border-radius: 12px;
+    font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.7;
+    color: var(--text);
+  }
+  .note.yellow {
+    background: rgba(255,194,3,0.06);
+    border: 1px solid rgba(255,194,3,0.25);
+    border-left: 3px solid var(--school-bus-yellow);
+  }
+  .note.green {
+    background: rgba(56,255,153,0.06);
+    border: 1px solid rgba(56,255,153,0.25);
+    border-left: 3px solid var(--spring-green);
+  }
+  .note h3 { font-family: "Outfit"; font-weight: 700; font-size: 0.95rem; margin: 0 0 6px; color: var(--text); }
+  .note.yellow h3 { color: var(--school-bus-yellow); }
+  .note.green h3 { color: var(--spring-green); }
+
+  .copy-btn {
+    display: inline-block; margin-top: 1rem;
+    padding: 10px 18px; border-radius: 100px;
+    background: var(--spring-green); color: var(--amethyst);
+    border: none;
+    font-family: "Outfit"; font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    cursor: pointer;
+  }
+  .copy-btn:hover { background: #00e087; }
+
+  @media (max-width: 540px) {
+    .note-row { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Email draft · for Rob · 24 Apr 2026</p>
+<h1>Draft: legal review ask</h1>
+
+<div class="email-card">
+  <div class="email-meta">
+    <dl>
+      <dt>To:</dt><dd>Rob</dd>
+      <dt>From:</dt><dd>nici@unbarrier.me</dd>
+      <dt>Subject:</dt><dd class="email-subject">Legal eyes on Unbarrier — would you take a look?</dd>
+    </dl>
+  </div>
+
+  <div class="email-body" id="email-body">
+    <p>Hi Rob, here they are.</p>
+
+    <p>Launching Unbarrier in the next few weeks and I've drafted a Privacy Policy, Cookies Policy and Terms of Service. Would you look them over and tell me if I need to pay for a proper review too, or if these are solid enough to go live as-is?</p>
+
+    <p>Links below — anything you flag, I'll fix.</p>
+
+    <p>Privacy: [LINK]<br/>
+    Cookies: [LINK]<br/>
+    Terms: [LINK]</p>
+
+    <p class="sign">Many thanks,<br/>Nici</p>
+  </div>
+
+  <button class="copy-btn" onclick="copyEmail()">Copy email</button>
+</div>
+
+<div class="note-row">
+  <div class="note yellow">
+    <h3>Before you send</h3>
+    Replace the three [LINK] placeholders with the deployed or shared versions of <code>Legal Pages v1.html</code> — easiest route: use the export tool to save it as a standalone HTML, send Rob the file directly, or host on a preview link.
+  </div>
+  <div class="note green">
+    <h3>If he comes back with "looks fine"</h3>
+    You can skip LawBite/Sparqa and save ~£300. Update the Task List. If he flags specific things, we fix those first, then decide on paid review based on what's left.
+  </div>
+</div>
+
+</div>
+
+<script>
+function copyEmail() {
+  const body = document.getElementById('email-body').innerText;
+  navigator.clipboard.writeText(body).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const original = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  });
+}
+</script>
+</body>
+</html>

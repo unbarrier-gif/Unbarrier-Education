@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code Wiring Spec — Newsletter · unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 640px; }
+  section.block { padding: 2rem 0 2.2rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.5rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.4rem 0 0.6rem; color: var(--text); }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.75; color: var(--text-muted); }
+  ol.plan, ul.plan { padding: 0 0 0 1.1rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 8px; }
+  ol.plan li b, ul.plan li b { color: var(--text); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 14px; padding: 18px 20px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px; color: var(--text); line-height: 1.65; }
+  pre .k { color: #db7dcc; }
+  pre .s { color: #38ff99; }
+  pre .c { color: #69d9d1; opacity: 0.6; }
+  .kv { display: grid; grid-template-columns: 180px 1fr; gap: 8px 20px; font-family: "Comfortaa"; font-size: 0.9rem; margin: 0 0 1rem; padding: 16px 18px; background: rgba(255,194,3,0.05); border: 1px solid rgba(255,194,3,0.2); border-radius: 12px; }
+  .kv dt { color: var(--text-subtle); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-family: "Outfit"; font-weight: 700; }
+  .kv dd { margin: 0; color: var(--text); }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  .box.good { padding: 16px 20px; border-radius: 12px; background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); margin: 10px 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Claude Code Wiring Spec · Newsletter · v1 · 24 Apr 2026</p>
+<h1>Wire the three opt-ins<br/><span style="color:var(--spring-green)">to MailerLite.</span></h1>
+<p class="sub">Engineer-ready spec. Form is live, automation is firing, deliverability is verified. Job for Claude Code: ship the three opt-in variants and connect them to MailerLite's API with per-source tagging.</p>
+
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Confirmed values</p>
+  <h2>What's already set up</h2>
+  <dl class="kv">
+    <dt>Platform</dt><dd>MailerLite (free plan, up to 1,000 subscribers)</dd>
+    <dt>Account email</dt><dd>nici@unbarrier.me</dd>
+    <dt>Form ID</dt><dd><code>185568935471482009</code></dd>
+    <dt>Form name</dt><dd>Unbarrier newsletter</dd>
+    <dt>Sending domain</dt><dd>unbarrier.me — verified (SPF + DKIM green)</dd>
+    <dt>Welcome automation</dt><dd>3 emails (instant / +3d / +7d) — tested, primary inbox delivery</dd>
+    <dt>Sender</dt><dd>Nici &lt;nici@unbarrier.me&gt;</dd>
+  </dl>
+  <div class="box good">All upstream wiring is done. Test subscriber received all three emails in primary inbox.</div>
+</section>
+
+<section class="block" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Component spec</p>
+  <h2>One React component, three variants</h2>
+  <p>Build <code>&lt;NewsletterOptIn variant="a|b|c" /&gt;</code> in <code>packages/design-system</code>. Variants per the Newsletter design doc:</p>
+  <table>
+    <thead><tr><th>Variant</th><th>Where it lives</th><th>Visual</th><th>Source tag</th></tr></thead>
+    <tbody>
+      <tr><td><code>a</code></td><td>Homepage (below fold)</td><td>Wide centred band, spring-green accent, rounded form pill</td><td><code>homepage</code></td></tr>
+      <tr><td><code>b</code></td><td>Blog post footer</td><td>Inline card, left rail, smaller</td><td><code>blog</code></td></tr>
+      <tr><td><code>c</code></td><td>Loop Breakers sessions page</td><td>Yellow gradient sidebar, "not booking yet?" framing</td><td><code>loop-breakers</code></td></tr>
+    </tbody>
+  </table>
+  <p>Reference design: <code>Newsletter - Opt-in and Welcome.html</code> in this project.</p>
+</section>
+
+<section class="block" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · API call</p>
+  <h2>POST to MailerLite — public form endpoint, no key needed</h2>
+
+  <h3>Endpoint</h3>
+<pre><span class="k">POST</span> https://assets.mailerlite.com/jsonp/{ACCOUNT_ID}/forms/{FORM_ID}/subscribe</pre>
+  <p>Where <code>{FORM_ID}</code> = <code>185568935471482009</code>. Account ID is exposed in MailerLite's embed snippet — Nici will paste it in chat (Forms → "Embedded form" → "Get embed code" → copy the number after <code>/jsonp/</code>).</p>
+
+  <h3>Request body (URL-encoded form data)</h3>
+<pre><span class="k">fields[email]</span>=<span class="s">user@example.com</span>
+<span class="k">fields[source]</span>=<span class="s">homepage</span>   <span class="c">// or "blog" or "loop-breakers"</span>
+<span class="k">ml-submit</span>=<span class="s">1</span>
+<span class="k">anticsrf</span>=<span class="s">true</span></pre>
+
+  <h3>Better path — server-side via API token</h3>
+  <p>If we want clean tagging and richer error handling, route through a Next.js API route (<code>/api/subscribe</code>) using MailerLite's REST API:</p>
+<pre><span class="k">POST</span> https://connect.mailerlite.com/api/subscribers
+<span class="k">Authorization:</span> Bearer <span class="s">$MAILERLITE_API_TOKEN</span>
+<span class="k">Content-Type:</span> application/json
+
+{
+  <span class="k">"email"</span>: <span class="s">"user@example.com"</span>,
+  <span class="k">"groups"</span>: [<span class="s">"{NEWSLETTER_GROUP_ID}"</span>],
+  <span class="k">"fields"</span>: { <span class="k">"source"</span>: <span class="s">"homepage"</span> }
+}</pre>
+  <p><b>Recommendation:</b> use the server-side route. Keeps the API token in Vercel env vars (not the browser bundle), gives proper error responses, lets us log to Plausible.</p>
+</section>
+
+<section class="block" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · UX behaviour</p>
+  <h2>What the form does</h2>
+  <ul class="plan">
+    <li><b>Inline success state</b> — no redirect. Replace form with: "You're in. Check your inbox — first note arriving now."</li>
+    <li><b>Inline error state</b> — same area. "Something went wrong. Try again, or email nici@unbarrier.me."</li>
+    <li><b>Email validation</b> — HTML5 <code>type="email"</code> + browser-native error message; no custom JS validator</li>
+    <li><b>Loading state</b> — button text: "Subscribing…" while in flight; disabled state</li>
+    <li><b>Keyboard</b> — Enter submits; visible focus ring on input + button (spring-green, 2px offset)</li>
+    <li><b>Reduced motion</b> — no slide/fade transitions on success state if <code>prefers-reduced-motion: reduce</code></li>
+    <li><b>Screen reader</b> — success message in <code>aria-live="polite"</code> region</li>
+  </ul>
+</section>
+
+<section class="block" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Analytics</p>
+  <h2>Plausible event</h2>
+<pre><span class="k">window.plausible</span>(<span class="s">'newsletter_subscribe'</span>, {
+  props: { source: variant === <span class="s">'a'</span> ? <span class="s">'homepage'</span>
+                  : variant === <span class="s">'b'</span> ? <span class="s">'blog'</span>
+                  : <span class="s">'loop-breakers'</span> }
+});</pre>
+  <p>Fires on confirmed 200 from MailerLite. Set up <code>newsletter_subscribe</code> as a goal in Plausible dashboard. Target conversion: 2.5% visit→subscribe.</p>
+</section>
+
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Env vars (Vercel)</p>
+  <h2>Required secrets</h2>
+  <table>
+    <thead><tr><th>Name</th><th>Source</th><th>Scope</th></tr></thead>
+    <tbody>
+      <tr><td><code>MAILERLITE_API_TOKEN</code></td><td>MailerLite → Integrations → Developer API → New token</td><td>Production + Preview</td></tr>
+      <tr><td><code>MAILERLITE_GROUP_ID</code></td><td>MailerLite → Subscribers → Groups → "Newsletter" → ID in URL</td><td>Production + Preview</td></tr>
+      <tr><td><code>NEXT_PUBLIC_PLAUSIBLE_DOMAIN</code></td><td>unbarrier.me</td><td>All</td></tr>
+    </tbody>
+  </table>
+  <p>Nici generates the API token and group ID in MailerLite, pastes into Vercel directly (not via chat).</p>
+</section>
+
+<section class="block" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · /subscribe page</p>
+  <h2>Dedicated landing page for Linktree + elsewhere</h2>
+  <p>Build <code>unbarrier.me/subscribe</code> as a standalone page. Purpose: Linktree and any other external link-in-bio surface point here instead of capturing on their own platform. One entry path, one list, one welcome flow.</p>
+
+  <h3>Page contents</h3>
+  <ol class="plan">
+    <li>Reuse the <b>&lt;NewsletterOptIn variant="a" /&gt;</b> component from §01 — homepage wide variant — as the hero</li>
+    <li>Source tag: <code>subscribe-page</code> (new — different from homepage's <code>homepage</code> tag)</li>
+    <li>Below the form: 2–3 short sentences restating what the newsletter is. Pull from the Newsletter design doc Variant A microcopy.</li>
+    <li>Below that: a small "What subscribers read first" section with 2 recent blog post cards (real posts once published)</li>
+    <li>Footer: standard site footer (registered address, company number, accessibility link, privacy link)</li>
+  </ol>
+
+  <h3>SEO meta</h3>
+  <ul class="plan">
+    <li>Title: <code>Subscribe · One note from me, once a month. · Unbarrier</code></li>
+    <li>Description: <code>Quiet letters from Nici about designing a life and business that works for your brain. Maybe less than once a month. Never more.</code></li>
+    <li>OG image: use the spring-green/amethyst newsletter Variant A card as the preview</li>
+  </ul>
+
+  <h3>Analytics</h3>
+  <ul class="plan">
+    <li>Plausible <code>newsletter_subscribe</code> event with <code>source: "subscribe-page"</code></li>
+    <li>Track referrer — we'll want to know what % came from Linktree vs direct</li>
+  </ul>
+</section>
+
+<section class="block" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Acceptance criteria</p>
+  <h2>Definition of done</h2>
+  <ol class="plan">
+    <li>Component renders all three variants pixel-matching the design doc</li>
+    <li>Submit succeeds end-to-end: subscriber appears in MailerLite within 5 seconds, with correct <code>source</code> tag</li>
+    <li>Welcome automation fires (Email 1 in inbox within 60 seconds)</li>
+    <li>Inline success/error states work, no redirect, no page flash</li>
+    <li>Plausible event fires with correct <code>source</code> prop</li>
+    <li>Lighthouse a11y ≥95 on every page hosting the component</li>
+    <li>Keyboard-only walkthrough passes</li>
+    <li>Works with JS disabled? <b>No</b> — gracefully shows fallback message: "Subscribe by emailing nici@unbarrier.me"</li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>

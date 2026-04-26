@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Phase 2 · Build Plan · Claude Code · unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 7rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orchid-mist); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,6vw,3.6rem); letter-spacing: -0.028em; line-height: 1.04; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--orchid-mist); }
+  .lede { font-family: "Comfortaa"; color: var(--text); font-size: 1.04rem; line-height: 1.8; margin: 0 0 0.6rem; max-width: 760px; }
+  .lede-sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 0.94rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 760px; }
+
+  /* HERO BANNER */
+  .banner {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+    padding: 22px 28px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(219,125,204,0.10), rgba(56,255,153,0.05));
+    border: 1.5px solid rgba(219,125,204,0.35);
+    margin: 2rem 0 3rem;
+  }
+  .banner .num { font-family: "Outfit"; font-weight: 800; font-size: 2.6rem; color: var(--orchid-mist); line-height: 1; letter-spacing: -0.04em; }
+  .banner .num small { display: block; font-size: 0.38em; letter-spacing: 0.16em; color: var(--text-muted); font-weight: 700; margin-top: 4px; text-transform: uppercase; }
+  .banner .label { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orchid-mist); margin: 0 0 4px; }
+  .banner h3 { font-family: "Outfit"; font-weight: 800; font-size: 1.15rem; margin: 0 0 4px; color: var(--text); }
+  .banner p { font-family: "Comfortaa"; font-size: 0.92rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
+  .banner .countdown { text-align: right; }
+  .banner .countdown b { font-family: "Outfit"; font-weight: 800; font-size: 1.5rem; color: var(--spring-green); display: block; line-height: 1; letter-spacing: -0.02em; }
+  .banner .countdown small { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-top: 4px; }
+
+  /* TOC */
+  .toc { padding: 18px 24px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); margin: 0 0 3rem; }
+  .toc h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin: 0 0 10px; }
+  .toc ol { padding: 0; margin: 0; list-style: none; counter-reset: toc; column-count: 2; column-gap: 32px; }
+  .toc li { counter-increment: toc; padding: 4px 0; font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.6; break-inside: avoid; }
+  .toc li::before { content: counter(toc, decimal-leading-zero) " · "; color: var(--text-faint); font-family: "Outfit"; font-weight: 700; }
+  .toc a { color: var(--text); text-decoration: none; border-bottom: 1px dotted transparent; }
+  .toc a:hover { color: var(--orchid-mist); border-bottom-color: var(--orchid-mist); }
+  @media (max-width: 720px) { .toc ol { column-count: 1; } }
+
+  /* SECTIONS */
+  section.block { padding: 2.4rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; scroll-margin-top: 20px; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--orchid-mist)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--orchid-mist)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.55rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); letter-spacing: -0.01em; }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; margin: 1.2rem 0 0.4rem; color: var(--text); letter-spacing: -0.005em; }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  p.summary { font-family: "Comfortaa"; font-size: 0.94rem; line-height: 1.75; color: var(--text-muted); margin: 0 0 1.2rem; max-width: 760px; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+
+  .kv { display: grid; grid-template-columns: 200px 1fr; gap: 8px 20px; font-family: "Comfortaa"; font-size: 0.9rem; margin: 0 0 1rem; padding: 18px 20px; background: rgba(219,125,204,0.05); border: 1px solid rgba(219,125,204,0.22); border-radius: 12px; }
+  .kv dt { color: var(--text-subtle); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-family: "Outfit"; font-weight: 700; }
+  .kv dd { margin: 0; color: var(--text); }
+
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.note { background: rgba(219,125,204,0.06); border: 1px solid rgba(219,125,204,0.3); border-left: 3px solid var(--orchid-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.note h4 { color: var(--orchid-mist); }
+
+  /* CARDS */
+  .card {
+    padding: 22px 24px; border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--c, var(--orchid-mist));
+    margin-bottom: 14px;
+  }
+  .card .lab {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--c, var(--orchid-mist)); margin: 0 0 6px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 1.2rem; }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+  .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 1rem 0 1.2rem; }
+  @media (max-width: 900px) { .grid-3 { grid-template-columns: 1fr; } }
+
+  /* PILLS */
+  .pill {
+    display: inline-block; font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 100px;
+    margin-left: 8px; vertical-align: middle; position: relative; top: -2px;
+  }
+  .p-route { background: rgba(56,255,153,0.14); color: var(--spring-green); border: 1px solid rgba(56,255,153,0.35); }
+  .p-build { background: rgba(105,217,209,0.14); color: var(--pearl-aqua); border: 1px solid rgba(105,217,209,0.35); }
+  .p-port  { background: rgba(255,194,3,0.14); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.35); }
+  .p-priv  { background: rgba(255,138,28,0.14); color: var(--princeton-orange); border: 1px solid rgba(255,138,28,0.35); }
+
+  /* MILESTONES */
+  .ms-list { display: grid; grid-template-columns: 90px 12px 1fr; gap: 0 18px; margin: 1.2rem 0; }
+  .ms-list .when { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-subtle); padding: 14px 0 0; }
+  .ms-list .dot { width: 12px; height: 12px; border-radius: 50%; margin-top: 18px; box-shadow: 0 0 0 4px rgba(255,255,255,0.04); }
+  .ms-list .dot.green { background: var(--spring-green); }
+  .ms-list .dot.aqua  { background: var(--pearl-aqua); }
+  .ms-list .dot.orchid { background: var(--orchid-mist); }
+  .ms-list .dot.yellow { background: var(--school-bus-yellow); }
+  .ms-list .dot.orange { background: var(--princeton-orange); }
+  .ms-list .what { padding: 10px 0 14px; border-bottom: 1px dashed rgba(255,255,255,0.07); }
+  .ms-list .what b { font-family: "Outfit"; color: var(--text); font-weight: 700; }
+  .ms-list .what p { margin: 4px 0 0; font-size: 0.86rem; line-height: 1.6; }
+
+  /* PHASE 3 BLOCK */
+  .next {
+    margin-top: 3rem;
+    padding: 28px 30px;
+    border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,194,3,0.08), rgba(255,138,28,0.04));
+    border: 1.5px solid rgba(255,194,3,0.3);
+  }
+  .next .lab { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 8px; }
+  .next h2 { color: var(--text); margin-top: 0; }
+  .next h2 em { font-style: normal; color: var(--school-bus-yellow); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<p class="doc-eyebrow">Claude Code · Phase 2 build plan · v1 · 26 Apr 2026</p>
+<h1>Phase 2 — <em>build the funnel,<br/>fill the rooms.</em></h1>
+<p class="lede">Phase 1 shipped the scaffolding. Phase 2 makes Unbarrier <b>shippable</b>: the homepage that earns trust, the Loop Breakers landing that fills sessions, the guest-host kit that turns Gemma and Nicki into a repeatable system, and the blog system that gives Nici somewhere to publish.</p>
+<p class="lede-sub">This is the engineer-ready spec. Work top-to-bottom. Every section names the routes, components, data sources, and acceptance criteria. Where existing HTML mocks live in this project, they are the source of truth — port the structure verbatim, then make it production.</p>
+
+<div class="banner">
+  <div class="num">02<small>Phase</small></div>
+  <div>
+    <p class="label">What this phase ships</p>
+    <h3>unbarrier.me homepage · loop.unbarrier.me · guest host kit (template + Gemma + Nicki) · /blog</h3>
+    <p>One PR per route. Each lands behind a feature flag, gets QA'd against the canonical mock in this project, then flips on. No big-bang launch.</p>
+  </div>
+  <div class="countdown">
+    <b>4 weeks</b>
+    <small>target window</small>
+  </div>
+</div>
+
+<div class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#scope">Scope &amp; boundaries</a></li>
+    <li><a href="#prereqs">Prereqs from Phase 1</a></li>
+    <li><a href="#home">unbarrier.me — homepage</a></li>
+    <li><a href="#loop">loop.unbarrier.me — landing</a></li>
+    <li><a href="#kit">Guest Host Kit — template engine</a></li>
+    <li><a href="#nicki">Live page — Nicki Hambleton</a></li>
+    <li><a href="#gemma">Template ready — Gemma</a></li>
+    <li><a href="#blog">Blog system — /blog</a></li>
+    <li><a href="#shared">Shared work this phase touches</a></li>
+    <li><a href="#order">Build order &amp; milestones</a></li>
+    <li><a href="#done">Definition of done — Phase 2</a></li>
+    <li><a href="#left">What's left after Phase 2</a></li>
+    <li><a href="#phase3">Phase 3 — content, polish, launch</a></li>
+  </ol>
+</div>
+
+<!-- ── 01 SCOPE ───────────────────────────────────────────────────────── -->
+<section class="block" id="scope" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Scope</p>
+  <h2>What's in, what's out</h2>
+
+  <div class="grid-2">
+    <div class="card" style="--c:var(--spring-green)">
+      <p class="lab">In scope</p>
+      <h3>Phase 2 ships</h3>
+      <ul class="plan">
+        <li>Production homepage at <code>unbarrier.me</code></li>
+        <li>Production landing at <code>loop.unbarrier.me</code></li>
+        <li>Guest Host Kit template engine (data → page)</li>
+        <li>Live <code>/loop/host/nicki-hambleton</code></li>
+        <li>Template-ready <code>/loop/host/gemma</code> (toggle to live)</li>
+        <li>Blog system + index + post template at <code>/blog</code></li>
+        <li>MDX content pipeline (frontmatter, reading time, OG)</li>
+        <li>Footer + nav wired across all four route trees</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:var(--princeton-orange)">
+      <p class="lab">Out of scope — Phase 3</p>
+      <h3>Not this phase</h3>
+      <ul class="plan">
+        <li>Newsletter component + <code>/subscribe</code> page</li>
+        <li>Stripe payment links wired in product</li>
+        <li>TidyCal embeds (still link-out only)</li>
+        <li><code>/hello</code> contact page</li>
+        <li>High-contrast toggle</li>
+        <li>RSS feed + Atom</li>
+        <li>Accessibility statement v2 + feedback form</li>
+        <li>Search on the blog</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="box note">
+    <h4>Why this split</h4>
+    Phase 2 is "<b>can a stranger find you, trust you, and book a room</b>". Phase 3 is "<b>can they subscribe, pay, and come back</b>". Don't blend them — Phase 2's success is measured in routes that work and pages that read right, not in conversion infra.
+  </div>
+</section>
+
+<!-- ── 02 PREREQS ─────────────────────────────────────────────────────── -->
+<section class="block" id="prereqs" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Prereqs</p>
+  <h2>What Phase 1 has to have left you</h2>
+  <p class="summary">Before opening a Phase 2 PR, confirm each of these is true in <code>main</code>. If any are false, finish Phase 1 first — Phase 2 leans on all of them.</p>
+
+  <ol class="plan">
+    <li><b>Turborepo</b> deployed; <code>apps/site</code> → unbarrier.me, <code>apps/loop</code> → loop.unbarrier.me, both green on Vercel.</li>
+    <li><b>Design tokens package</b> (<code>@unbarrier/design-system</code>) consumed by both apps. Tokens match <code>colors_and_type.css</code> in this project.</li>
+    <li><b>Primitives ported to TSX</b> — <code>Eyebrow</code>, <code>Glow</code>, <code>Button</code>, <code>Card</code>, <code>SectionHeader</code>, <code>Pill</code>. Source: <code>ui_kits/unbarrier-website/Primitives.jsx</code> and <code>ui_kits/loop-breakers/LBPrimitives.jsx</code>.</li>
+    <li><b>Global a11y CSS</b> — skip link, focus rings, <code>prefers-reduced-motion</code> handler, contrast fix.</li>
+    <li><b>SEO scaffolding</b> — sitemap, robots, Organization + Person JSON-LD on root layouts.</li>
+    <li><b>Footer</b> with company line ("Unbarrier Education Ltd · Company No. 16603630") on every page.</li>
+    <li><b>DNS</b> — <code>loop.unbarrier.me</code> live, <code>vision.unbarrier.me → loop.unbarrier.me</code> 301.</li>
+    <li><b>CI</b> — Lighthouse + axe in PR checks; both pass on the placeholder routes.</li>
+  </ol>
+
+  <div class="box warn">
+    <h4>If anything above is missing</h4>
+    Open it as a Phase 1 hotfix PR before starting Phase 2 work. Don't paper over it from inside a Phase 2 PR — keeps the diff readable.
+  </div>
+</section>
+
+<!-- ── 03 HOMEPAGE ────────────────────────────────────────────────────── -->
+<section class="block" id="home" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · unbarrier.me</p>
+  <h2>The homepage <span class="pill p-build">Build</span></h2>
+  <p class="summary">Canonical mock: <code>ui_kits/unbarrier-website/index.html</code> (and the components in that folder). Port section by section to <code>apps/site/app/page.tsx</code> with the section components broken out into <code>apps/site/components/home/*</code>. Don't redesign — the mock IS the spec.</p>
+
+  <h3>Routes</h3>
+  <dl class="kv">
+    <dt>Page</dt><dd><code>/</code> — App Router, server component by default</dd>
+    <dt>Layout</dt><dd><code>app/layout.tsx</code> — nav (translucent amethyst, 20px backdrop-blur) + footer</dd>
+    <dt>Metadata</dt><dd>OG image rendered from <code>app/opengraph-image.tsx</code> (dynamic, brand colours)</dd>
+    <dt>Schema</dt><dd>Organization + Person + WebSite JSON-LD on layout; Service schema on each service section</dd>
+  </dl>
+
+  <h3>Sections — port in this order</h3>
+  <table>
+    <thead><tr><th>Order</th><th>Section</th><th>Source component</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Nav</td><td><code>Nav.jsx</code></td><td>Lowercase links: audit / access / voice / hub / about. Sticks with backdrop-blur.</td></tr>
+      <tr><td>2</td><td>Hero</td><td><code>Hero.jsx</code></td><td>"bring the joy." Cherry Bomb One. Triangular illustration absolutely-positioned right. Two glows (green + orchid).</td></tr>
+      <tr><td>3</td><td>Services strip</td><td><code>Services.jsx</code></td><td>Three cards — audit (aqua), access (orange), voice (orchid). One accent per card.</td></tr>
+      <tr><td>4</td><td>Beliefs row</td><td><code>AboutBeliefs.jsx</code></td><td>Arrow-bullet list. Tight rhythm.</td></tr>
+      <tr><td>5</td><td>About Nici</td><td><code>Sections.jsx</code> (about block)</td><td>Real portrait on amethyst. Founder voice: first person.</td></tr>
+      <tr><td>6</td><td>"Pick your starting point"</td><td><code>Sections.jsx</code> (pick block)</td><td>Three CTAs out — to <code>/audit</code>, <code>loop.unbarrier.me</code>, <code>mailto:</code>.</td></tr>
+      <tr><td>7</td><td>Loop Breakers tease</td><td>new <code>HomeLoopTease.tsx</code></td><td>Single full-width band — yellow accent, links to loop.unbarrier.me. Builds bridge between sites.</td></tr>
+      <tr><td>8</td><td>Footer</td><td>shared</td><td>Company line, legal links, newsletter placeholder (Phase 3 will wire).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box good">
+    <h4>Acceptance</h4>
+    Side-by-side compare with <code>ui_kits/unbarrier-website/index.html</code> at 1440 / 1024 / 768 / 390. Glow positions, hero illustration crop, eyebrow colour per section, link hover (faded → full text colour) all match. Lighthouse a11y ≥98 on this route.
+  </div>
+</section>
+
+<!-- ── 04 LOOP ────────────────────────────────────────────────────────── -->
+<section class="block" id="loop" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · loop.unbarrier.me</p>
+  <h2>Loop Breakers landing <span class="pill p-build">Build</span> <span class="pill p-port">Port</span></h2>
+  <p class="summary">Canonical mocks: <code>ui_kits/loop-breakers/index.html</code> for the landing, <code>loop-breakers/sessions/index.html</code> for the sessions page, and <code>Loop Breakers - Source of Truth.html</code> for every fact. The Source of Truth wins any disagreement.</p>
+
+  <h3>Routes</h3>
+  <table>
+    <thead><tr><th>Path</th><th>Source</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>/</code></td><td><code>ui_kits/loop-breakers/index.html</code></td><td>Hero, who's-in-the-room, formats, 90-day loop, identity CTA</td></tr>
+      <tr><td><code>/sessions</code></td><td><code>loop-breakers/sessions/index.html</code></td><td>Upcoming + past · driven by data file</td></tr>
+      <tr><td><code>/host</code></td><td>new — landing for guest host kit</td><td>Pitch + link to template kit (see §05)</td></tr>
+      <tr><td><code>/host/[slug]</code></td><td>template engine (see §05)</td><td>Per-host pages — Nicki live, Gemma toggle</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Sessions data</h3>
+  <p>Lift <code>loop-breakers/sessions/SessionsData.jsx</code> into <code>apps/loop/data/sessions.ts</code>. Type it strictly:</p>
+<pre>type Session = {
+  id: string;
+  date: string;          // ISO
+  status: 'upcoming' | 'filling' | 'full' | 'past';
+  host: { name: string; slug: string; portrait?: string };
+  theme: string;
+  format: 'session' | 'guest-stage';
+  seats: number;
+  priceGBP: number;
+  bookingUrl: string;    // TidyCal link
+  recordingUrl?: string; // past only
+};</pre>
+
+  <h3>Components to port</h3>
+  <ul class="plan">
+    <li><code>LBHeader.tsx</code> ← <code>LBHeader.jsx</code></li>
+    <li><code>LBHero.tsx</code> ← <code>LBHero.jsx</code> (yellow accent, full bring-the-joy moment)</li>
+    <li><code>LBMiddle.tsx</code> ← <code>LBMiddle.jsx</code> (who's-in-the-room band)</li>
+    <li><code>LBPackages.tsx</code> ← <code>LBPackages.jsx</code> (formats: regular vs Guest Stage)</li>
+    <li><code>SessionsMenu.tsx</code> ← <code>SessionsMenu.jsx</code> (filterable upcoming/past)</li>
+  </ul>
+
+  <div class="box lock">
+    <h4>Source of Truth — locked facts</h4>
+    Pricing, seat counts, format definitions, the 90-day loop structure, and the founding-member offer ALL come from <code>Loop Breakers - Source of Truth.html</code>. If a number in a JSX mock disagrees, the Source of Truth wins. Flag the conflict in the PR description.
+  </div>
+
+  <div class="box good">
+    <h4>Acceptance</h4>
+    All four routes render. Sessions data is one source for both the LB landing's "Upcoming" band and <code>/sessions</code>. Past sessions show recording links. Status colour rule: upcoming = spring green · filling = yellow · full = pink mist. <code>vision.unbarrier.me/*</code> 301s to <code>loop.unbarrier.me/*</code> verified.
+  </div>
+</section>
+
+<!-- ── 05 KIT ─────────────────────────────────────────────────────────── -->
+<section class="block" id="kit" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Guest Host Kit</p>
+  <h2>The template engine <span class="pill p-build">Build</span></h2>
+  <p class="summary">The kit is two surfaces: a <b>generic kit</b> at <code>/host</code> (what hosting Loop Breakers looks like — the same for everyone), and a <b>per-host page</b> at <code>/host/[slug]</code> (a personal intro letter + the kit, tailored). Today these exist as standalone HTML files. Phase 2 turns them into a content-driven engine so adding a new host is a data change, not a code change.</p>
+
+  <h3>Source mocks (canonical)</h3>
+  <ul class="plan">
+    <li><code>loop-breakers/guest-host-kit/index.html</code> — the shared kit</li>
+    <li><code>loop-breakers/guest-host-kit/Nicki Hambleton - Personal Intro.html</code> — Nicki's personal letter</li>
+    <li><code>loop-breakers/guest-host-kit/Gemma - Personal Intro.html</code> — Gemma's personal letter</li>
+  </ul>
+
+  <h3>Architecture</h3>
+  <dl class="kv">
+    <dt>Content directory</dt><dd><code>apps/loop/content/hosts/[slug].mdx</code></dd>
+    <dt>Frontmatter shape</dt><dd>name, role, tagline, sessionTheme, sessionDate, portrait, accent, status (<code>'live' | 'draft'</code>)</dd>
+    <dt>Body</dt><dd>The personal-intro letter — MDX so Nici can drop in callouts, the testimonial echo, links</dd>
+    <dt>Page</dt><dd><code>app/host/[slug]/page.tsx</code> — reads MDX, composes &lt;PersonalIntro&gt; + &lt;HostKit&gt; + &lt;CTA&gt;</dd>
+    <dt>Shared kit</dt><dd><code>app/host/page.tsx</code> — renders &lt;HostKit&gt; standalone (no personal intro)</dd>
+    <dt>Toggle to live</dt><dd>Set frontmatter <code>status: live</code> → page indexed and linked from <code>/host</code>'s "current hosts" strip. <code>status: draft</code> → noindex, accessible only by direct URL.</dd>
+  </dl>
+
+  <h3>Components</h3>
+  <table>
+    <thead><tr><th>Component</th><th>Purpose</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>&lt;PersonalIntro&gt;</code></td><td>The "Hey [name], here's why I'm asking you" letter</td><td>MDX body. Optional <code>&lt;TestimonialEcho&gt;</code> child for verbatim quote-back.</td></tr>
+      <tr><td><code>&lt;HostKit&gt;</code></td><td>The shared kit — what hosting looks like, what they get, what we ask</td><td>Static. Reads from one MDX source so edits are central.</td></tr>
+      <tr><td><code>&lt;HostCTA&gt;</code></td><td>Two-route CTA — book a prep call OR reply by email</td><td>Prep call link is the host's TidyCal page (per-host frontmatter field).</td></tr>
+      <tr><td><code>&lt;HostStrip&gt;</code></td><td>Current hosts on <code>/host</code></td><td>Reads all <code>status: live</code> MDX entries, sorted by sessionDate.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box note">
+    <h4>The "add a new host" flow after Phase 2</h4>
+    1. Drop <code>content/hosts/olivia-jones.mdx</code> with frontmatter + intro letter. 2. Add their portrait to <code>public/hosts/</code>. 3. Set <code>status: draft</code>, share the preview URL with them. 4. When they say yes, flip to <code>status: live</code>. PR is ~5 lines + an image.
+  </div>
+</section>
+
+<!-- ── 06 NICKI ───────────────────────────────────────────────────────── -->
+<section class="block" id="nicki" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · First live host</p>
+  <h2>Nicki Hambleton — live page <span class="pill p-route">Live</span></h2>
+  <p class="summary">First production proof of the template engine. Source: <code>loop-breakers/guest-host-kit/Nicki Hambleton - Personal Intro.html</code>. The session is already on the calendar (20 May 2026), so this page goes live as soon as it's ready — we want it shareable for the prep-call email.</p>
+
+  <h3>Content map</h3>
+  <dl class="kv">
+    <dt>URL</dt><dd><code>loop.unbarrier.me/host/nicki-hambleton</code></dd>
+    <dt>Slug</dt><dd><code>nicki-hambleton</code></dd>
+    <dt>MDX file</dt><dd><code>apps/loop/content/hosts/nicki-hambleton.mdx</code></dd>
+    <dt>Status</dt><dd><code>live</code></dd>
+    <dt>Accent</dt><dd>Orchid Mist (<code>#db7dcc</code>) — human/voice colour</dd>
+    <dt>Portrait</dt><dd><code>/hosts/nicki-hambleton.jpg</code> · provided by Nicki, 1200×1200, on amethyst</dd>
+    <dt>Session theme</dt><dd>Visual thinking — drawing for thinking · 20 May 2026, 7pm BST</dd>
+    <dt>Prep call link</dt><dd>TidyCal "Guest host prep — Nicki" 30-min slot (Phase 1 should already have created)</dd>
+  </dl>
+
+  <h3>Body sections</h3>
+  <ol class="plan">
+    <li><b>Personal intro</b> — letter from Nici, ported verbatim from the HTML mock</li>
+    <li><b>Why you</b> — three-bullet "what you bring" (drawing, 30+ years, Apple PL)</li>
+    <li><b>The shape of your session</b> — 90 min · co-hosted · 1 exercise · 1 takeaway</li>
+    <li><b>What we provide</b> · <b>What we ask</b> — two columns, ported from the kit</li>
+    <li><b>Two routes</b> — book the prep call · reply by email</li>
+  </ol>
+
+  <div class="box good">
+    <h4>Definition of done — Nicki</h4>
+    Page live at production URL · indexed (no <code>noindex</code>) · linked from <code>/host</code>'s host strip · prep-call CTA tested end-to-end · OG image renders Nicki's portrait + name + session date · Nici has approved the page in writing before flip to live.
+  </div>
+</section>
+
+<!-- ── 07 GEMMA ───────────────────────────────────────────────────────── -->
+<section class="block" id="gemma" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Template ready</p>
+  <h2>Gemma — ready to flip <span class="pill p-priv">Private preview</span></h2>
+  <p class="summary">Built in Phase 2, but stays at <code>status: draft</code> until Gemma confirms a session date. Source: <code>loop-breakers/guest-host-kit/Gemma - Personal Intro.html</code>. The voice-note testimonial echo is the emotional centre — port it verbatim.</p>
+
+  <h3>Content map</h3>
+  <dl class="kv">
+    <dt>URL</dt><dd><code>loop.unbarrier.me/host/gemma</code> (preview only)</dd>
+    <dt>Slug</dt><dd><code>gemma</code> · use full surname when confirmed</dd>
+    <dt>MDX file</dt><dd><code>apps/loop/content/hosts/gemma.mdx</code></dd>
+    <dt>Status</dt><dd><code>draft</code> — meta noindex, not in <code>/host</code> strip, accessible by direct URL only</dd>
+    <dt>Accent</dt><dd>School Bus Yellow (<code>#ffc203</code>) — founding-member / payoff colour</dd>
+    <dt>Portrait</dt><dd>Placeholder · yellow gradient circle until Gemma supplies one</dd>
+    <dt>Session theme</dt><dd>"Freedom, not productivity — building a life you love" · TBC date</dd>
+  </dl>
+
+  <h3>Body sections</h3>
+  <ol class="plan">
+    <li><b>Personal intro</b> — Nici's letter, ported verbatim</li>
+    <li><b>Testimonial echo</b> — Gemma's voice-note quote in &lt;TestimonialEcho&gt;, with the "in a voice note we both kept" caption</li>
+    <li><b>Why this room is yours</b> — the founding-Loop-Breaker frame</li>
+    <li><b>What hosting looks like</b> — same shared <code>&lt;HostKit&gt;</code> as Nicki's page</li>
+    <li><b>Two routes</b> — same CTA component, Gemma's TidyCal link OR email reply</li>
+  </ol>
+
+  <div class="box warn">
+    <h4>Don't ship this live without Nici's go-ahead</h4>
+    The frontmatter <code>status</code> stays <code>draft</code> at the end of Phase 2. Flip to <code>live</code> is a 1-line change Nici can make herself once Gemma's date is confirmed and Gemma has read the page.
+  </div>
+
+  <div class="box good">
+    <h4>Acceptance — Gemma template</h4>
+    Direct URL renders correctly · noindex meta present · NOT linked from <code>/host</code> strip · NOT in sitemap · the testimonial echo CSS treatment matches the HTML mock · changing <code>status: draft → live</code> in MDX flips all four behaviours without any other code change.
+  </div>
+</section>
+
+<!-- ── 08 BLOG ────────────────────────────────────────────────────────── -->
+<section class="block" id="blog" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Blog</p>
+  <h2>/blog — system + index <span class="pill p-build">Build</span></h2>
+  <p class="summary">Canonical mock: <code>blog/index.html</code> + <code>blog/BlogIndex.jsx</code> + <code>blog/BlogCard.jsx</code> + <code>blog/StoriesPost.jsx</code>. Phase 2 ships the engine and the <b>index</b> with placeholders. The first three real posts are <b>Phase 3</b> — Nici needs to draft them from the Otter transcripts.</p>
+
+  <h3>Routes</h3>
+  <dl class="kv">
+    <dt>Index</dt><dd><code>/blog</code> on unbarrier.me — server-rendered list of all posts, newest first</dd>
+    <dt>Post</dt><dd><code>/blog/[slug]</code> — server-rendered MDX</dd>
+    <dt>Tag (Phase 3)</dt><dd><code>/blog/tag/[tag]</code> — stub route in Phase 2, fills in Phase 3</dd>
+    <dt>RSS</dt><dd>Phase 3 — not this phase</dd>
+  </dl>
+
+  <h3>Content shape</h3>
+<pre>// apps/site/content/posts/[slug].mdx
+---
+title: "What's actually happening here is…"
+slug: "naming-the-invisible"
+publishedAt: "2026-05-12"
+excerpt: "Three things that get missed when we treat behaviour as the problem."
+tags: ["voice", "practice"]
+heroIllustration: "/illustrations/wrench.png"
+heroAccent: "orchid"   // maps to one of the 6 brand accents
+status: "draft"        // 'draft' | 'published'
+readingTimeMin: 7      // optional override; computed if absent
+---
+</pre>
+
+  <h3>Components — port from <code>blog/</code></h3>
+  <ul class="plan">
+    <li><code>BlogIndex.tsx</code> ← <code>BlogIndex.jsx</code> — header, list, accent rotation</li>
+    <li><code>BlogCard.tsx</code> ← <code>BlogCard.jsx</code> — eyebrow + title + excerpt + reading time</li>
+    <li><code>BlogPost.tsx</code> — wraps MDX, renders <code>&lt;Author&gt;</code>, <code>&lt;ReadingTime&gt;</code>, <code>&lt;PublishedAt&gt;</code></li>
+    <li><code>BlogPrimitives.tsx</code> ← <code>BlogPrimitives.jsx</code> — pull quote, callout, footnote</li>
+  </ul>
+
+  <h3>What ships in Phase 2</h3>
+  <ol class="plan">
+    <li>The engine (MDX pipeline, frontmatter validation with zod, route handlers)</li>
+    <li><code>/blog</code> index page with <b>two seed posts</b> in <code>status: draft</code> so the layout is provable but nothing real is published</li>
+    <li><code>BlogPost</code> renders cleanly for any slug we drop into <code>content/posts</code></li>
+    <li>Per-post OG image (<code>opengraph-image.tsx</code> in route segment, brand colours, post title)</li>
+    <li>BlogPosting JSON-LD on each post</li>
+  </ol>
+
+  <div class="box good">
+    <h4>Acceptance — blog</h4>
+    Drop a new <code>.mdx</code> file → it shows in <code>/blog</code> on next deploy. Reading time computed from word count. Code blocks, callouts, pull quotes all render. Lighthouse a11y ≥98 on a sample post. <code>noindex</code> on <code>status: draft</code> posts.
+  </div>
+</section>
+
+<!-- ── 09 SHARED ──────────────────────────────────────────────────────── -->
+<section class="block" id="shared" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Shared</p>
+  <h2>Things this phase touches across both apps</h2>
+
+  <div class="grid-2">
+    <div class="card" style="--c:var(--pearl-aqua)">
+      <p class="lab">Design system</p>
+      <h3>New primitives</h3>
+      <ul class="plan">
+        <li><code>&lt;PersonalIntro&gt;</code> wrapper</li>
+        <li><code>&lt;TestimonialEcho&gt;</code> — italic, pink-mist accent, small caption</li>
+        <li><code>&lt;HostKit&gt;</code> shell</li>
+        <li><code>&lt;BlogCard&gt;</code> + <code>&lt;BlogPost&gt;</code> shell</li>
+        <li><code>&lt;Pill&gt;</code> with status variants (live · draft · upcoming · filling · full)</li>
+      </ul>
+      <p>All land in <code>@unbarrier/design-system</code> so both apps consume them.</p>
+    </div>
+    <div class="card" style="--c:var(--orchid-mist)">
+      <p class="lab">Cross-site</p>
+      <h3>Linking + nav</h3>
+      <ul class="plan">
+        <li>Homepage adds <code>HomeLoopTease</code> band linking to loop.unbarrier.me</li>
+        <li>Loop nav links back to unbarrier.me/about + /blog</li>
+        <li>Footer (shared package) updated with /blog + /host links</li>
+        <li>Sitemap on each app indexes its own routes only</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="--c:var(--school-bus-yellow)">
+    <p class="lab">Content pipeline</p>
+    <h3>MDX, validated</h3>
+    <p>Both <code>content/hosts/*</code> and <code>content/posts/*</code> use the same MDX setup. Frontmatter validated with <code>zod</code> at build time — typos in <code>status</code> or missing <code>publishedAt</code> fail the build, not silently render broken pages.</p>
+  </div>
+</section>
+
+<!-- ── 10 ORDER ───────────────────────────────────────────────────────── -->
+<section class="block" id="order" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · Build order</p>
+  <h2>Four weeks, in this order</h2>
+  <p class="summary">Each week ends with a deployable, reviewable state. Don't carry half-finished routes across week boundaries — feature-flag if needed.</p>
+
+  <div class="ms-list">
+    <div class="when">Week 1</div><div class="dot green"></div>
+    <div class="what"><b>Homepage port</b><p>Sections 1–8 in order. By end of week, <code>unbarrier.me</code> serves the new homepage. Nav + footer + SEO all wired. PR per section keeps review tight.</p></div>
+
+    <div class="when">Week 2</div><div class="dot yellow"></div>
+    <div class="what"><b>Loop landing + sessions</b><p><code>loop.unbarrier.me/</code> and <code>/sessions</code>. Sessions data file becomes the single source. Vision → loop redirects verified.</p></div>
+
+    <div class="when">Week 3</div><div class="dot orchid"></div>
+    <div class="what"><b>Guest Host Kit engine + Nicki</b><p>Template engine, MDX content directory, <code>/host</code> shared kit page. Nicki's MDX written, page live, OG image rendering. Prep-call CTA tested.</p></div>
+
+    <div class="when">Week 3.5</div><div class="dot orange"></div>
+    <div class="what"><b>Gemma — draft mode</b><p>Same engine, MDX with testimonial echo, draft status. Direct-URL preview shareable with Gemma. <b>Don't flip to live this phase.</b></p></div>
+
+    <div class="when">Week 4</div><div class="dot aqua"></div>
+    <div class="what"><b>Blog system</b><p>MDX pipeline, <code>/blog</code> index, post template, OG, BlogPosting schema. Two seed drafts so layouts are provable. Hand off to Nici for Phase 3 content.</p></div>
+
+    <div class="when">End of 4</div><div class="dot green"></div>
+    <div class="what"><b>Phase 2 close-out</b><p>Lighthouse + axe full sweep. Manual keyboard walkthrough on every new route. Tag <code>v0.2.0</code>. Update <code>Task List.html</code> with what's outstanding.</p></div>
+  </div>
+</section>
+
+<!-- ── 11 DONE ────────────────────────────────────────────────────────── -->
+<section class="block" id="done" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Definition of done</p>
+  <h2>What "Phase 2 shipped" means</h2>
+
+  <ol class="plan">
+    <li><code>unbarrier.me/</code> serves the new homepage in production · matches mock at all four breakpoints.</li>
+    <li><code>loop.unbarrier.me/</code>, <code>/sessions</code>, <code>/host</code> all live and crawlable.</li>
+    <li><code>vision.unbarrier.me/*</code> 301s verified for at least three sample paths.</li>
+    <li><code>/host/nicki-hambleton</code> live, indexed, OG image rendering, prep-call CTA tested.</li>
+    <li><code>/host/gemma</code> renders at direct URL, <code>noindex</code>, NOT in sitemap, NOT in host strip.</li>
+    <li><code>unbarrier.me/blog</code> renders the index. <code>/blog/[slug]</code> renders for any MDX file dropped in.</li>
+    <li>Lighthouse: Perf ≥90, A11y ≥95, BP ≥95, SEO ≥95 on every new route.</li>
+    <li>axe-core: zero violations in CI on every new route.</li>
+    <li>Manual keyboard walkthrough passes on every new route.</li>
+    <li>Footer + nav consistent across all four route trees.</li>
+    <li><code>Task List.html</code> in this project updated with the Phase 3 backlog.</li>
+  </ol>
+</section>
+
+<!-- ── 12 LEFT ────────────────────────────────────────────────────────── -->
+<section class="block" id="left" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="block-eyebrow">12 · Status overview</p>
+  <h2>Where we'll be at the end of Phase 2</h2>
+
+  <div class="grid-3">
+    <div class="card" style="--c:var(--spring-green)">
+      <p class="lab">Done</p>
+      <h3>Phase 1 + 2</h3>
+      <ul class="plan">
+        <li>Monorepo + design system + tokens</li>
+        <li>SEO scaffolding + a11y baseline</li>
+        <li>Legal pages (Phase 1)</li>
+        <li>Homepage live</li>
+        <li>Loop landing + sessions live</li>
+        <li>Guest host engine + Nicki live</li>
+        <li>Gemma ready to flip</li>
+        <li>Blog engine + index</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:var(--school-bus-yellow)">
+      <p class="lab">Outstanding · Phase 3</p>
+      <h3>Funnel + content</h3>
+      <ul class="plan">
+        <li>Newsletter component (3 variants) + API</li>
+        <li><code>/subscribe</code> page</li>
+        <li>MailerLite wiring + welcome email</li>
+        <li>Plausible goals wired</li>
+        <li>Stripe payment-link placement</li>
+        <li>TidyCal embeds (replace link-outs)</li>
+        <li>First three blog posts (from transcripts)</li>
+        <li><code>/hello</code> contact page</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:var(--princeton-orange)">
+      <p class="lab">Outstanding · post-launch</p>
+      <h3>Polish + operations</h3>
+      <ul class="plan">
+        <li>High-contrast toggle</li>
+        <li>RSS + Atom feeds</li>
+        <li>Blog tag pages + search</li>
+        <li>Accessibility statement v2 + feedback form</li>
+        <li>Per-post comments / reactions (decide later)</li>
+        <li>Internal "Guest Host Shortlist" admin page</li>
+        <li>One-Thing Template downloadable asset</li>
+        <li>Old repo archival</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── 13 PHASE 3 ─────────────────────────────────────────────────────── -->
+<section class="block" id="phase3" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <div class="next">
+    <p class="lab">Phase 3 · Preview</p>
+    <h2>Phase 3 — <em>turn visitors into subscribers, readers, payers.</em></h2>
+    <p class="summary" style="color:var(--text)">Phase 2 made everything <b>findable</b>. Phase 3 makes it <b>actionable</b>: connect the funnel stack, ship the first three real blog posts, and add the contact + subscribe surfaces. Smaller and tighter than Phase 2 — most of it is wiring, not building.</p>
+
+    <h3 style="color:var(--school-bus-yellow); margin-top:1.2rem">Phase 3 scope (preview)</h3>
+    <ol class="plan">
+      <li><b>Newsletter</b> — three opt-in variants (inline, footer, page), single <code>/api/subscribe</code> route, MailerLite group + welcome sequence wired, <code>/subscribe</code> page with the One-Thing Template as the gated asset. Spec already drafted in <code>Newsletter - Opt-in and Welcome.html</code> + <code>Claude Code Wiring - Newsletter.html</code>.</li>
+      <li><b>Blog content</b> — port the three Otter transcripts to long-form posts in Nici's voice. Frontmatter, hero illustrations, OG images, related-posts strip. Set <code>status: published</code>.</li>
+      <li><b>Funnel wiring</b> — Plausible goals on every CTA, Stripe payment links placed on Loop Breakers + sessions pages, TidyCal embeds replace link-outs where embed UX is better than redirect.</li>
+      <li><b>/hello page</b> — single-field lead capture from Nici's voice, mailto fallback. Quick build.</li>
+      <li><b>Polish</b> — high-contrast toggle, RSS feed, blog tag pages, accessibility statement v2 with feedback form, archive of old repos, sitemap regeneration.</li>
+    </ol>
+
+    <p class="summary" style="color:var(--text); margin-top:1.4rem">Phase 3 estimate: <b>2–3 weeks</b>, plus content time from Nici. Cardiff launch (per <code>Phase 1 - Cardiff Launch Plan.html</code>) sits inside Phase 3 — newsletter + Stripe + first post need to be live before that event.</p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

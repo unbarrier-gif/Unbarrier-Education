@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code Prompt — /hello page</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  .page { max-width: 880px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; font-size: 1rem; line-height: 1.75; margin: 0 0 2rem; max-width: 720px; color: var(--text); }
+  p { font-family: "Comfortaa"; font-size: 0.94rem; line-height: 1.75; color: var(--text-muted); }
+  p b { color: var(--text); font-weight: 700; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: 1.4rem; margin: 2.4rem 0 0.8rem; letter-spacing: -0.02em; color: var(--text); }
+  .prompt-box { background: #0c0418; border: 1.5px solid rgba(56,255,153,0.3); border-radius: 14px; padding: 22px 26px; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 13px; line-height: 1.7; color: var(--text); white-space: pre-wrap; word-wrap: break-word; margin: 14px 0 22px; }
+  .prompt-box code { color: var(--spring-green); }
+  .copy-btn { display: inline-block; background: var(--spring-green); color: var(--amethyst); border: none; border-radius: 100px; padding: 10px 20px; font-family: "Outfit"; font-weight: 700; font-size: 0.88rem; cursor: pointer; margin: 0 0 18px; }
+  .copy-btn:hover { opacity: 0.88; }
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.84rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ul.plan li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); margin-bottom: 6px; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">Claude Code · prompt · 26 Apr 2026</p>
+<h1>Build <em>/hello.</em><br/>Paste this into Claude Code.</h1>
+<p class="lede">This is the prompt for Claude Code. It points at <code>Hello Page Spec.html</code> (v1.2) as the binding design spec, gives the rules of the road, and tells it exactly when to stop and ask Nici instead of guessing. Copy the green block, paste it in, attach the spec file alongside the design-system tokens.</p>
+
+<div class="box lock">
+  <h4>Hero is type-only — locked decision</h4>
+  The <code>/hello</code> hero has no triangular spotlight illustration. No "bring the joy" Cherry Bomb. No magenta circle. Just green logo dot + <code>unbarrier.me</code> wordmark · "designed for <em style="color:var(--spring-green); font-style:normal">difference.</em>" · bio. The prompt below makes this explicit so Claude Code can't drift back to earlier drafts.
+</div>
+
+<button class="copy-btn" onclick="navigator.clipboard.writeText(document.getElementById('p').innerText); this.textContent='Copied ✓'; setTimeout(()=>this.textContent='Copy prompt to clipboard',1800)">Copy prompt to clipboard</button>
+
+<div class="prompt-box" id="p">You are Claude Code, working in the repo `unbarrier-gif/Unbarrier-Education` on branch `feat/hello-step-2`. Your job: ship the `/hello` page for Cardiff (Wed 29 Apr). The QR on the printed flyer points at `unbarrier.me/hello` — when scanned, the page must render correctly, links must resolve, and forms must work end-to-end.
+
+═══════════════════════════════════════════════════════════
+THE BINDING SPEC
+═══════════════════════════════════════════════════════════
+
+The single source of truth is `Hello Page Spec.html` (v1.2, 26 Apr 2026), attached to this conversation. Read it end-to-end before writing any code. Sections:
+
+  01 Scope &amp; non-goals
+  02 Stack &amp; conventions (Next.js 14 App Router, TypeScript strict)
+  03 File layout (exactly these files, nothing more)
+  04 Page structure — five sections, in order
+  05 Exact copy — verbatim, do not rewrite
+  06 Behaviour &amp; events (Plausible, MailerLite, Resend)
+  07 Environment variables
+  08 Accessibility — WCAG 2.1 AA, Lighthouse a11y ≥ 95
+  09 Acceptance criteria (the checklist you must hit)
+  10 PR flow
+  11 Step 2 — design pass &amp; live links (this is what you're shipping)
+
+Section 11 is the actual build instruction for this PR. Sections 01–10 are the surrounding contract.
+
+═══════════════════════════════════════════════════════════
+DESIGN TOKENS &amp; FONTS
+═══════════════════════════════════════════════════════════
+
+Tokens live in `colors_and_type.css` (also attached). Copy this file verbatim into `app/globals.css`. Do not invent new colour variables, do not change the type scale, do not substitute fonts. Outfit + Comfortaa load via `next/font/google` with `display: swap`. Cherry Bomb One is NOT used on /hello — it's reserved for the homepage's signature moment.
+
+═══════════════════════════════════════════════════════════
+HERO DIRECTION — LOCKED
+═══════════════════════════════════════════════════════════
+
+The /hello hero is TYPE-ONLY. Earlier drafts of the spec mentioned a triangular "bring the joy" spotlight illustration and a Cherry Bomb One frontispiece. THOSE ARE REMOVED. v1.2 of the spec is the current truth.
+
+The hero is:
+  1. A row at the top: a 22×22px Spring Green (#38ff99) square with 6px border-radius, followed by the lowercase wordmark `unbarrier.me` in Comfortaa 700, ~1.4rem, white. 12px gap.
+  2. The headline: `designed for difference.` — Outfit 800, clamp(2.4rem, 8vw, 3.6rem), line-height 1.05, letter-spacing -0.025em. Wrap `difference.` in an &lt;em&gt; styled `font-style: normal; color: var(--spring-green)`. The full stop stays inside the green span.
+  3. The bio: Comfortaa 400, ~1rem, line-height 1.7, color var(--text-muted). The words "Loop Breakers" are bold and white — only those two words.
+
+Do NOT add: an illustration, glow orbs, a Cherry Bomb headline, an eyebrow above the H1, a portrait, a magenta circle, or any decorative element. The page is calm by design — quiet beats decorative on a handheld page reached by QR scan.
+
+═══════════════════════════════════════════════════════════
+HOW TO SHIP
+═══════════════════════════════════════════════════════════
+
+1. Branch off `main` as `feat/hello-step-2`.
+2. Scaffold per spec §03. No Tailwind. CSS Modules + tokens.
+3. Build the page per §04 in this order: hero → 4 CTA cards → newsletter band → say-hi band → footer. Use the exact copy from §05 verbatim.
+4. Wire the four CTA hrefs from env vars (§07). Three open TidyCal in a new tab; the fourth is `mailto:`.
+5. Build `POST /api/say-hi` per §06 — Zod validation, honeypot drop, MailerLite add, Resend forward to `hello@unbarrier.me`. In-memory rate limit 5 req/IP/hr.
+6. Wire the three Plausible custom events: `cta_click`, `newsletter_signup`, `say_hi_sent`.
+7. Ship `/legal/privacy` and `/legal/terms` from `Legal Pages v1.html` so the footer links resolve.
+8. Add `/` → redirect to `/hello` for Phase 1 only.
+9. Open a PR to `main` with the Vercel preview URL in the description.
+
+Commit in logical chunks per §10. Squash-merge on approval.
+
+═══════════════════════════════════════════════════════════
+ACCEPTANCE — DO NOT CLOSE THE PR UNTIL ALL ARE TRUE
+═══════════════════════════════════════════════════════════
+
+From spec §09 + §11.7:
+
+  ☐ Renders cleanly on mobile (375px) and desktop (1280px)
+  ☐ Hero is type-only (green dot + wordmark + headline + bio). No illustration.
+  ☐ All four CTA cards have their assigned accent (green / orchid / aqua / orange) on title + 3px border-left
+  ☐ All four CTA hrefs resolve — three TidyCal in new tab, one mailto
+  ☐ Newsletter form adds a test email to MailerLite group 185831469000688733 (verify in dashboard)
+  ☐ Say-hi form delivers a test message to hello@unbarrier.me within 60s
+  ☐ Plausible dashboard shows all three custom events firing from a real phone test
+  ☐ /legal/privacy and /legal/terms render real pages (not 404)
+  ☐ Lighthouse: Accessibility ≥ 95, Performance ≥ 90 mobile
+  ☐ README documents local dev, deploy, env var list
+  ☐ All env vars confirmed in Vercel; preview build is green
+
+═══════════════════════════════════════════════════════════
+WHEN TO STOP AND ASK NICI INSTEAD OF GUESSING
+═══════════════════════════════════════════════════════════
+
+Default behaviour: if anything in the spec is ambiguous, contradictory with the codebase, or would require you to invent copy / colour / structure NOT in the spec — STOP and ask. Do not improvise on a page that ships behind a printed QR code.
+
+Specifically, ask before proceeding if:
+
+  • A spec section conflicts with what's already on `main` (e.g. existing components, existing routes, existing globals)
+  • An env var listed in §07 is missing from Vercel and you can't find it
+  • The MailerLite group ID, TidyCal URLs, or Resend domain don't validate (e.g. 401, 404, unverified domain)
+  • You'd need to add a dependency not already in `package.json` beyond: `zod`, `resend`, and Plausible's script tag
+  • You'd need to add a file not listed in §03 file layout
+  • The exact copy in §05 doesn't fit a layout you're building — DO NOT rewrite copy, ask
+  • Lighthouse a11y drops below 95 and you can't see why
+  • The hero starts to want decoration to "balance" — that's the wrong instinct, ask first
+
+Ask in the PR description or as a comment. Do not commit speculative changes that touch copy, structure, or the hero composition.
+
+═══════════════════════════════════════════════════════════
+WHAT THIS PR DOES NOT TOUCH
+═══════════════════════════════════════════════════════════
+
+From spec §11 lock-box:
+
+  • Page structure (5 sections in §04 order)
+  • Copy (use §05 verbatim)
+  • API contract (§06)
+  • Stack choices (§02)
+  • Section ordering
+
+If you find yourself adding a new component, changing the section order, or rewriting copy — stop. That's out of scope for this PR.
+
+When the PR is up, paste the Vercel preview URL and the screenshot of the live mobile view. Nici and the design Claude QA on phone + laptop before squash-merge.</div>
+
+<h2>What to attach alongside this prompt</h2>
+<ul class="plan">
+  <li><b><code>Hello Page Spec.html</code></b> (v1.2, this project) — the binding design spec. Drag it into the Claude Code conversation.</li>
+  <li><b><code>colors_and_type.css</code></b> (this project) — the design tokens. Goes verbatim into <code>app/globals.css</code>.</li>
+  <li><b><code>Loop Breakers - Source of Truth.html</code></b> (this project) — for context on §09b (the QR rule) and the wider Phase 1 plan.</li>
+  <li><b><code>Repo Setup Guide.html</code></b> (this project) — env var locations, Vercel project settings, MailerLite group ID confirmation.</li>
+  <li><b><code>Legal Pages v1.html</code></b> (this project) — copy for <code>/legal/privacy</code> and <code>/legal/terms</code>, which Step 2 must ship so the footer resolves.</li>
+</ul>
+
+<div class="box warn">
+  <h4>One thing to check before you paste</h4>
+  Confirm the <code>RESEND_API_KEY</code> is in Vercel. Spec §07 calls for it but the original v1.0 was written before Resend was set up. If it's missing, Claude Code will hit it on step 5 and stop to ask — which is fine, but you can save a round-trip by adding it now. Free signup at <a href="https://resend.com" style="color:var(--spring-green)">resend.com</a> → verify <code>unbarrier.me</code> domain → paste key into Vercel.
+</div>
+
+<footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Comfortaa'; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7;">
+  <p><b>Claude Code prompt · /hello · 26 April 2026</b> · pairs with Hello Page Spec v1.2</p>
+</footer>
+
+</main>
+</body>
+</html>

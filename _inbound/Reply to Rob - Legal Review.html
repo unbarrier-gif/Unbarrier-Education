@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reply to Rob · Business context + quote yes</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 720px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.8rem,4vw,2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 2rem; }
+
+  .email-card {
+    background: #fff; border-radius: 14px;
+    padding: 32px 36px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    font-family: "Comfortaa", sans-serif;
+    color: #333;
+  }
+  .email-meta {
+    padding: 0 0 18px 0; border-bottom: 1px solid #e8e8e8;
+    margin-bottom: 22px; font-size: 0.85rem;
+  }
+  .email-meta dl { margin: 0; display: grid; grid-template-columns: 70px 1fr; gap: 6px 16px; }
+  .email-meta dt { color: #888; font-weight: 600; }
+  .email-meta dd { margin: 0; color: #222; }
+  .email-subject { font-family: "Outfit"; font-weight: 700; font-size: 1.1rem; margin: 18px 0 0 !important; color: #111 !important; }
+  .email-body { font-size: 0.95rem; line-height: 1.8; color: #333; }
+  .email-body p { margin: 0 0 1.1rem; }
+  .email-body ol { padding-left: 1.3rem; margin: 0 0 1.1rem; }
+  .email-body ol li { margin-bottom: 6px; }
+  .email-body b { color: #111; font-weight: 700; }
+  .email-body .sign { margin-top: 1.5rem; }
+
+  .copy-btn {
+    display: inline-block; margin-top: 1rem;
+    padding: 10px 18px; border-radius: 100px;
+    background: var(--spring-green); color: var(--amethyst);
+    border: none; cursor: pointer;
+    font-family: "Outfit"; font-weight: 700; font-size: 0.82rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .copy-btn:hover { background: #00e087; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Reply to Rob · 24 Apr 2026</p>
+<h1>Draft reply</h1>
+
+<div class="email-card">
+  <div class="email-meta">
+    <dl>
+      <dt>To:</dt><dd>Rob</dd>
+      <dt>Subject:</dt><dd class="email-subject">Re: Legal eyes on Unbarrier</dd>
+    </dl>
+  </div>
+
+  <div class="email-body" id="email-body">
+    <p>Thanks Rob, appreciated.</p>
+
+    <p>Yes please to the formal quote — and thank you for passing the referral fee on, that's generous. Happy to go ahead once I see the number.</p>
+
+    <p><b>Unbarrier</b> is a coaching and learning business for neurodivergent adults (ADHD, autistic, dyslexic — at any diagnostic stage, often mid-career). I work with founders, educators, writers, creative professionals who've been circling the same idea or project and need help getting unstuck.</p>
+
+    <p>Two main things the site does:</p>
+    <ol>
+      <li><b>Loop Breakers</b> — small-group coaching sessions, 6–8 people, £45/seat, run on Google Meet. Will soon include guest-hosted sessions with other practitioners.</li>
+      <li><b>1:1 coaching</b> — £120/session, booked via Google Appointment Schedule, paid via Stripe.</li>
+    </ol>
+
+    <p>Plus free discovery calls and a newsletter (via MailerLite).</p>
+
+    <p>No therapy, no medical advice, no clinical claims — that's written explicitly into the Terms. Audience is UK-majority but international; launching in the next few weeks.</p>
+
+    <p class="sign">Nici</p>
+  </div>
+
+  <button class="copy-btn" onclick="copyEmail()">Copy email</button>
+</div>
+
+</div>
+
+<script>
+function copyEmail() {
+  const body = document.getElementById('email-body').innerText;
+  navigator.clipboard.writeText(body).then(() => {
+    const btn = document.querySelector('.copy-btn');
+    const original = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  });
+}
+</script>
+</body>
+</html>

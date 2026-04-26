@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Legal Pages v1 · Unbarrier</title>
+<template id="__bundler_thumbnail">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 300">
+  <rect width="400" height="300" fill="#2a1b3d"/>
+  <g transform="translate(120,60)" fill="none" stroke="#38ff99" stroke-width="6" stroke-linejoin="round" stroke-linecap="round">
+    <path d="M80 10 L150 40 L150 110 Q150 160 80 180 Q10 160 10 110 L10 40 Z"/>
+    <path d="M45 95 L72 120 L120 70" stroke-width="8"/>
+  </g>
+  <text x="200" y="250" text-anchor="middle" font-family="Outfit, sans-serif" font-weight="800" font-size="24" fill="#38ff99" letter-spacing="2">LEGAL · v1</text>
+</svg>
+</template>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 880px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 640px; }
+  section.doc { padding: 2.4rem 0 2.6rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.doc > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.7rem,3.6vw,2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; text-transform: lowercase; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.02rem; margin: 1.6rem 0 0.5rem; color: var(--text); text-transform: lowercase; letter-spacing: -0.005em; }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.8; color: var(--text-muted); }
+  p b, li b { color: var(--text); }
+  ul, ol { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  li { margin-bottom: 4px; }
+  .meta { font-family: "Outfit"; font-size: 11px; color: var(--text-subtle); margin: 0 0 1.5rem; letter-spacing: 0.05em; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0 16px; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td { color: var(--text-muted); }
+  .note { padding: 14px 18px; border-radius: 12px; background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.25); border-left: 3px solid var(--school-bus-yellow); font-family: "Comfortaa"; font-size: 0.86rem; color: var(--text); margin: 10px 0; }
+  .note b { color: var(--school-bus-yellow); }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Legal Pages v1 · draft for review · 24 Apr 2026</p>
+<h1>Three policies,<br/><span style="color:var(--spring-green)">rewritten.</span></h1>
+<p class="sub">Privacy rewritten against your actual processor list. Cookies rewritten to be concrete. Terms drafted from scratch. All in your lowercase-calm voice, with compliance substance underneath. Review for anything that doesn't sound like you — then I'll port to MDX at <code>content/legal/</code>.</p>
+
+<div class="note"><b>Legal note:</b> these are drafts written by a designer with care, not a solicitor with a practicing certificate. Before going live, have a UK solicitor (or <a href="https://lawbite.co.uk">LawBite</a> / <a href="https://sparqa.com">Sparqa</a> at ~£150 fixed fee each) review. Nothing here is legal advice.</div>
+
+<!-- ═══════════ PRIVACY ═══════════ -->
+<section class="doc" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · privacy</p>
+  <h2>privacy policy</h2>
+  <p class="meta">Last updated: 24 April 2026 · Version 2.0</p>
+
+  <h3>our approach</h3>
+  <p>unbarrier.me is designed to reduce friction, not create it — including when it comes to your data. we collect only what we need, use it with care, name every tool we pass it to, and never sell it. if you want the short version: one email if you subscribe, card details if you pay (handled by Stripe, we never see them), and anonymous page counts so we know which posts get read.</p>
+
+  <h3>who we are</h3>
+  <p>the data controller is <b>Unbarrier Education Ltd</b> (Company No. 16603630), trading as Unbarrier.Me, registered in England and Wales. registered office: 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH. contact: <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.</p>
+
+  <h3>what we collect and why</h3>
+  <table>
+    <thead><tr><th>What</th><th>When</th><th>Why (lawful basis)</th></tr></thead>
+    <tbody>
+      <tr><td>Email address</td><td>You subscribe to the newsletter</td><td>Consent (UK GDPR Art. 6(1)(a))</td></tr>
+      <tr><td>Name &amp; email</td><td>You book a session</td><td>Contract (Art. 6(1)(b))</td></tr>
+      <tr><td>Payment info</td><td>You pay for a session</td><td>Contract — handled by Stripe, we never see card numbers</td></tr>
+      <tr><td>Message content</td><td>You email us directly</td><td>Legitimate interest — replying to you</td></tr>
+      <tr><td>Page-visit counts (anonymous)</td><td>You visit the site</td><td>Legitimate interest — improving the site</td></tr>
+    </tbody>
+  </table>
+  <p>we do not collect sensitive personal data. we do not profile or advertise to you. we do not make automated decisions about you.</p>
+
+  <h3>the tools we use (our processors)</h3>
+  <p>we pass specific bits of your data to these services so the site and business can work. each has its own privacy policy:</p>
+  <ul>
+    <li><b>MailerLite</b> — newsletter delivery. Stores your email and subscription source. US-hosted under Standard Contractual Clauses.</li>
+    <li><b>Stripe</b> — payments. Handles card details entirely on their systems.</li>
+    <li><b>Google Workspace</b> — email (nici@unbarrier.me), calendar, bookings (Appointment Schedule), video (Meet). EU region where possible.</li>
+    <li><b>Plausible Analytics</b> — anonymous page-visit counts. Cookie-free, EU-hosted.</li>
+    <li><b>Vercel</b> — site hosting. Serves pages, logs basic request info.</li>
+    <li><b>Xero</b> — accounting. Holds invoice records as required by HMRC.</li>
+    <li><b>WhatsApp</b> — optional community group for Loop Breakers cohorts. You join voluntarily.</li>
+  </ul>
+
+  <h3>how long we keep it</h3>
+  <ul>
+    <li><b>Newsletter</b> — until you unsubscribe, then deleted within 30 days.</li>
+    <li><b>Session bookings &amp; invoices</b> — 6 years (HMRC requirement).</li>
+    <li><b>Direct emails</b> — 2 years, then deleted unless part of an ongoing relationship.</li>
+    <li><b>Analytics</b> — anonymous; no individual retention.</li>
+  </ul>
+
+  <h3>your rights</h3>
+  <p>under UK GDPR you can: access the data we hold about you, ask us to correct it, ask us to delete it, withdraw consent, or complain to the <a href="https://ico.org.uk">ICO</a>. email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a> — we'll respond within 30 days.</p>
+
+  <h3>children</h3>
+  <p>this service is for adults. we don't knowingly collect data from anyone under 16. if a child has submitted data, email us and we'll delete it.</p>
+
+  <h3>changes</h3>
+  <p>when this policy changes meaningfully, we'll update the date at the top and — if you're on the newsletter — mention it in the next letter.</p>
+</section>
+
+<!-- ═══════════ COOKIES ═══════════ -->
+<section class="doc" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · cookies</p>
+  <h2>cookies &amp; tracking</h2>
+  <p class="meta">Last updated: 24 April 2026 · Version 2.0</p>
+
+  <h3>the short version</h3>
+  <p>this site sets <b>no tracking cookies</b>. we use Plausible for analytics, which doesn't use cookies or collect personal data. you don't need to click a banner. there isn't one.</p>
+
+  <h3>what cookies are</h3>
+  <p>small text files some websites store on your device. they can be useful (remembering a login) or invasive (following you across sites). we don't use the invasive kind.</p>
+
+  <h3>what this site sets</h3>
+  <table>
+    <thead><tr><th>Cookie</th><th>Purpose</th><th>Duration</th></tr></thead>
+    <tbody>
+      <tr><td>None from us</td><td>—</td><td>—</td></tr>
+    </tbody>
+  </table>
+  <p>that table is not a joke. unbarrier.me itself sets no cookies.</p>
+
+  <h3>what other services might set, on their own pages</h3>
+  <ul>
+    <li><b>Stripe checkout</b> — when you click "book" and are taken to Stripe's page, Stripe sets its own cookies for payment security. these are on <code>stripe.com</code>, not unbarrier.me.</li>
+    <li><b>Google booking</b> — when you pick a session time via Google Appointment Schedule, you're on Google's domain. their cookies, their policy.</li>
+    <li><b>YouTube / Vimeo</b> — if we ever embed a video, those may set cookies. currently we don't embed any.</li>
+  </ul>
+
+  <h3>analytics — Plausible</h3>
+  <p>we use <a href="https://plausible.io">Plausible</a> to count page visits. it's cookie-free, privacy-respecting, and doesn't identify you. it counts things like "247 people read the vision page this week" — never "Jane Doe visited at 14:03". full details in their <a href="https://plausible.io/data-policy">data policy</a>.</p>
+
+  <h3>managing cookies in general</h3>
+  <p>you can block, clear, or manage cookies in your browser settings. here's <a href="https://www.aboutcookies.org">aboutcookies.org</a> for step-by-step guides. since we don't set any, this won't affect how unbarrier.me works — but it's a good habit.</p>
+</section>
+
+<!-- ═══════════ TERMS ═══════════ -->
+<section class="doc" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · terms</p>
+  <h2>terms of service</h2>
+  <p class="meta">Last updated: 24 April 2026 · Version 1.0</p>
+
+  <h3>the deal, short version</h3>
+  <p>if you book a session, you're agreeing to these terms. they're plain-English on purpose. if anything here is unclear, email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a> before booking — not after.</p>
+
+  <h3>who we are</h3>
+  <p><b>Unbarrier Education Ltd</b> (Company No. 16603630), trading as Unbarrier.Me. registered office: 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH. contact: <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.</p>
+
+  <h3>what we offer</h3>
+  <ul>
+    <li><b>Loop Breakers sessions</b> — small-group or 1:1 coaching, 90-minute format, delivered via Google Meet.</li>
+    <li><b>Unbarrier services</b> — audit, access, and voice consultancy packages described on the site.</li>
+    <li><b>Writing &amp; community</b> — free newsletter, blog posts, WhatsApp cohort spaces.</li>
+  </ul>
+
+  <h3>booking &amp; payment</h3>
+  <ul>
+    <li>you book via Google Appointment Schedule. prices are shown at the point of booking.</li>
+    <li>payment is taken via Stripe at booking, unless otherwise agreed.</li>
+    <li>invoices for services are issued separately via Xero.</li>
+    <li>all prices are in GBP unless stated. we are not VAT-registered at the time of writing.</li>
+  </ul>
+
+  <h3>cancellation, rescheduling, refunds</h3>
+  <ul>
+    <li><b>48+ hours before</b> — full refund, or reschedule free. email us.</li>
+    <li><b>24–48 hours before</b> — 50% refund, or reschedule with no fee.</li>
+    <li><b>Less than 24 hours</b> — no refund, but we'll reschedule once as a goodwill gesture where possible.</li>
+    <li><b>No-show</b> — no refund. we'll still reach out to check you're ok.</li>
+    <li><b>If we cancel</b> — full refund or reschedule, your choice.</li>
+  </ul>
+  <p>neurodivergent reality check: if you're mid-meltdown, mid-crisis, or genuinely can't make it for reasons outside your control, email us. we're human and we read context.</p>
+
+  <h3>what sessions are, and aren't</h3>
+  <ul>
+    <li>coaching and consultancy sessions are <b>not therapy</b> and <b>not clinical advice</b>. if you need mental-health support, see your GP, a registered therapist, or the <a href="https://www.samaritans.org">Samaritans</a> (call 116 123 any time).</li>
+    <li>educational consultancy is not a substitute for statutory SEND assessment or legal advice.</li>
+    <li>we don't guarantee specific outcomes — coaching supports your work, it doesn't do it for you.</li>
+  </ul>
+
+  <h3>intellectual property</h3>
+  <ul>
+    <li>worksheets, templates, written materials and recordings we provide remain our copyright. you may use them personally; please don't republish or resell without permission.</li>
+    <li>anything you create using our tools is yours.</li>
+    <li>testimonials you give us may be quoted (with your name or anonymously — your choice) on the site and in marketing.</li>
+  </ul>
+
+  <h3>confidentiality &amp; safeguarding</h3>
+  <ul>
+    <li>what's shared in sessions stays in sessions. we don't share your content with other clients.</li>
+    <li>exception: if we believe you or someone else is at serious risk, we may break confidentiality to get appropriate support. we'll tell you if we do.</li>
+    <li>group sessions: we ask all participants to respect the same principle. we can't guarantee other participants' behaviour — but we will address it.</li>
+  </ul>
+
+  <h3>accessibility</h3>
+  <p>we build the site to WCAG 2.2 AA. sessions can be adjusted for sensory, cognitive, or access needs — just tell us what works. see our <a href="/legal/accessibility">accessibility statement</a>.</p>
+
+  <h3>limitation of liability</h3>
+  <p>we take care in what we do, but we're a microbusiness and our liability is limited. we're not liable for: indirect or consequential losses, loss of profits, or things outside our reasonable control. nothing in these terms limits our liability for death, personal injury caused by negligence, or fraud — things the law doesn't let us limit.</p>
+
+  <h3>governing law</h3>
+  <p>these terms are governed by the laws of England and Wales. disputes will be resolved in the courts of England and Wales. before going to court, let's talk — email first, we mean it.</p>
+
+  <h3>changes</h3>
+  <p>we may update these terms. if they change materially, we'll notify existing clients by email and update the date above.</p>
+</section>
+
+</div>
+</body>
+</html>

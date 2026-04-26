@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Repo Setup · GitHub → Vercel → Bluehost · unbarrier.me/hello</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5.5vw,3.4rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; color: var(--text); font-size: 1rem; line-height: 1.75; margin: 0 0 2rem; max-width: 720px; }
+
+  section.block { padding: 2.4rem 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; margin: 1.1rem 0 0.4rem; color: var(--text); }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 8px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; white-space: pre-wrap; word-break: break-all; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+  td.do { color: var(--spring-green); font-weight: 700; }
+  td.dont { color: var(--pink-mist); font-weight: 700; }
+  td.change { color: var(--school-bus-yellow); font-weight: 700; }
+
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.danger { background: rgba(227,161,176,0.06); border: 1px solid rgba(227,161,176,0.3); border-left: 3px solid var(--pink-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.danger h4 { color: var(--pink-mist); }
+
+  .check { display: grid; grid-template-columns: auto 1fr; gap: 10px 14px; margin: 1rem 0; padding: 16px 20px; background: rgba(56,255,153,0.04); border: 1px solid rgba(56,255,153,0.2); border-radius: 12px; }
+  .check .box-tick { font-family: "Outfit"; font-weight: 800; color: var(--spring-green); font-size: 1.1rem; line-height: 1.4; }
+  .check .item { font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.6; color: var(--text); }
+
+  .step-num { display: inline-block; width: 24px; height: 24px; line-height: 24px; text-align: center; background: var(--spring-green); color: var(--amethyst); font-family: "Outfit"; font-weight: 800; font-size: 11px; border-radius: 100px; margin-right: 8px; vertical-align: middle; position: relative; top: -1px; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">Setup guide · 26 Apr 2026 · runs alongside Handover Plan v4</p>
+<h1>Repo setup<br/><em>step-by-step.</em></h1>
+<p class="lede">Three things to do, in this order: <b>1. wire GitHub repo</b> → <b>2. connect Vercel</b> → <b>3. fix Bluehost DNS</b>. After that, <code>unbarrier.me</code> resolves to Vercel and we can ship <code>/hello</code> in a single PR.</p>
+
+<!-- ═════════ 01 GITHUB ═════════ -->
+<section class="block" id="github" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · GitHub repo wiring</p>
+  <h2>Make sure the new repo is ready for Claude Code.</h2>
+
+  <p>You said the repo is created — good. A few things to confirm before we hand to Claude Code:</p>
+
+  <h3>Confirm in GitHub</h3>
+  <ol class="plan">
+    <li><b>Repo is private.</b> Settings → General → "Danger Zone" should show "Make public" (i.e. it's currently private). If not, change visibility.</li>
+    <li><b>Default branch is <code>main</code>.</b> Settings → Branches → Default branch.</li>
+    <li><b>Branch protection on <code>main</code>:</b> Settings → Branches → Add rule for <code>main</code>:
+      <ul style="margin-top:6px">
+        <li>✓ Require a pull request before merging</li>
+        <li>✓ Require status checks to pass (we'll add Vercel preview-deploy as a required check after step 2)</li>
+        <li>(Skip "Require approvals" for now — it's just you + Claude Code)</li>
+      </ul>
+    </li>
+    <li><b>Repo is empty</b> (no README, no .gitignore). If you initialised with a README, that's fine — Claude Code will work around it.</li>
+    <li><b>Send me the repo URL</b> in the format <code>github.com/&lt;owner&gt;/&lt;repo-name&gt;</code> so I can hand it to Claude Code.</li>
+  </ol>
+
+  <div class="box good">
+    <h4>If you used a personal account, not an org</h4>
+    Not a problem for Phase 1. We can transfer to an <code>Unbarrier-Education</code> org later (Settings → Transfer ownership). Don't redo this now — momentum matters more than perfect structure for Cardiff week.
+  </div>
+</section>
+
+<!-- ═════════ 02 VERCEL ═════════ -->
+<section class="block" id="vercel" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Vercel project</p>
+  <h2>Connect the repo · set env vars · first deploy.</h2>
+
+  <ol class="plan">
+    <li><b>Sign in to Vercel</b> at <a href="https://vercel.com" target="_blank">vercel.com</a> → "Continue with GitHub" → grant access to the repo (you can grant to "Selected repositories" and just pick the new one).</li>
+    <li><b>Import the repo</b> → "Add New… → Project" → find your repo → Import.</li>
+    <li><b>Framework preset:</b> leave on "Other" for now (the repo is empty). Vercel will auto-detect Next.js once Claude Code commits the scaffold.</li>
+    <li><b>Project name:</b> <code>unbarrier-me</code> (this is just Vercel's internal name).</li>
+    <li><b>Click Deploy.</b> First deploy will fail (empty repo) — that's expected. The project shell is what we needed.</li>
+    <li><b>Add environment variables</b> — Project → Settings → Environment Variables. Add these, one at a time, all three environments ticked (Production, Preview, Development):
+      <pre>MAILERLITE_API_KEY=<i>(paste the JWT you sent — kept out of this doc on purpose)</i>
+MAILERLITE_GROUP_ID=185831469000688733
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=unbarrier.me
+NEXT_PUBLIC_TIDYCAL_TUESDAY=https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch
+NEXT_PUBLIC_TIDYCAL_GUEST=https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking
+NEXT_PUBLIC_TIDYCAL_COACHING=https://tidycal.com/nici/accessible-coaching-monthly
+SAY_HI_FORWARD_TO=hello@unbarrier.me</pre>
+    </li>
+    <li><b>Send me the Vercel project URL</b> (the <code>...vercel.app</code> preview URL Vercel shows on the dashboard).</li>
+  </ol>
+
+  <div class="box warn">
+    <h4>The MailerLite API key is sensitive</h4>
+    Treat it like a password. You've already shared it with me here, which is fine — but <b>don't paste it into this doc, the README, or any committed code</b>. Vercel env vars only. Claude Code will read it from <code>process.env.MAILERLITE_API_KEY</code> at runtime. <b>Recommended:</b> rotate it after launch — MailerLite → Integrations → API → revoke + regenerate. Less than 2 min.
+  </div>
+
+  <div class="box lock">
+    <h4>What we don't have yet (and don't need today)</h4>
+    A 1:1-with-Nici TidyCal page (£120 one-off) and a discovery-call page. Both Phase 2. The three pages we have cover Tuesday, Wednesday, and Accessible Coaching — that's enough for Cardiff.
+  </div>
+</section>
+
+<!-- ═════════ 03 BLUEHOST DNS ═════════ -->
+<section class="block" id="bluehost" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Bluehost DNS — minimal change</p>
+  <h2>One A record to fix. Everything else stays.</h2>
+
+  <p>I read your Bluehost zone. <b>Good news:</b> <code>www</code> already points to Vercel, your Google MX records are right, and your MailerLite SPF/DKIM are all in place. <b>One change needed:</b> the apex <code>@</code> A record.</p>
+
+  <h3>Current state of your zone</h3>
+  <table>
+    <thead><tr><th>Record</th><th>Host</th><th>Currently points to</th><th>Action</th></tr></thead>
+    <tbody>
+      <tr><td>A</td><td><code>@</code> (apex)</td><td><code>216.150.1.1</code></td><td class="change">Change → Vercel IP</td></tr>
+      <tr><td>CNAME</td><td><code>www</code></td><td><code>9595be87582900af.vercel-dns-016.com</code></td><td class="do">Keep ✓ (already Vercel)</td></tr>
+      <tr><td>CNAME</td><td><code>loop</code></td><td><code>9595be87582900af.vercel-dns-016.com</code></td><td class="do">Keep ✓ (existing redirect)</td></tr>
+      <tr><td>CNAME</td><td><code>vision</code></td><td><code>9595be87582900af.vercel-dns-016.com</code></td><td class="do">Keep ✓ (existing redirect)</td></tr>
+      <tr><td>A</td><td><code>bloom</code></td><td><code>52.33.103.53</code></td><td class="do">Keep ✓ (subdomain — leave alone)</td></tr>
+      <tr><td>A</td><td><code>links</code></td><td><code>103.169.142.0</code></td><td class="do">Keep ✓</td></tr>
+      <tr><td>MX × 4</td><td><code>@</code></td><td>Google (<code>aspmx.l.google.com</code> + alts)</td><td class="dont">Don't touch — your email lives here</td></tr>
+      <tr><td>TXT</td><td><code>@</code></td><td>SPF, MailerLite verification</td><td class="dont">Don't touch — email auth</td></tr>
+      <tr><td>TXT</td><td><code>google._domainkey</code></td><td>DKIM</td><td class="dont">Don't touch</td></tr>
+      <tr><td>CNAME</td><td><code>litesrv._domainkey</code></td><td>MailerLite</td><td class="dont">Don't touch</td></tr>
+    </tbody>
+  </table>
+
+  <h3>The one change to make</h3>
+  <ol class="plan">
+    <li><b>In Vercel:</b> Project → Settings → Domains → "Add" → enter <code>unbarrier.me</code>. Vercel will tell you the exact A record value to use. As of now it's <code>76.76.21.21</code>, but <b>use whatever Vercel shows you</b> — that's the authoritative value.</li>
+    <li><b>Also add <code>www.unbarrier.me</code></b> in the same Domains panel → choose "Redirect to <code>unbarrier.me</code>". This formalises the redirect at Vercel level (CNAME is already correct).</li>
+    <li><b>Back in Bluehost</b> → DNS / Zone Editor → find the A record for <code>@</code> with value <code>216.150.1.1</code> → <b>Edit</b> → change "Point To" to the Vercel IP from step 1 → Save.</li>
+    <li><b>Set TTL to 15 minutes</b> while we're cutting over, so any mistake propagates fast. We can raise it back to 4 hours after Cardiff.</li>
+    <li><b>Wait 5–15 min</b>, then check at <a href="https://dnschecker.org" target="_blank">dnschecker.org</a> for A record on <code>unbarrier.me</code> — should resolve to the new Vercel IP globally within an hour.</li>
+    <li><b>Back in Vercel Domains panel:</b> status flips from "Invalid Configuration" → "Valid Configuration" with a green tick. SSL cert auto-issues 30s after that.</li>
+  </ol>
+
+  <div class="box danger">
+    <h4>Before you click anything in Bluehost</h4>
+    <b>Screenshot the current zone first.</b> One full screenshot, both sides of the page if needed, send to me on WhatsApp. If something goes wrong with email or domain resolution, that screenshot is your one-glance restore reference. Five seconds now buys you peace of mind for the next 72 hours.
+  </div>
+
+  <div class="box good">
+    <h4>What this does NOT touch</h4>
+    Email (Google MX) · MailerLite sender auth (SPF/DKIM TXT records) · subdomains <code>bloom</code>, <code>links</code>, <code>www.links</code>, <code>loop</code>, <code>vision</code>. Email and existing services keep working uninterrupted.
+  </div>
+
+  <h3>About <code>loop.unbarrier.me</code> and <code>vision.unbarrier.me</code></h3>
+  <p>Both already point at Vercel. Once <code>unbarrier.me/hello</code> is live, we'll add a Vercel rewrite/redirect so <code>loop.unbarrier.me</code> and <code>vision.unbarrier.me</code> 301-redirect to <code>unbarrier.me/loop-breakers</code> (canonical path per Source of Truth §08). No DNS change needed for that — pure Vercel config. Phase 2.</p>
+</section>
+
+<!-- ═════════ 04 HANDOFF CHECKLIST ═════════ -->
+<section class="block" id="handoff" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · What I need from you to hand to Claude Code</p>
+  <h2>Five things. Send them in a WhatsApp.</h2>
+
+  <div class="check">
+    <div class="box-tick">☐</div><div class="item"><b>GitHub repo URL</b> in the format <code>github.com/&lt;owner&gt;/&lt;repo&gt;</code></div>
+    <div class="box-tick">☐</div><div class="item"><b>Confirmation</b> Claude Code has been added as a collaborator with write access (or you've added me and I'll forward the invite)</div>
+    <div class="box-tick">☐</div><div class="item"><b>Vercel project URL</b> (the <code>...vercel.app</code> link from the dashboard)</div>
+    <div class="box-tick">☐</div><div class="item"><b>Confirmation</b> the seven env vars from §02 are set in Vercel</div>
+    <div class="box-tick">☐</div><div class="item"><b>Confirmation</b> the Bluehost A record is changed and DNS is propagating (a screenshot of the dnschecker.org green ticks does it)</div>
+  </div>
+
+  <p>When all five tick, I'll write the <code>/hello</code> page spec for Claude Code (it's the bit you said "no idea what this is, do later" — that's fine, I'll handle it) and we'll have CC commit the first PR Sunday evening / Monday morning. Vercel will auto-deploy the preview, you and I QA on phone, then merge to <code>main</code> and we're live.</p>
+</section>
+
+<footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Comfortaa'; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7;">
+  <p><b>Repo Setup Guide · 26 April 2026</b> · runs alongside Handover Plan v4</p>
+  <p>Source of Truth v1.2 §09c · stack locked: GitHub + Vercel + Bluehost + TidyCal + MailerLite + Plausible</p>
+</footer>
+
+</main>
+</body>
+</html>

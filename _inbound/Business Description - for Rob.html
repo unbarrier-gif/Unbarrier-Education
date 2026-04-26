@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Business lines for Rob · Unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 720px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.8rem,4vw,2.4rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  .deck { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.7; margin: 0 0 2rem; max-width: 620px; }
+
+  .card {
+    background: #fff !important;
+    color: #1a1a1a !important;
+    border-radius: 14px;
+    padding: 30px 34px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    font-family: "Comfortaa", sans-serif;
+    margin: 0 0 1.2rem;
+  }
+  .card .v-label {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: #888 !important; margin: 0 0 12px;
+  }
+  .card h3 {
+    font-family: "Outfit"; font-weight: 700; font-size: 1rem;
+    margin: 0 0 14px; color: #1a1a1a !important;
+  }
+  .card .body,
+  .card .body p,
+  .card .body li,
+  .card .body ul { font-size: 0.95rem; line-height: 1.8; color: #2a2a2a !important; }
+  .card .body p { margin: 0 0 0.9rem; }
+  .card .body p:last-child { margin-bottom: 0; }
+  .card .body b { color: #111 !important; font-weight: 700; }
+  .card .body ul { padding-left: 1.2rem; margin: 0 0 0.9rem; }
+  .card .body li { margin-bottom: 0.5rem; }
+
+  .copy-btn {
+    display: inline-block; margin-top: 18px;
+    padding: 9px 16px; border-radius: 100px;
+    background: var(--spring-green); color: var(--amethyst);
+    border: none; cursor: pointer;
+    font-family: "Outfit"; font-weight: 700; font-size: 0.78rem;
+    letter-spacing: 0.08em; text-transform: uppercase;
+  }
+  .copy-btn:hover { background: #00e087; }
+
+  .reply-note {
+    padding: 22px 26px; border-radius: 14px;
+    background: rgba(56,255,153,0.05);
+    border: 1px solid rgba(56,255,153,0.2);
+    border-left: 3px solid var(--spring-green);
+    font-family: "Comfortaa"; font-size: 0.92rem;
+    line-height: 1.75; color: var(--text);
+    margin: 2rem 0 1rem;
+  }
+  .reply-note h3 {
+    font-family: "Outfit"; font-weight: 700; font-size: 1rem;
+    margin: 0 0 10px; color: var(--spring-green);
+  }
+  .reply-note p { margin: 0 0 0.8rem; }
+  .reply-note p:last-child { margin: 0; }
+
+  .separator { font-family: "Outfit"; font-weight: 700; font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-subtle); text-align: center; margin: 2rem 0; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">For Rob · business context</p>
+<h1>A few lines about Unbarrier</h1>
+<p class="deck">Three versions — short, medium, longer. Pick whichever feels right when you paste into your reply. Each has a copy button.</p>
+
+<!-- ══════════ SHORT ══════════ -->
+<div class="card">
+  <p class="v-label">Version 1 · Short (3 lines)</p>
+  <h3>For a quick "here's what it is"</h3>
+  <div class="body" id="v1">
+    <p>Unbarrier is a coaching and learning business for neurodivergent adults — founders, educators, writers, creative professionals. I run small-group sessions (Loop Breakers) and 1:1 work.</p>
+    <p>The website collects newsletter sign-ups, sells session seats via Stripe, and books free discovery calls. It's launching in the next few weeks.</p>
+  </div>
+  <button class="copy-btn" onclick="copyBlock('v1', this)">Copy short version</button>
+</div>
+
+<!-- ══════════ MEDIUM ══════════ -->
+<div class="card">
+  <p class="v-label">Version 2 · Medium (recommended for Rob — gives him enough to spot issues)</p>
+  <h3>For when he needs real context</h3>
+  <div class="body" id="v2">
+    <p><b>Unbarrier</b> is a coaching and learning business for neurodivergent adults (ADHD, autistic, dyslexic — at any diagnostic stage, often mid-career). I work with founders, educators, writers, creative professionals who've been circling the same idea or project and need help to get unstuck.</p>
+    <p>Two main things the site does:</p>
+    <p>1. <b>Loop Breakers</b> — small-group coaching sessions, 6–8 people, £45/seat, run on Google Meet. Will soon include guest-hosted sessions with other practitioners.<br/>
+    2. <b>1:1 coaching</b> — £120/session, booked via Google Appointment Schedule, paid via Stripe.</p>
+    <p>Plus free discovery calls and a newsletter (via MailerLite).</p>
+    <p>No therapy, no medical advice, no clinical claims — that's written explicitly into the Terms. Audience is UK-majority but international; launching in the next few weeks.</p>
+  </div>
+  <button class="copy-btn" onclick="copyBlock('v2', this)">Copy medium version</button>
+</div>
+
+<!-- ══════════ LONGER ══════════ -->
+<div class="card">
+  <p class="v-label">Version 3 · Longer (if he wants fuller picture)</p>
+  <h3>For a proper briefing</h3>
+  <div class="body" id="v3">
+    <p><b>Unbarrier</b> (unbarrier.me) is my coaching and learning business for neurodivergent adults. After years running my own creative consultancy as a multiply neurodivergent person myself (dyslexia diagnosed at 10, ADHD &amp; dyscalculia at 20), I saw how much the generic coaching world fails people who think differently. Unbarrier is my answer to that.</p>
+    <p><b>What I sell:</b></p>
+    <ul>
+      <li><b>Loop Breakers</b> — small-group coaching sessions (6–8 people, 90 mins, £45/seat). Includes guest-hosted sessions with other practitioners, with a revenue share.</li>
+      <li><b>1:1 coaching</b> — £120/session, 60 minutes. Online via Google Meet.</li>
+      <li><b>Free discovery calls</b> — 30-min intros for people deciding whether to work with me.</li>
+    </ul>
+    <p><b>How the site works:</b> newsletter sign-ups go through MailerLite; booking and calendar handled by Google Appointment Schedule; payments through Stripe. Analytics are Plausible (privacy-friendly, no cookies). Hosted on Vercel.</p>
+    <p><b>What I'm <em>not</em>:</b> a therapist, a medical practitioner, or a diagnostic service. That's made explicit in the Terms. People come to me for coaching — thinking, strategy, accountability — not clinical support.</p>
+    <p><b>Audience:</b> majority UK, some international. Ltd company registered England & Wales. Launching in the next few weeks.</p>
+  </div>
+  <button class="copy-btn" onclick="copyBlock('v3', this)">Copy longer version</button>
+</div>
+
+<!-- ══════════ ON THE QUOTE ══════════ -->
+<div class="reply-note">
+  <h3>A note on Rob's formal quote offer</h3>
+  <p>Rob's offering: his commercial lawyer friends will review the T&Cs and sign off formally. Those lawyers give <b>Rob</b> a 15% referral fee for sending clients their way, and Rob's offering to pass that fee on to <b>you</b> — so the quote comes to you at 15% off retail.</p>
+  <p><b>Why it might be worth taking:</b> you get a formally-signed-off set of policies plus the protection of the lawyer's professional indemnity insurance if something ever goes wrong. That's the bit DIY (even with a good solicitor looking over your shoulder) doesn't give you.</p>
+  <p><b>My suggestion for your reply:</b> say yes to the quote, thank him for the referral fee, and decide once you see the number. A typical commercial review for a small service business runs £400–£900; with 15% off you're looking at £340–£765. Worth it for launch peace of mind, probably.</p>
+</div>
+
+<p class="separator">— Tell me which version you want for the reply and I'll draft it —</p>
+
+</div>
+
+<script>
+function copyBlock(id, btn) {
+  const text = document.getElementById(id).innerText;
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  });
+}
+</script>
+</body>
+</html>
