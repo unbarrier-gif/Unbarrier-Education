@@ -34,16 +34,6 @@
   margin: 0;
 }
 
-.joy {
-  font-family: var(--font-decorative);
-  color: var(--spring-green);
-  font-size: clamp(2rem, 5vw, 3.4rem);
-  line-height: 1.02;
-  font-weight: 400;
-  margin: 0;
-  text-shadow: 0 0 40px rgba(56, 255, 153, 0.25);
-}
-
 .headline {
   font-size: var(--fs-display);
   line-height: var(--lh-tight);

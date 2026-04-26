@@ -20,8 +20,6 @@ export function HelloHero() {
             <span aria-hidden="true">&middot;</span> Student Voice
           </p>
 
-          <p className={styles.joy}>bring the joy.</p>
-
           <h1 className={styles.headline}>
             designed for <em className={styles.headlineAccent}>difference.</em>
           </h1>
