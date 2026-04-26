@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:20px;}
+  .card{width:660px;display:flex;flex-direction:column;gap:8px;}
+  .row{display:flex;align-items:center;gap:14px;padding:10px 14px;border-radius:10px;background:var(--surface-raised);border:1px solid var(--border-subtle);}
+  .chip{width:36px;height:36px;border-radius:8px;flex-shrink:0;border:1px solid var(--border-subtle);}
+  .meta{display:flex;flex-direction:column;gap:2px;flex:1;}
+  .name{font-family:var(--font-heading);font-weight:700;font-size:13px;color:var(--text);}
+  .desc{font-family:var(--font-body);font-size:11px;color:var(--text-subtle);}
+  .val{font-family:var(--font-heading);font-size:11px;color:var(--text-muted);opacity:0.7;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="row"><div class="chip" style="background:#f0ebe5;"></div><div class="meta"><div class="name">text · primary</div><div class="desc">Body + headings on amethyst</div></div><div class="val">#f0ebe5</div></div>
+  <div class="row"><div class="chip" style="background:rgba(240,235,229,0.65);"></div><div class="meta"><div class="name">text-muted</div><div class="desc">Secondary copy · 65% alpha</div></div><div class="val">rgba 0.65</div></div>
+  <div class="row"><div class="chip" style="background:rgba(240,235,229,0.45);"></div><div class="meta"><div class="name">text-subtle</div><div class="desc">Captions, helper · 45%</div></div><div class="val">rgba 0.45</div></div>
+  <div class="row"><div class="chip" style="background:rgba(240,235,229,0.32);"></div><div class="meta"><div class="name">text-faint</div><div class="desc">Footer legal · 32%</div></div><div class="val">rgba 0.32</div></div>
+  <div class="row" style="background:#fceddb;border-color:rgba(0,0,0,0.1);"><div class="chip" style="background:#210a33;"></div><div class="meta"><div class="name" style="color:#210a33;">text-inverse</div><div class="desc" style="color:rgba(33,10,51,0.7);">On green / yellow buttons</div></div><div class="val" style="color:rgba(33,10,51,0.6);">#210a33</div></div>
+</div>
+</body>
+</html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:20px;}
+  .card{width:660px;display:flex;flex-direction:column;gap:18px;}
+  .stat-row{display:grid;grid-template-columns:repeat(3,1fr);}
+  .stat{padding:14px 16px;border-right:1px solid var(--border-default);}
+  .stat:last-child{border-right:none;}
+  .figure{font-family:var(--font-heading);font-size:32px;font-weight:800;margin:0 0 6px;color:var(--spring-green);letter-spacing:-0.02em;}
+  .slab{font-family:var(--font-body);font-size:11px;line-height:1.55;color:var(--text-subtle);margin:0;}
+  .bar{height:2px;background:linear-gradient(90deg,var(--spring-green) 0%,rgba(56,255,153,0) 100%);}
+  .note{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div>
+    <div class="note" style="margin-bottom:8px;">SectionBar · 2px gradient rule, accent → transparent</div>
+    <div class="bar"></div>
+  </div>
+  <div class="stat-row">
+    <div class="stat"><p class="figure">60%</p><p class="slab">Of learners don't fit the current system neatly — and are mostly invisible to it.</p></div>
+    <div class="stat"><p class="figure">1 question</p><p class="slab">Anchors every piece of work: what are we solving for the student?</p></div>
+    <div class="stat"><p class="figure">0 jargon</p><p class="slab">No fluff, no tick-boxes, no reports that don't change anything.</p></div>
+  </div>
+</div>
+</body>
+</html>

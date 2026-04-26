@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);}
+  body{padding:20px;}
+  .card{width:660px;}
+
+  /* Primary wordmark — hero slot */
+  .primary{background:var(--surface-raised);border:1px solid var(--spring-green);border-radius:14px;padding:40px 28px;display:flex;flex-direction:column;align-items:center;gap:10px;position:relative;}
+  .primary .wm{font-family:'Comfortaa',system-ui,sans-serif;font-weight:700;font-size:56px;letter-spacing:-0.012em;color:#ffffff;white-space:nowrap;line-height:1;}
+  .primary .wm .dot{color:var(--spring-green);}
+  .primary .caption{font-family:'Outfit',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:var(--spring-green);margin-top:6px;}
+
+  /* Sub-brand variants */
+  .variants{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:10px;}
+  .variants .slot{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:10px;padding:18px 12px;display:flex;flex-direction:column;align-items:center;gap:6px;}
+  .variants .wm{font-family:'Comfortaa',system-ui,sans-serif;font-weight:700;font-size:20px;letter-spacing:-0.012em;color:#ffffff;white-space:nowrap;line-height:1;}
+  .variants .role{font-family:'Outfit',system-ui,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,235,229,0.45);}
+
+  /* On-light */
+  .on-light-row{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px;}
+  .on-light-row .slot{background:#fceddb;border-radius:10px;padding:22px;display:flex;align-items:center;justify-content:center;position:relative;min-height:80px;}
+  .on-light-row .wm{font-family:'Comfortaa',system-ui,sans-serif;font-weight:700;font-size:28px;color:#210a33;letter-spacing:-0.012em;}
+  .on-light-row .wm .dot{color:var(--spring-green);}
+  .on-light-row .label{position:absolute;bottom:8px;left:12px;font-family:'Outfit',system-ui,sans-serif;font-size:9px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(33,10,51,0.45);}
+
+  /* Icon stamp row — retired from primary, kept for small/decorative */
+  .stamp-row{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px;}
+  .stamp-row .slot{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:10px;padding:18px;display:flex;align-items:center;justify-content:center;height:78px;position:relative;}
+  .stamp-row .slot.light{background:#fceddb;}
+  .stamp-row .slot img{max-width:100%;max-height:100%;object-fit:contain;}
+  .stamp-row .label{position:absolute;bottom:6px;left:10px;font-family:'Outfit',system-ui,sans-serif;font-size:8px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:rgba(240,235,229,0.35);}
+  .stamp-row .slot.light .label{color:rgba(33,10,51,0.45);}
+
+  h3{font-family:'Outfit',system-ui,sans-serif;font-size:10px;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(240,235,229,0.5);margin:18px 0 6px;}
+  h3:first-child{margin-top:0;}
+  .note{font-family:'Comfortaa',system-ui,sans-serif;font-size:11.5px;line-height:1.55;color:var(--text-subtle);margin:6px 0 0;}
+  .dot-me{color:#38ff99}
+  .dot-audit{color:#69d9d1}
+  .dot-access{color:#db7dcc}
+  .dot-voice{color:#ff832b}
+  .dot-hub{color:#f2c33e}
+</style>
+</head>
+<body>
+<div class="card">
+  <h3>Primary wordmark</h3>
+  <div class="primary">
+    <span class="wm">unbarrier<span class="dot">.</span>me</span>
+    <span class="caption">Primary mark · use everywhere</span>
+  </div>
+  <p class="note">The wordmark is the mark. Comfortaa Bold, tracked slightly tight, green dot carrying the brand energy. One mark, used confidently — no icon lockup.</p>
+
+  <h3>Sub-brand family</h3>
+  <div class="variants">
+    <div class="slot"><span class="wm">unbarrier<span class="dot dot-audit">.</span>audit</span><span class="role">pearl aqua</span></div>
+    <div class="slot"><span class="wm">unbarrier<span class="dot dot-access">.</span>access</span><span class="role">orchid mist</span></div>
+    <div class="slot"><span class="wm">unbarrier<span class="dot dot-voice">.</span>voice</span><span class="role">princeton orange</span></div>
+  </div>
+  <p class="note">Each service gets the same wordmark with its accent colour on the dot. One system, five expressions.</p>
+
+  <h3>On light</h3>
+  <div class="on-light-row">
+    <div class="slot"><span class="wm">unbarrier<span class="dot">.</span>me</span><span class="label">on cream</span></div>
+    <div class="slot" style="background:#ffffff"><span class="wm">unbarrier<span class="dot">.</span>me</span><span class="label">on white</span></div>
+  </div>
+
+  <h3>Icon (stamp use only)</h3>
+  <div class="stamp-row">
+    <div class="slot"><img src="../assets/logos/logo-icon-white.png" alt="icon white"><span class="label">white</span></div>
+    <div class="slot"><img src="../assets/logos/logo-icon-green.png" alt="icon green"><span class="label">green</span></div>
+    <div class="slot light"><img src="../assets/logos/logo-icon-colour.png" alt="icon colour"><span class="label">colour</span></div>
+    <div class="slot light"><img src="../assets/logos/logo-icon-black.png" alt="icon black"><span class="label">black</span></div>
+  </div>
+  <p class="note"><b>Retired from primary surfaces.</b> Keep the icon for favicons, app icons, social avatars, merch stamps, letter seals — where type can't breathe. Do not combine with the wordmark.</p>
+</div>
+</body>
+</html>

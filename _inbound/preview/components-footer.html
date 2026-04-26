@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:22px;display:flex;flex-direction:column;gap:40px;}
+
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-subtle);margin:0 0 14px;display:block;}
+
+  /* ───── Universal Unbarrier footer ───── */
+  .u-footer{
+    width:760px;
+    background:var(--amethyst);
+    border-top:1px solid rgba(56,255,153,0.18);
+    padding:44px 32px 24px;
+    border-radius:0 0 14px 14px;
+  }
+  .u-top{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:36px;align-items:start;}
+
+  .u-brand .u-logo{
+    display:flex;align-items:center;gap:10px;
+    font-family:var(--font-brand);font-weight:700;
+    color:var(--text);font-size:20px;letter-spacing:-0.005em;
+    margin-bottom:10px;
+  }
+  .u-brand .u-logo em{color:var(--spring-green);font-style:normal;}
+  .u-brand .u-voice{
+    font-family:var(--font-heading);font-weight:700;font-size:14px;line-height:1.5;
+    color:var(--text);margin:0 0 10px;letter-spacing:-0.005em;
+    max-width:260px;
+  }
+  .u-brand .u-voice span{
+    display:block;font-family:var(--font-body);font-weight:400;
+    font-size:12px;color:var(--text-muted);margin-top:4px;letter-spacing:0;
+  }
+  .u-brand .u-voice em{color:var(--spring-green);font-style:italic;}
+  .u-brand .u-tag{
+    font-family:var(--font-body);font-size:12.5px;line-height:1.6;
+    color:var(--text-muted);max-width:260px;margin:0 0 18px;
+  }
+  .u-brand .u-hello{
+    font-family:var(--font-heading);font-size:10.5px;font-weight:700;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--text-subtle);
+  }
+  .u-brand .u-hello a{color:var(--spring-green);text-decoration:none;margin-left:6px;}
+
+  .u-col h5{
+    font-family:var(--font-heading);font-size:10.5px;font-weight:700;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--spring-green);margin:0 0 16px;
+  }
+  .u-col .u-sub{
+    display:block;font-family:var(--font-body);font-size:12.5px;
+    color:var(--text-muted);margin-bottom:10px;text-decoration:none;
+    transition:color 150ms;
+  }
+  .u-col .u-sub:hover{color:var(--text);}
+  .u-col .u-sub b{
+    display:block;color:var(--text);font-weight:700;font-size:13.5px;
+    margin-bottom:2px;font-family:var(--font-heading);letter-spacing:-0.005em;
+  }
+  .u-col .u-sub span{display:block;font-size:11.5px;color:var(--text-faint);}
+
+  /* Social rows */
+  .u-social{display:flex;flex-direction:column;gap:2px;}
+  .u-social a{
+    display:flex;align-items:center;gap:12px;
+    padding:8px 0;text-decoration:none;
+    font-family:var(--font-body);font-size:13px;color:var(--text-muted);
+    transition:color 150ms;
+  }
+  .u-social a:hover{color:var(--spring-green);}
+  .u-social a svg{flex-shrink:0;opacity:0.85;}
+  .u-social a:hover svg{opacity:1;}
+  .u-social a b{color:var(--text);font-weight:700;font-family:var(--font-heading);font-size:13.5px;letter-spacing:-0.005em;}
+  .u-social a span{color:var(--text-faint);font-size:11.5px;margin-left:auto;}
+
+  .u-ctas{display:flex;flex-direction:column;gap:10px;margin-top:18px;}
+  .u-ctas a{
+    display:block;padding:9px 12px;
+    font-family:var(--font-body);font-size:12.5px;
+    color:var(--text);text-decoration:none;font-weight:600;
+    border:1px solid rgba(255,255,255,0.12);border-radius:10px;
+    transition:all 150ms;
+  }
+  .u-ctas a:hover{border-color:var(--spring-green);color:var(--spring-green);}
+  .u-ctas a span{display:block;color:var(--text-faint);font-weight:400;font-size:11px;margin-top:1px;}
+
+  /* Inline variant */
+  .u-inline{display:flex;gap:10px;margin-top:6px;}
+  .u-inline a{
+    display:flex;align-items:center;justify-content:center;
+    width:36px;height:36px;
+    border:1px solid rgba(255,255,255,0.12);border-radius:50%;
+    color:var(--text-muted);text-decoration:none;
+    transition:all 150ms;
+  }
+  .u-inline a:hover{border-color:var(--spring-green);color:var(--spring-green);}
+  .u-inline-label{
+    font-family:var(--font-heading);font-size:10.5px;font-weight:700;
+    letter-spacing:0.14em;text-transform:uppercase;
+    color:var(--text-subtle);margin:16px 0 8px;
+  }
+
+  .u-divider{height:1px;background:rgba(255,255,255,0.08);margin:32px 0 16px;}
+  .u-bottom{
+    display:flex;justify-content:space-between;align-items:center;
+    flex-wrap:wrap;gap:12px;
+  }
+  .u-copy{font-family:var(--font-body);font-size:11px;color:var(--text-faint);}
+  .u-copy b{color:var(--text-subtle);font-weight:700;}
+  .u-legal{display:flex;gap:18px;flex-wrap:wrap;}
+  .u-legal a{font-family:var(--font-body);font-size:11px;color:var(--text-faint);text-decoration:none;}
+  .u-legal a:hover{color:var(--text-subtle);}
+
+  /* ───── Breadcrumb pill (only on sub-sites) ───── */
+  .crumb{
+    width:760px;
+    padding:22px 32px;
+    background:rgba(56,255,153,0.04);
+    border-top:1px solid rgba(56,255,153,0.10);
+    display:flex;justify-content:center;
+  }
+  .crumb-pill{
+    display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--font-body);font-size:12px;
+    color:var(--text-muted);
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.10);
+    padding:7px 14px;border-radius:100px;
+  }
+  .crumb-pill b{color:var(--spring-green);font-weight:700;font-family:var(--font-brand);font-size:13px;}
+  .crumb-pill .sep{color:var(--text-faint);}
+  .crumb-pill a{color:var(--text);text-decoration:none;font-weight:600;}
+  .crumb-pill a:hover{color:var(--spring-green);}
+
+  /* ───── Fake page top, for context above footer ───── */
+  .page-fake{
+    width:760px;background:var(--amethyst);
+    padding:30px 32px;text-align:center;
+    border-top:1px dashed rgba(255,255,255,0.08);
+  }
+  .page-fake span{font-family:var(--font-heading);font-size:10.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);}
+
+  .stack{display:flex;flex-direction:column;}
+</style>
+</head>
+<body>
+
+<!-- VERSION A · The universal footer alone -->
+<div>
+  <span class="label">A · Universal Unbarrier footer — social as list with handles</span>
+  <div class="u-footer">
+    <div class="u-top">
+      <div class="u-brand">
+        <div class="u-logo">unbarrier<em>.me</em></div>
+        <p class="u-voice">Clear. Human. Grounded. Honest.<br/><span>We speak <em>with</em> people, not at them.</span></p>
+        <p class="u-tag">I'm Nici — I remove the barriers to learning and belonging for the students the system forgets.</p>
+        <div class="u-hello">Say hello <a href="mailto:hello@unbarrier.me">hello@unbarrier.me</a></div>
+      </div>
+
+      <div class="u-col">
+        <h5>What we do</h5>
+        <a class="u-sub" href="#"><b>unbarrier.audit</b><span>EHCP · Section 7 · needs-led reports</span></a>
+        <a class="u-sub" href="#"><b>unbarrier.access</b><span>Apple PLS · iPad strategy · belonging</span></a>
+        <a class="u-sub" href="#"><b>unbarrier.voice</b><span>Student voice · evidence · EdTech impact</span></a>
+        <a class="u-sub" href="#"><b>Loop Breakers</b><span>Vision-to-Launch · community · coaching</span></a>
+      </div>
+
+      <div class="u-col">
+        <h5>Connect</h5>
+        <div class="u-social">
+          <a href="https://www.linkedin.com/in/nicifoote/" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.95v5.66H9.33V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.28 2.37 4.28 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            <b>LinkedIn</b><span>@nicifoote</span>
+          </a>
+          <a href="https://www.instagram.com/unbarrier/" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            <b>Instagram</b><span>@unbarrier</span>
+          </a>
+          <a href="https://www.facebook.com/unbarrier" target="_blank" rel="noopener">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M13.4 21v-8.19h2.75l.41-3.19h-3.16V7.58c0-.92.26-1.55 1.58-1.55h1.69V3.17A22.7 22.7 0 0 0 14.21 3c-2.44 0-4.11 1.49-4.11 4.22v2.4H7.34v3.19h2.76V21h3.3z"/></svg>
+            <b>Facebook</b><span>@unbarrier</span>
+          </a>
+        </div>
+        <div class="u-ctas">
+          <a href="#">Book a clarity call<span>30 min · no pitch</span></a>
+          <a href="#">Speaking &amp; keynotes<span>Neurodivergence · inclusion</span></a>
+        </div>
+      </div>
+    </div>
+
+    <div class="u-divider"></div>
+    <div class="u-bottom">
+      <span class="u-copy">© 2026 <b>Unbarrier</b>. Built by Nici Foote.</span>
+      <div class="u-legal">
+        <a href="#">Privacy</a>
+        <a href="#">Cookies</a>
+        <a href="#">Terms</a>
+        <a href="#">Accessibility</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- VERSION B · Sub-site context: breadcrumb + inline icon variant -->
+<div>
+  <span class="label">B · On a sub-site (Loop Breakers) — breadcrumb pill + inline icon variant</span>
+
+  <div class="stack">
+    <!-- fake page context above -->
+    <div class="page-fake">
+      <span>· end of Loop Breakers page ·</span>
+    </div>
+
+    <!-- the only sub-site-specific bit: a breadcrumb pill -->
+    <div class="crumb">
+      <div class="crumb-pill">
+        You're reading <b>loop breakers</b><span class="sep">·</span>part of <a href="#">Unbarrier</a>
+      </div>
+    </div>
+
+    <!-- same universal footer, but with inline icon social variant -->
+    <div class="u-footer">
+      <div class="u-top">
+        <div class="u-brand">
+          <div class="u-logo">unbarrier<em>.me</em></div>
+          <p class="u-voice">Clear. Human. Grounded. Honest.<br/><span>We speak <em>with</em> people, not at them.</span></p>
+          <p class="u-tag">I'm Nici — I remove the barriers to learning and belonging for the students the system forgets.</p>
+          <div class="u-hello">Say hello <a href="mailto:hello@unbarrier.me">hello@unbarrier.me</a></div>
+          <div class="u-inline-label">Follow</div>
+          <div class="u-inline">
+            <a href="https://www.linkedin.com/in/nicifoote/" target="_blank" rel="noopener" aria-label="LinkedIn @nicifoote">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M20.45 20.45h-3.56v-5.57c0-1.33-.02-3.04-1.85-3.04-1.86 0-2.15 1.45-2.15 2.95v5.66H9.33V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.61 0 4.28 2.37 4.28 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.13 2.06 2.06 0 0 1 0 4.13zM7.12 20.45H3.56V9h3.56v11.45z"/></svg>
+            </a>
+            <a href="https://www.instagram.com/unbarrier/" target="_blank" rel="noopener" aria-label="Instagram @unbarrier">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+            </a>
+            <a href="https://www.facebook.com/unbarrier" target="_blank" rel="noopener" aria-label="Facebook @unbarrier">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M13.4 21v-8.19h2.75l.41-3.19h-3.16V7.58c0-.92.26-1.55 1.58-1.55h1.69V3.17A22.7 22.7 0 0 0 14.21 3c-2.44 0-4.11 1.49-4.11 4.22v2.4H7.34v3.19h2.76V21h3.3z"/></svg>
+            </a>
+          </div>
+        </div>
+
+        <div class="u-col">
+          <h5>What we do</h5>
+          <a class="u-sub" href="#"><b>unbarrier.audit</b><span>EHCP · Section 7 · needs-led reports</span></a>
+          <a class="u-sub" href="#"><b>unbarrier.access</b><span>Apple PLS · iPad strategy · belonging</span></a>
+          <a class="u-sub" href="#"><b>unbarrier.voice</b><span>Student voice · evidence · EdTech impact</span></a>
+          <a class="u-sub" href="#"><b>Loop Breakers</b><span>Vision-to-Launch · community · coaching</span></a>
+        </div>
+
+        <div class="u-col">
+          <h5>Connect</h5>
+          <div class="u-ctas" style="margin-top:0;">
+            <a href="#">Book a clarity call<span>30 min · no pitch</span></a>
+            <a href="#">Speaking &amp; keynotes<span>Neurodivergence · inclusion</span></a>
+            <a href="mailto:hello@unbarrier.me">Email<span>hello@unbarrier.me</span></a>
+          </div>
+        </div>
+      </div>
+
+      <div class="u-divider"></div>
+      <div class="u-bottom">
+        <span class="u-copy">© 2026 <b>Unbarrier</b>. Built by Nici Foote.</span>
+        <div class="u-legal">
+          <a href="#">Privacy</a>
+          <a href="#">Cookies</a>
+          <a href="#">Terms</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>

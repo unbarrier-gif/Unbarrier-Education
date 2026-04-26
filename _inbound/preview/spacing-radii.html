@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:20px;}
+  .card{width:660px;display:flex;flex-direction:column;gap:14px;}
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:4px;}
+  .scale{display:flex;gap:10px;align-items:flex-end;}
+  .unit{display:flex;flex-direction:column;align-items:center;gap:4px;font-family:var(--font-heading);font-size:10px;color:var(--text-subtle);}
+  .box{background:var(--spring-green);border-radius:4px;width:28px;}
+  .radii{display:flex;gap:14px;align-items:center;}
+  .r{width:70px;height:70px;background:var(--surface-raised);border:1.5px solid var(--border-default);display:flex;align-items:center;justify-content:center;font-family:var(--font-heading);font-weight:700;font-size:12px;color:var(--text-muted);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div>
+    <div class="label">Spacing scale (px)</div>
+    <div class="scale">
+      <div class="unit"><div class="box" style="height:4px;"></div>4</div>
+      <div class="unit"><div class="box" style="height:8px;"></div>8</div>
+      <div class="unit"><div class="box" style="height:12px;"></div>12</div>
+      <div class="unit"><div class="box" style="height:16px;"></div>16</div>
+      <div class="unit"><div class="box" style="height:24px;"></div>24</div>
+      <div class="unit"><div class="box" style="height:32px;"></div>32</div>
+      <div class="unit"><div class="box" style="height:48px;"></div>48</div>
+      <div class="unit"><div class="box" style="height:64px;"></div>64</div>
+      <div class="unit"><div class="box" style="height:96px;"></div>96</div>
+    </div>
+  </div>
+  <div>
+    <div class="label">Radii · 12 is the default, 100 for pills</div>
+    <div class="radii">
+      <div class="r" style="border-radius:6px;">6</div>
+      <div class="r" style="border-radius:12px;">12</div>
+      <div class="r" style="border-radius:18px;">18</div>
+      <div class="r" style="border-radius:24px;">24</div>
+      <div class="r" style="border-radius:100px;">pill</div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:20px;}
+  .card{width:660px;display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .service{display:flex;flex-direction:column;gap:8px;padding:22px;border-radius:18px;border:1.5px solid var(--border-default);background:var(--surface-raised);position:relative;text-decoration:none;}
+  .aud{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;opacity:0.85;}
+  .name{font-family:var(--font-heading);font-weight:800;font-size:18px;color:var(--text);}
+  .sub{font-family:var(--font-body);font-size:12.5px;font-weight:800;opacity:1;letter-spacing:0.03em;}
+  .desc{font-family:var(--font-body);font-size:12.5px;line-height:1.65;color:var(--text-muted);margin:0;}
+  .more{font-family:var(--font-body);font-size:13px;font-weight:600;margin-top:4px;}
+  .soon{position:absolute;top:14px;right:14px;font-family:var(--font-heading);font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:3px 9px;border-radius:100px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="service" style="border-color:#69d9d155;background:#69d9d10e;">
+    <span class="aud" style="color:#69d9d1;">Families &amp; Schools</span>
+    <span class="name">unbarrier.audit</span>
+    <span class="sub" style="color:#69d9d1;">EHCP · Section 7 reports</span>
+    <p class="desc">The Ruby story. Practical, evidence-based, built around the student's actual life.</p>
+    <span class="more" style="color:#69d9d1;">Find out more →</span>
+  </div>
+  <div class="service" style="border-color:#ff8a1c55;background:#ff8a1c0e;">
+    <span class="aud" style="color:#ff8a1c;">Schools &amp; Trusts</span>
+    <span class="name">unbarrier.access</span>
+    <span class="sub" style="color:#ff8a1c;">Apple PLS · iPad strategy</span>
+    <p class="desc">Most schools own powerful tools. Few use them. I build the strategy that makes digital access real.</p>
+    <span class="more" style="color:#ff8a1c;">Find out more →</span>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Core colors</title>
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  body { padding: 20px; }
+  .card { width: 660px; display: flex; flex-direction: column; gap: 8px; }
+  .row { display: flex; gap: 8px; align-items: stretch; }
+  .swatch { flex: 1; aspect-ratio: 1.4/1; border-radius: 12px; display: flex; flex-direction: column; justify-content: space-between; padding: 12px; font-family: var(--font-body); font-size: 12px; border: 1px solid var(--border-subtle); }
+  .swatch .role { font-family: var(--font-heading); font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.7; }
+  .swatch .name { font-family: var(--font-heading); font-weight: 700; font-size: 13px; letter-spacing: -0.01em; }
+  .swatch .hex { opacity: 0.72; font-size: 11px; margin-top: 2px; }
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="row">
+    <div class="swatch" style="background:#210a33; color:#f0ebe5;">
+      <div class="role">Structure</div>
+      <div><div class="name">Dark Amethyst</div><div class="hex">#210a33 · canvas · 70%</div></div>
+    </div>
+    <div class="swatch" style="background:#38ff99; color:#0a2418; box-shadow: 0 0 0 1px rgba(56,255,153,0.4), 0 8px 28px rgba(56,255,153,0.18); border-color: transparent;">
+      <div class="role">Signal · Action</div>
+      <div><div class="name">Spring Green</div><div class="hex">#38ff99 · CTAs · 10%</div></div>
+    </div>
+    <div class="swatch" style="background:#f0ebe5; color:#210a33;">
+      <div class="role">Text · FG</div>
+      <div><div class="name">Cream</div><div class="hex">#f0ebe5 · 20%</div></div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="swatch" style="background:#150520; color:#f0ebe5; aspect-ratio: 2.8/1;">
+      <div class="role">Wells · Deeper</div>
+      <div><div class="name">Amethyst Deep</div><div class="hex">#150520</div></div>
+    </div>
+    <div class="swatch" style="background:#fceddb; color:#210a33; aspect-ratio: 2.8/1;">
+      <div class="role">Warm surface</div>
+      <div><div class="name">Antique White</div><div class="hex">#fceddb</div></div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

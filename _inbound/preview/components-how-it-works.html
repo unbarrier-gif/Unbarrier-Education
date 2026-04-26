@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:22px;}
+  .card{width:680px;display:flex;flex-direction:column;gap:10px;}
+  .step{position:relative;border-left:4px solid var(--spring-green);border-radius:12px;padding:20px 24px;background:var(--surface-raised);overflow:hidden;}
+  .step.payoff{border-left-color:var(--school-bus-yellow);}
+  .watermark{position:absolute;top:-18px;right:6px;font-family:var(--font-heading);font-weight:800;font-size:96px;line-height:1;color:var(--spring-green);opacity:0.08;pointer-events:none;letter-spacing:-0.04em;}
+  .step.payoff .watermark{color:var(--school-bus-yellow);}
+  .num{font-family:var(--font-heading);font-size:12px;font-weight:700;letter-spacing:0.12em;color:var(--spring-green);margin:0 0 6px;}
+  .step.payoff .num{color:var(--school-bus-yellow);}
+  h4{margin:0 0 6px;font-family:var(--font-heading);font-weight:800;font-size:18px;color:var(--text);}
+  p{margin:0;font-family:var(--font-body);font-size:13px;color:var(--text-muted);line-height:1.6;}
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:6px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="label">How-it-works steps · watermark numeral, left accent, payoff tier yellow</div>
+  <div class="step">
+    <span class="watermark">01</span>
+    <p class="num">01</p>
+    <h4>Bring one idea</h4>
+    <p>The one you've been circling too long.</p>
+  </div>
+  <div class="step">
+    <span class="watermark">02</span>
+    <p class="num">02</p>
+    <h4>Make it smaller</h4>
+    <p>Until it's actually launchable.</p>
+  </div>
+  <div class="step">
+    <span class="watermark">03</span>
+    <p class="num">03</p>
+    <h4>Work it through</h4>
+    <p>Small group, real conversation.</p>
+  </div>
+  <div class="step payoff">
+    <span class="watermark">04</span>
+    <p class="num">04</p>
+    <h4>Leave with one step</h4>
+    <p>Not a list. One thing. Moving.</p>
+  </div>
+</div>
+</body>
+</html>
