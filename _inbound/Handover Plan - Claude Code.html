@@ -1,0 +1,601 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Handover Plan v4 — Claude Code · unbarrier.me/hello</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 980px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5.5vw,3.6rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; color: var(--text); font-size: 1.02rem; line-height: 1.8; margin: 0 0 0.6rem; max-width: 760px; }
+  .lede-sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 0.93rem; line-height: 1.75; margin: 0 0 0; max-width: 760px; }
+
+  .deadline {
+    display: grid; grid-template-columns: auto 1fr; gap: 24px; align-items: center;
+    padding: 22px 28px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,194,3,0.10), rgba(255,138,28,0.05));
+    border: 1.5px solid rgba(255,194,3,0.4);
+    margin: 2rem 0 3rem;
+  }
+  .deadline .num { font-family: "Outfit"; font-weight: 800; font-size: 2.6rem; color: var(--school-bus-yellow); line-height: 1; letter-spacing: -0.04em; }
+  .deadline .num small { display: block; font-size: 0.4em; letter-spacing: 0.1em; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
+  .deadline p { font-family: "Comfortaa"; font-size: 0.95rem; color: var(--text); margin: 0; line-height: 1.6; }
+  .deadline p b { color: var(--school-bus-yellow); }
+  .deadline .label { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--princeton-orange); margin: 0 0 4px; }
+
+  .toc { padding: 18px 24px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); margin: 0 0 3rem; }
+  .toc h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); margin: 0 0 10px; }
+  .toc ol { padding: 0; margin: 0; list-style: none; counter-reset: toc; column-count: 2; column-gap: 32px; }
+  .toc li { counter-increment: toc; padding: 4px 0; font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.6; break-inside: avoid; }
+  .toc li::before { content: counter(toc, decimal-leading-zero) " · "; color: var(--text-faint); font-family: "Outfit"; font-weight: 700; }
+  .toc a { color: var(--text); text-decoration: none; border-bottom: 1px dotted transparent; }
+  .toc a:hover { color: var(--spring-green); border-bottom-color: var(--spring-green); }
+  @media (max-width: 720px) { .toc ol { column-count: 1; } }
+
+  section.block { padding: 2.4rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2.05rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); letter-spacing: -0.01em; }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; margin: 1.2rem 0 0.4rem; color: var(--text); letter-spacing: -0.005em; }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+
+  .kv { display: grid; grid-template-columns: 200px 1fr; gap: 8px 20px; font-family: "Comfortaa"; font-size: 0.9rem; margin: 0 0 1rem; padding: 18px 20px; background: rgba(56,255,153,0.04); border: 1px solid rgba(56,255,153,0.18); border-radius: 12px; }
+  .kv dt { color: var(--text-subtle); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; font-family: "Outfit"; font-weight: 700; }
+  .kv dd { margin: 0; color: var(--text); }
+  .kv dd code { font-size: 0.82rem; }
+
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.do-not { background: rgba(227,161,176,0.06); border: 1px solid rgba(227,161,176,0.3); border-left: 3px solid var(--pink-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.do-not h4 { color: var(--pink-mist); }
+
+  .step-grid { display: grid; grid-template-columns: 60px 1fr; gap: 14px 18px; margin: 1rem 0; }
+  .step-grid .n { font-family: "Outfit"; font-weight: 800; font-size: 1.6rem; color: var(--spring-green); line-height: 1; letter-spacing: -0.02em; }
+  .step-grid .n small { display: block; font-size: 0.5em; color: var(--text-faint); letter-spacing: 0.1em; margin-top: 2px; font-weight: 700; }
+  .step-grid .body { padding-bottom: 12px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+  .step-grid .body p:first-child { font-family: "Outfit"; font-weight: 700; font-size: 0.98rem; color: var(--text); margin: 0 0 4px; }
+  .step-grid .body p { margin: 4px 0; font-size: 0.88rem; }
+
+  .pill { display: inline-block; font-family: "Outfit"; font-size: 9.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 3px 9px; border-radius: 100px; margin-left: 8px; vertical-align: middle; position: relative; top: -2px; }
+  .p-locked { background: rgba(56,255,153,0.14); color: var(--spring-green); border: 1px solid rgba(56,255,153,0.35); }
+  .p-now { background: rgba(255,194,3,0.14); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.35); }
+  .p-next { background: rgba(219,125,204,0.14); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.45); }
+  .p-later { background: rgba(105,217,209,0.14); color: var(--pearl-aqua); border: 1px solid rgba(105,217,209,0.35); }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 1rem; }
+  @media (max-width: 720px) { .two { grid-template-columns: 1fr; } }
+  .col { padding: 16px 20px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); }
+  .col.me { border-left: 3px solid var(--spring-green); }
+  .col.you { border-left: 3px solid var(--orchid-mist); }
+  .col.cc { border-left: 3px solid var(--school-bus-yellow); }
+  .col h4 { font-family: "Outfit"; font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 10px; }
+  .col.me h4 { color: var(--spring-green); }
+  .col.you h4 { color: var(--orchid-mist); }
+  .col.cc h4 { color: var(--school-bus-yellow); }
+
+  footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">Handover Plan · v4 · 26 Apr 2026 · supersedes v3</p>
+<h1>Ship <em>unbarrier.me/hello</em><br/>by Wednesday.</h1>
+<p class="lede">A single brief that gets <code>/hello</code> live in production for the Cardiff show on Wed 29 Apr — through GitHub, Vercel, and Bluehost DNS — then sets the foundation for the rest of <code>unbarrier.me</code> + Loop Breakers + the blog to ship in waves after.</p>
+<p class="lede-sub">v4 reflects Source of Truth v1.2: three products (Tuesday Loop Breakers, Wednesday Guest Stage, Accessible Coaching), TidyCal as the single booking tool, MailerLite as the newsletter, single Next.js app at <code>unbarrier.me</code>. v3 (23 Apr) is archived.</p>
+
+<div class="deadline">
+  <div class="num">29<small>APR · WED</small></div>
+  <div>
+    <p class="label">Hard deadline · Cardiff show</p>
+    <p><b>unbarrier.me/hello live in production · QR resolves cleanly · TidyCal booking links work · MailerLite opt-in fires · Plausible counts events.</b> Soft launch Tue 28 Apr evening; final tweak day Mon 27 Apr; this plan covers every blocker between now and then.</p>
+  </div>
+</div>
+
+<nav class="toc">
+  <h4>Contents</h4>
+  <ol>
+    <li><a href="#what-changed">What changed since v3</a></li>
+    <li><a href="#locked">Confirmed values &amp; accounts</a></li>
+    <li><a href="#stack">Final stack — locked</a></li>
+    <li><a href="#repo">Repo shape — single Next.js app</a></li>
+    <li><a href="#github">GitHub — org, repo, access</a></li>
+    <li><a href="#vercel">Vercel — project, env, deploy</a></li>
+    <li><a href="#bluehost">Bluehost DNS — point unbarrier.me at Vercel</a></li>
+    <li><a href="#hello-spec">/hello — page spec</a></li>
+    <li><a href="#newsletter">MailerLite wiring</a></li>
+    <li><a href="#tidycal">TidyCal links — what /hello points to</a></li>
+    <li><a href="#legal">Legal pages &amp; footer</a></li>
+    <li><a href="#timeline">Timeline · Sun → Wed</a></li>
+    <li><a href="#after">After /hello is live — what we plan next</a></li>
+  </ol>
+</nav>
+
+<!-- ═════════ 01 WHAT CHANGED ═════════ -->
+<section class="block" id="what-changed" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · What changed since v3</p>
+  <h2>Why this is v4 and not a patch.</h2>
+
+  <table>
+    <thead><tr><th>v3 said</th><th>v4 says</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Newsletter = <b>ConvertKit</b></td><td>Newsletter = <b>MailerLite</b></td><td>The MailerLite Setup Pack and Newsletter Opt-in &amp; Welcome docs are the live ones. ConvertKit reference was stale.</td></tr>
+      <tr><td>Booking = <b>Google Appointment Schedule</b></td><td>Booking = <b>TidyCal</b> (single tool, all products)</td><td>TidyCal handles Stripe-gated payment + per-client unlisted pages for Accessible Coaching. One tool, less moving parts.</td></tr>
+      <tr><td>Subdomain = <b>loop.unbarrier.me</b></td><td>Path = <b>unbarrier.me/loop-breakers</b></td><td>SoT v1.1 locks <code>unbarrier.me</code> as trading-name root; products live as paths.</td></tr>
+      <tr><td>Repo = <b>Turborepo</b> with <code>apps/main</code> + <code>apps/loop-breakers</code></td><td>Repo = <b>single Next.js app</b> at <code>unbarrier.me</code></td><td>Two products on one domain doesn't justify monorepo overhead. Easier deploys, simpler mental model.</td></tr>
+      <tr><td>Two products (Tue + Wed)</td><td>Three products: Tuesday Loop Breakers, Wednesday Guest Stage, <b>Accessible Coaching</b> (£55/mo)</td><td>Per SoT v1.1 §01.</td></tr>
+      <tr><td>Trading name = <b>Unbarrier.Me</b></td><td>Trading name = <b>Unbarrier</b> (the <code>.me</code> is the address, not the name)</td><td>Per SoT v1.1 §08.</td></tr>
+      <tr><td>/hello = single-field lead capture</td><td>/hello = <b>bio + next session callout + newsletter opt-in</b>, four CTA cards, mobile-first, QR target for Cardiff</td><td>Per Phase 1 Cardiff Launch Plan §05 + your decision today.</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ 02 LOCKED ═════════ -->
+<section class="block" id="locked" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Confirmed values &amp; accounts <span class="pill p-locked">Locked</span></p>
+  <h2>Set in stone. Don't re-question.</h2>
+
+  <dl class="kv">
+    <dt>Legal entity</dt><dd>Unbarrier Education Ltd · Companies House <b>16603630</b></dd>
+    <dt>Trading name</dt><dd><b>Unbarrier</b> (lives at <code>unbarrier.me</code>; the <code>.me</code> is the address, not part of the name)</dd>
+    <dt>Registered address</dt><dd>45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</dd>
+    <dt>Founder</dt><dd>Nici Foote — pronounced "Nicky", signs as "Nici"</dd>
+    <dt>Stripe</dt><dd><code>acct_1TI98cDd2uGyLE5a</code> · 1.5% + 20p / UK txn</dd>
+    <dt>Domain</dt><dd><code>unbarrier.me</code> — DNS at <b>Bluehost</b></dd>
+    <dt>Hosting</dt><dd><b>Vercel</b> (free tier fine for Phase 1)</dd>
+    <dt>Repo</dt><dd>GitHub · <b>Unbarrier-Education</b> org (new — see §05)</dd>
+    <dt>Email</dt><dd>Google Workspace · <code>hello@unbarrier.me</code> + <code>nici@unbarrier.me</code></dd>
+    <dt>Calendar &amp; video</dt><dd>Google Calendar + Google Meet (TidyCal writes to Calendar; Meet auto-attaches)</dd>
+    <dt>Booking</dt><dd>TidyCal (one account, multiple booking pages — see §10)</dd>
+    <dt>Newsletter</dt><dd>MailerLite (existing account — see <code>MailerLite Setup Pack.html</code>)</dd>
+    <dt>Analytics</dt><dd>Plausible (~£9/mo, cookieless, no banner needed)</dd>
+    <dt>Accounting</dt><dd>Xero (Stripe → Xero direct)</dd>
+    <dt>Post-session chat</dt><dd>WhatsApp group (moderated, 30-day access)</dd>
+  </dl>
+</section>
+
+<!-- ═════════ 03 STACK ═════════ -->
+<section class="block" id="stack" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Final stack <span class="pill p-locked">Locked</span></p>
+  <h2>One tool per slot. £9/mo new spend.</h2>
+
+  <table>
+    <thead><tr><th>Slot</th><th>Tool</th><th>Cost</th></tr></thead>
+    <tbody>
+      <tr><td>Domain &amp; DNS</td><td>Bluehost</td><td>Existing</td></tr>
+      <tr><td>Hosting</td><td>Vercel (Hobby tier)</td><td>£0</td></tr>
+      <tr><td>Repo</td><td>GitHub (private, Unbarrier-Education org)</td><td>£0</td></tr>
+      <tr><td>Booking (all products)</td><td>TidyCal</td><td>Existing (lifetime)</td></tr>
+      <tr><td>Payments</td><td>Stripe</td><td>1.5% + 20p / UK txn</td></tr>
+      <tr><td>Newsletter / lifecycle email</td><td>MailerLite</td><td>Existing</td></tr>
+      <tr><td>Email (Nici)</td><td>Google Workspace</td><td>Existing</td></tr>
+      <tr><td>Calendar &amp; video</td><td>Google Calendar + Meet</td><td>Existing (Workspace)</td></tr>
+      <tr><td>Accounting</td><td>Xero</td><td>Existing</td></tr>
+      <tr><td>Analytics</td><td>Plausible</td><td>~£9/mo</td></tr>
+      <tr><td>Post-session chat</td><td>WhatsApp group</td><td>£0</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box do-not">
+    <h4>Tools we are NOT using</h4>
+    ConvertKit (replaced by MailerLite) · Cal.com (replaced by TidyCal) · Google Appointment Schedule (replaced by TidyCal) · Resend (Stripe + Google + MailerLite cover all transactional flow) · Turborepo (single Next.js app is enough) · GA4 (Plausible is cookieless and avoids consent-banner overhead).
+  </div>
+</section>
+
+<!-- ═════════ 04 REPO SHAPE ═════════ -->
+<section class="block" id="repo" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Repo shape <span class="pill p-locked">Decided</span></p>
+  <h2>Single Next.js 14 app · App Router · TypeScript.</h2>
+
+  <p>One repo: <code>unbarrier-me</code>. One Next.js app. All routes — <code>/hello</code>, <code>/loop-breakers</code>, <code>/guest-stage</code>, <code>/accessible-coaching</code>, <code>/blog</code>, <code>/legal/*</code> — live inside <code>app/</code>. No monorepo. No second deploy target.</p>
+
+  <h3>Folder skeleton</h3>
+  <pre>unbarrier-me/
+├── app/
+│   ├── layout.tsx                  # root layout, fonts, plausible, footer
+│   ├── page.tsx                    # homepage (stub for now)
+│   ├── hello/
+│   │   └── page.tsx                # ★ Phase 1 hard target
+│   ├── loop-breakers/page.tsx      # stub
+│   ├── guest-stage/page.tsx        # stub
+│   ├── accessible-coaching/page.tsx# stub
+│   ├── blog/
+│   │   ├── page.tsx                # index
+│   │   └── [slug]/page.tsx         # MDX-rendered post
+│   ├── legal/
+│   │   ├── privacy/page.tsx
+│   │   ├── terms/page.tsx
+│   │   ├── cookies/page.tsx
+│   │   └── accessibility/page.tsx
+│   └── api/
+│       ├── subscribe/route.ts      # MailerLite proxy
+│       └── say-hi/route.ts         # /hello "just say hi" form
+├── components/
+│   ├── HelloHero.tsx
+│   ├── SessionCard.tsx
+│   ├── NewsletterOptIn.tsx
+│   ├── SayHiForm.tsx
+│   └── Footer.tsx
+├── content/
+│   └── blog/                       # .mdx files
+├── lib/
+│   ├── mailerlite.ts               # API client
+│   └── plausible.ts                # event helper
+├── public/
+│   ├── fonts/                      # Outfit, Comfortaa
+│   └── og/                         # 1200×630 OG images
+├── styles/
+│   └── colors_and_type.css         # ported verbatim from this project
+├── .env.example
+├── next.config.mjs
+├── tailwind.config.ts              # if Tailwind chosen
+├── tsconfig.json
+└── README.md
+</pre>
+
+  <div class="box good">
+    <h4>Why single app, not Turborepo</h4>
+    Turborepo earns its keep when you have multiple deployable surfaces (different domains, different framework versions, separate teams). We have one domain, one team-of-one, one Next.js version. A single app means: one Vercel project, one preview URL per PR, one set of env vars to manage, one mental model for routing. We can split later if we ever need to.
+  </div>
+</section>
+
+<!-- ═════════ 05 GITHUB ═════════ -->
+<section class="block" id="github" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · GitHub setup <span class="pill p-now">Do today</span></p>
+  <h2>One org · one private repo · two collaborators.</h2>
+
+  <h3>Recommended: create a GitHub Organisation</h3>
+  <p>Personal accounts are fine for hobby projects. For a registered company with a registered Stripe account, accounting, and IP that lives in a repo, an <b>Organisation</b> is the right shape — it survives if Nici's personal account is ever lost or transferred, and billing/access lives separate from her personal identity.</p>
+
+  <ol class="plan">
+    <li><b>Create the org:</b> github.com → "+" menu → "New organization" → Free plan → name <code>Unbarrier-Education</code> (or <code>unbarrier-edu</code> if taken)</li>
+    <li><b>Set the org to private-by-default</b> in org settings → Member privileges → "Repository creation" = "Private only"</li>
+    <li><b>Create the repo:</b> <code>Unbarrier-Education/unbarrier-me</code> · private · no README/gitignore (Claude Code will scaffold)</li>
+    <li><b>Invite collaborators:</b>
+      <ul style="margin-top:6px">
+        <li>Nici (owner)</li>
+        <li>The Claude Code engineer agent (write access on this repo only — not org-wide admin)</li>
+      </ul>
+    </li>
+    <li><b>Branch protection on <code>main</code>:</b> require PR before merge, require Vercel preview-deploy success</li>
+    <li><b>Default branch:</b> <code>main</code></li>
+  </ol>
+
+  <h3>Old repos</h3>
+  <p>The two existing repos — <code>unbarrier-me-APR-2026</code> and <code>loop-breakers-landing</code> — stay readable until <code>/hello</code> is live. Once Cardiff is over and we're confident, archive both via repo settings → "Archive this repository". Keeps history, prevents accidental commits.</p>
+</section>
+
+<!-- ═════════ 06 VERCEL ═════════ -->
+<section class="block" id="vercel" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · Vercel setup <span class="pill p-now">Do today</span></p>
+  <h2>One project · auto-deploy from <code>main</code> · preview per PR.</h2>
+
+  <ol class="plan">
+    <li><b>Sign in to Vercel with the GitHub Org account</b> (vercel.com → Sign Up → Continue with GitHub → grant access to <code>Unbarrier-Education</code> org)</li>
+    <li><b>Import <code>Unbarrier-Education/unbarrier-me</code></b> as a new project</li>
+    <li><b>Framework preset:</b> Next.js (auto-detected)</li>
+    <li><b>Root directory:</b> <code>./</code> · <b>Build command:</b> <code>next build</code> · <b>Output:</b> <code>.next</code></li>
+    <li><b>Production branch:</b> <code>main</code></li>
+    <li><b>Environment variables</b> — set in Vercel → Project → Settings → Environment Variables:
+      <pre style="margin-top:6px">MAILERLITE_API_KEY=<i>(from MailerLite → Integrations → API)</i>
+MAILERLITE_GROUP_ID=<i>(group for /hello opt-ins)</i>
+NEXT_PUBLIC_PLAUSIBLE_DOMAIN=unbarrier.me
+NEXT_PUBLIC_TIDYCAL_TUESDAY=https://tidycal.com/nici/loop-breakers-tuesday
+NEXT_PUBLIC_TIDYCAL_GUEST=https://tidycal.com/nici/guest-stage
+NEXT_PUBLIC_TIDYCAL_1TO1=https://tidycal.com/nici/1-to-1
+NEXT_PUBLIC_TIDYCAL_DISCOVERY=https://tidycal.com/nici/discovery
+SAY_HI_FORWARD_TO=hello@unbarrier.me
+RESEND_OR_SMTP_KEY=<i>(only if /api/say-hi sends mail; otherwise drop)</i></pre>
+    </li>
+    <li><b>Deploy</b> — first deploy lands at <code>unbarrier-me-xxx.vercel.app</code>. Verify it loads. Then add the custom domain in §07.</li>
+  </ol>
+
+  <div class="box good">
+    <h4>Preview deploys</h4>
+    Every PR Claude Code opens gets a unique preview URL. You and I can QA on phone before merging to <code>main</code>. <code>main</code> = production = <code>unbarrier.me</code>.
+  </div>
+</section>
+
+<!-- ═════════ 07 BLUEHOST DNS ═════════ -->
+<section class="block" id="bluehost" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Bluehost DNS <span class="pill p-now">Do today</span></p>
+  <h2>Point <code>unbarrier.me</code> at Vercel.</h2>
+
+  <p>This is the step that actually makes <code>unbarrier.me/hello</code> resolve. It's a 5-minute DNS edit, then 5 minutes to a few hours of propagation. Do it the day before Cardiff at the latest — <b>do it today if you can</b> so we have a buffer.</p>
+
+  <h3>Steps</h3>
+  <ol class="plan">
+    <li><b>In Vercel:</b> Project → Settings → Domains → Add → enter <code>unbarrier.me</code> → Vercel will show you the exact records you need (A record for apex, CNAME for <code>www</code>). Leave that tab open.</li>
+    <li><b>Also add <code>www.unbarrier.me</code></b> in the same Domains panel and choose "Redirect to <code>unbarrier.me</code>".</li>
+    <li><b>Log into Bluehost</b> → Domains → <code>unbarrier.me</code> → DNS / Zone Editor</li>
+    <li><b>Update the A record</b> for the apex (<code>@</code>) to Vercel's IP — currently <code>76.76.21.21</code>. Confirm exact value from the Vercel Domains panel; it's authoritative.</li>
+    <li><b>Update the CNAME for <code>www</code></b> to <code>cname.vercel-dns.com</code></li>
+    <li><b>Remove any conflicting records</b> — old Bluehost parking pages, old A records pointing to Bluehost servers, any AAAA records that conflict</li>
+    <li><b>Save.</b> Bluehost typically propagates within 5 min for most users. Check at <a href="https://dnschecker.org" target="_blank">dnschecker.org</a> for <code>unbarrier.me</code> A record — should resolve to <code>76.76.21.21</code> globally within an hour.</li>
+    <li><b>Back in Vercel</b> Domains panel: status should flip from "Invalid Configuration" to "Valid Configuration" with a green tick. SSL cert auto-provisions in 30s after that.</li>
+  </ol>
+
+  <h3>Email — don't break it</h3>
+  <p><b>Critical:</b> if Google Workspace MX records currently live in Bluehost DNS, <b>do not touch them</b>. Only change A records and the <code>www</code> CNAME. The MX records (typically <code>aspmx.l.google.com</code>, <code>alt1.aspmx.l.google.com</code> etc.) keep <code>hello@unbarrier.me</code> working and must stay exactly as they are.</p>
+
+  <div class="box warn">
+    <h4>Backup before you change anything</h4>
+    Screenshot the entire Bluehost DNS zone before editing. If something goes wrong (email stops, site goes white) you have a one-glance restore reference. Send the screenshot to me on WhatsApp.
+  </div>
+</section>
+
+<!-- ═════════ 08 /HELLO SPEC ═════════ -->
+<section class="block" id="hello-spec" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · /hello — page spec</p>
+  <h2>One page. Four CTAs. One email field. Mobile-first.</h2>
+
+  <p>Per SoT v1.2 §09b. This is the page on the back of the Cardiff flyer + the canonical mobile lead-capture going forward. Three jobs, in this order: <b>bio</b> → <b>next session callout</b> → <b>newsletter opt-in</b>.</p>
+
+  <h3>Above the fold (mobile)</h3>
+  <ul class="plan">
+    <li>Tiny <b>"Unbarrier"</b> wordmark · top-left</li>
+    <li>One-line bio: <em>"Hi — I'm Nici. Diagnosed dyslexic at 10, ADHD &amp; dyscalculia at 20. I run small rooms for neurodivergent founders. Tell me what's looping."</em></li>
+    <li>Primary CTA card: <b>Next Tuesday Loop Breakers</b> with date + price + TidyCal link</li>
+  </ul>
+
+  <h3>Below the fold</h3>
+  <ul class="plan">
+    <li>Three more cards: <b>Wednesday Guest Stage</b> (next date · £25 sliding), <b>1:1 with Nici</b> (£120), <b>Audit / access / voice for schools &amp; orgs</b> (discovery call)</li>
+    <li><b>"Just say hi"</b> form: name + email + optional textarea ("what's looping?") → <code>POST /api/say-hi</code> → forwards to <code>hello@unbarrier.me</code> + adds to MailerLite</li>
+    <li><b>MailerLite opt-in band</b>: single email field, the locked promise <em>"One note from me, once a month. Maybe less. Never more."</em></li>
+    <li>Footer: <code>From the desk of Nici Foote · Unbarrier Education Ltd · Companies House 16603630</code> + privacy/terms/accessibility links</li>
+  </ul>
+
+  <h3>Components Claude Code builds</h3>
+  <table>
+    <thead><tr><th>Component</th><th>File</th><th>Notes</th></tr></thead>
+    <tbody>
+      <tr><td><code>HelloHero</code></td><td><code>components/HelloHero.tsx</code></td><td>Wordmark + one-line bio. Static.</td></tr>
+      <tr><td><code>SessionCard</code></td><td><code>components/SessionCard.tsx</code></td><td>Reusable. Props: <code>title, subtitle, price, accentColor, href, ctaLabel</code>. Used 4× on /hello.</td></tr>
+      <tr><td><code>SayHiForm</code></td><td><code>components/SayHiForm.tsx</code></td><td>name + email + textarea. Submits to <code>/api/say-hi</code>. Inline success state, no redirect.</td></tr>
+      <tr><td><code>NewsletterOptIn</code></td><td><code>components/NewsletterOptIn.tsx</code></td><td>Single email field. Submits to <code>/api/subscribe</code>. Reused on every page.</td></tr>
+      <tr><td><code>Footer</code></td><td><code>components/Footer.tsx</code></td><td>Footer line + legal links. Reused everywhere.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Plausible events</h3>
+  <ul class="plan">
+    <li><code>session_book_click</code> — fires on each TidyCal CTA, with prop <code>{product: "tuesday|wednesday|1to1|discovery"}</code></li>
+    <li><code>say_hi_submit</code> — on form submit (success only)</li>
+    <li><code>newsletter_subscribe</code> — on opt-in submit (success only)</li>
+    <li><code>cardiff_qr_arrival</code> — fires once per session if URL has <code>?from=cardiff</code> param (the QR encodes this)</li>
+  </ul>
+
+  <h3>Acceptance criteria</h3>
+  <ul class="plan">
+    <li>Loads in &lt;2s on 4G phone, hero readable above the fold</li>
+    <li>All 4 TidyCal links open in new tab and resolve</li>
+    <li>"Just say hi" form lands in <code>hello@unbarrier.me</code> within 30s</li>
+    <li>MailerLite opt-in adds the address to the correct group</li>
+    <li>Plausible dashboard shows all four events firing on a real test</li>
+    <li>Lighthouse mobile ≥ 90 across all four categories</li>
+    <li>WCAG 2.2 AA contrast pass on every text/background pair</li>
+    <li>Reduced-motion respected (no transforms or pulses for users with the OS preference set)</li>
+  </ul>
+</section>
+
+<!-- ═════════ 09 NEWSLETTER ═════════ -->
+<section class="block" id="newsletter" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · MailerLite wiring</p>
+  <h2>One group · one welcome email · the locked promise.</h2>
+
+  <ol class="plan">
+    <li><b>Group:</b> create a MailerLite group called <code>hello-page</code>. All <code>/hello</code> opt-ins land here. (Cardiff arrivals get tagged <code>cardiff-2026</code> on top.)</li>
+    <li><b>API:</b> in <code>lib/mailerlite.ts</code>, server-side POST to MailerLite's <code>/api/subscribers</code>. API key in env (see §06).</li>
+    <li><b>Welcome email:</b> single instant email — see <code>Newsletter - Opt-in and Welcome.html</code> for copy. Subject line + body locked there.</li>
+    <li><b>Promise (used on every opt-in form):</b> <em>"One note from me, once a month. Maybe less. Never more."</em></li>
+    <li><b>Privacy micro-copy</b> below the field: <em>"One email address. I'll never sell it or spam you."</em></li>
+  </ol>
+
+  <div class="box do-not">
+    <h4>Don't build a 30-day automation</h4>
+    Single welcome email, then nothing scheduled. Real writing, when Nici has something to say. The MailerLite Setup Pack is the source of truth on this.
+  </div>
+</section>
+
+<!-- ═════════ 10 TIDYCAL ═════════ -->
+<section class="block" id="tidycal" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · TidyCal links</p>
+  <h2>What /hello points to.</h2>
+
+  <p>One TidyCal account (Nici's). Multiple booking pages. Each page is a TidyCal "Booking Type" with Stripe-gated payment, the agreed price, and the access-needs intake question. URLs go in Vercel env vars (§06).</p>
+
+  <table>
+    <thead><tr><th>Booking page</th><th>Purpose</th><th>Price</th><th>Stripe-gated</th></tr></thead>
+    <tbody>
+      <tr><td><code>/nici/loop-breakers-tuesday</code></td><td>Tuesday Loop Breakers — single seat</td><td>£10 (£5 access on request)</td><td>Yes</td></tr>
+      <tr><td><code>/nici/guest-stage</code></td><td>Wednesday Guest Stage — single seat</td><td>£15 / £25 / £40 sliding (attendee picks)</td><td>Yes</td></tr>
+      <tr><td><code>/nici/1-to-1</code></td><td>One-off 1:1 with Nici</td><td>£120</td><td>Yes</td></tr>
+      <tr><td><code>/nici/discovery</code></td><td>Discovery call (audit / access / voice / Accessible Coaching enquiry)</td><td>Free · 20 min</td><td>No</td></tr>
+      <tr><td><code>/nici/[firstname]-coaching</code></td><td>Per-client Accessible Coaching (unlisted)</td><td>From £55/mo</td><td>Yes (subscription)</td></tr>
+    </tbody>
+  </table>
+
+  <p>Nici creates these in TidyCal · sends me the 5 URLs · I drop them into Vercel env on Mon morning. Phase 2 = embed inline; Phase 1 = link-out (<code>target="_blank"</code>).</p>
+</section>
+
+<!-- ═════════ 11 LEGAL ═════════ -->
+<section class="block" id="legal" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Legal pages &amp; footer</p>
+  <h2>Four pages. Same footer. Plausible means no cookie banner.</h2>
+
+  <h3>Footer line — every page</h3>
+  <pre>From the desk of Nici Foote · Unbarrier Education Ltd · Companies House 16603630</pre>
+
+  <h3>Four routes</h3>
+  <ul class="plan">
+    <li><code>/legal/privacy</code> — lawful basis per flow (MailerLite, Stripe, TidyCal, Google Workspace)</li>
+    <li><code>/legal/terms</code> — session T&amp;Cs: refund (48h before = full refund), no-show, safeguarding</li>
+    <li><code>/legal/cookies</code> — Plausible is cookieless; banner not legally required. Page describes Stripe checkout's strictly-necessary cookies only.</li>
+    <li><code>/legal/accessibility</code> — port your March 2026 statement v1.1 verbatim</li>
+  </ul>
+
+  <p>Content lives in <code>Legal Pages v1.html</code> (pending Rob's review). For Cardiff, ship the v1 content; if Rob's edits come back after, swap in.</p>
+</section>
+
+<!-- ═════════ 12 TIMELINE ═════════ -->
+<section class="block" id="timeline" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">12 · Timeline · Sun → Wed</p>
+  <h2>Four days. Done by Tue night.</h2>
+
+  <div class="step-grid">
+    <div class="n">SUN<small>26 APR</small></div>
+    <div class="body">
+      <p>Setup day · accounts &amp; DNS</p>
+      <p><b>Nici (you):</b> create GitHub Org <code>Unbarrier-Education</code>; create Vercel account linked to it; back up Bluehost DNS zone (screenshot); update A record + <code>www</code> CNAME (§07); send me the 5 TidyCal URLs.</p>
+      <p><b>Me:</b> deliver this v4 doc + the /hello spec to Claude Code; final design review of <code>HelloHero</code> + <code>SessionCard</code> in this project before CC starts.</p>
+    </div>
+
+    <div class="n">MON<small>27 APR</small></div>
+    <div class="body">
+      <p>Build day · CC scaffolds the repo and ships /hello</p>
+      <p><b>Claude Code:</b> scaffold Next.js app per §04; port <code>colors_and_type.css</code> verbatim; build <code>HelloHero</code>, <code>SessionCard</code>, <code>SayHiForm</code>, <code>NewsletterOptIn</code>, <code>Footer</code>; build <code>/hello</code> page; wire <code>/api/subscribe</code> + <code>/api/say-hi</code>; add Plausible script; open PR; verify Vercel preview.</p>
+      <p><b>Nici:</b> final tweak day · zero client work · approve email templates · check Cardiff Flyer v3 QR points to <code>unbarrier.me/hello</code> · pack the bag.</p>
+    </div>
+
+    <div class="n">TUE<small>28 APR</small></div>
+    <div class="body">
+      <p>Soft launch · QA · merge to production</p>
+      <p><b>Morning:</b> CC merges PR to <code>main</code> after both of us QA the preview on phone. Production deploy at <code>unbarrier.me/hello</code>. SSL cert green. DNS propagated.</p>
+      <p><b>Lunchtime:</b> send pre-Cardiff newsletter from MailerLite ("I'm in Cardiff Wed — here's where to find me online").</p>
+      <p><b>Evening:</b> end-to-end test — scan a real Cardiff QR with phone in airplane-then-cellular, book a £10 Tuesday seat through to Stripe receipt, confirm Plausible counted every event. List any issues in WhatsApp; CC fixes overnight.</p>
+    </div>
+
+    <div class="n">WED<small>29 APR</small></div>
+    <div class="body">
+      <p>Cardiff · live</p>
+      <p>QR scans → <code>/hello</code> · /hello → TidyCal → Stripe → Calendar → Meet · Plausible counts every click · MailerLite collects every opt-in. Nici hands out flyers. We review the dashboard together Wed evening.</p>
+    </div>
+  </div>
+
+  <div class="box lock">
+    <h4>Phase 1 done = these all true by Wed 29 Apr 09:00</h4>
+    <ul class="plan" style="margin: 6px 0 0;">
+      <li><code>unbarrier.me/hello</code> loads in &lt;2s on phone, hero readable above fold</li>
+      <li>All 5 TidyCal pages take a real test booking end-to-end</li>
+      <li>Stripe receipts arrive within 30s of payment</li>
+      <li>Cardiff QR resolves to <code>/hello</code>, click counts in Plausible</li>
+      <li>"Just say hi" form lands in <code>hello@unbarrier.me</code> + adds to MailerLite</li>
+      <li>Newsletter welcome auto-fires on opt-in</li>
+      <li>Footer + Companies House number on every page</li>
+      <li>Legal pages v1 live at <code>/legal/*</code></li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═════════ 13 AFTER ═════════ -->
+<section class="block" id="after" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">13 · After /hello is live <span class="pill p-next">Phase 2</span></p>
+  <h2>What we plan once Cardiff is over.</h2>
+
+  <p>You said: <em>"When hello is live — we write the plan to get unbarrier.me + loop breakers + blog fully up and running."</em> Locked. Phase 2 brief gets written Thu 30 Apr after the Cardiff debrief. Rough shape so we know what we're aiming at:</p>
+
+  <table>
+    <thead><tr><th>Wave</th><th>Window</th><th>Ships</th></tr></thead>
+    <tbody>
+      <tr><td><b>Wave 1 — done</b></td><td>By Wed 29 Apr</td><td><code>/hello</code> · legal pages · footer · MailerLite · TidyCal link-out · Plausible</td></tr>
+      <tr><td><b>Wave 2</b> <span class="pill p-next">Plan Thu 30</span></td><td>Wk of 4 May → 5 May launch session</td><td>Homepage at <code>unbarrier.me</code> · <code>/loop-breakers</code> sessions page · <code>/guest-stage</code> with Nicki's 20 May session listing · TidyCal embed inline · 3 launch blog posts</td></tr>
+      <tr><td><b>Wave 3</b> <span class="pill p-later">Plan mid-May</span></td><td>Wk of 18 May → Nicki session</td><td><code>/accessible-coaching</code> · Founding Member landing · guest host kit hub · blog cadence kicks in (1 long-form/mo + Notes from Nici fortnightly)</td></tr>
+      <tr><td><b>Wave 4</b> <span class="pill p-later">Phase 2 review</span></td><td>Q3 2026</td><td>Booking-flow rebuild if TidyCal hits limits · founding-20 hard-open · pricing review at 10 regulars trigger</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ═════════ OWNERSHIP RECAP ═════════ -->
+<section class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">14 · Who does what</p>
+  <h2>Three columns. No ambiguity.</h2>
+
+  <div class="two">
+    <div class="col you">
+      <h4>Nici · today</h4>
+      <ul class="plan" style="margin:0; padding-left:1rem">
+        <li>Create GitHub Org <code>Unbarrier-Education</code> + private repo <code>unbarrier-me</code></li>
+        <li>Sign up Vercel via the org's GitHub</li>
+        <li>Screenshot Bluehost DNS zone (back-up)</li>
+        <li>Update A record + <code>www</code> CNAME at Bluehost (§07)</li>
+        <li>Create the 5 TidyCal booking pages · send me the URLs</li>
+        <li>Get MailerLite API key + group ID · send me both</li>
+        <li>Approve <code>HelloHero</code> + <code>SessionCard</code> designs in this project before CC builds</li>
+      </ul>
+    </div>
+    <div class="col me">
+      <h4>Me · today/tomorrow</h4>
+      <ul class="plan" style="margin:0; padding-left:1rem">
+        <li>This v4 doc · done</li>
+        <li>Update Source of Truth to v1.2 · done</li>
+        <li>Sweep ConvertKit references out of derived docs (Phase 1 plan etc.) — Sun</li>
+        <li>Final design pass on /hello components in this project — Sun</li>
+        <li>Hand the spec to Claude Code with repo + Vercel access — Sun evening</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="col cc" style="margin-top: 16px">
+    <h4>Claude Code · Mon → Tue</h4>
+    <ul class="plan" style="margin:0; padding-left:1rem">
+      <li>Scaffold Next.js 14 App Router app · TypeScript · Tailwind (or vanilla CSS — match this project's <code>colors_and_type.css</code>)</li>
+      <li>Port <code>colors_and_type.css</code> verbatim to <code>styles/</code></li>
+      <li>Build <code>/hello</code> page per §08 · all 5 components · both API routes</li>
+      <li>Add Plausible · MailerLite proxy · TidyCal env-var-driven links</li>
+      <li>Build <code>/legal/*</code> with content from <code>Legal Pages v1.html</code></li>
+      <li>Stub <code>/loop-breakers</code>, <code>/guest-stage</code>, <code>/accessible-coaching</code>, <code>/blog</code> as placeholder pages with footer</li>
+      <li>Open PR · verify Vercel preview · iterate after QA</li>
+      <li>Merge to <code>main</code> Tue morning after sign-off · production live</li>
+    </ul>
+  </div>
+</section>
+
+<footer>
+  <p><b>Handover Plan v4 · 26 April 2026</b> · supersedes v3 (archived to <code>archive/Handover Plan - Claude Code v3.html</code>)</p>
+  <p>Reflects Source of Truth v1.2 · Phase 1 Cardiff Launch Plan · MailerLite Setup Pack · TidyCal Setup Pack</p>
+  <p>Maintained by: Nici Foote · Unbarrier Education Ltd · Companies House 16603630</p>
+</footer>
+
+</main>
+</body>
+</html>

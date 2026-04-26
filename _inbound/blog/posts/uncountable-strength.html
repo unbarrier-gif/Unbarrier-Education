@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Uncountable strength · Notes from Nici</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: inherit; }
+  section { scroll-margin-top: 80px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="../../ui_kits/unbarrier-website/Primitives.jsx"></script>
+<script type="text/babel" src="../BlogPrimitives.jsx"></script>
+<script type="text/babel" src="../StoriesPost.jsx"></script>
+
+<script type="text/babel">
+  const post = {
+    title: "Uncountable strength: difference, determination, dyscalculia.",
+    byline: "Nici Foote",
+    authorBio: "Neurodivergent educator and founder of unbarrier.me. Dyslexic, dyspraxic, dyscalculic — and the one in the room who says the thing.",
+    portrait: "../../assets/nici-portrait-circle.png",
+    date: "3 Mar 2026",
+    readingMin: 7,
+    dek: "For most of my life, I thought being bad at numbers meant I was bad at success. Today, on Dyscalculia Awareness Day, I'm celebrating something bigger — the strength it took to get here, and the people who finally see dyscalculia for what it really is.",
+  };
+
+  // ── Blog nav (copied from BlogIndex so this page stands alone) ──
+  function Nav() {
+    return (
+      <nav style={{
+        position: "fixed", top: 0, left: 0, right: 0, zIndex: 100,
+        padding: "0.9rem 2.5rem",
+        background: "rgba(33,10,51,0.88)",
+        backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)",
+        borderBottom: "1px solid rgba(255,255,255,0.05)",
+        display: "flex", alignItems: "center", justifyContent: "space-between",
+      }}>
+        <a href="../index.html" style={{ display: "flex", alignItems: "center", gap: 14, textDecoration: "none" }}>
+          <Wordmark size="md" />
+          <span style={{
+            fontFamily: "Outfit", fontSize: 11, fontWeight: 700,
+            letterSpacing: "0.14em", textTransform: "uppercase",
+            color: "var(--spring-green)",
+            padding: "3px 9px", borderRadius: 100,
+            border: "1px solid rgba(56,255,153,0.4)",
+          }}>blog</span>
+        </a>
+        <div style={{ display: "flex", gap: "1.5rem", alignItems: "center" }}>
+          <a href="../index.html" style={{ fontFamily: "Outfit", fontSize: 13, color: "var(--text-muted)", textDecoration: "none" }}>← All notes</a>
+          <a href="mailto:nici@unbarrier.me"
+            style={{
+              fontFamily: "Comfortaa", fontWeight: 700, fontSize: 13,
+              background: "var(--spring-green)", color: "var(--amethyst)",
+              padding: "9px 18px", borderRadius: 100, textDecoration: "none",
+            }}
+          >Email Nici</a>
+        </div>
+      </nav>
+    );
+  }
+
+  function App() {
+    return (
+      <>
+        <Nav />
+        <StoriesHero post={post} />
+
+        <StoriesArticle>
+          <Para lead>
+            I counted wrong at the checkout yesterday. Handed over too much money, had
+            to be handed change, walked out with my face hot. Forty-three years old.
+            Two degrees. A company. And still — a handful of coins undoes me.
+          </Para>
+
+          <Para>
+            That's the thing about dyscalculia nobody warns you about. It doesn't
+            get easier with age. You just get better at hiding it, or better at
+            not caring who sees.
+          </Para>
+
+          <Placeholder
+            label="Opening scene"
+            hint="Replace the lead + this paragraph with the real opening. The pattern: a small, specific moment that shows dyscalculia in daily adult life (not school, not tests — the grown-up version). Something the reader can picture in under 60 seconds. Then one line of quiet truth about what that moment costs you."
+          />
+
+          <Sub>What dyscalculia actually is (and isn't)</Sub>
+
+          <Para>
+            If dyslexia is letters that don't sit still, dyscalculia is numbers that
+            won't mean anything. Not "bad at maths" — more like the symbols on the
+            page and the quantities they're supposed to stand for have never been
+            properly introduced.
+          </Para>
+
+          <Placeholder
+            label="Your definition, in your words"
+            hint="Dyscalculia Awareness Day means a lot of people will read this who don't know what it is. Two short paragraphs that define it in YOUR voice — not the textbook definition. What it feels like. What it looks like in a classroom, in a shop, in a bank app. One paragraph on what it isn't (stupid, lazy, not trying)."
+          />
+
+          <Pull attribution="Nici, age 8, school report">
+            Nici struggles with basic arithmetic and shows little aptitude for numerical reasoning.
+          </Pull>
+
+          <Sub>The story of the struggle</Sub>
+
+          <Placeholder
+            label="The school years"
+            hint="Two or three short paragraphs. The child version of you, trying to make numbers behave. Specific moments: the test where you froze, the teacher who didn't get it, the thing you told yourself about who you were because of it. End with the belief you internalised — the one we're going to come back and dismantle later in the piece."
+          />
+
+          <FigureBreak
+            caption="Placeholder — a photo of you as a child, or a scan of an old maths book with a bad grade, or an image from school. Something that visually anchors this era."
+            tint="pearl"
+          />
+
+          <Placeholder
+            label="The diagnosis (or lack of one)"
+            hint="When did you find out it had a name? How old were you? How did that land — relief, anger, grief, all three? A lot of dyscalculic adults never get a formal diagnosis. Whether you did or didn't, say so honestly."
+          />
+
+          <Sub>The turning point</Sub>
+
+          <Para>
+            There is always one. A person, a sentence, a job, a year, a morning
+            in the kitchen. The moment where the story you were telling yourself
+            about your brain stopped being the only story available.
+          </Para>
+
+          <Placeholder
+            label="Your turning point"
+            hint="The single moment where dyscalculia stopped being the thing that was wrong with you and started being information about how you work. It might be a person who saw you clearly, a job that used your strengths instead of testing your weaknesses, or a realisation you came to alone. Tell it as a scene, not a summary."
+          />
+
+          <Pull>
+            Being bad at numbers didn't mean I was bad at success. It meant I had
+            to find a version of success that wasn't measured in numbers.
+          </Pull>
+
+          <Sub>What I want you to know</Sub>
+
+          <Placeholder
+            label="Three things"
+            hint="A short list of three things you want the reader to leave with. Different readers, different asks. Something for the dyscalculic adult reading this (you are not stupid, here's proof). Something for the parent (this is what helps / doesn't help). Something for the teacher (the things you'd change about how schools test). Keep it direct, not preachy."
+          />
+
+          <EditorNote>
+            If you're dyscalculic and reading this — I would love to host your story here
+            too. Different ages, different paths, different wins. The more voices here,
+            the less alone any of us feels. Email me.
+          </EditorNote>
+
+          <Sub>Today, I'm celebrating</Sub>
+
+          <Placeholder
+            label="The closing"
+            hint="Two paragraphs. Come back to the opening scene (the checkout, the coins, whatever it was) — but this time from the other side. You still count wrong. You still have the hot-face moment. But something has changed. What is it? Land on a line that feels like a flag planted — something dyscalculic readers can print out and stick on the fridge. No tidy bow. Just the truth of where you are now."
+          />
+
+          <Para>
+            Happy Dyscalculia Awareness Day. To everyone still hiding it, still
+            carrying the belief that a brain like ours is a lesser brain —
+            come and find us. We're louder than we used to be.
+          </Para>
+        </StoriesArticle>
+
+        <StoriesOutro post={post} />
+      </>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById("root")).render(<App />);
+</script>
+</body>
+</html>

@@ -1,0 +1,1059 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Phase 1 · Cardiff Launch Plan · Unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 7rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,6vw,3.6rem); letter-spacing: -0.028em; line-height: 1.04; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; color: var(--text); font-size: 1.05rem; line-height: 1.8; margin: 0 0 0.6rem; max-width: 760px; }
+  .lede-sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 0.95rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 760px; }
+
+  /* CRITICAL PATH BANNER */
+  .ribbon {
+    display: grid; grid-template-columns: auto 1fr auto; gap: 24px; align-items: center;
+    padding: 22px 28px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(255,194,3,0.10), rgba(56,255,153,0.05));
+    border: 1.5px solid rgba(255,194,3,0.35);
+    margin: 0 0 3rem;
+  }
+  .ribbon .num {
+    font-family: "Outfit"; font-weight: 800; font-size: 2.4rem;
+    color: var(--school-bus-yellow); letter-spacing: -0.02em; line-height: 1;
+  }
+  .ribbon .label { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 6px; }
+  .ribbon h3 { font-family: "Outfit"; font-weight: 800; font-size: 1.2rem; margin: 0 0 4px; color: var(--text); }
+  .ribbon p { font-family: "Comfortaa"; font-size: 0.92rem; color: var(--text-muted); margin: 0; line-height: 1.6; }
+  .ribbon .countdown { text-align: right; }
+  .ribbon .countdown b { font-family: "Outfit"; font-weight: 800; font-size: 1.6rem; color: var(--spring-green); display: block; line-height: 1; letter-spacing: -0.02em; }
+  .ribbon .countdown small { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-muted); display: block; margin-top: 4px; }
+
+  /* SECTIONS */
+  section.block { padding: 2.4rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.6rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h2 .step { font-family: "Outfit"; font-weight: 700; font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--accent, var(--spring-green)); display: block; margin-bottom: 4px; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.1rem; margin: 1.6rem 0 0.6rem; color: var(--text); letter-spacing: -0.01em; }
+  h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 1.2rem 0 0.5rem; }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ol.plan, ul.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+
+  /* CARDS */
+  .card {
+    padding: 22px 24px; border-radius: 14px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--c, var(--spring-green));
+    margin-bottom: 14px;
+  }
+  .card .lab {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--c, var(--spring-green)); margin: 0 0 6px;
+  }
+  .card h3 { margin: 0 0 8px; font-size: 1.05rem; }
+  .card p:last-child { margin-bottom: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin: 1rem 0 1.2rem; }
+  @media (max-width: 720px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  /* CALLOUTS */
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); margin: 14px 0; line-height: 1.7; }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.decision { background: linear-gradient(135deg, rgba(255,194,3,0.08), rgba(255,138,28,0.04)); border: 1.5px solid rgba(255,194,3,0.3); }
+  .box.decision h3 { color: var(--school-bus-yellow); margin: 0 0 8px; }
+  .box.decision .pick { color: var(--spring-green); font-weight: 700; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+  td b { color: var(--text); }
+
+  /* DAY-BY-DAY ROADMAP */
+  .roadmap { margin: 1.4rem 0 0; padding: 0; list-style: none; }
+  .roadmap li {
+    display: grid; grid-template-columns: 130px 14px 1fr; gap: 16px;
+    padding: 14px 0; border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .roadmap li:first-child { border-top: none; }
+  .roadmap .when { font-family: "Outfit"; font-weight: 700; font-size: 0.86rem; color: var(--accent, var(--spring-green)); letter-spacing: -0.005em; padding-top: 1px; }
+  .roadmap .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent, var(--spring-green)); margin-top: 6px; box-shadow: 0 0 0 4px rgba(56,255,153,0.12); }
+  .roadmap .dot.gold { background: var(--school-bus-yellow); box-shadow: 0 0 0 4px rgba(255,194,3,0.15); }
+  .roadmap .dot.aqua { background: var(--pearl-aqua); box-shadow: 0 0 0 4px rgba(105,217,209,0.15); }
+  .roadmap .dot.orchid { background: var(--orchid-mist); box-shadow: 0 0 0 4px rgba(219,125,204,0.15); }
+  .roadmap .dot.orange { background: var(--princeton-orange); box-shadow: 0 0 0 4px rgba(255,138,28,0.15); }
+  .roadmap .what { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.7; color: var(--text); }
+  .roadmap .what b { color: var(--text); }
+  .roadmap .what small { display: block; color: var(--text-muted); font-size: 0.82rem; line-height: 1.6; margin-top: 3px; }
+
+  /* TAGS */
+  .tag {
+    display: inline-block;
+    padding: 2px 9px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 9px;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    margin-left: 6px; vertical-align: middle;
+  }
+  .tag-you { background: rgba(219,125,204,0.15); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.3); }
+  .tag-me  { background: rgba(105,217,209,0.15); color: var(--pearl-aqua); border: 1px solid rgba(105,217,209,0.3); }
+  .tag-cc  { background: rgba(255,194,3,0.15); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.3); }
+  .tag-nicki { background: rgba(219,125,204,0.15); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.3); }
+
+  /* NICKI BANNER */
+  .nicki {
+    display: grid; grid-template-columns: 160px 1fr; gap: 28px; align-items: center;
+    padding: 24px 28px; border-radius: 18px;
+    background: linear-gradient(135deg, rgba(219,125,204,0.10), rgba(56,255,153,0.04));
+    border: 1.5px solid rgba(219,125,204,0.3);
+    margin: 1rem 0 1.5rem;
+  }
+  .nicki img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 14px; border: 1px solid rgba(255,255,255,0.1); }
+  .nicki .lab { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--orchid-mist); margin: 0 0 6px; }
+  .nicki h3 { margin: 0 0 8px; font-size: 1.2rem; color: var(--text); }
+  .nicki p { color: var(--text); margin: 0 0 6px; font-size: 0.92rem; }
+  .nicki p:last-child { margin-bottom: 0; }
+  @media (max-width: 680px) { .nicki { grid-template-columns: 1fr; text-align: left; } .nicki img { max-width: 220px; } }
+
+  /* ANCHOR NAV */
+  .nav {
+    position: sticky; top: 12px; z-index: 10;
+    display: flex; flex-wrap: wrap; gap: 6px;
+    padding: 10px 14px; border-radius: 100px;
+    background: rgba(33,10,51,0.92);
+    border: 1px solid rgba(255,255,255,0.08);
+    backdrop-filter: blur(20px);
+    margin: 0 0 2.6rem;
+    font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.06em;
+  }
+  .nav a {
+    padding: 6px 12px; border-radius: 100px; text-decoration: none;
+    color: var(--text-muted);
+  }
+  .nav a:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+
+  /* SUBLIST */
+  ul.fine { padding-left: 1.1rem; margin: 0.4rem 0 0.6rem; }
+  ul.fine li { font-size: 0.86rem; line-height: 1.65; margin-bottom: 4px; }
+
+  .quote {
+    font-family: "Outfit"; font-weight: 700;
+    font-size: 1.05rem; letter-spacing: -0.015em; line-height: 1.4;
+    color: var(--text); padding: 14px 0 14px 22px;
+    border-left: 3px solid var(--accent, var(--spring-green));
+    margin: 1rem 0 1.2rem;
+  }
+
+  /* swipe diagram */
+  .swipe {
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px;
+    margin: 1rem 0 1.4rem;
+  }
+  .swipe .step {
+    padding: 14px 16px; border-radius: 12px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    text-align: left;
+  }
+  .swipe .step .n { font-family: "Outfit"; font-weight: 800; font-size: 1.1rem; color: var(--spring-green); display: block; margin-bottom: 2px; line-height: 1; }
+  .swipe .step .t { font-family: "Outfit"; font-weight: 700; font-size: 0.78rem; color: var(--text); display: block; margin-bottom: 4px; }
+  .swipe .step .d { font-family: "Comfortaa"; font-size: 0.76rem; color: var(--text-muted); line-height: 1.55; }
+  @media (max-width: 720px) { .swipe { grid-template-columns: 1fr 1fr; } }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Unbarrier launch · Phase 1 plan · written 25 Apr 2026</p>
+<h1>Phase 1 — public launch by Wednesday,<br/><em>then live for Cardiff.</em></h1>
+<p class="lede">A single plan that joins up everything we've talked about: booking system, Nicki Hambleton, the swipe, /hello, the kit, blog, calendar, dates and emails. Nothing here is new work I haven't already started — this is the order things happen in, who owns each step, and what "ready for the public" looks like.</p>
+<p class="lede-sub">You'll notice everything pulls toward <b>Wed 29 Apr (live for Cardiff)</b> with a soft-launch dress rehearsal on <b>Tue 28 Apr</b>, and Mon 27 set aside as your final tweak day. Tasks are tagged <span class="tag tag-you">You</span> <span class="tag tag-me">Me</span> <span class="tag tag-cc">CC</span> <span class="tag tag-nicki">Nicki</span>.</p>
+
+<div class="ribbon">
+  <div class="num">29<sub style="font-size:0.5em;color:var(--text-muted)">Apr</sub></div>
+  <div>
+    <p class="label">Hard deadline · Cardiff show</p>
+    <h3>unbarrier.me/hello live · sessions bookable · /loop-breakers links to booking · Cardiff flyer QR resolves cleanly</h3>
+    <p>Soft launch Tue 28 Apr · final tweak day Mon 27 Apr · this plan covers every blocker between now and then.</p>
+  </div>
+  <div class="countdown"><b>4 days</b><small>Sat → Wed</small></div>
+</div>
+
+<nav class="nav">
+  <a href="#decisions">01 · Decisions</a>
+  <a href="#dates">02 · Dates</a>
+  <a href="#booking">03 · Booking</a>
+  <a href="#booking-questions">03b · Booking Qs</a>
+  <a href="#calendar">04 · Calendar</a>
+  <a href="#hello">05 · /hello</a>
+  <a href="#swipe">06 · Swipe</a>
+  <a href="#nicki">07 · Nicki</a>
+  <a href="#guests">08 · Guests</a>
+  <a href="#emails">09 · Emails</a>
+  <a href="#blog">10 · Blog</a>
+  <a href="#kit">11 · Creative kit</a>
+  <a href="#pricing">12 · Pricing &amp; pay</a>
+  <a href="#roadmap">13 · Roadmap</a>
+</nav>
+
+<!-- ════════════════════════ 01 DECISIONS ════════════════════════ -->
+<section class="block" id="decisions" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Decisions — locked in 25 Apr</p>
+  <h2><span class="step">All five answered · plan is now build-ready</span>Five locked. Building from these.</h2>
+  <p>These are now the working assumptions for everything downstream. If anything here doesn't sit right when you re-read it, flag it before I start the Cardiff build on Sunday.</p>
+
+  <div class="box decision">
+    <h3>1. Booking platform · <span class="pick">TidyCal Individual (lifetime, $29 / ~£23)</span></h3>
+    <p><b>Why this wins:</b> one-off payment aligns with sustainability-by-design (no recurring SaaS bleed), native group bookings with auto-close at 10, two-way Google Calendar sync, native Zoom integration, Stripe built in, custom intake form for access needs. Saves ~£100/year vs Bookwhen, ~£140/year vs Calendly.</p>
+    <p style="margin-top:8px"><b>The two caveats I'm tracking for you:</b> (1) US/AppSumo company — I'll do a 5-min DPA scan on Sunday before we process any UK school-staff data; (2) community support means a Sunday-night outage is on you to triage. Acceptable trade for the price.</p>
+    <p style="margin-top:8px"><b>Outgrowth trigger:</b> if Phase 2 introduces multi-session courses, waitlists, or staff rotation, we re-evaluate Bookwhen at the £15/mo point. Not before.</p>
+  </div>
+
+  <div class="box decision">
+    <h3>2. Cadence · <span class="pick">Vision→Launch twice-monthly + monthly guest slot</span></h3>
+    <p>Twice-monthly Vision→Launch (1st &amp; last Tue, 10:30am) — straight in, no soft-launch. Plus one monthly <em>guest</em> Tue layered over the top. Nicki opens the guest slot.</p>
+    <p style="margin-top:8px"><b>Practical pattern from May:</b></p>
+    <ul style="margin: 6px 0 0 18px; padding: 0;">
+      <li><b>1st Tue</b> — Vision→Launch (Nici hosts)</li>
+      <li><b>Last Tue</b> — Vision→Launch (Nici hosts)</li>
+      <li><b>Middle Tue when present</b> — guest slot (Nicki, then rotating)</li>
+    </ul>
+    <p style="margin-top:8px"><b>Means May has 3 sessions:</b> 5 May (launch · Tue), 19 May (V→L · Tue), <em>plus</em> 20 May (Nicki guest · <em>Wed</em> — one-off off-cadence to fit her diary). See §02.</p>
+  </div>
+
+  <div class="box decision">
+    <h3>3. Nicki's first session · <span class="pick">Wed 20 May 2026</span> (mid-May, off-cadence)</h3>
+    <p>Nicki couldn't do Tue 19 May, so the date moved to <b>Wed 20 May</b> — a one-off off-cadence Wednesday session to fit her diary. The Tuesday V→L cadence resumes 2 Jun. May now has <b>3 sessions across 3 weeks</b>: Tue 5 May (launch V→L), Tue 19 May (V→L), Wed 20 May (Nicki guest) session that week. It frames her as the gravitational pull for session 2 instead of a side-event, gives her 3.5 weeks lead time (tight but workable for someone with her experience), and means /hello can promote two named sessions on Wednesday — yours on the 5th, hers on the 19th.</p>
+    <p style="margin-top:8px"><b>Note on cadence:</b> we treat Wed 20 May as a one-off accommodation, not a precedent. Future guest sessions land on Tuesdays per §02. The week of 18–22 May is therefore <em>back-to-back-to-back</em>: Tue V→L, Wed Nicki, Mon prep on 18 May covers both. Heavy week — but the Cardiff first month — that's the brand signal.</p>
+    <p style="margin-top:8px"><b>Working title (your call):</b> <em class="pick">"Holding It Lightly — drawing for thinking"</em>, 90 min.</p>
+  </div>
+
+  <div class="box decision">
+    <h3>4. /hello for Wednesday · <span class="pick">Minimum viable + 5 May feature</span></h3>
+    <p>Single page. Three jobs, in this order:</p>
+    <ol style="margin: 6px 0 0 18px; padding: 0;">
+      <li><b>Promote Tue 5 May</b> — hero block, big TidyCal book button, capacity counter</li>
+      <li><b>Newsletter signup</b> — single email field, "loop breakers · monthly" framing, ConvertKit/MailerLite</li>
+      <li><b>Three booking paths</b> — Tuesday Loop Breakers (£10, TidyCal) + Wednesday Guest Stage (£25 sliding, TidyCal) + 1:1 with Nici (£120, TidyCal)</li>
+    </ol>
+    <p style="margin-top:8px">No resource library, no podcast page, no service-strand pages on Wednesday. Those are Phase 2.</p>
+  </div>
+
+  <div class="box decision">
+    <h3>5. Founding Member offer · <span class="pick">Soft-open at launch, hard-open after session 2</span> <em style="color:var(--text-muted); font-weight:400">(my recommendation)</em></h3>
+    <p>You asked me to choose. <b>Soft open Wednesday 29 Apr, hard open after Wed 20 May.</b> Specifically:</p>
+    <ul style="margin: 6px 0 0 18px; padding: 0;">
+      <li><b>Now (Wed):</b> single line on /hello — <em>"First 20 founding members get all of Season 1 (8 sessions) for £180. Email me if you'd like in."</em> No checkout, no countdown, email-only intake. You can vet, pause, or flex pricing per conversation.</li>
+      <li><b>After 20 May (Nicki's session lands):</b> proper checkout page, public counter ("11 of 20 left"), included in launch-of-Season-1 email blast.</li>
+    </ul>
+    <p style="margin-top:8px"><b>Why soft-open now:</b> Cardiff banner + /hello traffic is your biggest organic spike of the next 8 weeks. Capturing 5–10 founders by email out of that is worth more than waiting for polish. The "soft" version is two lines of HTML — no infrastructure to build, no risk of looking like a sales push because there's no funnel.</p>
+  </div>
+
+  <div class="box decision">
+    <h3>6 (open thread) · Recording &amp; live platform · <span class="pick">Zoom for sessions, Riverside for marketing</span></h3>
+    <p>Two tools, ~£28/mo combined, each doing its one job brilliantly. Don't try to merge them.</p>
+    <ul style="margin: 6px 0 0 18px; padding: 0;">
+      <li><b>Zoom Pro (£12.99/mo)</b> — sessions. TidyCal speaks Zoom natively (built-in location, not Zapier). Cloud recording with separate audio tracks per speaker (essential for editing later). Live captions, breakout rooms, waiting room. Familiar to schools and educators — zero friction for guest hosts. Boring. Reliable.</li>
+      <li><b>Riverside Standard (£15/mo)</b> — guest interviews, podcast, marketing capture. Studio-quality local recording, AI clips, transcripts. <em>Not</em> for live sessions (no breakout rooms, you flagged that). Use it for recording with Nicki for promo, podcast eps, anything where production quality matters more than 10 people on a call.</li>
+      <li><b>Workflow:</b> TidyCal book → Zoom auto-link → record to cloud → if it's marketing-worthy, do a separate Riverside capture with the guest the following week.</li>
+    </ul>
+    <p style="margin-top:8px"><b>Park for now:</b> StreamYard (broadcast overkill for a 10-person room), Whereby (no TidyCal hook), Zoom Webinar tier (Phase 3 if Loop Breakers ever goes 100+).</p>
+  </div>
+</section>
+
+<!-- ════════════════════════ 02 DATES ════════════════════════ -->
+<section class="block" id="dates" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · The dates — moved to Tuesdays</p>
+  <h2><span class="step">As you asked — every session lands on a Tuesday</span>12 Tuesday sessions · May → October 2026</h2>
+  <p>Tuesdays at 10:30am, online, Google Meet. First &amp; last Tuesday of each month. Mondays of those weeks become your "final tweak &amp; organisation" day — no client work, no sessions, just prep and breathing room.</p>
+
+  <table>
+    <thead><tr><th>#</th><th>Tuesday</th><th>Mon prep</th><th>Format</th><th>Note</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>5 May 2026</b></td><td>Mon 4 May</td><td>V→L (Nici)</td><td><b style="color:var(--school-bus-yellow)">LAUNCH SESSION</b> · public welcome · Cardiff promo target</td></tr>
+      <tr><td>2</td><td><b>19 May 2026</b></td><td>Mon 18 May</td><td>V→L (Nici)</td><td>Second V→L Tuesday — held on cadence</td></tr>
+      <tr><td>2½</td><td><b style="color:var(--orchid-mist)">Wed 20 May 2026</b></td><td>Tue 19 May</td><td><b style="color:var(--orchid-mist)">Guest · Nicki</b></td><td><b style="color:var(--orchid-mist)">Nicki Hambleton's first session — off-cadence Wed</b></b> · &ldquo;Holding It Lightly&rdquo; · <b style="color:var(--spring-green)">hard-open Founding Member after this</b></td></tr>
+      <tr><td>3</td><td><b>2 Jun 2026</b></td><td>Mon 1 Jun</td><td>V→L (Nici)</td><td>First Tue June · post-Nicki momentum check</td></tr>
+      <tr><td>4</td><td><b>16 Jun 2026</b></td><td>Mon 15 Jun</td><td>Guest slot</td><td>Mid-June · second guest TBC (open invitation)</td></tr>
+      <tr><td>5</td><td><b>30 Jun 2026</b></td><td>Mon 29 Jun</td><td>V→L (Nici)</td><td>Last Tue June · review point · Phase 2 trigger check (10+ regulars?) · mid-month Nicki return possible</td></tr>
+      <tr><td>6</td><td><b>7 Jul 2026</b></td><td>Mon 6 Jul</td><td>V→L (Nici)</td><td>First Tue July</td></tr>
+      <tr><td>7</td><td><b>21 Jul 2026</b></td><td>Mon 20 Jul</td><td>Guest slot</td><td>Mid-July · third guest TBC</td></tr>
+      <tr><td>8</td><td><b>28 Jul 2026</b></td><td>Mon 27 Jul</td><td>V→L (Nici)</td><td>Last Tue July</td></tr>
+      <tr><td>9</td><td><b>4 Aug 2026</b></td><td>Mon 3 Aug</td><td>V→L (Nici)</td><td>First Tue August</td></tr>
+      <tr><td>10</td><td><b>18 Aug 2026</b></td><td>Mon 17 Aug</td><td>Guest slot</td><td>Mid-August · summer guest TBC</td></tr>
+      <tr><td>11</td><td><b>25 Aug 2026</b></td><td>Fri 22 Aug</td><td>V→L (Nici)</td><td>Last Tue Aug · Mon = bank holiday → prep moves to Fri</td></tr>
+      <tr><td>12</td><td><b>1 Sep 2026</b></td><td>Fri 28 Aug</td><td>V→L (Nici)</td><td>First Tue Sept · Mon = bank holiday → prep moves to Fri</td></tr>
+      <tr><td>13</td><td><b>15 Sep 2026</b></td><td>Mon 14 Sep</td><td>Guest slot</td><td>Mid-September · Season 1 closer guest</td></tr>
+      <tr><td>14</td><td><b>29 Sep 2026</b></td><td>Mon 28 Sep</td><td>V→L (Nici)</td><td>Last Tue Sept · <b style="color:var(--school-bus-yellow)">Season 1 finale</b></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <b>Bank-holiday Mondays in Aug/Sept</b> — prep moves to Fri 22 Aug and Fri 28 Aug. I'll mark those in the TidyCal availability and Google Calendar as "no client work" blocks. The pattern from Oct onwards reverts to Mondays.
+  </div>
+
+  <div class="box good">
+    <b>The rule of the prep Monday</b> — <em>nothing client-facing happens on a Monday</em>. No discovery calls, no 1:1s, no email triage. Calendar shows you as fully busy. It's there to absorb the inevitable last-minute panic so the Tuesday session opens with you settled.
+  </div>
+</section>
+
+<!-- ════════════════════════ 03 BOOKING ════════════════════════ -->
+<section class="block" id="booking" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Booking system — TidyCal · what flips on Wednesday</p>
+  <h2><span class="step">TidyCal lifetime + Zoom Pro + Google Calendar</span>$29 once. Five booking pages. Native Zoom &amp; Stripe.</h2>
+
+  <div class="grid-2">
+    <div class="card" style="--c:#38ff99">
+      <span class="lab">Locked in · TidyCal Individual (lifetime $29 · ~£23 once)</span>
+      <h3>Why this won the call</h3>
+      <ul class="fine">
+        <li><b>Native group bookings</b> — capacity-capped at 10, slot auto-disappears when full, each attendee gets their own confirmation</li>
+        <li><b>Native Zoom integration</b> — Zoom is a built-in location option, auto-generates meeting link per session</li>
+        <li><b>Two-way Google Calendar sync</b> via OAuth — no Zapier, no glue code</li>
+        <li><b>Stripe built in</b> — paid sessions flow through your existing Stripe account, each attendee pays separately on group bookings</li>
+        <li><b>Custom intake questions</b> on the booking form — capture access needs upfront, on-brand for unbarrier</li>
+        <li><b>Custom domain CNAME</b> — sits on <code>book.unbarrier.me</code> instead of a third-party URL</li>
+        <li><b>One-off £23.</b> No recurring SaaS bill. Aligns with sustainability-by-design.</li>
+        <li><b>60-day money-back guarantee</b> — risk-free trial through the launch month</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:#ff8a1c">
+      <span class="lab">Tracked caveats · what to watch</span>
+      <h3>The trade-offs we're accepting</h3>
+      <ul class="fine">
+        <li><b>US/AppSumo company</b> — not UK. I'll do a 5-min DPA scan on Sun before processing UK school-staff data; standard SaaS DPA situation, but worth confirming</li>
+        <li><b>Community support, not premium</b> — Sunday-night outage = on you to triage until Mon</li>
+        <li><b>Lighter admin features than Bookwhen</b> — fewer attendance reports, simpler form customisation</li>
+        <li><b>Outgrowth trigger:</b> if Phase 2 brings multi-week courses with prerequisites, waitlists, or staff rotation across team booking pages → re-evaluate <b>Bookwhen (£15/mo, UK)</b>. Not before.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3>The five booking pages on TidyCal</h3>
+  <table>
+    <thead><tr><th>Page</th><th>Type</th><th>Cap</th><th>Price</th><th>URL</th></tr></thead>
+    <tbody>
+      <tr><td><b>Loop Breakers · Tuesday regular</b><br/><small style="color:var(--text-muted)">With Nici, every Tuesday 10:30am</small></td><td>Group · 10 hard cap</td><td>10</td><td>£10 <small style="color:var(--text-muted)">(£5 access)</small></td><td><code style="font-size:11px">tidycal.com/nici/loop-breakers-sessions-vision-to-launch</code> ✅ live</td></tr>
+      <tr><td><b>Guest Stage · Sketch-noting (Nicki)</b><br/><small style="color:var(--text-muted)">Wed 20 May · off-cadence</small></td><td>Guest Stage · up to 40</td><td>40</td><td>£25 <small style="color:var(--text-muted)">(sliding £15/£25/£40)</small></td><td><code style="font-size:11px">tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking</code> ✅ live</td></tr>
+      <tr><td><b>Loop Breakers · 1:1</b></td><td>1:1</td><td>1</td><td>£120</td><td><code style="font-size:11px">tidycal.com/nici/loop-breakers-1-to-1</code> · Sun build</td></tr>
+      <tr><td>unbarrier.audit · discovery</td><td>1:1</td><td>1</td><td>Free</td><td><code style="font-size:11px">tidycal.com/nici/audit-discovery</code> · Sun build</td></tr>
+      <tr><td>unbarrier.access · discovery</td><td>1:1</td><td>1</td><td>Free</td><td><code style="font-size:11px">tidycal.com/nici/access-discovery</code> · Sun build</td></tr>
+      <tr><td>unbarrier.voice · discovery</td><td>1:1</td><td>1</td><td>Free</td><td><code style="font-size:11px">tidycal.com/nici/voice-discovery</code> · Sun build</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box good" style="margin-bottom:1.5rem">
+    <b>The two live ones (as of today):</b><br/>
+    → <a href="https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch" target="_blank" style="color:var(--spring-green)">tidycal.com/nici/loop-breakers-sessions-vision-to-launch</a><br/>
+    → <a href="https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking" target="_blank" style="color:var(--orchid-mist)">tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking</a><br/><br/>
+    Custom domain (<code>book.unbarrier.me</code>) is a Phase 2 nice-to-have — TidyCal subdomain works fine for Wednesday launch. We add the CNAME after Cardiff once everything is proven stable.
+  </div>
+
+  <div class="box good">
+    <b>Phase 2 / 3 thinking:</b> TidyCal handles Phase 1 (Tue £10 PAYG, Wed £25 sliding) cleanly. <em>If</em> Phase 2 introduces a £30/mo subscription, that lives in Stripe (recurring billing) and TidyCal acts as the booking layer for sub-holders only — same architecture, no migration. <em>If</em> Phase 3 needs multi-session course mechanics, that's the trigger to migrate to Bookwhen (or stay on TidyCal + a course tool like Podia, depending on shape).
+  </div>
+
+  <h3>Setup checklist · Sun 26 Apr <span class="tag tag-you">You · 60 min</span></h3>
+  <ol class="plan">
+    <li>Buy TidyCal Individual lifetime ($29) via AppSumo — use the <code>nici@unbarrier.me</code> Workspace email · 3 min</li>
+    <li>Quick DPA scan (I'll send you the link to TidyCal's terms) — confirm it's signable for UK data · 5 min</li>
+    <li>Connect Google Calendar (two-way OAuth — checks conflicts, writes events) · 2 min</li>
+    <li>Connect Zoom (native integration, generates per-session meeting link) · 3 min</li>
+    <li>Connect Stripe — link to existing Unbarrier Education Ltd account · 5 min</li>
+    <li>Set up CNAME for <code>book.unbarrier.me</code> in Vercel DNS (I'll do this — send me your TidyCal account once registered) · 5 min</li>
+    <li>Create 5 booking pages with copy from <code>Google Appointment Schedule Setup.html</code> §02 — copy is all valid, just lives in TidyCal instead · 25 min</li>
+    <li>Add the access-needs intake question to the group booking form · 5 min</li>
+    <li>Send me the 5 booking URLs · I wire them into /hello on Tuesday morning · 5 min handoff</li>
+  </ol>
+  <p><b>Total: ~60 min, then £0/month forever.</b></p>
+
+  <h3>Companion: Zoom Pro setup <span class="tag tag-you">You · 15 min</span></h3>
+  <ol class="plan">
+    <li>Sign up Zoom Pro (£12.99/mo) on <code>nici@unbarrier.me</code> · 5 min</li>
+    <li>Settings: enable cloud recording with <b>separate audio tracks per speaker</b> (essential for editing later) · 2 min</li>
+    <li>Settings: enable live captions, waiting room, breakout rooms · 3 min</li>
+    <li>Connect Zoom to TidyCal (one-click in TidyCal integrations) · 1 min</li>
+    <li>Brand: upload Unbarrier logo + amethyst virtual background to your account · 4 min · I'll send the assets</li>
+  </ol>
+  <p><b>Riverside is a separate decision</b> — only sign up when we book the first guest interview (likely w/c 5 May for a Nicki promo capture). Don't pay for it until you'll use it within 7 days.</p>
+</section>
+
+<!-- ════════════════════════ 03b BOOKING QUESTIONS ════════════════════════ -->
+<section class="block" id="booking-questions" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03b · Booking form questions — what to ask, why, when</p>
+  <h2><span class="step">The intake form is the first sentence of the relationship</span>What do I need? Accommodations? — answered.</h2>
+  <p>You asked what a bookee might want to know before they say yes, and what <em>you</em> need to know to host them well. This is both: <b>the questions you ask <em>them</em></b> on the booking form, and <b>the questions they'll ask <em>you</em></b> that the form copy + confirmation email need to pre-empt.</p>
+
+  <div class="box decision">
+    <h3>The principle, in one line</h3>
+    <p><b>Ask what you'll actually act on. Don't ask out of politeness.</b> Every question on the form has to either (a) change how you set up the session, or (b) change how you welcome that person. If neither — cut it. unbarrier-style accessibility means <em>using</em> the answers, not collecting them.</p>
+  </div>
+
+  <h3 style="margin-top:2rem;">Form 1 · Loop Breakers group session (Vision→Launch + guest sessions)</h3>
+  <p>Used on both live booking pages right now. Keep it short — 6 questions max. People bouncing off a 12-field form is the #1 cause of TidyCal abandonment.</p>
+
+  <table>
+    <thead><tr><th style="width:5%">#</th><th style="width:30%">Question</th><th style="width:10%">Type</th><th style="width:10%">Required</th><th>Why we ask</th></tr></thead>
+    <tbody>
+      <tr><td>Q1</td><td><b>Your name</b><br/><small>"What should I call you in the room?"</small></td><td>Text</td><td>Yes</td><td>TidyCal default. The "what should I call you" framing matters — name on Stripe ≠ name they want on screen. Trans/ND-friendly.</td></tr>
+      <tr><td>Q2</td><td><b>Email</b></td><td>Email</td><td>Yes</td><td>TidyCal default. Used for Zoom invite + reminders.</td></tr>
+      <tr><td>Q3</td><td><b>Pronouns (optional)</b><br/><small>e.g. she/her · they/them · he/him · prefer not to say</small></td><td>Text</td><td>No</td><td>Optional but visible. Signals "you are welcome here as you are" without making it a hurdle. Used for the "round the room" intro.</td></tr>
+      <tr><td>Q4</td><td><b>Anything you'd like me to know about how you learn or join in?</b><br/><small>"e.g. I prefer cameras off · I won't unmute · I'm a quiet processor · captions please · screen reader · ADHD bouncing-around-rooms is a feature for me, not a bug"</small></td><td>Long text</td><td>No</td><td><b>The big one.</b> Replaces the clinical "do you have any access requirements" framing with something neurodivergent-friendly. The example list does the heavy lifting — it tells people what's <em>welcome</em> to disclose.</td></tr>
+      <tr><td>Q5</td><td><b>What pulled you in?</b><br/><small>The Cardiff show · a friend · the website · social · other</small></td><td>Single select</td><td>No</td><td>Marketing data — but also <em>relational</em>. Lets you say "thanks for coming via Cardiff" in the welcome email. <em>Phase 1 only — drop this Q3+ once you have data.</em></td></tr>
+      <tr><td>Q6</td><td><b>Anything you'd like me to bring or prepare?</b><br/><small>Optional — most people leave this blank</small></td><td>Long text</td><td>No</td><td>Catches the rare specific request (e.g. "can we cover X?" or "I'd like a name-blind intro"). 90% leave blank and that's fine.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warn" style="margin-top:1rem;">
+    <b>Questions I deliberately did NOT include:</b>
+    <ul style="margin:6px 0 0 18px">
+      <li><b>"Job title / company"</b> — irrelevant for Loop Breakers. Adds friction. Educators, parents, ND-curious adults, freelancers all welcome equally.</li>
+      <li><b>"Diagnosis / formal assessment"</b> — never. Self-identification is the unbarrier standard.</li>
+      <li><b>"How did you hear about us in detail (5 options)"</b> — too marketing-y. One field, optional.</li>
+      <li><b>"Phone number"</b> — no need. Email + Zoom. Less data, less GDPR exposure.</li>
+      <li><b>"Are you over 18"</b> — confirm in the booking page <em>copy</em>, not as a checkbox. Don't ask people to tick a box about their identity to access a session.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin-top:2rem;">Form 2 · Loop Breakers 1:1 (£120)</h3>
+  <p>Same as Form 1, plus one extra question to pre-frame the call. People paying £120 want to know you've read their answer before the session starts.</p>
+
+  <table>
+    <thead><tr><th style="width:5%">#</th><th>Question</th><th style="width:10%">Required</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Q1–4</td><td>Same as group form (name, email, pronouns, how-you-learn)</td><td>—</td><td>Consistency.</td></tr>
+      <tr><td>Q5</td><td><b>What's the loop you're trying to break?</b><br/><small>One line, one paragraph, one essay — whatever fits. We'll work with whatever you bring.</small></td><td>Yes</td><td>Sets the agenda before you walk in. People who can't articulate this in any form aren't ready for a 1:1 — gentle filter.</td></tr>
+      <tr><td>Q6</td><td><b>What would "this was worth £120" look like to you?</b></td><td>Yes</td><td>Outcome-framing forces honest expectation-setting. If they write "instant transformation" you can recalibrate before the call. If they write "feel less alone in this" you know your job.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:2rem;">Form 3 · Discovery calls (audit · access · voice — free)</h3>
+
+  <table>
+    <thead><tr><th style="width:5%">#</th><th>Question</th><th style="width:10%">Required</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Q1</td><td>Name + email</td><td>Yes</td><td>Default.</td></tr>
+      <tr><td>Q2</td><td><b>Organisation + your role</b></td><td>Yes</td><td>Free 30-min calls need basic qualification. School + SENCO is different to LA + commissioner is different to charity + CEO.</td></tr>
+      <tr><td>Q3</td><td><b>Which strand brought you here?</b><br/><small>Audit (digital/SEND audit) · Access (training/curriculum) · Voice (lived experience research) · Not sure yet</small></td><td>Yes</td><td>Routes the conversation. "Not sure yet" is a valid answer — that's what the call is for.</td></tr>
+      <tr><td>Q4</td><td><b>What's the question you're hoping I can help with?</b><br/><small>Even if it's "I don't know what to ask yet" — that's useful.</small></td><td>Yes</td><td>Same as 1:1 Q5 — primes the call. Schools that can't articulate this are usually best routed back to a Loop Breakers session first.</td></tr>
+      <tr><td>Q5</td><td><b>Budget shape (rough)</b><br/><small>Under £1k · £1–5k · £5–15k · £15k+ · Just exploring</small></td><td>No</td><td>Optional but <em>important</em>. Saves both of you time. "Just exploring" is fine — it's an answer.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top:2rem;">The booking page <em>copy</em> — pre-empting questions they're scared to ask</h3>
+  <p>These aren't form questions — these are the FAQs that should sit <em>on the page itself</em>, above the form, so people don't have to email you to find out. Each addresses a real reservation a ND adult might have before clicking book:</p>
+
+  <div class="grid-2" style="margin-top:1rem;">
+    <div class="card" style="--c:#38ff99">
+      <span class="lab">For the group session page</span>
+      <h3>Six things people want to know before they book</h3>
+      <ul class="fine">
+        <li><b>"Will I have to talk?"</b> — No. Cameras off, mic muted, lurk-and-learn is welcome. We name this in the room.</li>
+        <li><b>"Will I have to draw / write / share my screen?"</b> — Only if you want to. Most prompts are private. We share if it's helpful, never to perform.</li>
+        <li><b>"What if I have to leave halfway?"</b> — Fine. Door is unlocked both ways. Recording goes out after.</li>
+        <li><b>"What if I'm late?"</b> — Come in whenever. We don't shame the door.</li>
+        <li><b>"Refund policy?"</b> — Full refund up to 24h before. After that, you get the recording + credit toward the next session.</li>
+        <li><b>"What if I can't afford £10?"</b> — Email me, just say "£5 seat please." No questions, no form. The £5 access seat is real and routine.</li>
+      </ul>
+    </div>
+
+    <div class="card" style="--c:#db7dcc">
+      <span class="lab">For the 1:1 page</span>
+      <h3>Three things £120-clients want to know</h3>
+      <ul class="fine">
+        <li><b>"What if 1 hour isn't enough?"</b> — We'll say so by minute 50. You can book a follow-up at a discount, or we'll wrap with a written summary.</li>
+        <li><b>"Will you record it?"</b> — Only if you ask. Default is no recording, written notes shared after.</li>
+        <li><b>"What's your specialism?"</b> — Educator + ND adult + Apple PL trainer. If your loop is genuinely outside that (e.g. corporate finance, surgery), I'll say so before we book.</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 style="margin-top:2rem;">Where these answers live in the system</h3>
+
+  <table>
+    <thead><tr><th>Answer field</th><th>Lands in</th><th>You see it</th></tr></thead>
+    <tbody>
+      <tr><td>Name + email</td><td>TidyCal booking + Stripe receipt + Zoom invite</td><td>In your inbox + Calendar 1 event</td></tr>
+      <tr><td>Pronouns</td><td>TidyCal booking page (private to you)</td><td>Calendar 1 event description · use in the room intro</td></tr>
+      <tr><td><b>"How you learn / join in"</b></td><td>TidyCal booking + auto-forward to <code>nici@unbarrier.me</code></td><td><b>You read it Mon prep day before each session.</b> Make a 1-line note per attendee.</td></tr>
+      <tr><td>Marketing source</td><td>TidyCal export → spreadsheet, monthly</td><td>End-of-month review (Tue 26 May etc)</td></tr>
+      <tr><td>Loop / outcome (1:1)</td><td>TidyCal booking → forwarded to your prep doc</td><td>30 min before the call.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box decision" style="margin-top:2rem;">
+    <h3>The implementation steps for Sunday</h3>
+    <ol class="plan">
+      <li>Open both live TidyCal pages → <b>Edit booking form</b> · 5 min each</li>
+      <li>Paste in Q1–Q6 from Form 1 above (TidyCal supports custom fields natively) · 10 min</li>
+      <li>Set Q4 (the access question) to <em>long text, optional</em> · 1 min</li>
+      <li>Set the booking-page description to include the "Six things people want to know" FAQ · 10 min</li>
+      <li>Test-book yourself once, walking through every field — make sure the access answer arrives in your email · 5 min</li>
+      <li>Configure auto-forward: TidyCal → notify <code>nici@unbarrier.me</code> on every booking with full form data · 3 min</li>
+    </ol>
+    <p style="margin-top:8px"><b>Total: ~35 min on Sunday.</b> Then Form 2 (1:1) and Form 3 (discovery) are templates of Form 1 — another 20 min combined.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════ 04 CALENDAR ════════════════════════ -->
+<section class="block" id="calendar" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Google Calendar — how to organise it for this</p>
+  <h2><span class="step">A separate Unbarrier calendar that TidyCal reads from</span>One brain, three calendars, one source of truth.</h2>
+  <p>The mistake to avoid: pointing TidyCal at your personal calendar. You'll either burn out or double-book your family. Three calendars, clear roles:</p>
+
+  <div class="grid-2">
+    <div class="card" style="--c:#38ff99">
+      <span class="lab">Calendar 1 · Unbarrier — bookings</span>
+      <h3>What TidyCal writes to</h3>
+      <p>This calendar holds <em>only</em> client bookings created by TidyCal — Loop Breakers sessions, 1:1s, discovery calls, guest host sessions. TidyCal creates events here automatically with the Zoom link attached.</p>
+      <ul class="fine">
+        <li>Owner: <code>nici@unbarrier.me</code></li>
+        <li>TidyCal → "Add to calendar" → this calendar</li>
+        <li>Colour: spring green <code>#38ff99</code> so bookings stand out at a glance</li>
+        <li>Visibility: shared with Gemma (read-only) so she sees the schedule</li>
+      </ul>
+    </div>
+    <div class="card" style="--c:#69d9d1">
+      <span class="lab">Calendar 2 · Unbarrier — work blocks</span>
+      <h3>Your working hours &amp; prep days</h3>
+      <p>This is where <b>you</b> add: prep Mondays (busy), guest host prep calls, session prep blocks, deep work, admin. TidyCal reads it for conflicts — anything here means you can't be booked.</p>
+      <ul class="fine">
+        <li>Recurring "Mon prep day" event blocking 09:00–17:00 every session-week Monday</li>
+        <li>Recurring "Loop Breakers session" 10:00–12:30 on each of the 14 Tuesdays</li>
+        <li>Colour: pearl aqua <code>#69d9d1</code></li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="--c:#db7dcc">
+    <span class="lab">Calendar 3 · Personal</span>
+    <h3>Family, life, the rest of you</h3>
+    <p>Stays personal. TidyCal checks it for conflicts but <em>doesn't</em> write to it. Gemma sees only "busy" — no titles. This is the protection your week needs.</p>
+  </div>
+
+  <h3>The integration shape</h3>
+  <ul class="fine">
+    <li><b>TidyCal reads:</b> all 3 calendars (conflict checking)</li>
+    <li><b>TidyCal writes to:</b> Calendar 1 only (bookings)</li>
+    <li><b>You add work blocks to:</b> Calendar 2</li>
+    <li><b>Tuesdays + Thursdays</b> are your client-facing days — TidyCal availability window. Every other day is closed by default.</li>
+    <li><b>One overlay view</b> in Google Calendar: tick all three on, you see everything at once.</li>
+  </ul>
+
+  <div class="box good">
+    <b>Why this matters when guests join:</b> when Nicki hosts the 20 May session, you create a one-off TidyCal page for her, point it at Calendar 1, and share it via her guest kit. Her bookings land on the same calendar. No team-account upgrade needed for the first guest. If you reach 3+ regular guest hosts, that's the trigger to evaluate moving to Bookwhen for proper multi-host management.
+  </div>
+</section>
+
+<!-- ════════════════════════ 05 HELLO ════════════════════════ -->
+<section class="block" id="hello" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · unbarrier.me/hello — ready by Tuesday night</p>
+  <h2><span class="step">The page that catches every Cardiff QR scan</span>One page, four CTAs, a single email field.</h2>
+  <p>This is the page on the back of your Cardiff flyer. Someone scans the QR mid-conversation, opens it on a phone in poor venue wifi — they need to convert in 30 seconds or we've lost them.</p>
+
+  <h3>Wireframe of the minimum</h3>
+  <div class="card" style="--c:#38ff99; padding:24px 28px;">
+    <p style="margin-bottom:12px;"><b>Hero · 1 sentence.</b> "Hi — I'm Nici. Tell me what's looping for you and I'll point you somewhere useful."</p>
+    <p style="margin-bottom:12px;"><b>Four cards (one accent each):</b></p>
+    <ol class="plan">
+      <li><span style="color:var(--school-bus-yellow)"><b>Loop Breakers · Tuesday</b></span> — £10 (£5 access), every Tuesday 10:30am, with Nici → button: <em>Book a Tuesday →</em></li>
+      <li><span style="color:var(--princeton-orange)"><b>Guest Stage · Wednesday</b></span> — £25 sliding, off-cadence, with invited practitioners → button: <em>See the next Guest Stage →</em></li>
+      <li><span style="color:var(--orchid-mist)"><b>Loop Breakers · 1:1</b></span> — £120, hour with Nici → button: <em>Book a 1:1 →</em></li>
+      <li><span style="color:var(--pearl-aqua)"><b>Audit · access · voice</b></span> — for schools &amp; orgs → button: <em>Book a discovery call →</em> (links to /services landing)</li>
+      <li><span style="color:var(--spring-green)"><b>Just say hi</b></span> — single email field + textarea "what's looping?" → submits to your inbox + adds to MailerLite</li>
+    </ol>
+    <p style="margin-bottom:0;"><b>Footer:</b> newsletter opt-in (existing form ID), one-line "from the desk of Nici Foote · Unbarrier Education Ltd · 16603630", three social links.</p>
+  </div>
+
+  <h3>What ships Wednesday vs. what ships Phase 2</h3>
+  <table>
+    <thead><tr><th>Feature</th><th>Wed 29 Apr</th><th>Phase 2 (May–Jun)</th></tr></thead>
+    <tbody>
+      <tr><td>Hero + 4 CTA cards</td><td>✓</td><td></td></tr>
+      <tr><td>"Just say hi" form → inbox</td><td>✓</td><td></td></tr>
+      <tr><td>MailerLite opt-in</td><td>✓</td><td></td></tr>
+      <tr><td>TidyCal link-out (target=_blank)</td><td>✓</td><td></td></tr>
+      <tr><td>TidyCal embedded inline</td><td></td><td>✓</td></tr>
+      <tr><td>Dynamic "next 3 sessions" feed from TidyCal API</td><td></td><td>✓</td></tr>
+      <tr><td>Resource library / sketchnote gallery</td><td></td><td>✓</td></tr>
+      <tr><td>Founding Member landing page</td><td></td><td>✓ (after session 2)</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <b>The QR code on the Cardiff flyer must point to <code>unbarrier.me/hello</code></b> — not the homepage, not a UTM'd link, not a redirect. Re-check Cardiff Flyer v3 before you print/hand out: it should already be set, but verify Sat morning.
+  </div>
+
+  <h3>Build · Mon 27 Apr <span class="tag tag-cc">Claude Code</span></h3>
+  <ol class="plan">
+    <li>Create <code>/hello</code> route in <code>apps/main</code> · 30 min</li>
+    <li>Use existing components: <code>SessionsMenu</code> tile pattern, <code>NewsletterOptIn</code>, footer · 1 hr</li>
+    <li>Wire "just say hi" form to existing <code>/api/contact</code> route (or extend <code>/api/subscribe</code>) · 45 min</li>
+    <li>Add Plausible event <code>session_book_click</code> on each TidyCal link · 10 min</li>
+    <li>Deploy to Vercel · 5 min</li>
+    <li>Test on phone with real Cardiff QR before bed Tue · 10 min <span class="tag tag-you">You</span></li>
+  </ol>
+</section>
+
+<!-- ════════════════════════ 06 SWIPE ════════════════════════ -->
+<section class="block" id="swipe" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · The swipe — where it fits</p>
+  <h2><span class="step">Stop treating the swipe as a feature — treat it as the entry sequence</span>The swipe is /hello → menu → book.</h2>
+  <p>You've been circling "where does the swipe fit". The answer: it isn't a separate page — it's the <em>shape of the journey</em> for someone who lands on /hello and isn't sure what they need. Four screens, swipe forward or back, three exits.</p>
+
+  <div class="swipe">
+    <div class="step"><span class="n">01</span><span class="t">What's looping?</span><span class="d">Three large buttons: "an idea I can't start" · "a project that's gone cold" · "a decision I keep deferring"</span></div>
+    <div class="step"><span class="n">02</span><span class="t">Are you ND or ND-curious?</span><span class="d">Yes / Self-identifying / Not sure — just here to look. (No diagnosis required, framing only.)</span></div>
+    <div class="step"><span class="n">03</span><span class="t">How much do you want?</span><span class="d">Tuesday Loop Breakers — small room of 10 (£10) · Wednesday Guest Stage — themed, expert-led (£25 sliding) · 1:1 with Nici (£120) · just a newsletter for now (free)</span></div>
+    <div class="step"><span class="n">04</span><span class="t">Here's where to go →</span><span class="d">Single CTA based on answers. TidyCal link, 1:1 link, or MailerLite opt-in. With a "this isn't quite right? email Nici" escape hatch.</span></div>
+  </div>
+
+  <h3>Links that need creating for the swipe</h3>
+  <ul class="fine">
+    <li><code>/hello</code> — entry, lists 4 cards (the static fallback for swipe-skeptics)</li>
+    <li><code>/hello/swipe</code> — the 4-step swipe (use existing card pattern, 1 frame at a time)</li>
+    <li>TidyCal links — already covered above</li>
+    <li><code>/hello/email</code> — the "just say hi" inline form (or stays as part of /hello)</li>
+  </ul>
+
+  <div class="box good">
+    <b>Phase 1 vs. Phase 2 split:</b> for Wednesday, ship <b>just /hello</b> with the four static cards. Build the swipe as <b>Phase 2 (week of 11 May)</b> once we've watched Cardiff click data come in — Plausible will tell us whether people pick easily from 4 cards or get stuck. If they pick easily, the swipe is unnecessary. If they hover and bounce, the swipe earns its build.
+  </div>
+</section>
+
+<!-- ════════════════════════ 07 NICKI ════════════════════════ -->
+<section class="block" id="nicki" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Nicki Hambleton — first session &amp; future engagement</p>
+  <h2><span class="step">Mid-May launch → Aug–Nov mini-series → expert panel</span>Nicki opens the guest slot. Wed 20 May.</h2>
+
+  <div class="nicki">
+    <img src="assets/nicki-portrait.png" alt="Nicki Hambleton — visual thinking practitioner, NiH Consultancy" />
+    <div>
+      <p class="lab">Guest host #1 · NiH Consultancy</p>
+      <h3>Nicki Hambleton — visual thinking practitioner</h3>
+      <p>30+ years in education and design. Drawing for thinking. Apple PL educator. The transcripts already contain a session — we just need to shape it.</p>
+      <p style="font-style:italic; color:var(--text-muted)">"She describes herself as an octopus, with multiple skills and strategies… everything connects back to one central intelligence: helping different kinds of minds find their own way forward."</p>
+    </div>
+  </div>
+
+  <h3>The first session — Wed 20 May 2026</h3>
+  <p><b>Working title:</b> <em>Holding it lightly — drawing as thinking for neurodivergent minds.</em></p>
+  <p><b>Why Wed 20 May, not a Tuesday:</b> Nicki couldn't make Tue 19 May. Rather than push to June and lose mid-May launch momentum, we're running a one-off Wednesday session for her. The V→L Tuesday cadence holds (19 May runs as planned, 2 Jun next). This is the only Wednesday in the schedule — every future guest lands on a Tuesday session of the launch month — not a side-event in week 3. /hello can promote two named sessions on Wednesday: yours on the 5th, hers on the 19th. That's a much stronger Cardiff pitch.</p>
+  <p><b>Lead time:</b> 3.5 weeks from her "yes" — tight, but workable for someone with her experience and existing material. The prep call needs to happen by Wed 6 May.</p>
+  <p style="margin-top:8px"><b>The 18–22 May week is heavy:</b> Mon 18 prep, Tue 19 V→L session, Wed 20 Nicki session, Thu 21 round-up + clip prep, Fri 22 Founding Member hard-open. Block it in your calendar now as a launch-week sprint — no other commitments.</p>
+  
+  <p style="margin-top:14px"><b>Shape (90 min):</b></p>
+  <ol class="plan">
+    <li><b>10 min · Arrival.</b> Each line, one breath — the calming starter Nicki opens her workshops with. Sets the tone: pen down, no pressure.</li>
+    <li><b>15 min · Drawing for fun.</b> Quick doodles, the warm-up. No-one is "good at drawing" — that fear gets named and put down in the first 15 minutes.</li>
+    <li><b>25 min · Drawing for thinking.</b> Visual metaphors. Nicki teaches her octopus / rabbit-hole framework. People draw their own loop.</li>
+    <li><b>30 min · Witnessed round.</b> Each person shows their drawing in 2 mins, names one next step. Nicki reflects.</li>
+    <li><b>10 min · Close + journalling prompt.</b> Drawing for remembering — what to take home and continue this week.</li>
+  </ol>
+
+  <h3>The engagement plan — compressed for Wed 20 May</h3>
+  <div class="roadmap">
+    <ul class="roadmap" style="list-style:none; padding:0;">
+      <li><span class="when">Sun 26 Apr</span><span class="dot orchid"></span><div class="what"><b>Send Nicki the personal intro + Guest Host Kit</b> · already drafted at <code>loop-breakers/guest-host-kit/Nicki Hambleton - Personal Intro.html</code> <span class="tag tag-you">You</span><small>One email. Standalone HTML attachment so it opens cleanly. <b>Update the intro to ask for 19 May, not 30 Jun.</b> Ask: yes / maybe / not for me. One line.</small></div></li>
+      <li><span class="when">By Wed 30 Apr</span><span class="dot orchid"></span><div class="what"><b>Reply received · 30-min prep call booked</b> · free TidyCal 1:1 slot <span class="tag tag-nicki">Nicki</span><small>If yes/maybe — confirm 19 May, agree shape (Option A: her framework), agree the one-sentence pitch we'll send the list. If no / not-this-shape — we slot Nicki for July and find a different mid-May guest, or run V→L solo for 19 May.</small></div></li>
+      <li><span class="when">Tue 28 Apr</span><span class="dot orchid"></span><div class="what"><b>Promo email goes out</b> to Loop Breakers list · day before Cardiff <span class="tag tag-me">Me</span><small>Co-drafted with Nicki, she gets a final cc before send. Subject: "two Tuesdays in May — 5th &amp; 19th." Cardiff flyers reference both dates.</small></div></li>
+      <li><span class="when">Mon 11 May</span><span class="dot orchid"></span><div class="what"><b>T-8 days reminder + booking nudge</b> <span class="tag tag-me">Me</span><small>Second push to fill remaining seats. Anonymous "who's coming" tease (3 first names + what they're looping on, with consent).</small></div></li>
+      <li><span class="when">Tue 19 May</span><span class="dot orchid"></span><div class="what"><b>T-1 day check-in</b> — final attendee list to Nicki <span class="tag tag-you">You</span><small>First names + 1 line on what each is looping on. Optional 30-min dry-run on Mon evening.</small></div></li>
+      <li><span class="when">Wed 20 May · 10:30</span><span class="dot orchid"></span><div class="what"><b>Nicki's session · she hosts</b> · 90 min, Zoom · off-cadence Wed · <em>Guest Stage format (up to 40)</em><small>You arrive, introduce her, step back. Re-enter for the close. Send £75 within 7 days.</small></div></li>
+      <li><span class="when">Fri 22 May</span><span class="dot orchid"></span><div class="what"><b>Round-up + clip + Founding Member hard-open</b> <span class="tag tag-me">Me</span><small>Payment, anonymous attendee feedback, edited Riverside clip if she wants one. Founding Member offer goes hard-open the same morning — Nicki's session is the proof point.</small></div></li>
+    </ul>
+  </div>
+
+  <h3>Future engagement — beyond session 1</h3>
+  <p>Three ways the relationship grows after the first session works:</p>
+  <ul class="fine">
+    <li><b>The mini-series.</b> 3 more sessions across Jul–Oct: drawing for fun (12 Jul guest slot, TBC) · drawing for remembering (Aug guest) · drawing for choosing (Sept). Each at £75 (Phase 1 host rate) rising to £125 once Phase 2 triggers fire. Bundled as "Drawing as Thinking — a Loop Breakers mini-series" if attendance holds.</li>
+    <li><b>The Drawing Studio.</b> Phase 2 premium product — 6 seats, 3 hours, sketchbook + pen kit posted to each attendee, £180/seat. Once a quarter. Designed by Nicki, sourced by you. Floats to her in the personal letter; built once 20 May lands.</li>
+    <li><b>The asset pack.</b> Branded creative kit — A5 journal, dual-end pen, watercolour cube, water brush. Sold alongside her sessions. Designed by Nicki, sourced by you. See §11.</li>
+    <li><b>The Riverside capture.</b> Once 20 May is in the bag, book a 60-min Riverside conversation with Nicki for the podcast / clip pipeline. Her reach + your platform = compound marketing without either of you grinding.</li>
+  </ul>
+
+  <div class="box good">
+    <b>The relationship principle:</b> Nicki is the <em>first</em> guest host because the work is already there in the transcripts — we're not asking her to invent something for us, we're asking her to formalise what she already does. That makes the yes easy. Future hosts (Olivia, Jen, Michelle, Gemma) follow the same pattern: their existing work, lightly shaped, paid properly.
+  </div>
+</section>
+
+<!-- ════════════════════════ 08 GUESTS ════════════════════════ -->
+<section class="block" id="guests" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Guest HTML pack — initial contact &amp; contracts</p>
+  <h2><span class="step">A repeatable pack so each new guest costs you 30 minutes, not 3 hours</span>What a guest gets, in one bundle.</h2>
+  <p>Every guest host (Nicki first, then Olivia / Jen / Gemma / Michelle / others) gets the same 4-document pack. They're not a contract in the legal sense — they're a clarity-and-trust pack.</p>
+
+  <div class="grid-2">
+    <div class="card" style="--c:#db7dcc">
+      <span class="lab">Doc 1 · Personal intro letter</span>
+      <h3>Why I'm asking <em>you</em>, specifically.</h3>
+      <p>Already drafted for Nicki + Gemma. One template, two minutes to personalise per new guest. Names what you've already seen them do, why it fits, when you're thinking, what you need from them.</p>
+    </div>
+    <div class="card" style="--c:#38ff99">
+      <span class="lab">Doc 2 · Guest Host Kit (the deal)</span>
+      <h3>£75 Phase 1 → £125 Phase 2 → £200 + 50% Phase 3.</h3>
+      <p>Already at <code>loop-breakers/guest-host-kit/index.html</code>. Reads in 6 minutes. Tells them what you handle, what they handle, what's a yes / no, the do's and don'ts, the scripts they can steal. Money block shows all three phases honestly with trigger criteria.</p>
+    </div>
+    <div class="card" style="--c:#ffc203">
+      <span class="lab">Doc 3 · "How it works" — operations</span>
+      <h3>The week-by-week timeline. <span style="color:var(--text-muted); font-weight:400">Needs writing.</span></h3>
+      <p>I'll draft this Mon 27 Apr. Covers: prep call agenda · what you send them at T-3w / T-2w / T-3d / T-1d · what to do if their wifi dies · how the fee lands · what counts as a "done" session.</p>
+    </div>
+    <div class="card" style="--c:#69d9d1">
+      <span class="lab">Doc 4 · "What I need from you" — checklist</span>
+      <h3>One page, six items. <span style="color:var(--text-muted); font-weight:400">Needs writing.</span></h3>
+      <p>I'll draft this Mon 27 Apr. Items: 3 possible dates · Option A or B (framework or themed) · headshot + bio (≤80 words) · 1-sentence pitch for the promo email · bank details for the fee · access needs.</p>
+    </div>
+  </div>
+
+  <h3>The booking link for guests</h3>
+  <p>Each guest gets their own TidyCal booking page after their first session works, e.g. <code>book.unbarrier.me/nicki-hambleton</code>. For the <em>first</em> session, no booking link — you book them in via the prep call. Phase 2 only.</p>
+
+  <h3>Timeframe — from "first contact" to "their first session"</h3>
+  <table>
+    <thead><tr><th>Stage</th><th>Lead time</th><th>What happens</th></tr></thead>
+    <tbody>
+      <tr><td>Cold approach → reply</td><td>1 week</td><td>Send the personal intro + kit. Wait for yes/maybe/no.</td></tr>
+      <tr><td>Reply → prep call</td><td>1–2 weeks</td><td>Book them in. 30 min on Meet.</td></tr>
+      <tr><td>Prep call → date confirmed</td><td>Same day</td><td>You leave the call with a date in the diary.</td></tr>
+      <tr><td>Date confirmed → promo email</td><td>3–4 weeks before session</td><td>Co-drafted, cc'd to guest, then sent.</td></tr>
+      <tr><td>Promo email → session</td><td>3 weeks bookings open</td><td>Bookings fill, you fill them in.</td></tr>
+      <tr><td>Session → next conversation</td><td>3 days after</td><td>Round-up email + "shall we do another?"</td></tr>
+    </tbody>
+  </table>
+  <p><b>Total runway, cold approach to first session: ~6–8 weeks.</b> For Nicki we're compressing this to ~3.5 weeks — only workable because we've been talking for months and her material is already shaped. For future cold-approach guests, hold the 6–8 week runway.</p>
+</section>
+
+<!-- ════════════════════════ 09 EMAIL TEMPLATES ════════════════════════ -->
+<section class="block" id="emails" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Emailing templates — mapped to brand</p>
+  <h2><span class="step">10 templates cover every Loop Breakers email you'll send for 6 months</span>Plain text first, branded HTML for the moments that earn it.</h2>
+  <p>Brand voice in email is the same as on the site: short paragraphs, em-dashes, sentence case, no exclamation marks, no emoji. The visual treatment is light — a coloured top rule + the wordmark, no glow orbs (they don't render in Gmail).</p>
+
+  <h3>The 10 templates I'll draft Tuesday <span class="tag tag-me">Me</span></h3>
+  <table>
+    <thead><tr><th>#</th><th>Template</th><th>Trigger</th><th>Style</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td>Newsletter welcome (existing — needs brand pass)</td><td>MailerLite opt-in</td><td>Branded HTML</td></tr>
+      <tr><td>2</td><td>Loop Breakers booking confirmation</td><td>TidyCal group booking</td><td>Plain text</td></tr>
+      <tr><td>3</td><td>Loop Breakers payment received</td><td>Stripe webhook</td><td>Plain text</td></tr>
+      <tr><td>4</td><td>Loop Breakers T-2 days reminder</td><td>2 days before each Tuesday</td><td>Plain text</td></tr>
+      <tr><td>5</td><td>Loop Breakers T-1 hour reminder</td><td>1 hr before each Tuesday</td><td>Plain text</td></tr>
+      <tr><td>6</td><td>Loop Breakers post-session round-up</td><td>Wed after session</td><td>Branded HTML</td></tr>
+      <tr><td>7</td><td>1:1 booking confirmation</td><td>TidyCal 1:1 booked</td><td>Plain text</td></tr>
+      <tr><td>8</td><td>Discovery call confirmation (audit/access/voice)</td><td>TidyCal discovery booked</td><td>Plain text</td></tr>
+      <tr><td>9</td><td>Founding Member welcome</td><td>£20/mo Stripe sub started</td><td>Branded HTML</td></tr>
+      <tr><td>10</td><td>Guest host approach (Nicki, Gemma, future)</td><td>Manual</td><td>Plain text + HTML attachment</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Brand spec for the branded HTML templates</h3>
+  <ul class="fine">
+    <li><b>Width:</b> 600px max, single column, fluid down to 320px</li>
+    <li><b>Background:</b> amethyst <code>#210a33</code> · <em>not</em> the design system glows (poor email client support)</li>
+    <li><b>Top rule:</b> 4px solid section accent (spring green for newsletter, school-bus yellow for Loop Breakers, orchid for 1:1)</li>
+    <li><b>Wordmark:</b> 32px high, white version, <code>logo no strap white.png</code> from assets/logos</li>
+    <li><b>Headings:</b> Outfit 700, fallback to <code>system-ui</code>. Use <code>&lt;link&gt;</code> to Google Fonts CDN — Outlook ignores it but degrades gracefully</li>
+    <li><b>Body:</b> Comfortaa 400, fallback to Verdana, line-height 1.7</li>
+    <li><b>CTA button:</b> spring green background, amethyst text, 100px radius, 14px padding, font-weight 700</li>
+    <li><b>Footer:</b> "From the desk of Nici Foote · Unbarrier Education Ltd · 16603630 · Unsubscribe · Privacy" — 11px, 65% white</li>
+  </ul>
+
+  <h3>Where they live</h3>
+  <ul class="fine">
+    <li><b>TidyCal confirmations &amp; reminders</b> (templates 2, 4, 5, 7, 8) — pasted into TidyCal email settings</li>
+    <li><b>MailerLite welcome &amp; round-up &amp; founding-member</b> (templates 1, 6, 9) — built as MailerLite blocks</li>
+    <li><b>Guest host approach</b> (template 10) — Gmail draft template, with the personal intro HTML as standalone attachment</li>
+    <li><b>Stripe payment received</b> (template 3) — set in Stripe Dashboard receipt customisation</li>
+  </ul>
+
+  <div class="box good">
+    <b>Phase 1 minimum (Wed 29 Apr):</b> templates 1, 2, 7, 8 + Cardiff post-flyer "thanks for scanning" auto-response (template 11, plain text, fires from /hello form). The rest can roll out across week 1 and week 2.
+  </div>
+</section>
+
+<!-- ════════════════════════ 10 BLOG ════════════════════════ -->
+<section class="block" id="blog" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · Blog — three posts ready for Wed</p>
+  <h2><span class="step">Including one that promotes Nicki's brilliance</span>Three posts. One promotes Nicki. Two pull from your transcripts.</h2>
+
+  <table>
+    <thead><tr><th>#</th><th>Post</th><th>Source</th><th>Owner</th><th>Goal</th></tr></thead>
+    <tbody>
+      <tr><td>1</td><td><b>"Why I'm bringing Nicki Hambleton into Loop Breakers"</b></td><td>The Nici/Nicki transcript + the Otter excerpts you flagged + Nicki's own bio &amp; intro</td><td><span class="tag tag-me">Me drafts Sun</span> · <span class="tag tag-you">You edit Mon</span></td><td>Promotes Nicki publicly · gives the 30 Jun session a story · drives newsletter signups</td></tr>
+      <tr><td>2</td><td><b>"The 60% in the middle — who Loop Breakers is actually for"</b></td><td>Neurodivergent Coaching Strategy transcript</td><td><span class="tag tag-me">Me drafts Sun</span> · <span class="tag tag-you">You edit Mon</span></td><td>The "what is this room" anchor post · ranks for "ND group coaching"</td></tr>
+      <tr><td>3</td><td><b>"What an ADHD founder actually needs (and why nothing on the internet quite fits)"</b></td><td>ADHD Business Launch Session transcript</td><td><span class="tag tag-me">Me drafts Sun</span> · <span class="tag tag-you">You edit Mon</span></td><td>Top of funnel for Cardiff audience · ADHD-founder keyword</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Post 1 — the Nicki post · structure</h3>
+  <div class="card" style="--c:#db7dcc">
+    <span class="lab">~1,200 words · publishes Tue 28 Apr morning</span>
+    <h3>Working outline</h3>
+    <ol class="plan">
+      <li><b>Open:</b> "I've been sitting with the transcripts of conversations with Nicki Hambleton, and there's a session in there." Lift Nicki's own line — <em>"the loop breaks when someone else sees it"</em> — to anchor.</li>
+      <li><b>Who Nicki is</b> — the short bio, lifted verbatim from her own copy. Octopus metaphor. 30+ years. NiH Consultancy.</li>
+      <li><b>What "drawing for thinking" actually means</b> — pull her line: "stuff down that works on a one to one." Ground it for the ND adult who doesn't think they can draw.</li>
+      <li><b>The session, sketched</b> — the 5-block shape from §07. Not the final running order, the <em>idea</em> of it.</li>
+      <li><b>Why this is the first guest session</b> — the pattern is already there in our work together. Lower-friction yes for both of us.</li>
+      <li><b>How to be in the room</b> — bookings open Mon 11 May. £25 sliding (£15/£25/£40). Up to 40 seats — Guest Stage format. CTA: <em>Get the next-session email →</em> (newsletter opt-in)</li>
+    </ol>
+    <p><b>Imagery:</b> Nicki's portrait (already copied to <code>assets/nicki-portrait.png</code>) + 2–3 of her sketchnote pages from the PDF you uploaded. Amethyst background with orchid glow.</p>
+  </div>
+
+  <div class="box good">
+    <b>The reuse:</b> the same blog post (with a few sentence edits) becomes — the promo email body for Mon 11 May, Nicki's LinkedIn intro post, and a one-paragraph version for Cardiff hand-out conversations. Write once, cascade everywhere.
+  </div>
+</section>
+
+<!-- ════════════════════════ 11 KIT ════════════════════════ -->
+<section class="block" id="kit" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Loop Breakers Creative Kit</p>
+  <h2><span class="step">Phase 2 product — but spec'd now so it ships clean</span>One pencil case. Five things inside.</h2>
+  <p>Nicki's kit suggestion from your transcript: a small pack people buy alongside a session. Not Phase 1 — but designing it now means we can pre-announce on the Nicki blog post and take £25 deposits at session 4.</p>
+
+  <table>
+    <thead><tr><th>Item</th><th>Spec</th><th>Source</th><th>~Cost</th></tr></thead>
+    <tbody>
+      <tr><td>A5 journal</td><td>Soft cover, 80gsm, 96 pages, blank or dot-grid · amethyst cover with white wordmark</td><td>Print on demand · Mixam or similar</td><td>£3.50</td></tr>
+      <tr><td>Black dual-end pen</td><td>Mungyo or similar — fine line one end, brush pen other end · the one Nicki uses</td><td>Bulk Amazon · ~£0.80/unit at qty 50</td><td>£0.80</td></tr>
+      <tr><td>White gel pen</td><td>Sakura Gelly Roll or equivalent</td><td>Amazon bulk</td><td>£0.90</td></tr>
+      <tr><td>Mini watercolour set</td><td>Cube format · the "tiny one Nici has from Instagram"</td><td>Source Sun 26 Apr — Etsy / AliExpress / Cass Art</td><td>£3.50</td></tr>
+      <tr><td>Water brush pen</td><td>Pentel Aquash small</td><td>Amazon</td><td>£2.50</td></tr>
+      <tr><td>Cotton drawstring pouch</td><td>Amethyst, white wordmark printed</td><td>Custom · Vistaprint or Awesome Merchandise</td><td>£2.80</td></tr>
+    </tbody>
+  </table>
+  <p><b>Cost in: ~£14. Sell at: £29.</b> Bundled with a Loop Breakers session: £35 instead of £39 (£10 session + £29 kit). Margin pays your time and the inevitable shipping faff.</p>
+
+  <h3>Phase 2 timeline · spec'd now, ships Aug</h3>
+  <ul class="fine">
+    <li><b>Sun 26 Apr:</b> Nicki sources the watercolour cube + confirms the pen model · <span class="tag tag-nicki">Nicki</span></li>
+    <li><b>Mon 12 May:</b> Order 1 sample of each item · check, photograph · <span class="tag tag-you">You</span></li>
+    <li><b>Mon 26 May:</b> Order 25 of each · pouches printed · <span class="tag tag-you">You</span></li>
+    <li><b>Wed 20 May (Nicki's session):</b> Soft tease — show a kit on screen, take expressions of interest only. Don't oversell.</li>
+    <li><b>Tue 30 Jun:</b> Soft launch — show kit on screen, take 10 deposits.</li>
+    <li><b>Aug 2026:</b> Available to buy alongside any Loop Breakers booking on TidyCal (add-on product, Stripe handles).</li>
+  </ul>
+</section>
+
+<!-- ════════════════════════ 12 PRICING & PAY ════════════════════════ -->
+<section class="block" id="pricing" style="--accent:#9d8cff">
+  <span class="rail"></span>
+  <p class="block-eyebrow">12 · Pricing &amp; paying yourself — decision record</p>
+  <h2><span class="step">When prices rise · when Nicki gets paid sustainably · when you start paying yourself</span>Two products. Two prices. Triggers, not vibes.</h2>
+  <p>This section exists so you don't re-litigate pricing every month. The decisions below are the working agreement for Phase 1. They're locked. They get reviewed on the dates listed — not before, not on a whim. Canonical reference: <code>Loop Breakers - Source of Truth.html</code> §02 §07.</p>
+
+  <div class="box decision">
+    <h3>Decision 12 (locked) · Phase 1 ticket &amp; guest-fee pricing</h3>
+    <p><b>Tuesday Loop Breakers · £10 flat · £5 access seat on request.</b> Held at this price <em>for all of Phase 1 and Phase 2</em>. The £10 floor is the access promise — it doesn't move until weekly cadence with 20+ regulars (Phase 3 trigger).</p>
+    <p><b>Wednesday Guest Stage · £25 standard · sliding £15 / £25 / £40.</b> Attendee picks at checkout. Up to 40 seats (Guest Stage format). Reviewed at Phase 2 trigger.</p>
+    <p><b>Guest host fee: £75 per session · Phase 1 flat fee.</b> Paid within 7 days, regardless of attendance. Rises to £125 at Phase 2 trigger, £200 + 50% of revenue above base at Phase 3.</p>
+    <p><b>Reasoning — why two prices, not one:</b></p>
+    <ul style="margin: 6px 0 0 18px;">
+      <li><b>Tuesday and Wednesday do different jobs.</b> Tuesday is the <em>weekly room</em> — what makes it work is people <em>keep coming</em>. £10 is the price an ADHD-tax inconsistent income can absorb every week. Wednesday is the <em>event room</em> — paying for a named expert's prep and time. £25 is honest about that value.</li>
+      <li><b>Bundling them at one price would break both.</b> £15 for Tuesday is too high to be the floor. £15 for Wednesday is too low to fund a real guest fee plus margin. Two products, two prices.</li>
+      <li><b>£75 is what Phase 1 can honestly pay.</b> Even at 3 attendees on Wednesday (£25 standard × 3 = £75), the guest fee is covered. At 10 attendees, +£175 net. At 20, +£425 net. The £75 fee never depends on a sold-out room.</li>
+      <li><b>Founding Members protect the floor.</b> The £180 Founding rate is locked at signup. Any future price rise grandfathers them in — that's the deal.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin-top: 2rem;">When prices change — the trigger system</h3>
+  <p>Three measurable triggers. Reviewed on the <b>last Tuesday of each month</b> as part of the existing review pattern. If 2 of 3 fire at any review, prices move.</p>
+
+  <table>
+    <thead><tr><th style="width: 8%">#</th><th style="width: 32%">Trigger</th><th style="width: 30%">What it measures</th><th>Why this one</th></tr></thead>
+    <tbody>
+      <tr><td><b>T1</b></td><td><b>2 consecutive guest sessions sell ≥8 of 10 seats</b></td><td>Demand for guest format specifically</td><td>One sold-out session might be hype. Two is a pattern. Strongest single signal that the room values guests.</td></tr>
+      <tr><td><b>T2</b></td><td><b>15+ Founding Members signed up</b></td><td>Community size · pricing power</td><td>Founders are your floor. 15 is roughly 60–80 sessions of pre-paid revenue — enough cushion to risk a price rise without losing the room.</td></tr>
+      <tr><td><b>T3</b></td><td><b>3+ months elapsed since launch (i.e. ≥1 Aug 2026)</b></td><td>Time for word-of-mouth and content to mature</td><td>Guards against premature optimisation. You can't price-test in month 1 because the room hasn't formed yet.</td></tr>
+    </tbody>
+  </table>
+
+  <h3 style="margin-top: 2rem;">When triggers fire — what happens</h3>
+
+  <table>
+    <thead><tr><th>Triggers fired</th><th>Action</th><th>New prices</th></tr></thead>
+    <tbody>
+      <tr><td>0 or 1</td><td>Hold. Re-review next month.</td><td>Tue £10 · Wed £25 sliding · Guest fee £75 · Founding £180</td></tr>
+      <tr><td><b>2 of 3</b> — pricing power confirmed</td><td><b>Move to Phase 2.</b> Wednesday rises to £35 (sliding £20/£35/£50). <b>Tuesday stays £10</b> — the access floor doesn't move yet. <b>Guest fee to £125.</b> Founding rate closes — re-opens at £240 for next 20 places.</td><td>Tue <b>£10</b> · Wed <b>£35</b> · Guest fee <b>£125</b> · Founding <b>£240</b></td></tr>
+      <tr><td><b>3 of 3</b> — strong demand confirmed</td><td>Phase 2 prices AND introduce expert-panel tier at £45–£55 for Phase 3 prep. Tuesday stays £10.</td><td>Tue £10 · Wed £35 · Panel £50 · Guest £125 · Founding £240</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box decision" style="margin-top: 2rem;">
+    <h3>When can I pay Nicki sustainably?</h3>
+    <p><b>Phase 1 numbers actually work.</b> Nicki gets her £75 on 20 May regardless of bookings. The Guest Stage format (up to 40 seats, £25 standard sliding) means even three attendees at standard cover the fee. The honest math:</p>
+    <table style="margin-top: 10px;">
+      <thead><tr><th>Bookings on 20 May (Wed Guest Stage · £25 std)</th><th>Session revenue (avg £25/seat)</th><th>Nicki's fee</th><th>Net to Unbarrier</th></tr></thead>
+      <tbody>
+        <tr><td>3 seats</td><td>£75</td><td>£75</td><td><b style="color:var(--text-muted)">£0</b> (break-even at standard tier)</td></tr>
+        <tr><td>10 seats</td><td>£250</td><td>£75</td><td><b style="color:var(--spring-green)">+£175</b></td></tr>
+        <tr><td>20 seats (half-full)</td><td>£500</td><td>£75</td><td><b style="color:var(--spring-green)">+£425</b></td></tr>
+        <tr><td>40 seats (full)</td><td>£1,000</td><td>£75</td><td><b style="color:var(--spring-green)">+£925</b></td></tr>
+        <tr><td><b>20 seats + 5 Founding signups in same month</b></td><td><b>£500 + £900 (5 × £180)</b></td><td>£75</td><td><b style="color:var(--spring-green)">+£1,325</b></td></tr>
+      </tbody>
+    </table>
+    <p style="margin-top: 12px;"><b>The unlock:</b> separate £25 Wednesday pricing means the Guest Stage is a properly-funded event, not a subsidised one. Even at 3 attendees on the standard tier, it pays for itself. Founding signups are pure upside, not a rescue mechanism. Tuesday £10 stays accessible because Wednesday is doing the heavier lift.</p>
+    <p><b>When does Nicki rise to £125?</b> When Phase 2 triggers fire (≥10 Tuesday regulars + 2 sold-out Guest Stages in a row). At Phase 2 Wednesday prices (£35), 4 seats covers the £125 fee. Realistic by <b>Q4 2026</b> if T1+T2+T3 fire on schedule.</p>
+  </div>
+
+  <div class="box decision" style="margin-top: 2rem;">
+    <h3>When do you start paying yourself?</h3>
+    <p><b>Trigger T4 — Self-pay activates when monthly Loop Breakers revenue clears £600.</b></p>
+    <ul style="margin: 6px 0 0 18px;">
+      <li>£600/mo combined Tuesday + Wednesday revenue is achievable by August. Math: 4 Tuesdays × 10 seats × £10 = £400 + 1 Wednesday × 10 seats × £25 = £250 → £650/mo. Realistic by <b>Aug or Sept 2026</b> if cadence holds and word-of-mouth builds.</li>
+      <li>Until then: your "host fee" is reinvested into Nicki, the kit, the platform. You're paying yourself in proof, not pounds. That's a Phase 1 trade you've explicitly chosen.</li>
+      <li>Once T4 fires: <b>£50/session host fee</b> to you on Tuesdays, paid monthly. That's £200/mo at weekly cadence — small but real.</li>
+      <li>When Phase 2 fires: <b>your Tuesday host fee rises to £75</b> and Wednesday gives you the same revenue split as guests get in Phase 3.</li>
+    </ul>
+  </div>
+
+  <h3 style="margin-top: 2rem;">Review schedule — locked dates</h3>
+  <table>
+    <thead><tr><th>Review date</th><th>Tuesday</th><th>What to check</th><th>Possible outcome</th></tr></thead>
+    <tbody>
+      <tr><td><b>End of May 2026</b></td><td>Tue 26 May</td><td>Did 20 May sell? How many Founding Members? T1/T2/T3 status?</td><td>Likely T0–T1 fired. Hold prices. Confirm cadence.</td></tr>
+      <tr><td><b>End of June 2026</b></td><td>Tue 30 Jun</td><td>16 Jun guest sales · Founding count · 1:1 pipeline</td><td>Possibly T1 fires. Hold pricing — need T3 (Aug minimum).</td></tr>
+      <tr><td><b>End of July 2026</b></td><td>Tue 28 Jul</td><td>21 Jul guest · revenue trajectory · self-pay possibility</td><td>T4 may fire — start paying yourself.</td></tr>
+      <tr><td><b style="color:var(--spring-green)">End of August 2026</b></td><td>Tue 25 Aug</td><td><b>The first real review.</b> All three triggers eligible. 18 Aug guest results in.</td><td>If 2 of 3 fire: announce price change for Oct sessions onwards. 6 weeks notice.</td></tr>
+      <tr><td><b>End of September 2026</b></td><td>Tue 29 Sep</td><td>Phase 1 wrap. Full Season 1 numbers. Phase 2 planning.</td><td>Phase 2 pricing (with kit, with paid 1:1 pipeline) finalised here.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box decision" style="margin-top: 2rem;">
+    <h3>The "Nicki, I can pay you more" conversation</h3>
+    <p>Already had it in stage 1 — the personal letter shows all three phases honestly. Stage 2 is the trigger fire.</p>
+    <ul style="margin: 6px 0 0 18px;">
+      <li><b>Stage 1 (now, in personal letter):</b> "£75 for 20 May. Phase 1 number, not a market number. Rises to £125 at Phase 2 trigger, £200 + 50% above at Phase 3. Trigger criteria written down on paper." Honest, not subsidised, sustainable.</li>
+      <li><b>Stage 2 (after Tue 25 Aug review):</b> If T1+T2 fire, Nicki's fee rises to <b>£125/session</b> from Q4 onwards. Send her a short email the week of the review with the actual numbers — "guest sessions sold X of Y, Founding count is Z, moving to Phase 2 prices and your fee to £125."</li>
+    </ul>
+    <p style="margin-top: 10px;"><b>The principle, locked:</b> guest fees rise <em>before</em> your own host fee rises. You eat the cashflow gap because you're the one with upside on every other dimension (audience, brand, content rights, audit pipeline). Guests don't get that upside, so they get paid first.</p>
+  </div>
+</section>
+
+<!-- ════════════════════════ 13 ROADMAP ════════════════════════ -->
+<section class="block" id="roadmap" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">13 · Day-by-day · Sat → Wed</p>
+  <h2><span class="step">The actual order things happen</span>Four days. One launch. Nothing skipped.</h2>
+
+  <ul class="roadmap" style="list-style:none;">
+
+    <li><span class="when">Sat 25 Apr<br/>(today)</span><span class="dot gold"></span><div class="what">
+      <b>Build kickoff: TidyCal + Zoom signup.</b><span class="tag tag-you">You · 90 min</span>
+      <small>Decisions are locked (§01). Sign up TidyCal lifetime ($29) + Zoom Pro. Connect Google Calendar, Zoom, Stripe. Send Nicki her personal intro email + kit (the standalone HTML version, updated to ask for 19 May) — that's the one async dependency that has the longest lead time.</small>
+    </div></li>
+
+    <li><span class="when">Sat 25 Apr<br/>(evening)</span><span class="dot aqua"></span><div class="what">
+      <b>I draft the 3 blog posts &amp; brand the 4 launch email templates.</b><span class="tag tag-me">Me · 4 hrs</span>
+      <small>Posts 1–3 + templates 1, 2, 7, 8. Drops in your inbox by Sun lunchtime for editing.</small>
+    </div></li>
+
+    <li><span class="when">Sun 26 Apr</span><span class="dot orchid"></span><div class="what">
+      <b>You: blog edits + TidyCal booking pages + Stripe links.</b><span class="tag tag-you">You · 2 hrs</span>
+      <small>Edit the 3 blog drafts (rewrite anything that doesn't sound like you). Create the 5 TidyCal booking pages using the copy already in <code>Google Appointment Schedule Setup.html</code>. Create the 2 Stripe Payment Links (£10, £120) — connect them to Cal.com. Source watercolour cube for the kit.</small>
+    </div></li>
+
+    <li><span class="when">Sun 26 Apr<br/>(evening)</span><span class="dot aqua"></span><div class="what">
+      <b>I write &amp; deliver the /hello page spec to Claude Code.</b><span class="tag tag-me">Me · 1 hr</span>
+      <small>Spec doc + component map. CC starts overnight build.</small>
+    </div></li>
+
+    <li><span class="when">Mon 27 Apr<br/>(your prep day)</span><span class="dot orchid"></span><div class="what">
+      <b>Final tweak day · zero client work.</b><span class="tag tag-you">You · all day, low-pressure</span>
+      <small>Send me the 5 TidyCal booking URLs · final blog post approval · approve email templates · check Cardiff Flyer v3 QR points to /hello · pack the bag for Wednesday. Write any pages I haven't covered yet.</small>
+    </div></li>
+
+    <li><span class="when">Mon 27 Apr</span><span class="dot aqua"></span><div class="what">
+      <b>I write Docs 3 &amp; 4 of the Guest pack.</b><span class="tag tag-me">Me · 2 hrs</span>
+      <small>"How it works" operations doc + "What I need from you" checklist. Filed at <code>loop-breakers/guest-host-kit/</code>.</small>
+    </div></li>
+
+    <li><span class="when">Mon 27 Apr<br/>(evening)</span><span class="dot gold"></span><div class="what">
+      <b>Claude Code: /hello deployed to Vercel preview.</b><span class="tag tag-cc">CC</span>
+      <small>You + I both QA on phone before bed. List any issues in WhatsApp. Plausible goals confirmed firing.</small>
+    </div></li>
+
+    <li><span class="when">Tue 28 Apr<br/>(soft launch)</span><span class="dot orchid"></span><div class="what">
+      <b>Publish 3 blog posts · send pre-Cardiff newsletter · final QA.</b><span class="tag tag-you">You · 90 min</span>
+      <small>Posts go live morning. Newsletter goes out lunchtime: "I'm in Cardiff Wed — here's what I'll be talking about, and how to find me online." Final phone QA of /hello. Test booking a £10 Tuesday session yourself end-to-end.</small>
+    </div></li>
+
+    <li><span class="when">Tue 28 Apr<br/>(evening)</span><span class="dot aqua"></span><div class="what">
+      <b>Last fixes I find · I'm on standby.</b><span class="tag tag-me">Me</span>
+      <small>You're packing for Cardiff. I'm fixing whatever the QA caught.</small>
+    </div></li>
+
+    <li><span class="when">Wed 29 Apr<br/>(Cardiff)</span><span class="dot gold"></span><div class="what">
+      <b>You're at the show · everything is live.</b><span class="tag tag-you">You</span>
+      <small>QR scans → /hello. /hello → TidyCal bookings. Bookings → Stripe → calendar. Plausible counts every click. You hand out flyers. We review the Plausible dashboard together Wed evening.</small>
+    </div></li>
+
+    <li><span class="when">Thu 30 Apr</span><span class="dot orange"></span><div class="what">
+      <b>Cardiff debrief · first bookings response.</b><span class="tag tag-me">Me · 30 min</span>
+      <small>What converted, what didn't, what to fix before session 1 (Tue 5 May). Phase 2 backlog opens.</small>
+    </div></li>
+
+    <li><span class="when">Tue 5 May<br/>(launch session)</span><span class="dot gold"></span><div class="what">
+      <b>Loop Breakers session 1 · 10:30am · £10/seat (£5 access on request).</b>
+      <small>The first room. Whatever happens here is the answer. Phase 1 closes the moment this session ends.</small>
+    </div></li>
+  </ul>
+
+  <h3>What's explicitly out of Phase 1</h3>
+  <ul class="fine">
+    <li>The 4-step swipe (rebuild as Phase 2 only if /hello data justifies it)</li>
+    <li>TidyCal inline embed (link-out is fine for Wed)</li>
+    <li>Founding Member landing (opens 20 May, after Nicki's session)</li>
+    <li>Creative kit on sale (designed now, ships Aug)</li>
+    <li>Resource library / sketchnote gallery on /hello</li>
+    <li>Guest pack Docs 3 &amp; 4 — drafted Mon, polished Phase 2</li>
+    <li>Posts 4–6 of the blog backlog — drafted across May</li>
+  </ul>
+
+  <div class="box decision">
+    <h3>The Phase 1 promise — what "ready for the public" means</h3>
+    <p>By Wed 29 Apr 09:00:</p>
+    <ul class="fine" style="margin-top:8px">
+      <li>unbarrier.me/hello loads in &lt;2s on phone, hero readable above the fold</li>
+      <li>All 5 TidyCal booking pages take a real test booking end-to-end (free or paid)</li>
+      <li>Stripe receipts arrive within 30 seconds of payment</li>
+      <li>Cardiff QR resolves to /hello, click counts in Plausible</li>
+      <li>3 blog posts published, indexable, all internal links work</li>
+      <li>Newsletter "thanks for scanning" auto-fires from /hello form</li>
+      <li>Nicki's reply received (yes/maybe/no — any answer is good)</li>
+    </ul>
+    <p style="margin-top:10px"><b class="pick">Decisions locked. I start the Sunday build at 09:00 — TidyCal page setup, blog edits, /hello scaffold, Nicki intro update, the 10 email templates.</b></p>
+  </div>
+</section>
+
+</div>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:20px;}
+  .card{width:660px;}
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+  .swatch{aspect-ratio:1.5/1;border-radius:12px;display:flex;flex-direction:column;justify-content:space-between;padding:14px;font-family:var(--font-body);border:1px solid rgba(0,0,0,0.08);color:#210a33;}
+  .swatch .role{font-size:10px;font-family:var(--font-heading);font-weight:700;text-transform:uppercase;letter-spacing:0.12em;opacity:0.7;}
+  .swatch .name{font-family:var(--font-heading);font-weight:800;font-size:14px;}
+  .swatch .hex{font-size:11px;opacity:0.65;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="grid">
+    <div class="swatch" style="background:#38ff99;"><div class="role">Action · Home · Hub</div><div><div class="name">Spring Green</div><div class="hex">#38ff99</div></div></div>
+    <div class="swatch" style="background:#69d9d1;"><div class="role">unbarrier.audit</div><div><div class="name">Pearl Aqua</div><div class="hex">#69d9d1</div></div></div>
+    <div class="swatch" style="background:#ff8a1c;color:#fff;"><div class="role" style="opacity:0.85;">unbarrier.access</div><div><div class="name">Princeton Orange</div><div class="hex">#ff8a1c</div></div></div>
+    <div class="swatch" style="background:#db7dcc;color:#fff;"><div class="role" style="opacity:0.85;">unbarrier.voice · Nici</div><div><div class="name">Orchid Mist</div><div class="hex">#db7dcc</div></div></div>
+    <div class="swatch" style="background:#ffc203;"><div class="role">Payoff · Community</div><div><div class="name">School Bus Yellow</div><div class="hex">#ffc203</div></div></div>
+    <div class="swatch" style="background:#e3a1b0;"><div class="role">Supporting soft</div><div><div class="name">Pink Mist</div><div class="hex">#e3a1b0</div></div></div>
+  </div>
+</div>
+</body>
+</html>

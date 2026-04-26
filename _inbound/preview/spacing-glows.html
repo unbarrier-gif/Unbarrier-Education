@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:24px;}
+  .card{width:660px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;}
+  .cell{background:var(--surface-raised);border:1px solid var(--border-subtle);border-radius:12px;padding:20px;height:140px;position:relative;overflow:hidden;display:flex;align-items:flex-end;}
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--text-subtle);position:relative;z-index:2;}
+  .orb{position:absolute;width:220px;height:220px;border-radius:50%;filter:blur(60px);opacity:0.7;top:-40px;left:-40px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="cell"><div class="orb" style="background:#38ff99;"></div><div class="label">Glow · Spring Green</div></div>
+  <div class="cell"><div class="orb" style="background:#db7dcc;"></div><div class="label">Glow · Orchid</div></div>
+  <div class="cell"><div class="orb" style="background:#ffc203;"></div><div class="label">Glow · Yellow</div></div>
+</div>
+</body>
+</html>

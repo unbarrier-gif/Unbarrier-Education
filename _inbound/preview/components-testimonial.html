@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:24px;}
+  .card{width:660px;background:rgba(219,125,204,0.06);border:1px solid rgba(219,125,204,0.22);border-radius:20px;padding:32px 34px;position:relative;}
+  .quote-mark{font-family:var(--font-heading);font-weight:800;font-size:84px;line-height:1;color:var(--orchid-mist);opacity:0.28;position:absolute;top:8px;left:18px;pointer-events:none;}
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--orchid-mist);margin:0 0 12px;position:relative;}
+  blockquote{margin:0;font-family:var(--font-body);font-size:15.5px;line-height:1.65;color:var(--text);font-weight:500;position:relative;}
+  blockquote em{color:var(--spring-green);font-style:normal;font-weight:600;}
+  .cite{margin-top:18px;display:flex;align-items:center;gap:12px;position:relative;}
+  .avatar{width:44px;height:44px;border-radius:50%;background:var(--orchid-mist);overflow:hidden;flex-shrink:0;display:flex;align-items:center;justify-content:center;}
+  .avatar img{width:100%;height:100%;object-fit:cover;display:block;}
+  .who{display:flex;flex-direction:column;}
+  .who b{font-family:var(--font-heading);font-size:13px;color:var(--text);font-weight:700;}
+  .who span{font-family:var(--font-body);font-size:11.5px;color:var(--text-subtle);letter-spacing:0.02em;}
+</style>
+</head>
+<body>
+<div class="card">
+  <span class="quote-mark">"</span>
+  <p class="label">What shifted</p>
+  <blockquote>
+    My brain just feels like it has so much more room, and <em>nothing feels urgent</em>. I just walked up a hill barefoot. I feel like the dogs are listening to me more. I'm going to do yoga in the field with my horse. Because why the fuck not?
+  </blockquote>
+  <div class="cite">
+    <div class="avatar"><img src="../assets/gemma-portrait.png" alt="Gemma"></div>
+    <div class="who">
+      <b>Gemma</b>
+      <span>Loop Breakers coaching client</span>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  :root{
+    --well:#1c0d2e;
+    --hair:rgba(255,244,230,0.10);
+  }
+  html,body{margin:0;padding:0;background:var(--amethyst);}
+  body{padding:22px;font-family:'Outfit',system-ui,sans-serif;color:var(--cream);}
+  .wrap{width:720px;}
+
+  .eyebrow{font-size:10px;font-weight:700;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,244,230,0.55);margin:0 0 6px;}
+  h2{font-family:'Fredoka',system-ui,sans-serif;font-weight:600;font-size:22px;letter-spacing:-0.01em;margin:0 0 4px;color:var(--cream);}
+  .sub{font-size:12px;color:rgba(255,244,230,0.62);margin:0 0 18px;max-width:560px;line-height:1.5;}
+
+  /* ——— Tier 1: Core cast ——— */
+  .core{
+    display:grid;
+    grid-template-columns: 1.6fr 1fr 1fr;
+    grid-template-rows: repeat(4, 110px);
+    gap:10px;
+    margin-bottom:18px;
+  }
+  .slot{
+    background:var(--well);
+    border:1px solid var(--hair);
+    border-radius:14px;
+    display:flex;align-items:center;justify-content:center;
+    padding:14px;
+    overflow:hidden;
+    position:relative;
+  }
+  .slot img{max-width:100%;max-height:100%;object-fit:contain;display:block;}
+  .tag{
+    position:absolute;top:8px;left:10px;
+    font-size:8.5px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;
+    color:rgba(255,244,230,0.55);
+  }
+  .role{
+    position:absolute;bottom:8px;left:10px;right:10px;
+    font-size:9.5px;font-weight:600;letter-spacing:0.02em;
+    color:rgba(255,244,230,0.82);
+    display:flex;justify-content:space-between;gap:8px;
+  }
+  .role b{font-weight:700;color:var(--cream);}
+
+  .hero{
+    grid-row: span 4;
+    background:
+      radial-gradient(120% 80% at 50% 65%, rgba(56,255,153,0.14) 0%, transparent 55%),
+      var(--well);
+  }
+  .hero-stack{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    gap:6px;width:100%;height:100%;
+  }
+  .hero-figure{max-height:280px;max-width:85%;object-fit:contain;}
+  .hero-mark{max-height:70px;max-width:70%;object-fit:contain;}
+
+  /* ——— Tier 2: Supporting ——— */
+  .support-head{display:flex;align-items:baseline;gap:10px;margin:22px 0 8px;}
+  .support{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:10px;
+    margin-bottom:18px;
+  }
+  .support .slot{height:100px;}
+
+  /* ——— Rejected ——— */
+  .rej-head{display:flex;align-items:baseline;gap:10px;margin:22px 0 8px;}
+  .rejected{
+    display:grid;grid-template-columns:repeat(6,1fr);gap:8px;
+  }
+  .rejected .slot{
+    height:72px;background:rgba(28,13,46,0.5);
+    border:1px dashed rgba(255,244,230,0.18);
+    padding:10px;
+  }
+  .rejected .slot img{opacity:0.32;filter:grayscale(0.6);max-height:100%;}
+  .rej-why{
+    position:absolute;bottom:6px;left:8px;right:8px;
+    font-size:7.5px;font-weight:600;letter-spacing:0.04em;
+    color:rgba(255,244,230,0.55);
+    text-align:center;line-height:1.25;
+  }
+  .rej-x{
+    position:absolute;top:6px;right:8px;
+    font-family:'Fredoka';font-weight:600;font-size:13px;color:#ff6b6b;
+  }
+
+  /* ——— Usage note ——— */
+  .note{
+    margin-top:18px;padding:14px 16px;
+    background:rgba(56,255,153,0.06);
+    border:1px solid rgba(56,255,153,0.22);
+    border-radius:12px;
+    font-size:11.5px;line-height:1.55;color:rgba(255,244,230,0.86);
+  }
+  .note b{color:#9dffc6;font-weight:700;letter-spacing:0.01em;}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="eyebrow">Illustration system</p>
+  <h2>Core cast + supporting tools</h2>
+  <p class="sub">A curated subset of the illustrations on file. "Bring the joy" leads as a figure + wordmark pairing — the heart of the brand. The rest of the core cast carries supporting ideas: old stories (pyramids, helmet), new worlds (planet), breakthrough (flask). Supporting tools pair with a core mark when a topic needs specificity.</p>
+
+  <!-- TIER 1 -->
+  <div class="core">
+    <div class="slot hero">
+      <span class="tag">01 · Hero pairing</span>
+      <div class="hero-stack">
+        <img class="hero-figure" src="../assets/illustrations/bring-the-joy-figure.png" alt="the human figure">
+        <img class="hero-mark" src="../assets/illustrations/bring-the-joy-wordmark.png" alt="bring the joy wordmark">
+      </div>
+      <div class="role"><b>Bring the joy</b><span>Figure + wordmark</span></div>
+    </div>
+
+    <div class="slot">
+      <span class="tag">02</span>
+      <img src="../assets/illustrations/bring-the-joy-wordmark.png" alt="bring the joy wordmark" style="max-height:80px;">
+      <div class="role"><b>Wordmark</b><span>Rallying cry</span></div>
+    </div>
+    <div class="slot">
+      <span class="tag">03</span>
+      <img src="../assets/illustrations/trans-09.png" alt="blue ringed planet">
+      <div class="role"><b>New World</b><span>Curiosity</span></div>
+    </div>
+
+    <div class="slot">
+      <span class="tag">04</span>
+      <img src="../assets/illustrations/pyramids.png" alt="pyramids in clouds">
+      <div class="role"><b>Pyramids</b><span>Old stories</span></div>
+    </div>
+    <div class="slot">
+      <span class="tag">05</span>
+      <img src="../assets/illustrations/helmet.png" alt="spartan helmet">
+      <div class="role"><b>Helmet</b><span>Old stories</span></div>
+    </div>
+
+    <div class="slot" style="grid-column: 2 / span 2;">
+      <span class="tag">06</span>
+      <img src="../assets/illustrations/science.png" alt="flask breakthrough" style="max-height:88px;">
+      <div class="role"><b>Flask</b><span>Bold stories · breakthrough</span></div>
+    </div>
+  </div>
+
+  <!-- TIER 2 -->
+  <div class="support-head">
+    <p class="eyebrow" style="margin:0;">Supporting · tools &amp; subjects</p>
+    <span style="font-size:10.5px;color:rgba(255,244,230,0.5);">Pair with a core mark — never the hero.</span>
+  </div>
+  <div class="support">
+    <div class="slot">
+      <img src="../assets/illustrations/trans-05-wrench.png" alt="wrench">
+      <div class="role"><b>Wrench</b><span>Make / unbarrier</span></div>
+    </div>
+    <div class="slot">
+      <img src="../assets/illustrations/trans-06-ruler.png" alt="ruler triangle">
+      <div class="role"><b>Ruler</b><span>Design / structure</span></div>
+    </div>
+    <div class="slot">
+      <img src="../assets/illustrations/trans-04.png" alt="gear with sparks">
+      <div class="role"><b>Gear</b><span>Engineering</span></div>
+    </div>
+  </div>
+
+  <!-- REJECTED -->
+  <div class="rej-head">
+    <p class="eyebrow" style="margin:0;">Parked · off-system</p>
+    <span style="font-size:10.5px;color:rgba(255,244,230,0.5);">Available on file but kept out of the kit.</span>
+  </div>
+  <div class="rejected">
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/basketball.png" alt="">
+      <div class="rej-why">Off-palette</div>
+    </div>
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/planet-orange.png" alt="">
+      <div class="rej-why">Palette clash</div>
+    </div>
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/trans-10.png" alt="">
+      <div class="rej-why">Line style</div>
+    </div>
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/trans-11.png" alt="">
+      <div class="rej-why">Flat silhouette</div>
+    </div>
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/trans-07.png" alt="">
+      <div class="rej-why">Fragment</div>
+    </div>
+    <div class="slot">
+      <span class="rej-x">×</span>
+      <img src="../assets/illustrations/trans-14.png" alt="">
+      <div class="rej-why">Blank file</div>
+    </div>
+  </div>
+
+  <div class="note">
+    <b>Rules of thumb.</b> The figure + "bring the joy" wordmark is the signature pairing — use them together whenever possible. For everything else, one core mark per composition; don't stack Pyramids with Helmet with Planet. Supporting tools add specificity (wrench + flask when talking about <i>how</i> we do it). The spring-green wordmark and the green ring on the planet are the only greens in the set — that's what makes them ownable.
+  </div>
+
+</div>
+</body>
+</html>

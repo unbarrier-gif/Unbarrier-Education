@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Claude Code Master Brief · unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 960px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,5.5vw,3.6rem); letter-spacing: -0.025em; line-height: 1.04; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 680px; }
+
+  .toc { padding: 22px 26px; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); margin: 0 0 2.2rem; }
+  .toc h3 { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 12px; color: var(--text-subtle); }
+  .toc ol { margin: 0; padding: 0 0 0 1.2rem; }
+  .toc li { font-family: "Comfortaa"; font-size: 0.9rem; line-height: 2; color: var(--text); }
+  .toc li a { color: var(--text); text-decoration: none; border-bottom: 1px solid transparent; }
+  .toc li a:hover { border-bottom-color: var(--spring-green); color: var(--spring-green); }
+
+  section.block { padding: 2.2rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; scroll-margin-top: 20px; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.6rem,3.4vw,2.3rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.5rem 0 0.6rem; color: var(--text); }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; margin: 1.2rem 0 0.5rem; color: var(--text); letter-spacing: -0.005em; }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.75; color: var(--text-muted); }
+  p.summary { font-family: "Comfortaa"; font-size: 0.94rem; line-height: 1.75; color: var(--text-muted); margin: 0 0 1.2rem; max-width: 720px; }
+  ol.plan, ul.plan { padding: 0 0 0 1.1rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 6px; }
+  ol.plan li b, ul.plan li b { color: var(--text); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; }
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); }
+
+  .kv { display: grid; grid-template-columns: 200px 1fr; gap: 8px 20px; font-family: "Comfortaa"; font-size: 0.9rem; margin: 0 0 1rem; padding: 18px 20px; background: rgba(56,255,153,0.05); border: 1px solid rgba(56,255,153,0.2); border-radius: 12px; }
+  .kv dt { color: var(--text-subtle); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; font-family: "Outfit"; font-weight: 700; }
+  .kv dd { margin: 0; color: var(--text); }
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 10px 0 14px; }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); color: var(--text); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); color: var(--text); }
+  .box.note { background: rgba(219,125,204,0.06); border: 1px solid rgba(219,125,204,0.3); border-left: 3px solid var(--orchid-mist); color: var(--text); }
+  .box b { color: var(--text); }
+
+  .two { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 0 0 1rem; }
+  @media (max-width: 680px) { .two { grid-template-columns: 1fr; } }
+
+  .phase { display: inline-block; font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 10px; border-radius: 100px; margin-left: 10px; vertical-align: middle; position: relative; top: -3px; }
+  .p-1 { background: rgba(56,255,153,0.14); color: var(--spring-green); border: 1px solid rgba(56,255,153,0.35); }
+  .p-2 { background: rgba(219,125,204,0.14); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.35); }
+  .p-3 { background: rgba(255,194,3,0.14); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.35); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<p class="doc-eyebrow">Claude Code Master Brief · v1 · 24 Apr 2026</p>
+<h1>Everything Claude Code needs,<br/><span style="color:var(--spring-green)">in one document.</span></h1>
+<p class="sub">Engineer-ready. Assumes you're reading this in a Claude Code session with repo access. Work top-to-bottom in the three phases listed. Every section links to the full-fidelity design/spec doc in this project when more detail is needed.</p>
+
+<!-- ── TOC ────────────────────────────────────────────────────────────── -->
+<div class="toc">
+  <h3>Contents</h3>
+  <ol>
+    <li><a href="#context">Project context &amp; principles</a></li>
+    <li><a href="#confirmed">Confirmed values &amp; accounts</a></li>
+    <li><a href="#repo">Repo structure — Turborepo monorepo</a></li>
+    <li><a href="#design">Design system &amp; tokens</a></li>
+    <li><a href="#accessibility">Accessibility baseline (WCAG 2.2 AA)</a></li>
+    <li><a href="#seo">SEO &amp; metadata</a></li>
+    <li><a href="#compliance">Compliance — footer, legal pages, cookies</a></li>
+    <li><a href="#newsletter">Newsletter — opt-in + /subscribe page</a></li>
+    <li><a href="#funnel">Funnel stack wiring (Stripe, Google, Plausible, MailerLite)</a></li>
+    <li><a href="#phases">Shipping order — three phases</a></li>
+    <li><a href="#criteria">Definition of done</a></li>
+  </ol>
+</div>
+
+<!-- ── 01 CONTEXT ─────────────────────────────────────────────────────── -->
+<section class="block" id="context" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Context</p>
+  <h2>Project context &amp; principles</h2>
+  <p class="summary"><b>Unbarrier</b> is a values-driven practice — consultancy, personal brand, and emerging movement built around real inclusion, belonging, and neurodivergent-first design. Founder: Nici Foote. Audience: neurodivergent adults, educators, families, and the organisations that serve them.</p>
+
+  <h3>Non-negotiable principles</h3>
+  <ol class="plan">
+    <li><b>Accessibility is structural, not cosmetic.</b> WCAG 2.2 AA is the floor, not the goal. See §05.</li>
+    <li><b>Calm over density.</b> Reduced motion respected globally. No popups, no nags, no dark patterns.</li>
+    <li><b>Plain language.</b> Copy reads like a human wrote it. No corporate voice, no AI-ese.</li>
+    <li><b>Privacy-first.</b> No cookies for analytics. No third-party trackers. No consent theatre.</li>
+    <li><b>Performance as access.</b> Slow sites exclude people on cheap devices / bad connections. Lighthouse ≥95 across the board.</li>
+  </ol>
+</section>
+
+<!-- ── 02 CONFIRMED VALUES ────────────────────────────────────────────── -->
+<section class="block" id="confirmed" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Confirmed values</p>
+  <h2>Accounts, IDs, addresses</h2>
+  <dl class="kv">
+    <dt>Company</dt><dd>Unbarrier Education Ltd · Company No. <b>16603630</b> · trading as Unbarrier.Me</dd>
+    <dt>Registered address</dt><dd>45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</dd>
+    <dt>Primary domain</dt><dd><code>unbarrier.me</code></dd>
+    <dt>Loop Breakers subdomain</dt><dd><code>loop.unbarrier.me</code> (replaces <code>vision.unbarrier.me</code> — 301 redirect)</dd>
+    <dt>Primary email</dt><dd>nici@unbarrier.me (alias: hello@unbarrier.me)</dd>
+    <dt>Stripe account</dt><dd><code>acct_1TI98cDd2uGyLE5a</code></dd>
+    <dt>MailerLite form ID</dt><dd><code>185568935471482009</code></dd>
+    <dt>Sending domain (MailerLite)</dt><dd>unbarrier.me — SPF + DKIM verified</dd>
+    <dt>Accounting</dt><dd>Xero (Stripe → Xero reconciles natively)</dd>
+    <dt>Calendar / booking</dt><dd>Google Calendar + Appointment Schedule (Workspace)</dd>
+    <dt>Video</dt><dd>Google Meet</dd>
+    <dt>Analytics</dt><dd>Plausible (cookieless — no banner needed)</dd>
+    <dt>Community</dt><dd>WhatsApp group for Loop Breakers cohorts (30-day access)</dd>
+  </dl>
+</section>
+
+<!-- ── 03 REPO ────────────────────────────────────────────────────────── -->
+<section class="block" id="repo" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Repo</p>
+  <h2>Turborepo monorepo <span class="phase p-1">Phase 1</span></h2>
+  <p class="summary">Two existing repos consolidated into one. Keeps design system + apps + content in sync, enables atomic changes across sites.</p>
+
+  <h3>Structure</h3>
+<pre>unbarrier/                         <span style="opacity:0.5">// new monorepo root</span>
+  apps/
+    main/                          <span style="opacity:0.5">// unbarrier.me — landing, services, blog</span>
+    loop-breakers/                 <span style="opacity:0.5">// loop.unbarrier.me — sessions, booking</span>
+  packages/
+    design-system/                 <span style="opacity:0.5">// tokens, components, CSS</span>
+    content/                       <span style="opacity:0.5">// MDX blog + legal pages</span>
+  turbo.json
+  package.json
+  pnpm-workspace.yaml</pre>
+
+  <h3>Migration tasks</h3>
+  <ol class="plan">
+    <li>New GitHub repo: <code>unbarrier-monorepo</code> (private)</li>
+    <li>Set up Turborepo + pnpm workspaces + Next.js 15 app router</li>
+    <li>Port existing <code>unbarrier-me-APR-2026</code> → <code>apps/main</code></li>
+    <li>Port existing <code>loop-breakers-landing</code> → <code>apps/loop-breakers</code></li>
+    <li>Extract shared components + tokens into <code>packages/design-system</code></li>
+    <li>Deploy both apps to Vercel (one project per app, same Vercel team)</li>
+    <li>DNS: <code>unbarrier.me</code> → apps/main · <code>loop.unbarrier.me</code> → apps/loop-breakers</li>
+    <li>301 redirect <code>vision.unbarrier.me</code> → <code>loop.unbarrier.me</code> at DNS level</li>
+    <li>Archive old repos after cutover is confirmed in production</li>
+  </ol>
+
+  <div class="box note"><b>You handle:</b> grant Claude Code engineer access to both private repos. Confirm archive date for the old ones. Confirm <code>loop.unbarrier.me</code> (not <code>vision</code>) is the new subdomain.</div>
+</section>
+
+<!-- ── 04 DESIGN SYSTEM ───────────────────────────────────────────────── -->
+<section class="block" id="design" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Design system</p>
+  <h2>Tokens, type, components <span class="phase p-1">Phase 1</span></h2>
+  <p class="summary">Single source of truth: <code>packages/design-system/colors_and_type.css</code>. Every app imports it. Do not hand-write hex values in components.</p>
+
+  <h3>Core tokens (abbreviated — see colors_and_type.css)</h3>
+  <table>
+    <thead><tr><th>Token</th><th>Value</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td><code>--amethyst</code></td><td>#210a33</td><td>Primary background</td></tr>
+      <tr><td><code>--spring-green</code></td><td>#38ff99</td><td>CTA, hero highlight</td></tr>
+      <tr><td><code>--pearl-aqua</code></td><td>#69d9d1</td><td>unbarrier.audit — evidence</td></tr>
+      <tr><td><code>--princeton-orange</code></td><td>#ff8a1c</td><td>unbarrier.access — premium</td></tr>
+      <tr><td><code>--orchid-mist</code></td><td>#db7dcc</td><td>unbarrier.voice / Nici</td></tr>
+      <tr><td><code>--school-bus-yellow</code></td><td>#ffc203</td><td>Loop Breakers · community</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Type</h3>
+  <ul class="plan">
+    <li><b>Outfit</b> — display, headings, buttons (700–900)</li>
+    <li><b>Comfortaa</b> — body, UI copy (400–600)</li>
+    <li><b>Cherry Bomb One</b> — accent only, sparingly</li>
+    <li>Self-hosted via <code>packages/design-system/fonts/</code> — no Google Fonts network dependency</li>
+  </ul>
+
+  <h3>Components to lift from existing UI kits</h3>
+  <p>Source: <code>ui_kits/unbarrier-website/</code> and <code>ui_kits/loop-breakers/</code> — existing React components, rewrite as typed TSX in <code>packages/design-system</code>.</p>
+  <ul class="plan">
+    <li>Nav (translucent amethyst + blur) — from <code>ui_kits/unbarrier-website/Nav.jsx</code></li>
+    <li>Hero · Services · AboutBeliefs · StatStrip · Footer — main site</li>
+    <li>LBHero · LBMiddle · LBPackages · LBFooter — Loop Breakers</li>
+    <li>SessionsMenu — <code>loop-breakers/sessions/SessionsMenu.jsx</code></li>
+    <li>NewsletterOptIn (three variants) — <code>Newsletter - Opt-in and Welcome.html</code></li>
+  </ul>
+</section>
+
+<!-- ── 05 ACCESSIBILITY ───────────────────────────────────────────────── -->
+<section class="block" id="accessibility" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Accessibility</p>
+  <h2>WCAG 2.2 AA baseline <span class="phase p-1">Phase 1</span></h2>
+  <p class="summary">The statement on <code>/legal/accessibility</code> is the claim. This section is how we back up every promise in it. No overlay widgets — structural only.</p>
+
+  <h3>Global CSS rules (add to design-system root)</h3>
+<pre>/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Visible focus always */
+*:focus-visible {
+  outline: 2px solid var(--spring-green);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Skip link pattern */
+.skip-link {
+  position: absolute; top: -40px; left: 8px;
+  background: var(--spring-green); color: var(--amethyst);
+  padding: 8px 14px; border-radius: 6px;
+  font-family: "Outfit"; font-weight: 700;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 8px; }</pre>
+
+  <h3>Per-page requirements</h3>
+  <ul class="plan">
+    <li>Skip link as first focusable element, points to <code>#main</code></li>
+    <li>Landmark structure: <code>&lt;header&gt;</code> / <code>&lt;nav&gt;</code> / <code>&lt;main id="main"&gt;</code> / <code>&lt;footer&gt;</code></li>
+    <li>Exactly one <code>&lt;h1&gt;</code> per page. Heading levels don't skip.</li>
+    <li>All interactive elements keyboard-reachable, Enter/Space activatable</li>
+    <li>Every form input has a visible <code>&lt;label&gt;</code>. Errors announced via <code>aria-live="polite"</code>.</li>
+    <li>Images: meaningful content = descriptive alt; decorative = <code>alt="" aria-hidden="true"</code></li>
+  </ul>
+
+  <h3>Contrast audit — known fix</h3>
+  <div class="box warn"><b>Issue:</b> <code>--text-faint: rgba(240, 235, 229, 0.32)</code> fails AA on amethyst (measured 3.4:1, needs 4.5:1). <b>Fix:</b> lift alpha to <code>0.5</code> (gives 4.9:1). Apply across design-system.</div>
+
+  <h3>CI guardrails</h3>
+  <ol class="plan">
+    <li>GitHub Actions: run <code>@axe-core/cli</code> against every route on PR</li>
+    <li>Lighthouse CI: a11y score ≥95 blocks merge</li>
+    <li>Manual keyboard walkthrough checklist committed to <code>/docs/a11y-checklist.md</code>, reviewed per release</li>
+  </ol>
+
+  <div class="box note"><b>Statement text:</b> use v1.1 (March 2026) verbatim. Nici approved. Port as MDX at <code>content/legal/accessibility.mdx</code>.</div>
+</section>
+
+<!-- ── 06 SEO ─────────────────────────────────────────────────────────── -->
+<section class="block" id="seo" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · SEO</p>
+  <h2>Technical + on-page <span class="phase p-1">Phase 1</span></h2>
+
+  <h3>Technical — one PR</h3>
+  <ul class="plan">
+    <li><code>app/sitemap.ts</code> — auto-generated from file-based routes + blog MDX + sessions data</li>
+    <li><code>app/robots.ts</code> — allow all, reference sitemap</li>
+    <li>JSON-LD structured data components: <code>&lt;Organization&gt;</code>, <code>&lt;Person&gt;</code> (Nici), <code>&lt;Service&gt;</code> ×3, <code>&lt;Event&gt;</code> per Loop Breakers session, <code>&lt;BlogPosting&gt;</code> per post</li>
+    <li>Canonical URL on every page</li>
+    <li>Open Graph + Twitter card meta on every page</li>
+    <li>1200×630 OG images per top-level route — generated via <code>next/og</code> using brand tokens</li>
+    <li>Image pipeline: <code>next/image</code> with WebP + AVIF, responsive srcset</li>
+  </ul>
+
+  <h3>Keyword targets (non-exhaustive)</h3>
+  <table>
+    <thead><tr><th>Page</th><th>Primary keyword</th></tr></thead>
+    <tbody>
+      <tr><td>Homepage</td><td>neurodivergent consultancy UK</td></tr>
+      <tr><td>/services/audit</td><td>EHCP report writing, inclusive education audit</td></tr>
+      <tr><td>/services/access</td><td>Apple Professional Learning Specialist</td></tr>
+      <tr><td>/services/voice</td><td>ADHD business coaching, neurodivergent founder coaching</td></tr>
+      <tr><td>loop.unbarrier.me</td><td>ADHD accountability group online, neurodivergent business community</td></tr>
+      <tr><td>/vision</td><td>inclusive EdTech research UK</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ── 07 COMPLIANCE ──────────────────────────────────────────────────── -->
+<section class="block" id="compliance" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Compliance</p>
+  <h2>Footer, legal pages, cookies <span class="phase p-1">Phase 1</span></h2>
+
+  <h3>Global footer line</h3>
+  <div class="box good">© 2026 <b>Unbarrier Education Ltd</b> — a microbusiness registered in England and Wales (Company Number: 16603630) and trading as Unbarrier.Me. Registered office: 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH.</div>
+  <p>Apply to both <code>apps/main</code> and <code>apps/loop-breakers</code>.</p>
+
+  <h3>Four legal pages (MDX in <code>content/legal/</code>)</h3>
+  <ol class="plan">
+    <li><b>/legal/privacy</b> — lawful basis per flow (MailerLite, Stripe, Google Appointment Schedule, Plausible). Nici drafts copy; Claude Code builds page.</li>
+    <li><b>/legal/cookies</b> — minimal (Plausible is cookieless; only functional/strictly-necessary). No cookie banner needed unless/until we add third-party tracking.</li>
+    <li><b>/legal/terms</b> — session T&amp;Cs: refund (48h before = full refund), no-show, safeguarding. Nici drafts.</li>
+    <li><b>/legal/accessibility</b> — statement v1.1 (March 2026) verbatim.</li>
+  </ol>
+
+  <h3>Cookie strategy</h3>
+  <div class="box good"><b>No cookie banner.</b> Plausible uses no cookies (sets no client-side identifiers). Stripe checkout uses strictly-necessary cookies only on the Stripe-hosted checkout page (not ours). Google Appointment Schedule runs in an iframe on its own domain — their cookies, their consent, their jurisdiction. We stay clean.</div>
+</section>
+
+<!-- ── 08 NEWSLETTER ──────────────────────────────────────────────────── -->
+<section class="block" id="newsletter" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Newsletter</p>
+  <h2>Opt-in + /subscribe <span class="phase p-2">Phase 2</span></h2>
+  <p class="summary">Full spec in <code>Claude Code Wiring - Newsletter.html</code>. Summary here.</p>
+
+  <h3>Component</h3>
+  <p>Build <code>&lt;NewsletterOptIn variant="a|b|c" /&gt;</code> in <code>packages/design-system</code>. Three visual variants. Reference: <code>Newsletter - Opt-in and Welcome.html</code>.</p>
+
+  <h3>API route</h3>
+<pre><span style="opacity:0.5">// app/api/subscribe/route.ts</span>
+POST https://connect.mailerlite.com/api/subscribers
+Authorization: Bearer ${MAILERLITE_API_TOKEN}
+Content-Type: application/json
+
+{ "email": "...", "groups": ["${MAILERLITE_GROUP_ID}"],
+  "fields": { "source": "homepage|blog|loop-breakers|subscribe-page" } }</pre>
+
+  <h3>Placement</h3>
+  <table>
+    <thead><tr><th>Variant</th><th>Where</th><th>source tag</th></tr></thead>
+    <tbody>
+      <tr><td><code>a</code></td><td>Homepage below fold</td><td><code>homepage</code></td></tr>
+      <tr><td><code>b</code></td><td>Every blog post footer</td><td><code>blog</code></td></tr>
+      <tr><td><code>c</code></td><td>loop.unbarrier.me sessions page sidebar</td><td><code>loop-breakers</code></td></tr>
+      <tr><td><code>a</code> (reused)</td><td>New page <code>unbarrier.me/subscribe</code></td><td><code>subscribe-page</code></td></tr>
+    </tbody>
+  </table>
+  <p><code>/subscribe</code> is the destination for Linktree (which doesn't integrate with MailerLite natively). One entry path → one list → one welcome flow.</p>
+</section>
+
+<!-- ── 09 FUNNEL STACK ────────────────────────────────────────────────── -->
+<section class="block" id="funnel" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Funnel stack</p>
+  <h2>Wiring the money + calendar + comms <span class="phase p-2">Phase 2</span></h2>
+
+  <h3>Booking (Google Appointment Schedule)</h3>
+  <ul class="plan">
+    <li>Nici configures booking pages in Google Calendar (one per session type)</li>
+    <li>On <code>loop.unbarrier.me</code>, each session's "Book" CTA links out to the Google booking page (external)</li>
+    <li>Optional: embed the Google Appointment Schedule iframe on a session-detail page if we want to stay in-brand. <b>Decision needed from Nici</b> — embed vs link-out.</li>
+    <li>Google auto-creates a Calendar event + Google Meet link, emails both parties</li>
+  </ul>
+
+  <h3>Payments (Stripe)</h3>
+  <ul class="plan">
+    <li>Use <b>Stripe Payment Links</b> (one per session type) — no checkout page build needed for v1</li>
+    <li>Paste the payment link URL into Google Appointment Schedule's confirmation email</li>
+    <li>Stripe emails the receipt. Xero syncs payouts natively.</li>
+    <li>Stripe account: <code>acct_1TI98cDd2uGyLE5a</code></li>
+  </ul>
+
+  <h3>Analytics (Plausible)</h3>
+  <ul class="plan">
+    <li>Install Plausible script in <code>app/layout.tsx</code> with <code>data-domain="unbarrier.me"</code></li>
+    <li>Enable subdomain tracking for <code>loop.unbarrier.me</code></li>
+    <li>Goals: <code>newsletter_subscribe</code>, <code>session_book_click</code>, <code>contact_submit</code></li>
+  </ul>
+</section>
+
+<!-- ── 10 PHASES ──────────────────────────────────────────────────────── -->
+<section class="block" id="phases" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · Shipping order</p>
+  <h2>Three phases, ship in order</h2>
+
+  <div class="two">
+    <div>
+      <h3 style="color:var(--spring-green); margin-top:0">Phase 1 — Foundations</h3>
+      <ul class="plan">
+        <li>Turborepo scaffolding + deploy both apps to Vercel</li>
+        <li>Design system package — tokens, type, global a11y CSS</li>
+        <li>Port existing UI-kit components to TSX</li>
+        <li>Skip links, focus rings, reduced-motion, contrast fix</li>
+        <li>SEO technical pass (sitemap, robots, JSON-LD, OG)</li>
+        <li>Footer with company line on every page</li>
+        <li>DNS cutover: loop.unbarrier.me live, vision redirect live</li>
+        <li>Lighthouse CI wired, axe in PR checks</li>
+      </ul>
+    </div>
+    <div>
+      <h3 style="color:var(--orchid-mist); margin-top:0">Phase 2 — Funnel</h3>
+      <ul class="plan">
+        <li>Newsletter component (3 variants) + API route</li>
+        <li>/subscribe page</li>
+        <li>Plausible goals wired</li>
+        <li>Legal pages (privacy, cookies, terms, accessibility)</li>
+        <li>Sessions page with Google Appointment Schedule link-outs</li>
+        <li>Stripe payment link placement</li>
+      </ul>
+    </div>
+  </div>
+
+  <div>
+    <h3 style="color:var(--school-bus-yellow)">Phase 3 — Content &amp; polish</h3>
+    <ul class="plan">
+      <li>Blog system (MDX) with author component, reading time, related posts</li>
+      <li>First 3 blog posts ported from Nici's drafts</li>
+      <li>/hello contact page</li>
+      <li>Accessibility feedback form (optional, from statement roadmap Phase 2)</li>
+      <li>High-contrast toggle (data-contrast="high")</li>
+      <li>RSS feed</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ── 11 DONE ────────────────────────────────────────────────────────── -->
+<section class="block" id="criteria" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Definition of done</p>
+  <h2>What "shipped" means</h2>
+  <ol class="plan">
+    <li>Both apps deployed at their production subdomains</li>
+    <li>Lighthouse scores: Perf ≥90, A11y ≥95, Best Practices ≥95, SEO ≥95 on every top-level route</li>
+    <li>axe-core reports zero violations in CI</li>
+    <li>Manual keyboard walkthrough passes on every route</li>
+    <li>Newsletter: test subscribe succeeds end-to-end; Email 1 arrives in primary inbox under 60 seconds</li>
+    <li>Plausible logging all three goals correctly</li>
+    <li>vision.unbarrier.me → loop.unbarrier.me redirects verified</li>
+    <li>Old repos archived</li>
+    <li>All legal pages present and linked from footer</li>
+  </ol>
+</section>
+
+</div>
+</body>
+</html>

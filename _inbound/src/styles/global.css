@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@500;600;700&family=Inter:wght@400;500;600;700;800;900&family=Lora:ital,wght@0,400;0,600;1,400;1,600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Comfortaa", ui-sans-serif, system-ui, sans-serif;
+  --font-comfortaa: "Comfortaa", ui-sans-serif, system-ui, sans-serif;
+  --font-lora: "Lora", ui-serif, Georgia, serif;
+
+  --color-brand-bg: #210A33;
+  --color-brand-primary: #38FF99; /* Spring Green */
+  --color-brand-accent: #210A33; /* Dark Amethyst */
+  --color-brand-mint: #38FF99;
+  --color-brand-purple: #210A33;
+  --color-brand-text: #210A33;
+  --color-brand-antique: #FAF6EF;
+  --color-brand-aqua: #69D9D1;
+  --color-brand-muted: #64748b; /* slate-500 */
+
+  /* Micro-accents */
+  --color-accent-yellow: #FFC203;
+  --color-accent-teal: #69D9D1;
+  --color-accent-rose: #E3A1B0;
+  --color-accent-pink: #DB7DCC;
+}
+
+@layer components {
+  .arrow-list {
+    list-style: none;
+    padding-left: 0;
+  }
+  .arrow-list li::before {
+    content: "→";
+    color: #38ff99;
+    font-weight: 700;
+    font-size: 16px;
+    margin-right: 10px;
+  }
+}
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-brand-bg text-brand-antique font-sans antialiased;
+    font-size: 16px;
+    line-height: 1.6;
+  }
+
+  h1 {
+    font-family: var(--font-sans);
+    font-size: clamp(56px, 8vw, 88px);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  h2 {
+    font-family: var(--font-sans);
+    font-size: clamp(36px, 5vw, 52px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: #ffffff;
+  }
+
+  h3, h4 {
+    font-family: var(--font-sans);
+    font-size: clamp(22px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+    letter-spacing: 0;
+    color: #ffffff;
+  }
+
+  p {
+    font-family: var(--font-comfortaa);
+    font-size: clamp(16px, 2vw, 18px);
+    font-weight: 500;
+    line-height: 1.75;
+    color: rgba(255, 255, 255, 0.8);
+  }
+}

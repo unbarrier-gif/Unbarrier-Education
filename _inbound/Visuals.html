@@ -1,0 +1,835 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Visuals — unbarrier.me visual asset system</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 1180px; margin: 0 auto; padding: clamp(2.5rem,5vw,4.5rem) clamp(1.25rem,4vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--school-bus-yellow); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,6vw,3.6rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .lede { font-family: "Comfortaa"; font-size: 1rem; line-height: 1.75; margin: 0 0 2rem; max-width: 800px; color: var(--text); }
+  .lede b { color: var(--text); }
+
+  /* TOC */
+  .toc { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 8px 18px; padding: 22px 26px; margin: 0 0 2.5rem; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px; }
+  .toc a { font-family: "Outfit"; font-size: 0.82rem; font-weight: 600; color: var(--text-muted); text-decoration: none; padding: 4px 0; }
+  .toc a:hover { color: var(--spring-green); }
+  .toc a span { color: var(--text-faint); font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.72rem; margin-right: 6px; }
+
+  section.block { padding: 2.6rem 0; border-top: 1px solid rgba(255,255,255,0.08); position: relative; scroll-margin-top: 20px; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.6rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.6rem; }
+  h2 em { font-style: normal; color: var(--accent, var(--spring-green)); }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.9rem; margin: 1.1rem 0 0.4rem; color: var(--text); letter-spacing: 0.02em; }
+
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.78; color: var(--text-muted); }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ul.plan, ol.plan { padding: 0 0 0 1.2rem; margin: 0 0 1rem; }
+  ul.plan li, ol.plan li { margin-bottom: 8px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+  pre { background: #0f0420; border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 14px 18px; overflow-x: auto; font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12px; color: var(--text); line-height: 1.65; margin: 8px 0 14px; white-space: pre; }
+
+  .box { padding: 16px 20px; border-radius: 12px; font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7; margin: 14px 0; color: var(--text); }
+  .box.lock { background: rgba(255,194,3,0.06); border: 1px solid rgba(255,194,3,0.3); border-left: 3px solid var(--school-bus-yellow); }
+  .box.good { background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3); border-left: 3px solid var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3); border-left: 3px solid var(--princeton-orange); }
+  .box.aqua { background: rgba(105,217,209,0.06); border: 1px solid rgba(105,217,209,0.3); border-left: 3px solid var(--pearl-aqua); }
+  .box.orchid { background: rgba(219,125,204,0.06); border: 1px solid rgba(219,125,204,0.3); border-left: 3px solid var(--orchid-mist); }
+  .box.danger { background: rgba(227,161,176,0.06); border: 1px solid rgba(227,161,176,0.3); border-left: 3px solid var(--pink-mist); }
+  .box h4 { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 8px; }
+  .box.lock h4 { color: var(--school-bus-yellow); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.aqua h4 { color: var(--pearl-aqua); }
+  .box.orchid h4 { color: var(--orchid-mist); }
+  .box.danger h4 { color: var(--pink-mist); }
+
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-size: 0.84rem; }
+  th, td { text-align: left; padding: 10px 12px; border-bottom: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; vertical-align: top; color: var(--text-muted); }
+  th { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); white-space: nowrap; }
+  td b { color: var(--text); }
+  td code { font-size: 0.76rem; }
+  table.compact th, table.compact data { padding: 8px 10px; }
+
+  .pill { display: inline-block; font-family: "Outfit"; font-size: 9px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; padding: 2px 8px; border-radius: 100px; border: 1px solid currentColor; line-height: 1.4; }
+  .pill.have { color: var(--pearl-aqua); }
+  .pill.need { color: var(--princeton-orange); }
+  .pill.miss { color: var(--pink-mist); }
+  .pill.ok { color: var(--spring-green); }
+  .pill.todo { color: var(--school-bus-yellow); }
+
+  /* asset card */
+  .asset-card { display: grid; grid-template-columns: 80px 1fr; gap: 16px; padding: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; margin: 10px 0; align-items: start; }
+  .asset-card .thumb { width: 80px; height: 80px; border-radius: 8px; background: var(--amethyst-deep, #15052a); display: flex; align-items: center; justify-content: center; overflow: hidden; }
+  .asset-card .thumb img { max-width: 100%; max-height: 100%; object-fit: contain; }
+  .asset-card .meta h4 { margin: 0 0 4px; font-family: "Outfit"; font-size: 0.92rem; color: var(--text); }
+  .asset-card .meta .file { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.74rem; color: var(--pearl-aqua); margin: 0 0 6px; }
+  .asset-card .meta p { margin: 0 0 4px; font-size: 0.82rem; line-height: 1.6; }
+  .asset-card .meta .specs { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.72rem; color: var(--text-faint); }
+
+  .legend { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 1rem; }
+
+  /* decisions list */
+  .decisions { display: grid; gap: 10px; }
+  .decision { padding: 14px 18px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); border-radius: 12px; }
+  .decision .head { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-bottom: 6px; }
+  .decision .num { font-family: "Outfit"; font-weight: 800; font-size: 0.78rem; color: var(--text-faint); letter-spacing: 0.1em; }
+  .decision .title { font-family: "Outfit"; font-weight: 700; font-size: 0.96rem; color: var(--text); }
+  .decision p { margin: 0; font-size: 0.84rem; line-height: 1.65; }
+  .decision.exec { border-left: 3px solid var(--spring-green); }
+  .decision.approval { border-left: 3px solid var(--princeton-orange); }
+
+  .matrix { width: 100%; }
+  .matrix th { background: rgba(255,255,255,0.02); }
+  .matrix td:first-child { white-space: nowrap; font-family: "Outfit"; font-weight: 600; color: var(--text); font-size: 0.82rem; }
+</style>
+</head>
+<body>
+<main class="page">
+
+<p class="doc-eyebrow">visuals · v2.0 · 26 Apr 2026 · single source of truth</p>
+<h1>Visuals — every image, <em>everywhere it lives.</em></h1>
+<p class="lede">This is the all-encompassing visual asset system for unbarrier.me. <b>One naming convention, one folder structure, one inventory.</b> Anyone — Nici, Claude Code, a VA, a future hire — should be able to open this doc and answer in 30 seconds: <i>what is this image, where does it live, where is it used, and when did it last change?</i></p>
+
+<p class="lede" style="margin-top: -1rem;">Covers: brand marks · illustrations · photos · credential badges · favicons · iOS app icons · Android icons · OG / social cards · email images · print collateral. Plus the editorial framework — <b>what each image means and why we use it where</b>.</p>
+
+<div class="legend">
+  <span class="pill ok">have · ready</span>
+  <span class="pill have">have · needs rename / re-export</span>
+  <span class="pill todo">have · awaiting decision</span>
+  <span class="pill need">need · to commission or generate</span>
+  <span class="pill miss">missing · ask Nici</span>
+</div>
+
+<nav class="toc" aria-label="Table of contents">
+  <a href="#sec-01"><span>01</span> Naming convention</a>
+  <a href="#sec-02"><span>02</span> Folder structure</a>
+  <a href="#sec-03"><span>03</span> Brand &amp; meaning</a>
+  <a href="#sec-04"><span>04</span> Logos &amp; marks</a>
+  <a href="#sec-05"><span>05</span> Illustrations</a>
+  <a href="#sec-06"><span>06</span> Photos</a>
+  <a href="#sec-07"><span>07</span> Credential badges</a>
+  <a href="#sec-08"><span>08</span> Favicons</a>
+  <a href="#sec-09"><span>09</span> iOS &amp; Android icons</a>
+  <a href="#sec-10"><span>10</span> OG / social cards</a>
+  <a href="#sec-11"><span>11</span> Email images</a>
+  <a href="#sec-12"><span>12</span> Print collateral</a>
+  <a href="#sec-13"><span>13</span> Per-page usage</a>
+  <a href="#sec-14"><span>14</span> Production rules</a>
+  <a href="#sec-15"><span>15</span> Decisions made</a>
+  <a href="#sec-16"><span>16</span> Decisions for approval</a>
+  <a href="#sec-17"><span>17</span> Changelog</a>
+</nav>
+
+<!-- ──────────────────────────────────────────────────── 01 NAMING ── -->
+<section id="sec-01" class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Naming convention</p>
+  <h2>One pattern. Lowercase. Hyphens. <em>Predictable.</em></h2>
+
+<pre>{category}-{subject}-{variant}-{size?}.{ext}
+
+category   logo · mark · illo · photo · badge · og · icon · email · print · bg
+subject    the thing it is (kebab-case)
+variant    treatment or version (closed set — see below)
+size       optional pixel width when multiple sizes exist (180, 512, 1200)
+ext        svg · png · jpg · webp · ico · pdf</pre>
+
+  <h3>Worked examples</h3>
+  <table class="compact">
+    <thead><tr><th>Filename</th><th>Reads as</th></tr></thead>
+    <tbody>
+      <tr><td><code>logo-full-strap-colour.svg</code></td><td>Full logo, with strapline, full-colour version, vector</td></tr>
+      <tr><td><code>mark-icon-green.svg</code></td><td>Icon-only mark, green-on-amethyst, vector</td></tr>
+      <tr><td><code>illo-hero-bring-the-joy.png</code></td><td>The signature triangular spotlight hero illustration</td></tr>
+      <tr><td><code>photo-nici-portrait-circle-green.png</code></td><td>Nici's portrait, circular crop, green ring</td></tr>
+      <tr><td><code>badge-apple-miee.png</code></td><td>Apple MIEE credential badge (do not modify)</td></tr>
+      <tr><td><code>og-hello-1200.png</code></td><td>Open Graph card for /hello, 1200×630</td></tr>
+      <tr><td><code>icon-apple-touch-180.png</code></td><td>iOS Safari home-screen icon, 180×180</td></tr>
+      <tr><td><code>icon-android-512.png</code></td><td>Android / PWA icon, 512×512</td></tr>
+      <tr><td><code>email-header-welcome-600.png</code></td><td>MailerLite welcome-email header, 600px wide</td></tr>
+      <tr><td><code>print-flyer-cardiff-2026-04-29.pdf</code></td><td>Print artwork, dated because the artefact <em>is</em> dated</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Variant suffixes — closed set</h3>
+  <p>Don't invent new variants. Extend this list with a doc edit (and bump §17 changelog).</p>
+  <ul class="plan">
+    <li><b>Colour mode:</b> <code>colour</code> · <code>green</code> · <code>white</code> · <code>black</code> · <code>mono</code></li>
+    <li><b>Crop:</b> <code>circle</code> · <code>square</code> · <code>landscape</code> · <code>portrait</code></li>
+    <li><b>Composition:</b> <code>strap</code> (with strapline) · <code>nostrap</code> · <code>icon</code> · <code>full</code> · <code>lockup</code></li>
+    <li><b>Use-context:</b> <code>hero</code> · <code>thumb</code> · <code>avatar</code> · <code>banner</code> · <code>header</code> · <code>footer</code></li>
+    <li><b>Density / size:</b> trailing pixel width (longest edge) — <code>180</code>, <code>512</code>, <code>1200</code>, <code>2x</code></li>
+  </ul>
+
+  <h3>Rules — non-negotiable</h3>
+  <ul class="plan">
+    <li><b>All lowercase.</b> Vercel/Linux are case-sensitive — <code>Nici-Portrait.png</code> ≠ <code>nici-portrait.png</code> in production.</li>
+    <li><b>Kebab-case only.</b> No spaces, no underscores, no camelCase. Spaces become <code>%20</code> in URLs and break copy-paste.</li>
+    <li><b>No version numbers in filenames</b> (<code>v2</code>, <code>final</code>, <code>final-final</code>). Version is what git is for.</li>
+    <li><b>No dates in filenames</b> unless the artefact itself is date-bound (<code>print-flyer-cardiff-2026-04-29.pdf</code>).</li>
+    <li><b>British English in subject words</b> (<code>colour</code>, not <code>color</code>) — matches the rest of the codebase and the brand voice.</li>
+    <li><b>Extensions tell the truth.</b> SVG for marks; PNG for transparent illustrations; JPG for photos; ICO for legacy favicons; PDF for print; WebP/AVIF only as <code>&lt;picture&gt;</code> alternates.</li>
+    <li><b>Filenames are forever.</b> Once an image is in an email, on a flyer, or on a deployed page, the URL must keep working. Renaming requires a redirect.</li>
+  </ul>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 02 FOLDERS ── -->
+<section id="sec-02" class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Folder structure</p>
+  <h2>Inside <code>public/</code>. <em>Two levels deep, max.</em></h2>
+
+<pre>public/
+├── favicon.ico                       # legacy multi-size .ico
+├── icon.svg                          # modern browsers (Next.js auto-discovers)
+├── apple-touch-icon.png              # iOS bookmarks (Next.js auto-discovers)
+├── manifest.webmanifest              # PWA manifest
+├── robots.txt
+├── sitemap.xml
+├── og/                               # social-share cards (1200×630)
+│   ├── og-default-1200.png
+│   ├── og-hello-1200.png
+│   ├── og-loop-breakers-1200.png
+│   ├── og-audit-1200.png
+│   ├── og-access-1200.png
+│   └── og-voice-1200.png
+└── assets/
+    ├── logos/                        # brand marks (vector + raster)
+    ├── illustrations/                # cosmic hand-drawn library (PNG)
+    ├── photos/                       # real people (JPG/PNG)
+    ├── badges/                       # Apple + accreditation
+    ├── icons/                        # PWA / iOS / Android variants
+    ├── email/                        # bitmap headers + footers for MailerLite
+    └── bg/                           # decorative backgrounds (rare)
+
+print-assets/                         # outside public/, never deployed
+├── flyers/
+├── business-cards/
+├── banners/
+└── slide-templates/</pre>
+
+  <ul class="plan">
+    <li><b>Why <code>og/</code> is its own folder, not under <code>assets/</code>:</b> OG cards are site-meta, not site-content. Lots of tooling crawls <code>/og/</code> directly.</li>
+    <li><b>Why <code>print-assets/</code> is outside <code>public/</code>:</b> print artwork is heavy CMYK PDFs that should never be served as web traffic.</li>
+    <li><b>Don't nest deeper than 2 levels.</b> If a folder grows past 30 files, prefix-group inside it (<code>illo-trans-*</code>, <code>illo-hero-*</code>) — don't create <code>illustrations/transparent/</code>.</li>
+    <li><b>Logos are SVG-first, illustrations are PNG.</b> Marks are geometric and vector-clean; the cosmic illustrations have grain, gradients and shading that don't survive SVG export.</li>
+    <li><b>Photos are JPG (mostly).</b> JPG is ~70% smaller than PNG for photographic content. Reserve PNG for circular crops where transparency is genuinely needed.</li>
+  </ul>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 03 MEANING ── -->
+<section id="sec-03" class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Brand &amp; meaning</p>
+  <h2>What each image <em>says</em>, and where it speaks loudest.</h2>
+
+  <p>This is the editorial layer — the "why" beneath every visual. The brand is built on a small library of recurring metaphors. Images aren't decoration; each one is a sentence in the brand's voice.</p>
+
+  <h3>The signature moment — "bring the joy"</h3>
+  <p><b>The triangular spotlight pouring colour out of dark.</b> This is the brand's whole thesis in one image: the dark background is the system as it is — the colour, planets, and jumping figure are what becomes possible when barriers come down. Used <b>once per surface, never twice</b>. It's the punctuation, not the sentence.</p>
+  <p><b>Where:</b> /hello hero (≥720px). Homepage hero. About page closer. Cardiff flyer back.</p>
+
+  <h3>The character — the jumping figure</h3>
+  <p><b>Round-faced, pink/orange hair, orange tee, blue jeans, jumping or floating.</b> The character is "you" — the student, the educator, the person finally finding space. Use them when the moment is about <b>release</b> or <b>self-recognition</b>: success states, confirmations, end-of-flow.</p>
+  <p><b>Where:</b> Loop Breakers landing hero. "Thanks for signing up" confirmations. Blog post end-cards.</p>
+
+  <h3>The cosmic library — recurring metaphors</h3>
+  <table>
+    <thead><tr><th>Visual</th><th>What it means</th><th>Where it earns its place</th></tr></thead>
+    <tbody>
+      <tr><td><b>Planets</b></td><td>Possibility, range, "another world is possible"</td><td>Section dividers, services intro, decorative on /about</td></tr>
+      <tr><td><b>Pyramids</b></td><td>Triadic structure, scaffolding, the "three things"</td><td>"Three services" intros, Loop Breakers vision→launch, audit framework</td></tr>
+      <tr><td><b>Wrench</b></td><td>Fix, repair, take it apart and put it back better</td><td>/audit belief rows, blog posts about accessibility-fixing</td></tr>
+      <tr><td><b>Ruler</b></td><td>Measurement, evidence, "we measure what's there"</td><td>/audit (the framework), data-led blog posts</td></tr>
+      <tr><td><b>Helmet</b></td><td>Safety, scaffolding, holding the framework</td><td>/audit (we hold the line), risk-related blogs</td></tr>
+      <tr><td><b>Engineering</b> (gears/structure)</td><td>Building it differently, technical strategy</td><td>/access (iPad strategy, Apple PLS), repo / build-related blogs</td></tr>
+      <tr><td><b>Beakers / science</b></td><td>Evidence, research, running the studies</td><td>/voice (we run the evidence), research blog posts</td></tr>
+      <tr><td><b>Basketball</b></td><td>Play, engagement, movement, sport-as-belonging</td><td>/voice student engagement, blog posts about joy in learning</td></tr>
+      <tr><td><b>Nonbinary figure</b></td><td>Identity, "everyone's in this universe"</td><td>/voice, About belief rows, identity-themed blogs</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Editorial rules</h3>
+  <ul class="plan">
+    <li><b>One illustration per section, max.</b> The brand voice is "quiet authority" — visually overloading a section with planets + pyramids + basketball is the opposite.</li>
+    <li><b>Pair illustration with whitespace.</b> Let the amethyst breathe.</li>
+    <li><b>Match colour to section accent.</b> If a section is using Pearl Aqua (audit), choose an illustration whose dominant tone harmonises — ruler, helmet — not the orange planet.</li>
+    <li><b>Don't crop people.</b> The character is whole. Cropping a face or limbs reads as detached; the brand is about belonging.</li>
+    <li><b>Never on white.</b> All illustrations live on amethyst. They lose their meaning on light backgrounds.</li>
+    <li><b>Never AI-generated people, never stock photography.</b> When a photo is needed, it's a real portrait on plain amethyst.</li>
+  </ul>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 04 LOGOS ── -->
+<section id="sec-04" class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · Inventory · Logos &amp; marks</p>
+  <h2>Every logo file. <em>Where, how, why.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Type · Size</th><th>Status</th><th>Used on</th><th>Last update</th></tr></thead>
+    <tbody>
+      <tr><td><b>logo-full-colour</b></td><td><code>assets/logos/</code></td><td>PNG · 87KB</td><td><span class="pill have">have png</span></td><td>About page hero on light surfaces. Print collateral.</td><td>2026-04 (rename)</td></tr>
+      <tr><td><b>logo-full-green</b></td><td><code>assets/logos/</code></td><td>PNG · 87KB</td><td><span class="pill have">have png</span></td><td><b>Default site logo on amethyst</b> — nav, footer, wordmark anywhere on dark.</td><td>2026-04</td></tr>
+      <tr><td><b>logo-full-black</b></td><td><code>assets/logos/</code></td><td>PNG · 86KB</td><td><span class="pill have">have png</span></td><td>Print only — invoices, A4 letterhead, business cards on white.</td><td>2026-04</td></tr>
+      <tr><td><b>logo-full-strap-colour</b></td><td><code>assets/logos/</code></td><td>PNG · 93KB</td><td><span class="pill have">have png</span></td><td>Marketing surfaces with room — flyer back, About hero, slide masters.</td><td>2026-04</td></tr>
+      <tr><td><b>logo-full-strap-green</b></td><td><code>assets/logos/</code></td><td>PNG · 93KB</td><td><span class="pill have">have png</span></td><td>Email signature, slide masters, social profile banners.</td><td>2026-04</td></tr>
+      <tr><td><b>logo-full-strap-white</b></td><td><code>assets/logos/</code></td><td>PNG · 92KB</td><td><span class="pill have">have png</span></td><td>Mono dark print collateral.</td><td>2026-04</td></tr>
+      <tr><td><b>mark-icon-colour</b></td><td><code>assets/logos/</code></td><td>PNG · 83KB</td><td><span class="pill have">have png</span></td><td>Source for favicon, app icons, social square avatars (Twitter, LinkedIn, MailerLite sender).</td><td>2026-04</td></tr>
+      <tr><td><b>mark-icon-green</b></td><td><code>assets/logos/</code></td><td>PNG · 83KB</td><td><span class="pill have">have png</span></td><td><b>Nav, footer, /hello brand-dot.</b> Most-used mark on the site.</td><td>2026-04</td></tr>
+      <tr><td><b>mark-icon-white</b></td><td><code>assets/logos/</code></td><td>PNG · 83KB</td><td><span class="pill have">have png</span></td><td>Loading splash, dark print collateral, watermarks.</td><td>2026-04</td></tr>
+      <tr><td><b>mark-icon-black</b></td><td><code>assets/logos/</code></td><td>PNG · 83KB</td><td><span class="pill have">have png</span></td><td>Print on white only.</td><td>2026-04</td></tr>
+      <tr><td><b>lockup-unbarrier-me</b></td><td><code>assets/logos/</code></td><td>PNG · 17KB</td><td><span class="pill ok">ready</span></td><td>Footer site-strap on every page.</td><td>2026-04</td></tr>
+      <tr><td><b>lockup-unbarrier-audit</b></td><td><code>assets/logos/</code></td><td>PNG · 19KB</td><td><span class="pill ok">ready</span></td><td>/audit hero, audit service card on home, OG card.</td><td>2026-04</td></tr>
+      <tr><td><b>lockup-unbarrier-access</b></td><td><code>assets/logos/</code></td><td>PNG · 22KB</td><td><span class="pill ok">ready</span></td><td>/access hero, access service card on home, OG card.</td><td>2026-04</td></tr>
+      <tr><td><b>lockup-unbarrier-voice</b></td><td><code>assets/logos/</code></td><td>PNG · 19KB</td><td><span class="pill ok">ready</span></td><td>/voice hero, voice service card on home, OG card.</td><td>2026-04</td></tr>
+      <tr><td><b>lockup-unbarrier-hub</b></td><td><code>assets/logos/</code></td><td>PNG · 17KB</td><td><span class="pill ok">ready</span></td><td>/hub (members) hero — Phase 3 only.</td><td>2026-04</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <h4>Open issue: SVG masters</h4>
+    All marks currently exist as <b>PNG only</b>. PNG works at fixed sizes but loses on retina + can't be recoloured at runtime. <b>Decision needed (§16.1):</b> request original Illustrator/Figma files from Nici, or commission vectorisation. Until then, ship PNG everywhere except favicon.svg.
+  </div>
+
+  <h3>Sizing rules</h3>
+  <table class="compact">
+    <thead><tr><th>Use</th><th>CSS width</th><th>File to use</th></tr></thead>
+    <tbody>
+      <tr><td>Nav (mobile)</td><td>120px</td><td><code>logo-full-green</code></td></tr>
+      <tr><td>Nav (desktop)</td><td>160px</td><td><code>logo-full-green</code></td></tr>
+      <tr><td>Footer</td><td>140px</td><td><code>logo-full-strap-green</code></td></tr>
+      <tr><td>Service-card lockup</td><td>120–160px</td><td><code>lockup-unbarrier-{audit|access|voice}</code></td></tr>
+      <tr><td>Inline mark (icon-only)</td><td>24–48px</td><td><code>mark-icon-green</code></td></tr>
+      <tr><td>Avatar / profile</td><td>96–256px</td><td><code>mark-icon-colour</code> on amethyst</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 05 ILLOS ── -->
+<section id="sec-05" class="block" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Inventory · Illustrations</p>
+  <h2>The cosmic library. <em>Hand-drawn, transparent PNG, on amethyst.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Meaning · use</th><th>Last update</th></tr></thead>
+    <tbody>
+      <tr><td><b>illo-hero-bring-the-joy</b></td><td><code>assets/illustrations/</code></td><td>PNG · 461KB</td><td><span class="pill ok">ready</span></td><td>Signature spotlight. /hello hero, home hero, About closer. Once per surface.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-bring-the-joy-figure</b></td><td><code>assets/illustrations/</code></td><td>PNG · 441KB</td><td><span class="pill ok">ready</span></td><td>Standalone character. Loop Breakers hero, "thanks" confirmations, blog end-cards.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-bring-the-joy-wordmark</b></td><td><code>assets/illustrations/</code></td><td>PNG · 123KB</td><td><span class="pill ok">ready</span></td><td>"bring the joy" hand-lettered raster — fallback when Cherry Bomb One can't render (emails, social cards).</td><td>2026-04</td></tr>
+      <tr><td><b>illo-planets</b></td><td><code>assets/illustrations/</code></td><td>PNG · 705KB</td><td><span class="pill todo">resize</span></td><td>Section dividers, services intro. <b>705KB is too heavy</b> — needs re-export at 1000px wide max.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-planet-orange</b></td><td><code>assets/illustrations/</code></td><td>PNG · 407KB</td><td><span class="pill todo">resize</span></td><td>Solo planet, orange. /access page accent. Re-export to ~150KB.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-pyramids</b></td><td><code>assets/illustrations/</code></td><td>PNG · 109KB</td><td><span class="pill ok">ready</span></td><td>Triadic structure visuals — Loop Breakers vision→launch, audit framework.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-basketball</b></td><td><code>assets/illustrations/</code></td><td>PNG · 97KB</td><td><span class="pill ok">ready</span></td><td>Play / movement metaphors — /voice, blogs about engagement.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-basketball-scene</b></td><td><code>assets/illustrations/</code></td><td>PNG · 93KB</td><td><span class="pill ok">ready</span></td><td>Wider scene with character — story moments, blog hero alt.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-helmet</b></td><td><code>assets/illustrations/</code></td><td>PNG · 112KB</td><td><span class="pill ok">ready</span></td><td>Safety / scaffolding — /audit "we hold the framework", risk blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-engineering</b></td><td><code>assets/illustrations/</code></td><td>PNG · 124KB</td><td><span class="pill ok">ready</span></td><td>Building / making — /access (technical strategy), repo blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-science</b></td><td><code>assets/illustrations/</code></td><td>PNG · 96KB</td><td><span class="pill ok">ready</span></td><td>Beakers, lab — /voice (we run the studies), research blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-wrench</b></td><td><code>assets/illustrations/</code></td><td>PNG · 88KB</td><td><span class="pill ok">ready</span></td><td>"Fix / repair" — /audit belief rows, accessibility-fix blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-ruler</b></td><td><code>assets/illustrations/</code></td><td>PNG · 104KB</td><td><span class="pill ok">ready</span></td><td>Measurement / standards — /audit ("we measure what's there"), data blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-statement-old-stories</b></td><td><code>assets/illustrations/</code></td><td>PNG · 254KB</td><td><span class="pill ok">ready</span></td><td>Manifesto block — homepage belief section, About manifesto.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-nonbinary-figure</b></td><td><code>assets/illustrations/</code></td><td>PNG · 441KB</td><td><span class="pill todo">resize</span></td><td>Identity — /voice, About belief rows, identity blogs.</td><td>2026-04</td></tr>
+      <tr><td><b>illo-full-scene</b></td><td><code>assets/illustrations/</code></td><td>PNG · 459KB</td><td><span class="pill ok">ready</span></td><td>Complete cosmic scene — About closer, signature landmark moments.</td><td>2026-04</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Smaller transparent elements (decorative pieces)</h3>
+  <p>Numbered <code>illo-trans-*</code> files in the design system are individual cut-out elements (planets, beakers, character poses) for collage. Use sparingly. Most are 80–110KB.</p>
+
+  <div class="box warn">
+    <h4>Performance flag</h4>
+    Four illustrations are over 400KB and need re-export at lower density. <code>illo-planets.png</code> at 705KB is the worst — that single image breaks the /hello performance budget. <b>Action:</b> Phase 2 includes a resize pass — target ≤180KB for hero illustrations, ≤80KB for inline.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 06 PHOTOS ── -->
+<section id="sec-06" class="block" style="--accent: var(--pink-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · Inventory · Photos</p>
+  <h2>Real people. Plain amethyst backgrounds. <em>Never stock.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Used on</th><th>Last update</th></tr></thead>
+    <tbody>
+      <tr><td><b>photo-nici-portrait</b></td><td><code>assets/photos/</code></td><td>PNG · 463KB</td><td><span class="pill todo">placeholder</span></td><td>About page hero (full-bleed). <b>Real portrait awaited Mon 28 Apr.</b> Convert to JPG once received.</td><td>2026-04 placeholder</td></tr>
+      <tr><td><b>photo-nici-portrait-circle</b></td><td><code>assets/photos/</code></td><td>PNG · 137KB</td><td><span class="pill ok">ready</span></td><td>/hello hero brand-dot, nav avatar, blog author byline.</td><td>2026-04</td></tr>
+      <tr><td><b>photo-nici-portrait-circle-green</b></td><td><code>assets/photos/</code></td><td>PNG · 131KB</td><td><span class="pill ok">ready</span></td><td>Footer "from Nici" sign-off, MailerLite welcome email header, say-hi form decoration.</td><td>2026-04</td></tr>
+      <tr><td><b>photo-nicki-portrait</b></td><td><code>assets/photos/</code></td><td>PNG · 1.9MB</td><td><span class="pill todo">resize</span></td><td>Wed 20 May Guest Stage card, Loop Breakers guest archive, blog byline. <b>1.9MB is way too heavy</b> — re-export to ≤120KB JPG.</td><td>2026-04</td></tr>
+      <tr><td><b>photo-gemma-portrait</b></td><td><code>assets/photos/</code></td><td>PNG · 1.2MB</td><td><span class="pill todo">resize</span></td><td>Gemma testimonial card, About "people I've worked with" strip. Re-export to ≤120KB JPG.</td><td>2026-04</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box danger">
+    <h4>Image rights — must capture before launch</h4>
+    Do we have <b>written consent</b> to use Nicki's and Gemma's portraits on the public site, in social, and in MailerLite? If not, get it before /loop-breakers ships in Phase 2. Capture in a <code>RIGHTS.md</code> next to <code>photos/</code>: who, what, when granted, where stored, scope (web only? print? email?).
+  </div>
+
+  <h3>Future portraits — naming pattern</h3>
+  <p>For Loop Breakers guests, school-leader testimonials, and case-study contacts, follow this pattern:</p>
+  <pre>photo-{firstname-lastname}-portrait.jpg              # full body / square
+photo-{firstname-lastname}-portrait-circle.png       # circular crop with transparency
+photo-{firstname-lastname}-portrait-circle-green.png # circular crop, green ring</pre>
+
+  <div class="box warn">
+    <h4>Student photo policy</h4>
+    <b>Do not photograph identifiable students.</b> When school case studies arrive, use illustrated avatars from the existing library (the nonbinary figure, the basketball character) or silhouette + first name + year group only. Make this a written policy before any case study lands.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 07 BADGES ── -->
+<section id="sec-07" class="block" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">07 · Inventory · Credential badges</p>
+  <h2>Apple &amp; accreditation. <em>Don't manipulate.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Used on</th><th>Last update</th></tr></thead>
+    <tbody>
+      <tr><td><b>badge-apple-miee</b></td><td><code>assets/badges/</code></td><td>PNG · 49KB</td><td><span class="pill ok">ready</span></td><td>About credential strip, /access (Apple PLS context), email signature.</td><td>2026-04</td></tr>
+      <tr><td><b>badge-apple-gce</b></td><td><code>assets/badges/</code></td><td>PNG · 34KB</td><td><span class="pill ok">ready</span></td><td>About strip, /access. Apple Google Certified Educator.</td><td>2026-04</td></tr>
+      <tr><td><b>badge-apple-innovator</b></td><td><code>assets/badges/</code></td><td>PNG · 22KB</td><td><span class="pill ok">ready</span></td><td>About strip, /access. Apple Innovator.</td><td>2026-04</td></tr>
+      <tr><td><b>badge-i-digital</b></td><td><code>assets/badges/</code></td><td>PNG · 146KB</td><td><span class="pill todo">resize</span></td><td>About credential strip — I Digital. <b>Heavy</b> — re-export to ≤40KB.</td><td>2026-04</td></tr>
+      <tr><td><b>badge-we-digital</b></td><td><code>assets/badges/</code></td><td>PNG · 146KB</td><td><span class="pill todo">resize</span></td><td>About credential strip — We Digital. Re-export to ≤40KB.</td><td>2026-04</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box lock">
+    <h4>Apple badge rule (from design-system guide)</h4>
+    Apple badges are <b>licensed marks</b>. Use at <b>32–64px tall</b>, never colour-shifted, never on white (always amethyst). No hover states. Don't overlap with other elements. <b>If we ever lose a credential, the badge has to come down within 30 days.</b>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 08 FAVICONS ── -->
+<section id="sec-08" class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">08 · Inventory · Favicons</p>
+  <h2>The browser-tab surface. <em>Three formats, one source.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Type · Size</th><th>Status</th><th>Used by</th><th>Generated from</th></tr></thead>
+    <tbody>
+      <tr><td><b>favicon.ico</b></td><td><code>public/</code></td><td>ICO · multi-size (16, 32, 48)</td><td><span class="pill need">need</span></td><td>Legacy IE/Edge, RSS readers, browser bookmarks bar.</td><td><code>mark-icon-green.png</code></td></tr>
+      <tr><td><b>icon.svg</b></td><td><code>public/</code></td><td>SVG · vector</td><td><span class="pill need">need</span></td><td>Modern Chrome, Firefox, Safari (Next.js auto-discovers).</td><td>SVG master needed (§16.1)</td></tr>
+      <tr><td><b>icon-32.png</b></td><td><code>public/assets/icons/</code></td><td>PNG · 32×32</td><td><span class="pill need">need</span></td><td>Fallback when SVG can't render.</td><td><code>mark-icon-green.png</code></td></tr>
+      <tr><td><b>icon-192.png</b></td><td><code>public/assets/icons/</code></td><td>PNG · 192×192</td><td><span class="pill need">need</span></td><td>PWA manifest, Android home-screen.</td><td><code>mark-icon-green.png</code></td></tr>
+      <tr><td><b>icon-512.png</b></td><td><code>public/assets/icons/</code></td><td>PNG · 512×512</td><td><span class="pill need">need</span></td><td>PWA manifest, Android splash.</td><td><code>mark-icon-green.png</code></td></tr>
+    </tbody>
+  </table>
+
+  <div class="box good">
+    <h4>Favicon rendering rule</h4>
+    Favicons can't be transparent — they look broken on light browser chrome. <b>Bake the amethyst background in.</b> The mark is green; the background is <code>#210a33</code>; corners stay sharp (no rounding — the OS rounds them).
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 09 iOS / ANDROID ── -->
+<section id="sec-09" class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">09 · Inventory · iOS &amp; Android icons</p>
+  <h2>Home-screen surface. <em>Where the brand lives in someone's pocket.</em></h2>
+
+  <h3>iOS</h3>
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Used by</th></tr></thead>
+    <tbody>
+      <tr><td><b>apple-touch-icon.png</b></td><td><code>public/</code></td><td>180×180</td><td><span class="pill need">need</span></td><td><b>iOS Safari "Add to Home Screen".</b> Default iPhone size; Next.js auto-discovers from <code>public/</code>.</td></tr>
+      <tr><td><b>icon-apple-touch-152.png</b></td><td><code>public/assets/icons/</code></td><td>152×152</td><td><span class="pill need">need</span></td><td>iPad home screen.</td></tr>
+      <tr><td><b>icon-apple-touch-167.png</b></td><td><code>public/assets/icons/</code></td><td>167×167</td><td><span class="pill need">need</span></td><td>iPad Pro home screen.</td></tr>
+      <tr><td><b>icon-apple-splash-2048x2732.png</b></td><td><code>public/assets/icons/</code></td><td>2048×2732</td><td><span class="pill need">need</span></td><td>iPad Pro 12.9" PWA splash. Optional Phase 3.</td></tr>
+      <tr><td><b>icon-apple-splash-1170x2532.png</b></td><td><code>public/assets/icons/</code></td><td>1170×2532</td><td><span class="pill need">need</span></td><td>iPhone 13/14 PWA splash. Optional Phase 3.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Android &amp; PWA</h3>
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Used by</th></tr></thead>
+    <tbody>
+      <tr><td><b>icon-android-192.png</b></td><td><code>public/assets/icons/</code></td><td>192×192</td><td><span class="pill need">need</span></td><td>Android home screen, PWA manifest.</td></tr>
+      <tr><td><b>icon-android-512.png</b></td><td><code>public/assets/icons/</code></td><td>512×512</td><td><span class="pill need">need</span></td><td>Android PWA install banner, splash.</td></tr>
+      <tr><td><b>icon-maskable-512.png</b></td><td><code>public/assets/icons/</code></td><td>512×512 (with safe zone)</td><td><span class="pill need">need</span></td><td>Android adaptive icons — mark sits in central 80% safe zone, amethyst fills the rest.</td></tr>
+      <tr><td><b>manifest.webmanifest</b></td><td><code>public/</code></td><td>JSON</td><td><span class="pill need">need</span></td><td>PWA metadata. Lists icons + theme colour <code>#210a33</code> + name.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Recommended manifest.webmanifest</h3>
+<pre>{
+  "name": "unbarrier.me",
+  "short_name": "unbarrier",
+  "description": "Designed for difference. Inclusion, digital access, student voice.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#210a33",
+  "theme_color": "#210a33",
+  "icons": [
+    { "src": "/assets/icons/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/assets/icons/icon-512.png", "sizes": "512x512", "type": "image/png" },
+    { "src": "/assets/icons/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}</pre>
+
+  <div class="box aqua">
+    <h4>Generation tool</h4>
+    Use <a href="https://realfavicongenerator.net" target="_blank">realfavicongenerator.net</a> with <code>mark-icon-green.png</code> + amethyst background <code>#210a33</code>. It produces every size above + the manifest in one shot. Verify output against this table; rename if it deviates.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 10 OG ── -->
+<section id="sec-10" class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">10 · Inventory · OG / social cards</p>
+  <h2>1200×630. <em>The first impression of every shared link.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Status</th><th>Route</th><th>Composition</th></tr></thead>
+    <tbody>
+      <tr><td><b>og-default-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>fallback / homepage</td><td>Wordmark + "designed for difference." + spotlight illo. Site-wide fallback.</td></tr>
+      <tr><td><b>og-hello-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>/hello</td><td>"hi, I'm Nici." + circular portrait + spring-green accent. Cardiff QR landing.</td></tr>
+      <tr><td><b>og-loop-breakers-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>/loop-breakers, vision.unbarrier.me</td><td>Loop Breakers wordmark + "where we get unstuck together" + yellow accent.</td></tr>
+      <tr><td><b>og-audit-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>/audit</td><td>unbarrier.audit lockup + ruler illustration + aqua accent.</td></tr>
+      <tr><td><b>og-access-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>/access</td><td>unbarrier.access lockup + engineering illustration + orange accent.</td></tr>
+      <tr><td><b>og-voice-1200</b></td><td><code>public/og/</code></td><td><span class="pill need">need</span></td><td>/voice</td><td>unbarrier.voice lockup + nonbinary-figure + orchid accent.</td></tr>
+      <tr><td><b>og-blog-{slug}-1200</b></td><td><code>public/og/</code> (or generated)</td><td><span class="pill need">per post</span></td><td>/blog/{slug}</td><td>Per-post card. Post title + author byline + chosen illustration.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box good">
+    <h4>Executive decision: templated OG route, not hand-built</h4>
+    Building a Next.js <code>app/og/[slug]/route.tsx</code> using <code>ImageResponse</code> generates these PNGs from React components — same fonts, same tokens, never drifts when the brand updates. <b>2–3 hrs upfront, saves indefinite design debt.</b> See §15.3.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 11 EMAIL ── -->
+<section id="sec-11" class="block" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">11 · Inventory · Email images</p>
+  <h2>MailerLite headers. <em>600px wide. Permanent URLs.</em></h2>
+
+  <p>Email clients are conservative — no SVG, no CSS positioning, no responsive units. Email images are <b>fixed-width PNG/JPG, hosted at a permanent URL on unbarrier.me</b>. Once an email is sent, the URL must work forever, even after a redesign. Treat email images as <b>append-only</b>.</p>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Size</th><th>Status</th><th>Used in</th></tr></thead>
+    <tbody>
+      <tr><td><b>email-header-welcome-600</b></td><td><code>public/assets/email/</code></td><td>600×200</td><td><span class="pill need">need</span></td><td>MailerLite "welcome" automation. Wordmark + Nici circular portrait + spring-green band.</td></tr>
+      <tr><td><b>email-header-newsletter-600</b></td><td><code>public/assets/email/</code></td><td>600×200</td><td><span class="pill need">need</span></td><td>Monthly newsletter header. Wordmark + planets + yellow band.</td></tr>
+      <tr><td><b>email-header-loop-breakers-600</b></td><td><code>public/assets/email/</code></td><td>600×200</td><td><span class="pill need">need</span></td><td>Loop Breakers session recaps. Loop Breakers lockup + yellow band.</td></tr>
+      <tr><td><b>email-footer-signature-600</b></td><td><code>public/assets/email/</code></td><td>600×120</td><td><span class="pill need">need</span></td><td>Footer block — strap logo + co. number + unsubscribe link area.</td></tr>
+      <tr><td><b>email-cta-button-{colour}-600</b></td><td><code>public/assets/email/</code></td><td>600×60</td><td><span class="pill need">need</span></td><td>Bulletproof button images for Outlook (which doesn't render CSS buttons). Variants: green, yellow, orchid.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box danger">
+    <h4>Email image permanence rule</h4>
+    Once <code>email-header-welcome-600.png</code> is in someone's inbox, that exact URL must keep returning that exact image <b>forever</b>. Don't rename. Don't delete. If the design needs to change, ship a new file with a new name (<code>email-header-welcome-2-600.png</code>) and update the email template. Old emails keep their old image.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 12 PRINT ── -->
+<section id="sec-12" class="block" style="--accent: var(--school-bus-yellow)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">12 · Inventory · Print collateral</p>
+  <h2>CMYK PDFs. <em>Outside <code>public/</code>. Dated where the artefact is dated.</em></h2>
+
+  <table>
+    <thead><tr><th>Filename</th><th>Path</th><th>Format</th><th>Status</th><th>Use</th></tr></thead>
+    <tbody>
+      <tr><td><b>print-flyer-cardiff-2026-04-29</b></td><td><code>print-assets/flyers/</code></td><td>PDF · A5 double-sided · CMYK</td><td><span class="pill ok">ready</span></td><td>Cardiff event flyer (existing in <code>uploads/</code>).</td></tr>
+      <tr><td><b>print-business-card-portrait</b></td><td><code>print-assets/business-cards/</code></td><td>PDF · 55×85mm · CMYK</td><td><span class="pill ok">ready</span></td><td>Existing in <code>uploads/</code>; needs renaming + CMYK verification.</td></tr>
+      <tr><td><b>print-banner-retractable-2026-04</b></td><td><code>print-assets/banners/</code></td><td>PDF · 850×2000mm · CMYK</td><td><span class="pill ok">ready</span></td><td>Cardiff banner (existing in <code>uploads/</code>).</td></tr>
+      <tr><td><b>print-letterhead-a4</b></td><td><code>print-assets/</code></td><td>PDF · A4 · CMYK</td><td><span class="pill need">need</span></td><td>Phase 2 — invoices, formal letters.</td></tr>
+      <tr><td><b>print-slide-template-keynote</b></td><td><code>print-assets/slide-templates/</code></td><td>KEY · 16:9</td><td><span class="pill need">need</span></td><td>Keynote master for client decks.</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box warn">
+    <h4>CMYK colour conversion</h4>
+    The brand palette is RGB neon — Spring Green <code>#38ff99</code> in particular cannot print accurately on CMYK. Print collateral uses a <b>shifted CMYK palette</b> (slightly desaturated, slightly darker) approved by Nici. <b>Decision needed (§16.4):</b> commission a CMYK swatch sheet so print designers have a definitive reference.
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 13 PER-PAGE ── -->
+<section id="sec-13" class="block" style="--accent: var(--pearl-aqua)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">13 · Per-page usage map</p>
+  <h2>Which images each route loads. <em>Use as load checklist.</em></h2>
+
+  <table class="matrix">
+    <thead><tr><th>Route</th><th>Logos</th><th>Illustrations</th><th>Photos</th><th>Badges</th><th>OG</th></tr></thead>
+    <tbody>
+      <tr>
+        <td>/hello (Phase 1)</td>
+        <td><code>mark-icon-green</code></td>
+        <td><code>illo-hero-bring-the-joy</code> (≥720px)</td>
+        <td><code>photo-nici-portrait-circle</code></td>
+        <td>—</td>
+        <td><code>og-hello-1200</code></td>
+      </tr>
+      <tr>
+        <td>/ (homepage)</td>
+        <td><code>logo-full-green</code> · <code>logo-full-strap-green</code></td>
+        <td><code>illo-hero-bring-the-joy</code> · <code>illo-statement-old-stories</code> · <code>illo-planets</code></td>
+        <td><code>photo-gemma-portrait</code></td>
+        <td>—</td>
+        <td><code>og-default-1200</code></td>
+      </tr>
+      <tr>
+        <td>/audit</td>
+        <td><code>lockup-unbarrier-audit</code></td>
+        <td><code>illo-ruler</code> · <code>illo-pyramids</code> · <code>illo-helmet</code></td>
+        <td>—</td>
+        <td><code>badge-apple-*</code></td>
+        <td><code>og-audit-1200</code></td>
+      </tr>
+      <tr>
+        <td>/access</td>
+        <td><code>lockup-unbarrier-access</code></td>
+        <td><code>illo-engineering</code> · <code>illo-planet-orange</code></td>
+        <td>—</td>
+        <td><code>badge-apple-miee</code> · <code>gce</code> · <code>innovator</code></td>
+        <td><code>og-access-1200</code></td>
+      </tr>
+      <tr>
+        <td>/voice</td>
+        <td><code>lockup-unbarrier-voice</code></td>
+        <td><code>illo-nonbinary-figure</code> · <code>illo-science</code> · <code>illo-basketball</code></td>
+        <td>—</td>
+        <td>—</td>
+        <td><code>og-voice-1200</code></td>
+      </tr>
+      <tr>
+        <td>/loop-breakers</td>
+        <td><code>logo-full-green</code></td>
+        <td><code>illo-bring-the-joy-figure</code> · <code>illo-pyramids</code></td>
+        <td><code>photo-nicki</code> · <code>photo-gemma</code></td>
+        <td>—</td>
+        <td><code>og-loop-breakers-1200</code></td>
+      </tr>
+      <tr>
+        <td>/about</td>
+        <td><code>logo-full-strap-colour</code></td>
+        <td><code>illo-full-scene</code></td>
+        <td><code>photo-nici-portrait</code> (real)</td>
+        <td>all five</td>
+        <td><code>og-default-1200</code></td>
+      </tr>
+      <tr>
+        <td>/blog</td>
+        <td><code>mark-icon-green</code></td>
+        <td>topic-matched (one per post)</td>
+        <td><code>photo-{author}-portrait-circle</code></td>
+        <td>—</td>
+        <td>per-post generated</td>
+      </tr>
+      <tr>
+        <td>/legal/privacy · /legal/terms</td>
+        <td><code>mark-icon-green</code></td>
+        <td>—</td>
+        <td>—</td>
+        <td>—</td>
+        <td><code>og-default-1200</code></td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 14 PRODUCTION ── -->
+<section id="sec-14" class="block" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">14 · Production rules</p>
+  <h2>Sizes, formats, alt text, performance.</h2>
+
+  <h3>Always use Next.js <code>&lt;Image&gt;</code></h3>
+  <pre>import Image from "next/image";
+import nici from "@/public/assets/photos/photo-nici-portrait-circle.png";
+
+&lt;Image
+  src={nici}
+  alt="Nici Foote, smiling, wearing a green jumper, on amethyst background"
+  width={56}
+  height={56}
+  priority={isAboveFold}
+/&gt;</pre>
+  <p>Importing the asset (rather than a string path) lets Next.js auto-generate WebP/AVIF, lazy-load below-fold, and prevent layout shift.</p>
+
+  <h3>Alt text — single source</h3>
+  <p>Maintain alt text in a JSON sidecar per folder, not inline in components. Claude Code reads from this file:</p>
+  <pre>// public/assets/illustrations/alt.json
+{
+  "illo-hero-bring-the-joy.png":
+    "A triangular spotlight pouring colourful planets, beakers and a jumping figure out of a dark sky.",
+  "illo-planets.png":
+    "Four stylised planets in fuchsia, acid green, orange and sky blue.",
+  ...
+}</pre>
+  <p><b>Decorative-only</b> illustrations (background glows, dividers) get <code>alt=""</code> — explicitly empty, never omitted.</p>
+
+  <h3>Performance budget</h3>
+  <ul class="plan">
+    <li><b>Hero PNG ≤ 180KB</b> after Next.js compression.</li>
+    <li><b>Inline illustration ≤ 80KB.</b></li>
+    <li><b>Photo ≤ 120KB</b> at q85.</li>
+    <li><b>Total page weight (images) ≤ 500KB</b> on /hello, ≤ 800KB on home.</li>
+    <li><b>Lighthouse Performance ≥ 90</b> mobile is part of the spec.</li>
+  </ul>
+
+  <h3>Caching</h3>
+  <p>Vercel auto-caches <code>/public</code> for 1 year. Don't fight it. Corollary: <b>never overwrite an image at the same filename</b> mid-deploy. Browsers will serve stale. If an asset changes meaningfully, change the filename or rely on Next.js's content-hash on imported assets.</p>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 15 EXEC DECISIONS ── -->
+<section id="sec-15" class="block" style="--accent: var(--spring-green)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">15 · Decisions made (no approval needed)</p>
+  <h2>Executive calls I'm taking as head designer.</h2>
+
+  <p>These are operational decisions inside scope. I'll proceed unless you tell me otherwise.</p>
+
+  <div class="decisions">
+    <div class="decision exec">
+      <div class="head"><span class="num">15.1</span><span class="title">Naming convention is locked</span></div>
+      <p><code>{category}-{subject}-{variant}-{size?}.{ext}</code>, all lowercase kebab-case, British spelling, closed variant set. Existing files in <code>assets/</code> already mostly follow this; I'll rename the strays (notably <code>nici-portrait*.png</code> → <code>photo-nici-portrait*.png</code>, badge files prefixed <code>badge-apple-</code>).</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.2</span><span class="title">Folder structure: 6 sub-folders under <code>public/assets/</code></span></div>
+      <p><code>logos · illustrations · photos · badges · icons · email</code> + a sibling <code>public/og/</code>. Print stays outside <code>public/</code> in <code>print-assets/</code>. No deeper nesting.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.3</span><span class="title">OG cards generated by templated route, not hand-built PNGs</span></div>
+      <p>Phase 2 ships a Next.js <code>app/og/[slug]/route.tsx</code> using <code>ImageResponse</code>. One file, one set of components, every page's OG card auto-generated. Saves indefinite design debt — when the brand updates, every card updates. 2–3 hrs upfront.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.4</span><span class="title">Favicons generated via realfavicongenerator.net</span></div>
+      <p>One pass through that tool with <code>mark-icon-green.png</code> + amethyst background <code>#210a33</code> produces every size and the manifest. Verified against the table in §08–09; renamed if it deviates.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.5</span><span class="title">Re-export oversized images at Phase 2 kickoff</span></div>
+      <p>Six files exceed budget: <code>illo-planets</code> (705KB), <code>illo-full-illustration</code> (459KB), <code>illo-hero-bring-the-joy</code> (461KB), <code>illo-bring-the-joy-figure</code> (441KB), <code>illo-nonbinary-figure</code> (441KB), <code>photo-nicki</code> (1.9MB), <code>photo-gemma</code> (1.2MB). I'll re-export at target sizes during the Phase 2 build.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.6</span><span class="title">Alt text lives in JSON sidecars, not React components</span></div>
+      <p>One <code>alt.json</code> per folder. Single edit point; Claude Code, VAs, and future humans all touch the same file. Component code reads it.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.7</span><span class="title">Email images are append-only</span></div>
+      <p>Once an email image URL is in someone's inbox, the URL is permanent. Redesigns ship as new filenames (<code>email-header-welcome-2-600.png</code>), never overwrites.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.8</span><span class="title">Student photo policy: illustrated avatars only</span></div>
+      <p>No identifiable students photographed for case studies. Use library illustrations (nonbinary figure, basketball character) or first-name + year-group + silhouette. Written into the brand guide as policy.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.9</span><span class="title">This document is the manifest</span></div>
+      <p>When an image is added, renamed, or removed, the change goes here first, then to disk, then to code. If the manifest disagrees with disk, the manifest is the truth and disk is fixed. §17 changelog tracks every change.</p>
+    </div>
+
+    <div class="decision exec">
+      <div class="head"><span class="num">15.10</span><span class="title">Loop Breakers session imagery: pick from library, never per-session</span></div>
+      <p>Each Tuesday recap reuses one library illustration + one accent colour. No new commissions per session until volume justifies it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 16 APPROVAL ── -->
+<section id="sec-16" class="block" style="--accent: var(--princeton-orange)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">16 · Decisions for approval</p>
+  <h2>Things I can't decide alone. <em>Need a yes or no from you.</em></h2>
+
+  <div class="decisions">
+    <div class="decision approval">
+      <div class="head"><span class="num">16.1</span><span class="title">SVG masters from Nici — request or commission?</span></div>
+      <p>All logos and the mark exist as PNG only. PNG works at fixed sizes, but loses on retina, can't be runtime-recoloured, and bloats favicon weight. <b>Options:</b> (a) ask Nici for original Illustrator/Figma files, (b) commission vectorisation (~£150 round trip), (c) ship PNG forever and accept the limits. <b>My recommendation: (a) first, fall back to (b) by Phase 2 launch.</b></p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.2</span><span class="title">Real Nici portrait — deadline + format</span></div>
+      <p>The /hello spec says Nici sends Mon 28 Apr. I need: (a) confirmation of that deadline, (b) format spec — <b>square 1600×1600 JPG, plain amethyst background, taken at chest-up framing</b>. If Nici can't supply by Mon, /hello ships with the existing circular green portrait and skips full-bleed. <b>Confirm: deadline + fallback OK?</b></p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.3</span><span class="title">Image rights — Nicki and Gemma</span></div>
+      <p>Do we have <b>written consent</b> to use Nicki's and Gemma's portraits on the public site, in social, and in MailerLite? If yes, where is it stored and can I capture it in <code>RIGHTS.md</code>? If no, this needs to happen before /loop-breakers ships. <b>Confirm: yes/no, and where the consent record lives.</b></p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.4</span><span class="title">CMYK swatch sheet for print</span></div>
+      <p>RGB neon (Spring Green <code>#38ff99</code>) doesn't print accurately on CMYK. We need a definitive shifted-CMYK palette so flyer/banner/business-card production is consistent. <b>Cost: ~£100 for a printer to produce a swatch proof.</b> <b>Approve? Or accept that print colour will drift slightly per supplier?</b></p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.5</span><span class="title">Two missing illustration metaphors</span></div>
+      <p>Looking at the upcoming pages, two metaphors aren't covered: <b>(a) a school building</b> (for /access "schools we work with"), <b>(b) two figures in conversation</b> (for /voice and the say-hi confirmation). <b>Options:</b> commission both (~£300 from the original illustrator), substitute existing illustrations and document, or skip and use photography. <b>My recommendation: commission both as the universe is what makes the brand — gaps weaken it.</b></p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.6</span><span class="title">PWA splash screens — Phase 2 or Phase 3?</span></div>
+      <p>iOS and Android PWA splash screens (~10 sizes) are a polish item. Most users won't install the site as a PWA. <b>My recommendation: Phase 3.</b> Confirm or push to Phase 2.</p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.7</span><span class="title">Email-image versioning policy</span></div>
+      <p>Once an email is sent, the image URL is permanent. New designs ship as new filenames (<code>email-header-welcome-2-600.png</code>). <b>This means the <code>email/</code> folder accumulates indefinitely.</b> Acceptable? Or do you want a hard limit (e.g. archive emails &gt; 2 years old, accept some image breakage)?</p>
+    </div>
+
+    <div class="decision approval">
+      <div class="head"><span class="num">16.8</span><span class="title">Image SEO — sitemap-images.xml</span></div>
+      <p>For Phase 3 SEO, ship a separate <code>sitemap-images.xml</code> listing every image with location, caption, and licence. Helps Google Image search rank the brand illustrations. Small lift, real upside if blog content takes off. <b>Approve for Phase 3?</b></p>
+    </div>
+  </div>
+</section>
+
+<!-- ──────────────────────────────────────────────────── 17 CHANGELOG ── -->
+<section id="sec-17" class="block" style="--accent: var(--orchid-mist)">
+  <span class="rail"></span>
+  <p class="block-eyebrow">17 · Changelog</p>
+  <h2>Every change to this manifest, dated.</h2>
+
+  <table class="compact">
+    <thead><tr><th>Date</th><th>Author</th><th>Change</th></tr></thead>
+    <tbody>
+      <tr><td>2026-04-26</td><td>Design Claude</td><td>v2.0 — full visual asset system. Adds favicons, iOS, Android, OG cards, email, print, decisions log.</td></tr>
+      <tr><td>2026-04-26</td><td>Design Claude</td><td>v1.0 — initial naming convention + inventory of logos, illustrations, photos, badges.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>How to update this doc</h3>
+  <ol class="plan">
+    <li>Make the change in this HTML file first (add row to inventory, mark status, etc.).</li>
+    <li>Add an entry to §17 with date, author, one-line description.</li>
+    <li>Then make the corresponding change on disk (rename file, add asset, etc.).</li>
+    <li>Then update any code references.</li>
+    <li>If the change affects users (new email image, new OG card), note it in <code>Phase X Build Plan</code>.</li>
+  </ol>
+
+  <div class="box lock">
+    <h4>The single rule that prevents 90% of image bugs</h4>
+    <b>Plan the filename here, then create the file at that name in one go.</b> Never <code>img1.png → I'll rename later</code>. Later doesn't come; the link is already deployed; the file is already in someone's email. Names are forever.
+  </div>
+</section>
+
+<footer style="margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Comfortaa'; font-size: 0.82rem; color: var(--text-faint); line-height: 1.7;">
+  <p><b>Visuals v2.0 · 26 April 2026 · Design Claude (head designer) for Nici Foote / Unbarrier Education Ltd</b></p>
+  <p>Companion docs: <code>Hello Page Spec.html</code> · <code>Phase 2 - Build Plan.html</code> · <code>Repo Setup Guide.html</code> · <code>colors_and_type.css</code>. This document is the manifest — when in doubt, this is the source of truth.</p>
+</footer>
+
+</main>
+</body>
+</html>

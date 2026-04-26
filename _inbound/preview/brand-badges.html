@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);}
+  body{padding:22px;}
+  .card{width:660px;display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:center;}
+  .badge{height:118px;display:flex;align-items:center;justify-content:center;}
+  .badge img{max-height:100%;width:auto;object-fit:contain;}
+  /* Edufuturists badges carry ~88% transparent padding, so the artwork reads much smaller at the same CSS height.
+     Give them an over-sized bounding box (~1.35×) so the visible mark matches the others optically. */
+  .badge.eduf{height:160px;}
+  .badge.eduf img{max-width:220px;}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="badge"><img src="../assets/badges/miee-badge.png" alt="MIEE"></div>
+  <div class="badge"><img src="../assets/badges/innovator-badge.png" alt="Innovator"></div>
+  <div class="badge"><img src="../assets/badges/gce-badge.png" alt="GCE"></div>
+  <div class="badge eduf"><img src="../assets/badges/i-digital-badge.png" alt="Edufuturists — I Digital"></div>
+  <div class="badge eduf"><img src="../assets/badges/we-digital-badge.png" alt="Edufuturists — We Digital"></div>
+</div>
+</body>
+</html>

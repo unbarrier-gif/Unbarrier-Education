@@ -1,0 +1,662 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loop Breakers · Messaging System</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+
+  /* Sticky TOC sidebar */
+  .layout {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    max-width: 1180px;
+    margin: 0 auto;
+    min-height: 100vh;
+  }
+  .toc {
+    position: sticky; top: 0;
+    padding: 3rem 1.5rem 3rem;
+    height: 100vh; overflow-y: auto;
+    border-right: 1px solid rgba(255,255,255,0.08);
+    font-family: "Outfit"; font-size: 0.82rem;
+  }
+  .toc h3 {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--spring-green); margin: 0 0 12px;
+  }
+  .toc a {
+    display: block; padding: 5px 10px; margin: 0 0 2px;
+    border-radius: 6px; color: var(--text-muted);
+    text-decoration: none; line-height: 1.4;
+    font-weight: 500;
+    border-left: 2px solid transparent;
+  }
+  .toc a:hover { color: var(--text); background: rgba(56,255,153,0.05); border-left-color: var(--spring-green); }
+  .toc .gap { height: 14px; }
+
+  .content { padding: clamp(3rem,5vw,4.5rem) clamp(2rem,5vw,4rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 3rem; max-width: 720px; }
+
+  section.doc {
+    padding: 2.6rem 0 2.4rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    position: relative;
+    scroll-margin-top: 2rem;
+  }
+  section.doc > .rail {
+    position: absolute; top: -1px; left: 0;
+    width: 80px; height: 2px;
+    background: linear-gradient(90deg, var(--accent) 0%, transparent 100%);
+  }
+  .sec-eyebrow {
+    font-family: "Outfit"; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin: 0 0 8px;
+  }
+  h2 {
+    font-family: "Outfit"; font-weight: 800;
+    font-size: clamp(1.5rem,3vw,2rem); letter-spacing: -0.022em;
+    line-height: 1.12; margin: 0 0 0.7rem;
+  }
+  h3 {
+    font-family: "Outfit"; font-weight: 700;
+    font-size: 1.1rem; margin: 1.6rem 0 0.8rem;
+    color: var(--text); letter-spacing: -0.005em;
+  }
+  p, li {
+    font-family: "Comfortaa"; font-size: 0.94rem;
+    line-height: 1.85; color: var(--text-muted);
+  }
+  p { margin: 0 0 1rem; max-width: 720px; }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ul, ol { padding-left: 1.2rem; margin: 0 0 1.2rem; max-width: 720px; }
+  li { margin-bottom: 5px; }
+
+  /* Highlight card for headline/tagline */
+  .callout {
+    background: linear-gradient(135deg, rgba(56,255,153,0.08), rgba(219,125,204,0.04));
+    border: 1px solid rgba(56,255,153,0.3);
+    border-radius: 14px;
+    padding: 24px 28px;
+    margin: 1rem 0 1.5rem;
+    font-family: "Outfit"; font-weight: 800;
+    font-size: clamp(1.2rem,2.4vw,1.6rem); line-height: 1.2;
+    color: var(--text); letter-spacing: -0.02em;
+  }
+  .callout em { font-style: normal; color: var(--spring-green); }
+  .callout .label { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--spring-green); display: block; margin-bottom: 8px; }
+
+  /* Voice lines — pill-like quote cards */
+  .lines-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 10px;
+    margin: 1rem 0 1.5rem;
+  }
+  .line-card {
+    padding: 14px 18px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    font-family: "Outfit"; font-weight: 700; font-size: 0.95rem;
+    line-height: 1.35; color: var(--text);
+    letter-spacing: -0.01em;
+  }
+  .line-card.soft { font-weight: 500; color: var(--text-muted); font-family: "Comfortaa"; letter-spacing: 0; font-size: 0.88rem; line-height: 1.5; }
+
+  /* Frame cards */
+  .frames { display: grid; grid-template-columns: 1fr; gap: 14px; margin: 1rem 0 1.5rem; }
+  .frame {
+    padding: 22px 26px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+  }
+  .frame.A { border-left: 3px solid var(--spring-green); }
+  .frame.B { border-left: 3px solid var(--orchid-mist); }
+  .frame.C { border-left: 3px solid var(--school-bus-yellow); }
+  .frame-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 6px; flex-wrap: wrap; }
+  .frame-letter { font-family: "Outfit"; font-weight: 900; font-size: 1.4rem; color: var(--text); }
+  .frame.A .frame-letter { color: var(--spring-green); }
+  .frame.B .frame-letter { color: var(--orchid-mist); }
+  .frame.C .frame-letter { color: var(--school-bus-yellow); }
+  .frame-title { font-family: "Outfit"; font-weight: 700; font-size: 1rem; color: var(--text); letter-spacing: -0.005em; }
+  .frame-for { font-family: "Comfortaa"; font-size: 0.8rem; color: var(--text-subtle); }
+  .frame p { margin: 0 0 0.6rem; color: var(--text-muted); }
+  .frame .where { margin-top: 8px; font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text-subtle); }
+
+  /* Objection tables */
+  .objection {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 0;
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    margin: 10px 0;
+  }
+  .objection .col { padding: 16px 20px; }
+  .objection .col.q {
+    background: rgba(255,138,28,0.06);
+    border-right: 1px solid rgba(255,255,255,0.08);
+    font-family: "Outfit"; font-weight: 600; font-size: 0.92rem;
+    color: var(--text); letter-spacing: -0.005em;
+  }
+  .objection .col.q small {
+    display: block; font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--princeton-orange); margin-bottom: 6px;
+  }
+  .objection .col.a {
+    background: rgba(56,255,153,0.04);
+    font-family: "Comfortaa"; font-size: 0.9rem;
+    color: var(--text); line-height: 1.7;
+  }
+  .objection .col.a small {
+    display: block; font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--spring-green); margin-bottom: 6px;
+  }
+
+  /* Usage rules */
+  .rule {
+    padding: 18px 22px;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.03);
+    border-left: 3px solid var(--spring-green);
+    margin: 10px 0;
+    font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7;
+    color: var(--text);
+  }
+  .rule b { color: var(--spring-green); font-family: "Outfit"; font-weight: 700; }
+  .rule.dont { border-left-color: var(--princeton-orange); }
+  .rule.dont b { color: var(--princeton-orange); }
+
+  /* Identity stats */
+  .identity-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 10px; margin: 1rem 0 1.5rem;
+  }
+  .id-card {
+    padding: 18px 20px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px;
+  }
+  .id-card .k {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-subtle); margin-bottom: 5px;
+  }
+  .id-card .v {
+    font-family: "Outfit"; font-weight: 700; font-size: 0.98rem;
+    color: var(--text); line-height: 1.4; letter-spacing: -0.005em;
+  }
+  .id-card .v.accent { color: var(--spring-green); }
+  .id-card .v.muted { font-family: "Comfortaa"; font-weight: 500; font-size: 0.88rem; color: var(--text-muted); line-height: 1.55; }
+
+  /* Two column yes/no */
+  .yn { display: grid; grid-template-columns: 1fr 1fr; gap: 18px; margin: 1rem 0 1.5rem; }
+  .yn .col { padding: 18px 22px; border-radius: 12px; }
+  .yn .yes { background: rgba(56,255,153,0.05); border: 1px solid rgba(56,255,153,0.2); }
+  .yn .no { background: rgba(255,138,28,0.05); border: 1px solid rgba(255,138,28,0.2); }
+  .yn h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.85rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0 0 12px; }
+  .yn .yes h4 { color: var(--spring-green); }
+  .yn .no h4 { color: var(--princeton-orange); }
+  .yn ul { margin: 0; padding-left: 1.2rem; }
+  .yn li { font-family: "Comfortaa"; font-size: 0.88rem; margin-bottom: 6px; }
+
+  @media (max-width: 820px) {
+    .layout { grid-template-columns: 1fr; }
+    .toc { display: none; }
+    .yn { grid-template-columns: 1fr; }
+    .objection { grid-template-columns: 1fr; }
+    .objection .col.q { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.08); }
+  }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<!-- ════════ TOC ════════ -->
+<nav class="toc">
+  <h3>Messaging system</h3>
+  <a href="#north-star">00 North star</a>
+  <a href="#identity">01 Identity</a>
+  <a href="#frames">02 Three frames</a>
+  <div class="gap"></div>
+  <h3>Frame A · The loop</h3>
+  <a href="#A-lines">Sharp diagnostic lines</a>
+  <div class="gap"></div>
+  <h3>Frame B · Permission</h3>
+  <a href="#B-lines">Permission lines</a>
+  <div class="gap"></div>
+  <h3>Frame C · Witnessed</h3>
+  <a href="#C-lines">Witnessed lines</a>
+  <div class="gap"></div>
+  <h3>Applied</h3>
+  <a href="#founder">03 Founder voice</a>
+  <a href="#whois">04 Who's in the room</a>
+  <a href="#objections">05 Objections &amp; answers</a>
+  <a href="#not">06 What it isn't</a>
+  <a href="#community">07 Community offer</a>
+  <a href="#ctas">08 CTAs</a>
+  <a href="#voice-rules">09 Voice rules</a>
+  <a href="#usage">10 Where each piece goes</a>
+</nav>
+
+<!-- ════════ CONTENT ════════ -->
+<main class="content">
+
+<p class="doc-eyebrow">Canonical · Loop Breakers · v1</p>
+<h1>The messaging system.</h1>
+<p class="sub">One source of truth for every line Loop Breakers puts in front of a human. Taglines, hooks, founder voice, objection answers, voice rules. Claude Code, designers, copywriters — everyone pulls from this. When in doubt, this doc wins.</p>
+
+<!-- ═══════════ 00 NORTH STAR ═══════════ -->
+<section class="doc" id="north-star" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">00 · North star</p>
+  <h2>The one sentence.</h2>
+  <p>If every other line on this page had to compress into one thing, it's this:</p>
+
+  <div class="callout">
+    <span class="label">Positioning line</span>
+    A held room for neurodivergent people sitting on an idea — <em>because the loop breaks when someone else sees it.</em>
+  </div>
+
+  <p>Every other line on this page is a way to say that same thing, to a different person, in a different moment, at a different scale.</p>
+</section>
+
+<!-- ═══════════ 01 IDENTITY ═══════════ -->
+<section class="doc" id="identity" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">01 · Identity</p>
+  <h2>What Loop Breakers is, factually.</h2>
+
+  <div class="identity-grid">
+    <div class="id-card"><p class="k">What it is</p><p class="v">Online group coaching sessions</p></div>
+    <div class="id-card"><p class="k">For whom</p><p class="v">Neurodivergent adults sitting on an idea</p></div>
+    <div class="id-card"><p class="k">Format</p><p class="v">90 min · two room sizes (10 hard cap / Guest Stage up to 40) · Google Meet</p></div>
+    <div class="id-card"><p class="k">Cadence</p><p class="v">Tuesdays weekly (Loop Breakers, with Nici) · Wednesdays off-cadence (Guest Stages, invited practitioners)</p></div>
+    <div class="id-card"><p class="k">Tuesday price</p><p class="v accent">£10 PAYG · £5 access seat on request</p></div>
+    <div class="id-card"><p class="k">Wednesday price</p><p class="v accent">£25 sliding (£15 / £25 / £40) · attendee picks at checkout</p></div>
+    <div class="id-card"><p class="k">Founding Members</p><p class="v accent">£180 lifetime founding rate · locked at signup, grandfathered through any future rise</p></div>
+    <div class="id-card"><p class="k">Parent brand</p><p class="v muted">Unbarrier.me — coaching and learning for neurodivergent adults. Founded by Nici.</p></div>
+    <div class="id-card"><p class="k">What it is not</p><p class="v muted">Not therapy. Not a course. Not a masterclass. Not a productivity method.</p></div>
+  </div>
+</section>
+
+<!-- ═══════════ 02 FRAMES ═══════════ -->
+<section class="doc" id="frames" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">02 · Three voice frames</p>
+  <h2>Three ways of saying the same thing.</h2>
+  <p>Different audiences need different access points. Use all three — each in the right channel. <b>Mix freely within a piece; don't mix across a single message.</b></p>
+
+  <div class="frames">
+    <div class="frame A">
+      <div class="frame-head">
+        <span class="frame-letter">A</span>
+        <span class="frame-title">The loop</span>
+        <span class="frame-for">for: people who recognise the pattern in themselves</span>
+      </div>
+      <p>Sharp, diagnostic, pattern-naming. Names the loop so clearly people gasp a little. <b>This is the Cardiff-stall voice, the merch voice, the hook voice.</b></p>
+      <p class="where">Best in: flyers · social hooks · t-shirts · first line of landing pages</p>
+    </div>
+    <div class="frame B">
+      <div class="frame-head">
+        <span class="frame-letter">B</span>
+        <span class="frame-title">Permission</span>
+        <span class="frame-for">for: any diagnostic stage — early, late, self-, undiagnosed-but-curious</span>
+      </div>
+      <p>Soft, disarming, counter-hustle. Gives people permission to stop performing a brain they don't have. <b>This is the newsletter voice, the about-page voice, the thank-you voice.</b></p>
+      <p class="where">Best in: newsletter · about pages · thank-you emails · long-form</p>
+    </div>
+    <div class="frame C">
+      <div class="frame-head">
+        <span class="frame-letter">C</span>
+        <span class="frame-title">Witnessed</span>
+        <span class="frame-for">for: isolated thinkers, people who work alone</span>
+      </div>
+      <p>Quiet, relational, about the power of another mind. Names what groups do that a diary doesn't. <b>This is the sales-page voice, the why-group voice, the booking-confirmation voice.</b></p>
+      <p class="where">Best in: sessions sales page · booking confirmation · community offer</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ FRAME A LINES ═══════════ -->
+<section class="doc" id="A-lines" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">Frame A · sharp diagnostic lines</p>
+  <h2>The loop voice.</h2>
+  <p>Use as headlines, flyers, social hooks, merch. All are pick-ups, not explanations.</p>
+
+  <div class="lines-grid">
+    <div class="line-card">Your brain isn't the problem. Your system is.</div>
+    <div class="line-card">You're not stuck because you can't. You're stuck because you're doing it alone.</div>
+    <div class="line-card">You plan. You start. You refine. You stall.</div>
+    <div class="line-card">You don't need a planner. You need a room.</div>
+    <div class="line-card">Your third notebook isn't going to fix this.</div>
+    <div class="line-card">The thing you've tried seven times is trying to tell you something.</div>
+    <div class="line-card">One idea. 90 minutes. You actually move.</div>
+    <div class="line-card">Some ideas don't want a note app. They want other people.</div>
+    <div class="line-card">You don't have a productivity problem. You have a witness problem.</div>
+    <div class="line-card">If "just start" worked, you'd already be finished.</div>
+  </div>
+</section>
+
+<!-- ═══════════ FRAME B LINES ═══════════ -->
+<section class="doc" id="B-lines" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">Frame B · permission lines</p>
+  <h2>The permission voice.</h2>
+  <p>Use in newsletter, about, long-form. Aim: make a neurodivergent reader — at any diagnostic stage — exhale.</p>
+
+  <div class="lines-grid">
+    <div class="line-card">Stop trying to be the other kind of brain.</div>
+    <div class="line-card">Move one idea forward. That's the whole goal.</div>
+    <div class="line-card">A system, designed for you — not retrofitted from someone else's.</div>
+    <div class="line-card">Messy is a feature. We built the room around it.</div>
+    <div class="line-card">You're allowed to bring a mess.</div>
+    <div class="line-card">Bring a half-idea. Bring something you've been circling for two years. Any stage is the right stage.</div>
+    <div class="line-card">You don't need to arrive clean. You need to arrive.</div>
+    <div class="line-card">Not every loop is a failure. Some are maps.</div>
+    <div class="line-card">The tools you've been handed were built for a brain you don't have.</div>
+    <div class="line-card">Slow on purpose. Not slow by mistake.</div>
+  </div>
+</section>
+
+<!-- ═══════════ FRAME C LINES ═══════════ -->
+<section class="doc" id="C-lines" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">Frame C · witnessed lines</p>
+  <h2>The witnessed voice.</h2>
+  <p>Use on the sessions page, in why-group explanations, and in booking / session confirmations.</p>
+
+  <div class="lines-grid">
+    <div class="line-card">The loop breaks when someone else sees it.</div>
+    <div class="line-card">Other people's stuck ideas unstick yours.</div>
+    <div class="line-card">Think out loud, with other people who get it.</div>
+    <div class="line-card">Working-out-loud, as a service.</div>
+    <div class="line-card">A room where you're allowed to be messy.</div>
+    <div class="line-card">The thing that doesn't happen in a diary entry, a journal, or a voice note to yourself.</div>
+    <div class="line-card">A held room. For the kind of thinking that needs other brains in it.</div>
+    <div class="line-card">Your idea gets to meet 7 other brains that aren't yours.</div>
+    <div class="line-card">You'll leave knowing what to do next. Not finished. <em>Moved.</em></div>
+    <div class="line-card">Sometimes all an idea needs is to be heard out loud.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 03 FOUNDER ═══════════ -->
+<section class="doc" id="founder" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">03 · The founder voice</p>
+  <h2>How Nici shows up.</h2>
+  <p>For any page, flyer, or pitch that needs a human face, use one of these. Never use a headshot without a line; never use a line without a name.</p>
+
+  <h3>Micro-bio (one line, for signatures + flyer footers)</h3>
+  <div class="callout">
+    I'm Nici — diagnosed dyslexic at 10, ADHD &amp; dyscalculia at 20, still looping. These are the sessions I wish I'd had.
+  </div>
+
+  <h3>Short bio (for session pages, about footer)</h3>
+  <p>I'm Nici. I've spent years circling ideas I couldn't quite land — until I built the kind of room I wished I'd had. Loop Breakers is that room. I run most sessions; a few rotate to other neurodivergent practitioners who bring their own frameworks.</p>
+
+  <h3>Longer bio (for about page, media requests)</h3>
+  <p>I'm Nici, the founder of Unbarrier and Loop Breakers. I'm not late-diagnosed — I've known I think differently since I was ten (dyslexia at 10; ADHD, dyscalculia, and Auditory Processing Disorder at 20). What I didn't know, for years, was how to build <em>around</em> it. I'm creatively prolific and have spent most of my adult life looping on the same handful of good ideas. I built the thing I needed: small, slow, held rooms for neurodivergent adults to move one idea forward in 90 minutes, without the shame spiral that comes from not fitting the productivity systems we've been handed. I've worked as a creative consultant, an educator, and a design practitioner. Loop Breakers is the distillation of everything I've learnt about how our brains actually get unstuck.</p>
+</section>
+
+<!-- ═══════════ 04 WHO'S IN THE ROOM ═══════════ -->
+<section class="doc" id="whois" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">04 · Who's in the room</p>
+  <h2>Social placement without names.</h2>
+  <p>People want to know the <b>shape</b> of who's there before they book. Use these, not testimonial-stacks.</p>
+
+  <h3>The list (for sessions page, flyers)</h3>
+  <div class="callout">
+    <span class="label">Who's in the room</span>
+    Founders, educators, writers, parents, designers, therapists, consultants — people with ideas that have been waiting.
+  </div>
+
+  <h3>The sentence (for tweets, short intros)</h3>
+  <ul>
+    <li>"A room of about eight people, all neurodivergent, all mid-idea."</li>
+    <li>"Up to 10 smart people with a thing they've been circling."</li>
+    <li>"Think: the most interesting person at dinner × ten, all slightly lost in the same way."</li>
+  </ul>
+
+  <h3>The honesty line (for objection-handling)</h3>
+  <ul>
+    <li>"You won't be the weirdest person in the room. You won't be the most stuck. You will be exactly in the right spot."</li>
+  </ul>
+</section>
+
+<!-- ═══════════ 05 OBJECTIONS ═══════════ -->
+<section class="doc" id="objections" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">05 · Objections &amp; answers</p>
+  <h2>What people won't say out loud — and the line that answers it.</h2>
+
+  <div class="objection">
+    <div class="col q"><small>Objection 1</small>My idea isn't formed enough yet.</div>
+    <div class="col a"><small>Answer</small>Bring a mess. Bring a half-idea. Any stage is the right stage — that's literally the point.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 2</small>I don't want to perform in front of strangers.</div>
+    <div class="col a"><small>Answer</small>You don't have to share on camera if you don't want to. Chat works. Silence works. You set the shape.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 3</small>I've done coaching before and it didn't stick.</div>
+    <div class="col a"><small>Answer</small>This isn't coaching shaped for a neurotypical brain. It's sized differently — smaller ask, smaller step, one idea at a time.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 4</small>I can't afford it / is this another £2k course?</div>
+    <div class="col a"><small>Answer</small>£10 for a Tuesday seat — £5 access seat if that's still too much, no questions. Wednesday Guest Stages are £25 sliding (£15 / £25 / £40, you pick). Pay-as-you-go. Skip any week. That's the whole pricing — no upsell waiting behind it.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 5</small>Why groups? I'd rather have 1:1.</div>
+    <div class="col a"><small>Answer</small>Because other people's stuck ideas unstick yours. 1:1 is available too (£120) — but most people move further in a group than they expect.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 6</small>Is this therapy? I'm in/not in therapy.</div>
+    <div class="col a"><small>Answer</small>Not therapy. Coaching — thinking, strategy, accountability, witness. Works alongside therapy, doesn't replace it.</div>
+  </div>
+  <div class="objection">
+    <div class="col q"><small>Objection 7</small>What if I'm the only ADHD/autistic/dyslexic one in the room?</div>
+    <div class="col a"><small>Answer</small>You won't be. The whole room is neurodivergent. Different shapes of it, same general terrain.</div>
+  </div>
+</section>
+
+<!-- ═══════════ 06 WHAT IT ISN'T ═══════════ -->
+<section class="doc" id="not" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">06 · What it isn't</p>
+  <h2>The safety frame.</h2>
+  <p>Neurodivergent people have been sold things. Say what this isn't, up front, to earn trust.</p>
+
+  <div class="yn">
+    <div class="col yes">
+      <h4>What it is</h4>
+      <ul>
+        <li>Group coaching</li>
+        <li>A thinking room</li>
+        <li>A held space to work out loud</li>
+        <li>Facilitated accountability</li>
+        <li>Pay-as-you-go</li>
+        <li>Neurodivergent-first by design</li>
+      </ul>
+    </div>
+    <div class="col no">
+      <h4>What it isn't</h4>
+      <ul>
+        <li>Therapy</li>
+        <li>Clinical / diagnostic</li>
+        <li>A course with modules</li>
+        <li>A masterclass or webinar</li>
+        <li>A productivity method</li>
+        <li>A subscription lock-in</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="callout">
+    <span class="label">Condensed line</span>
+    Not therapy. Not a course. Not a masterclass. <em>A held room, for the kind of thinking that needs other brains in it.</em>
+  </div>
+</section>
+
+<!-- ═══════════ 07 COMMUNITY ═══════════ -->
+<section class="doc" id="community" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">07 · Community offer</p>
+  <h2>What Founding Membership actually buys.</h2>
+  <p>Right now this is underspecified — here's the working definition to use everywhere, unless/until we change it.</p>
+
+  <div class="callout">
+    <span class="label">Founding Members — £180 lifetime, locked at signup</span>
+    Tuesday Loop Breakers drop-in access (every week, £0 at the door) · first access to Wednesday Guest Stages at the £15 sliding tier · slow-pace WhatsApp room with the cohort · <em>voice on what Loop Breakers becomes next</em>
+  </div>
+
+  <h3>Why 20?</h3>
+  <p>20 is the number of people Nici can hold well. After that, it's a different kind of thing — good, but different. The scarcity is honest: it's a capacity ceiling, not a marketing tactic.</p>
+
+  <h3>What "slow-pace WhatsApp" means (plain English)</h3>
+  <ul>
+    <li><b>Not a chat room that pings constantly.</b> A space to drop an idea and let it sit.</li>
+    <li><b>Reply when you reply.</b> Async, accepted. Days between messages is fine.</li>
+    <li><b>One rule:</b> when someone else shares, read it. Even if you don't reply. That's the witness part.</li>
+  </ul>
+
+  <h3>What Founding Members keep, forever</h3>
+  <ul>
+    <li>£180 lifetime rate — locked at signup, grandfathered through any future rise</li>
+    <li>Seat in every session they want to attend</li>
+    <li>Voice on what Loop Breakers becomes next</li>
+  </ul>
+</section>
+
+<!-- ═══════════ 08 CTAs ═══════════ -->
+<section class="doc" id="ctas" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">08 · Calls to action</p>
+  <h2>The CTA library.</h2>
+  <p>Use the shortest CTA that fits the space. Never weaker than "Book" — <em>never</em> "Learn more".</p>
+
+  <h3>Primary (paid session)</h3>
+  <div class="lines-grid">
+    <div class="line-card">Book a Tuesday Loop Breakers · £10</div>
+    <div class="line-card">See the next Wednesday Guest Stage · £25 sliding</div>
+    <div class="line-card">Book the next Loop Breakers</div>
+    <div class="line-card">Take a seat</div>
+    <div class="line-card">Bring an idea. Move it.</div>
+  </div>
+
+  <h3>Founding (Cardiff flyer + launch push)</h3>
+  <div class="lines-grid">
+    <div class="line-card">Become a Founding Member · £180 lifetime</div>
+    <div class="line-card">Claim one of 20 founding seats</div>
+    <div class="line-card">£180 once · locked forever</div>
+  </div>
+
+  <h3>Soft (newsletter, top of funnel)</h3>
+  <div class="lines-grid">
+    <div class="line-card soft">Read the Loop Breakers letter — no pitch, just honest writing every Tuesday.</div>
+    <div class="line-card soft">Book a free 30-min audit call — tell me what you're looping on, I'll tell you if Loop Breakers is right.</div>
+    <div class="line-card soft">Just watch for a while. Join the list — leave the list — no hard feelings.</div>
+  </div>
+
+  <h3>Never use</h3>
+  <ul>
+    <li>"Learn more" — gives nothing, asks nothing.</li>
+    <li>"Click here" — embarrassing. Link the verb.</li>
+    <li>"Unlock…" — productivity-bro language.</li>
+    <li>"Transform your…" — run away.</li>
+    <li>"Limited time!" — we're honest about scarcity, not urgent about it.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ 09 VOICE RULES ═══════════ -->
+<section class="doc" id="voice-rules" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">09 · Voice rules</p>
+  <h2>The things that make it sound like us.</h2>
+
+  <div class="rule"><b>Do</b> — say it plainly. "A room where you're allowed to be messy" beats "a supportive, non-judgmental environment."</div>
+  <div class="rule"><b>Do</b> — use the word <em>moved</em>, not <em>transformed</em>, <em>unlocked</em>, <em>levelled-up</em>.</div>
+  <div class="rule"><b>Do</b> — name the loop. Patterns recognised = trust built.</div>
+  <div class="rule"><b>Do</b> — use specific numbers (90 min, 10 hard cap, £10 Tuesday / £25 sliding Wednesday) over vague promises.</div>
+  <div class="rule"><b>Do</b> — leave an explicit "out". "No pressure." "Say no." "Not for you? Fine."</div>
+  <div class="rule"><b>Do</b> — lowercase headers where it reads warmer. Sentence case > Title Case.</div>
+  <div class="rule"><b>Do</b> — British English spelling (programme, organise, behaviour).</div>
+  <div class="rule dont"><b>Don't</b> — sell the outcome of one session as life-changing.</div>
+  <div class="rule dont"><b>Don't</b> — stack testimonials in a wall. One, well-placed, does the job.</div>
+  <div class="rule dont"><b>Don't</b> — use medical/clinical language ("symptoms", "treat", "manage").</div>
+  <div class="rule dont"><b>Don't</b> — say "journey" or "community" empty of content. Define community every time we name it.</div>
+  <div class="rule dont"><b>Don't</b> — use the word "tribe". Ever.</div>
+  <div class="rule dont"><b>Don't</b> — use emoji as punctuation. A single one, occasionally, with intent, is fine.</div>
+  <div class="rule dont"><b>Don't</b> — use stock photos of people looking wistfully out windows. (We use placeholder blocks until we have real portraits.)</div>
+</section>
+
+<!-- ═══════════ 10 USAGE ═══════════ -->
+<section class="doc" id="usage" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">10 · Where each piece goes</p>
+  <h2>The applied map.</h2>
+  <p>When you're writing a thing, start here. Pick the frame, pull the line, obey the voice rule, use the CTA library.</p>
+
+  <div class="identity-grid">
+    <div class="id-card">
+      <p class="k">Cardiff flyer</p>
+      <p class="v muted"><b style="color:var(--spring-green)">Frame A</b> hook on front · <b style="color:var(--spring-green)">Frame C</b> promise inside · Founding offer box · QR to <code>unbarrier.me</code></p>
+    </div>
+    <div class="id-card">
+      <p class="k">Sessions landing page</p>
+      <p class="v muted"><b style="color:var(--spring-green)">Frame A</b> hero · <b style="color:var(--spring-green)">Frame C</b> main body · objection list · Founder micro-bio · Primary CTA</p>
+    </div>
+    <div class="id-card">
+      <p class="k">Newsletter</p>
+      <p class="v muted"><b style="color:var(--orchid-mist)">Frame B</b> throughout. No sales page language. Soft CTA at the bottom, if any.</p>
+    </div>
+    <div class="id-card">
+      <p class="k">Social hooks</p>
+      <p class="v muted"><b style="color:var(--spring-green)">Frame A</b> lines only. One per post, no explanation.</p>
+    </div>
+    <div class="id-card">
+      <p class="k">Booking confirmation</p>
+      <p class="v muted"><b style="color:var(--school-bus-yellow)">Frame C</b> warmth · what to bring · what to expect · one sentence of Nici voice</p>
+    </div>
+    <div class="id-card">
+      <p class="k">About page</p>
+      <p class="v muted"><b style="color:var(--orchid-mist)">Frame B</b> opener · Longer founder bio · Community definition · Soft CTA</p>
+    </div>
+    <div class="id-card">
+      <p class="k">Guest host pitch</p>
+      <p class="v muted">Use Guest Host Kit. North-star line as frontispiece.</p>
+    </div>
+    <div class="id-card">
+      <p class="k">Community (founding) page</p>
+      <p class="v muted"><b style="color:var(--school-bus-yellow)">Frame C</b> hero · <b style="color:var(--orchid-mist)">Frame B</b> permission · Community definition · Founding offer callout</p>
+    </div>
+  </div>
+
+  <div class="callout" style="margin-top:2rem">
+    <span class="label">Rule of thumb</span>
+    If the line you're writing doesn't sound like one of the voice frames, <em>it probably isn't Loop Breakers.</em>
+  </div>
+</section>
+
+</main>
+</div>
+
+</body>
+</html>

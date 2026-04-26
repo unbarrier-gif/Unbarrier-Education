@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:24px;display:flex;flex-direction:column;gap:18px;}
+  .card{width:660px;}
+  .btn{display:inline-block;font-family:var(--font-body);font-weight:700;font-size:15px;padding:13px 28px;border-radius:100px;text-decoration:none;cursor:pointer;transition:opacity 150ms;}
+  .btn:hover{opacity:0.88;}
+  .primary{background:var(--spring-green);color:var(--amethyst);}
+  .primary-orchid{background:var(--orchid-mist);color:var(--amethyst);}
+  .primary-yellow{background:var(--school-bus-yellow);color:var(--amethyst);}
+  .ghost{background:transparent;color:var(--text);border:1.5px solid rgba(240,235,229,0.22);}
+  .label{font-family:var(--font-heading);font-size:10px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-subtle);margin-bottom:10px;}
+  .row{display:flex;gap:10px;align-items:center;flex-wrap:wrap;}
+</style>
+</head>
+<div class="card">
+  <div class="label">Buttons · Primary (green · orchid · yellow) · Ghost</div>
+  <div class="row">
+    <a class="btn primary" href="#">Email Nici</a>
+    <a class="btn primary-orchid" href="#">More about Nici →</a>
+    <a class="btn primary-yellow" href="#">Visit Loop Breakers →</a>
+    <a class="btn ghost" href="#">How I work →</a>
+  </div>
+</div>
+</body>
+</html>

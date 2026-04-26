@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="stylesheet" href="../colors_and_type.css">
+<style>
+  html,body{margin:0;padding:0;background:var(--amethyst);color:var(--text);}
+  body{padding:22px;}
+  .card{width:680px;display:grid;grid-template-columns:1fr 1fr;gap:14px;align-items:stretch;}
+  .tier{position:relative;background:rgba(21,5,32,0.6);border:1px solid rgba(105,217,209,0.22);border-radius:20px;padding:26px;display:flex;flex-direction:column;}
+  .tier.featured{border:2px solid var(--princeton-orange);box-shadow:0 0 0 1px rgba(255,138,28,0.25), 0 8px 32px rgba(255,138,28,0.12);}
+  .rec{position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-size:9px;font-weight:800;letter-spacing:0.16em;text-transform:uppercase;padding:5px 12px;border-radius:100px;white-space:nowrap;}
+  .name{font-family:var(--font-heading);font-weight:800;font-size:18px;color:var(--text);margin:0 0 6px;}
+  .desc{font-family:var(--font-body);font-size:12px;line-height:1.6;color:var(--text-subtle);margin:0 0 18px;}
+  .price{font-family:var(--font-heading);font-weight:800;font-size:44px;line-height:1;letter-spacing:-0.02em;margin:0;}
+  .price.a{color:var(--school-bus-yellow);}
+  .price.b{color:var(--text);}
+  .meta{font-family:var(--font-heading);font-size:10px;letter-spacing:0.08em;color:var(--text-faint);margin:4px 0 18px;text-transform:uppercase;}
+  ul{list-style:none;padding:0;margin:0 0 20px;flex:1;}
+  li{display:flex;gap:10px;align-items:center;padding:9px 0;border-bottom:1px solid rgba(255,255,255,0.05);font-family:var(--font-body);font-size:12.5px;color:var(--text-muted);}
+  li::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--pearl-aqua);flex-shrink:0;}
+  .featured li::before{background:var(--princeton-orange);}
+  .cta{display:block;text-align:center;font-family:var(--font-body);font-weight:700;font-size:13.5px;padding:12px;border-radius:12px;text-decoration:none;}
+  .cta.green{background:var(--spring-green);color:var(--amethyst);}
+  .cta.orange{background:var(--princeton-orange);color:#1a0800;}
+  .note{position:absolute;top:10px;left:14px;font-family:var(--font-heading);font-size:9px;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--text-faint);}
+</style>
+</head>
+<body>
+<div class="card">
+  <div class="tier">
+    <span class="note">01 · Entry</span>
+    <h3 class="name" style="margin-top:18px;">90 Minute Session</h3>
+    <p class="desc">Show up with one idea. Work through it in a small, structured group. Leave with a clear next step.</p>
+    <p class="price a">£10</p>
+    <p class="meta">One-off · No VAT · No subscription</p>
+    <ul>
+      <li>One Vision to Launch session</li>
+      <li>Small group, online</li>
+      <li>90 minutes</li>
+    </ul>
+    <a class="cta green" href="#">Join a Session</a>
+  </div>
+
+  <div class="tier featured">
+    <span class="rec">Recommended</span>
+    <span class="note" style="color:var(--princeton-orange);opacity:0.7;">02 · Bundle</span>
+    <h3 class="name" style="margin-top:18px;">Session + 1:1 Coaching</h3>
+    <p class="desc">Your group session plus a private 45-minute follow-up call. We go deeper on your idea and map your actual next steps together.</p>
+    <p class="price b">£55</p>
+    <p class="meta">One-off · No VAT · No subscription</p>
+    <ul>
+      <li>Everything in the 90 min session</li>
+      <li>Private 45-min 1:1 coaching call</li>
+      <li>Personalised next steps</li>
+    </ul>
+    <a class="cta orange" href="#">Get the Bundle</a>
+  </div>
+</div>
+</body>
+</html>

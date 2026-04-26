@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>MailerLite Setup Pack · unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 920px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 640px; }
+  section.block { padding: 2rem 0 2.2rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.5rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.4rem 0 0.6rem; color: var(--text); }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.75; color: var(--text-muted); }
+  ol.plan, ul.plan { padding: 0 0 0 1.1rem; margin: 0 0 1rem; }
+  ol.plan li, ul.plan li { margin-bottom: 8px; }
+  ol.plan li b, ul.plan li b { color: var(--text); }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+
+  .step {
+    padding: 22px 24px; border-radius: 16px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--c, var(--spring-green));
+    margin-bottom: 14px;
+  }
+  .step .n { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--c, var(--spring-green)); margin: 0 0 6px; }
+  .step h3 { margin: 0 0 8px; }
+  .step .time { font-family: "Comfortaa"; font-size: 11px; color: var(--text-subtle); margin-bottom: 8px; }
+
+  .paste {
+    background: #0f0420; border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 14px; padding: 20px 22px; margin: 10px 0 18px;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 12.5px;
+    color: var(--text); line-height: 1.65;
+    white-space: pre-wrap; word-wrap: break-word;
+  }
+  .paste .lbl {
+    display: block;
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--school-bus-yellow); margin-bottom: 8px;
+  }
+  .copy-btn {
+    float: right; margin-top: -2px;
+    background: transparent; color: var(--spring-green);
+    border: 1px solid rgba(56,255,153,0.4); padding: 4px 10px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 10px; letter-spacing: 0.08em;
+    text-transform: uppercase; cursor: pointer;
+  }
+  .copy-btn:hover { background: rgba(56,255,153,0.1); }
+
+  .email-meta {
+    display: grid; grid-template-columns: 120px 1fr; gap: 6px 16px;
+    font-family: "Comfortaa"; font-size: 13px; margin-bottom: 12px;
+    padding: 12px 14px; border-radius: 10px;
+    background: rgba(255,194,3,0.05); border: 1px solid rgba(255,194,3,0.2);
+  }
+  .email-meta dt { color: var(--text-subtle); font-weight: 700; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; }
+  .email-meta dd { margin: 0; color: var(--text); }
+
+  .box.warn {
+    padding: 18px 22px; border-radius: 14px;
+    background: rgba(255,138,28,0.06); border: 1px solid rgba(255,138,28,0.3);
+    border-left: 3px solid var(--princeton-orange);
+    font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text);
+  }
+  .box.warn b { color: var(--princeton-orange); }
+
+  .box.good {
+    padding: 18px 22px; border-radius: 14px;
+    background: rgba(56,255,153,0.06); border: 1px solid rgba(56,255,153,0.3);
+    border-left: 3px solid var(--spring-green);
+    font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text);
+  }
+
+  .ask {
+    padding: 22px 24px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(56,255,153,0.06), rgba(219,125,204,0.04));
+    border: 1.5px solid rgba(56,255,153,0.3);
+  }
+  .ask h3 { margin-top: 0; color: var(--spring-green); }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<p class="doc-eyebrow">MailerLite Setup Pack · 23 Apr 2026 · replaces Kit</p>
+<h1>New home:<br/><span style="color:var(--spring-green)">MailerLite.</span></h1>
+<p class="sub">Kit locked sequences behind $33/mo. You've got nothing on Kit yet, so we're swapping. MailerLite's free tier includes everything you need up to 1,000 subscribers — forms, sequences, automations, landing pages. Same checklist, new platform, ~25 minutes.</p>
+
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Why this is better</p>
+  <h2>Free until 1,000 subs, then $9/mo</h2>
+  <div class="box good">
+    <b>On MailerLite free plan you get:</b>
+    <ul class="plan" style="margin:8px 0 0">
+      <li>Up to 1,000 subscribers · 12,000 emails/month</li>
+      <li><b>Automations (sequences) — included</b></li>
+      <li>Unlimited forms &amp; landing pages</li>
+      <li>Basic email campaigns (broadcasts)</li>
+      <li>Drag-and-drop editor</li>
+      <li>Subscriber tags &amp; segments</li>
+    </ul>
+    <p style="margin:10px 0 0">When you cross 1,000 subs: $9/mo (Growing Business). Kit's cheapest paid plan is $33/mo. MailerLite is ~$280/year cheaper for the same job.</p>
+  </div>
+</section>
+
+<section class="block" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Before you start</p>
+  <h2>Clean up Kit (60 seconds)</h2>
+  <ol class="plan">
+    <li>Kit → Grow → Landing Pages &amp; Forms → archive/delete the "Unbarrier newsletter" form</li>
+    <li>Optional: Kit → Account → close it, or just leave it dormant (no cost on free plan)</li>
+    <li>The DNS records you added for Kit's domain auth — <b>leave them for now</b>, we'll remove them after MailerLite is verified, so we don't break anything mid-swap</li>
+  </ol>
+</section>
+
+<section class="block" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Part 1 · Your 25-minute checklist</p>
+  <h2>Five steps, in this order</h2>
+
+  <div class="step" style="--c:#69d9d1">
+    <p class="n">Step 1</p>
+    <h3>Sign up at MailerLite</h3>
+    <p class="time">~3 minutes</p>
+    <ol class="plan">
+      <li>Go to <code>mailerlite.com</code> → Sign up free</li>
+      <li>Use <b>nici@unbarrier.me</b> as the account email</li>
+      <li>Answer the onboarding questions honestly (business type: coaching/education; list size: under 100)</li>
+      <li>Skip the "import subscribers" step</li>
+      <li>They'll ask for a business address — use <b>45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</b> (required by anti-spam law, shown in email footers)</li>
+    </ol>
+  </div>
+
+  <div class="step" style="--c:#db7dcc">
+    <p class="n">Step 2</p>
+    <h3>Verify sending domain</h3>
+    <p class="time">~5 minutes + DNS wait</p>
+    <ol class="plan">
+      <li>Left sidebar → <b>Settings (cog icon)</b> → <b>Domains</b> → <b>Add domain</b></li>
+      <li>Enter <code>unbarrier.me</code></li>
+      <li>MailerLite shows you <b>SPF</b> and <b>DKIM</b> DNS records</li>
+      <li>Add them to your DNS host (Cloudflare / Google Domains / wherever unbarrier.me is registered)</li>
+      <li>Click <b>Verify</b>. Usually green in 1–15 minutes.</li>
+    </ol>
+    <div class="box warn" style="margin-top:10px"><b>If the verify step stalls:</b> screenshot the DNS records MailerLite is asking for and tell me where you host DNS — I'll translate them into exact clicks for your host.</div>
+  </div>
+
+  <div class="step" style="--c:#38ff99">
+    <p class="n">Step 3</p>
+    <h3>Create the Form</h3>
+    <p class="time">~3 minutes</p>
+    <ol class="plan">
+      <li>Left sidebar → <b>Forms</b> → <b>Create form</b> → <b>Embedded form</b></li>
+      <li>Name it: <b>Unbarrier newsletter</b></li>
+      <li>Pick any template — we don't use MailerLite's styling, our site has its own</li>
+      <li>In the form builder → <b>Settings</b>:
+        <ul class="plan">
+          <li>Double opt-in: <b>OFF</b></li>
+          <li>Success message: "You're in. Check your inbox — first note arriving now."</li>
+        </ul>
+      </li>
+      <li>Save and <b>note the form ID</b> — it's in the URL: <code>app.mailerlite.com/forms/{FORM_ID}/edit</code></li>
+    </ol>
+  </div>
+
+  <div class="step" style="--c:#ffc203">
+    <p class="n">Step 4</p>
+    <h3>Build the Welcome Automation</h3>
+    <p class="time">~10 minutes</p>
+    <ol class="plan">
+      <li>Left sidebar → <b>Automations</b> → <b>Create automation</b></li>
+      <li>Name: <b>Welcome</b></li>
+      <li>Trigger: <b>When subscriber joins a form</b> → pick "Unbarrier newsletter"</li>
+      <li>Add <b>Email</b> step → paste Email 1 (below) → set delay: <b>immediately</b></li>
+      <li>Add <b>Delay</b>: 3 days. Then <b>Email</b> → paste Email 2</li>
+      <li>Add <b>Delay</b>: 7 days. Then <b>Email</b> → paste Email 3</li>
+      <li>Top-right: switch automation <b>ON</b></li>
+    </ol>
+  </div>
+
+  <div class="step" style="--c:#ff8a1c">
+    <p class="n">Step 5</p>
+    <h3>Test &amp; tell me</h3>
+    <p class="time">~2 minutes</p>
+    <ol class="plan">
+      <li>Subscribe yourself at a test email (different from your account email). Email 1 should arrive in under 60 seconds.</li>
+      <li>Paste back into chat: <b>Form ID</b> + "<b>domain verified ✓</b>" + any test-email weirdness</li>
+    </ol>
+  </div>
+</section>
+
+<section class="block" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Part 2 · Copy-paste email pack</p>
+  <h2>Same three emails — different UI to paste into</h2>
+  <p style="font-family:'Comfortaa'; color:var(--text-muted); font-size:0.92rem; line-height:1.75; max-width:620px;">Paste the subject line into MailerLite's subject field. Paste the body into the email editor (switch to <b>Rich text</b> or <b>Plain text</b> mode — we don't want fancy templated layouts, just a letter).</p>
+
+  <h3>Email 1 — sends immediately</h3>
+  <dl class="email-meta">
+    <dt>Subject</dt><dd>You're in. Here's the one thing I'd read first.</dd>
+    <dt>Preview</dt><dd>No spam, no schedule, no 37-step onboarding. Just this.</dd>
+    <dt>Delay</dt><dd>Immediately</dd>
+  </dl>
+  <div class="paste" id="e1"><span class="lbl">BODY <button class="copy-btn" onclick="copyPaste('e1', this)">Copy</button></span>Hi — it's Nici.
+
+Thanks for signing up. I kept my promise short for a reason: one note from me, once a month. Maybe less. Never more.
+
+No welcome-series avalanche. No "5-day challenge." No dashboard. If you're neurodivergent, you already have enough open tabs.
+
+If you want to start somewhere, this is the piece I'd read first — it explains why I started Unbarrier, in plain English:
+
+→ Read the manifesto: https://unbarrier.me/vision
+
+That's it for now. I'll be in your inbox again in a few days with a shorter one.
+
+— Nici</div>
+
+  <h3>Email 2 — sends day 3</h3>
+  <dl class="email-meta">
+    <dt>Subject</dt><dd>What's looping for you right now?</dd>
+    <dt>Preview</dt><dd>Short one. A question, not a pitch.</dd>
+    <dt>Delay</dt><dd>3 days after previous</dd>
+  </dl>
+  <div class="paste" id="e2"><span class="lbl">BODY <button class="copy-btn" onclick="copyPaste('e2', this)">Copy</button></span>Hi again.
+
+A short email this time — because I promised, and because short is the whole point.
+
+Most people who sign up are carrying one idea around with them. A thing they've started and stopped. A business they keep rewriting the landing page for. A report they keep not writing. A life they keep almost redesigning.
+
+I'd love to know — what's looping for you right now?
+
+Just hit reply. I read every one. I don't always answer fast (ADHD, a small business, a dog) — but I do read.
+
+No pressure to reply. If you'd rather lurk, lurk.
+
+— Nici</div>
+
+  <h3>Email 3 — sends day 10</h3>
+  <dl class="email-meta">
+    <dt>Subject</dt><dd>There's a room for the looping.</dd>
+    <dt>Preview</dt><dd>One invitation. Zero pressure.</dd>
+    <dt>Delay</dt><dd>7 days after previous</dd>
+  </dl>
+  <div class="paste" id="e3"><span class="lbl">BODY <button class="copy-btn" onclick="copyPaste('e3', this)">Copy</button></span>Hi.
+
+Last one in the welcome sequence — then I'm out of your inbox until I have something worth saying.
+
+I run small sessions called Loop Breakers. 90 minutes. Up to 10 people, hard cap. A room of (mostly) neurodivergent folks who have been circling the same idea for months, sometimes years.
+
+You bring the one thing you've been stuck on. You leave with it moved forward — not finished, not perfect, moved. That's the whole brief.
+
+There's a menu of upcoming sessions here. Have a look. Or don't. Either's fine:
+
+→ See the sessions: https://loop.unbarrier.me
+
+If now's not the time — no worries. I'll only be in your inbox when I have something real. That's the deal.
+
+— Nici</div>
+
+  <h3>Email footer — MailerLite auto-includes address + unsubscribe</h3>
+  <p>MailerLite appends this automatically once you've set your business address in account settings. Make sure it reads:</p>
+  <div class="paste" id="ef"><span class="lbl">BUSINESS ADDRESS (settings) <button class="copy-btn" onclick="copyPaste('ef', this)">Copy</button></span>Unbarrier Education Ltd
+Company No. 16603630
+45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH
+United Kingdom</div>
+</section>
+
+<section class="block" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Part 3 · What I need back from you</p>
+  <h2>Three things when done</h2>
+  <div class="ask">
+    <ol class="plan">
+      <li><b>MailerLite Form ID</b> — from the URL</li>
+      <li><b>"Domain verified ✓"</b> — once SPF/DKIM go green</li>
+      <li><b>"Test email arrived"</b> — after subscribing yourself</li>
+    </ol>
+    <p style="margin:14px 0 0">Then I write the Claude Code wiring spec with MailerLite's API endpoint, and we're done with the newsletter phase.</p>
+  </div>
+</section>
+
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">Part 4 · Bonus — Linktree integration</p>
+  <h2>Pipe Linktree email captures into MailerLite</h2>
+  <p>Since you've got Linktree Pro:</p>
+  <ol class="plan">
+    <li>Linktree → add <b>Email Signup</b> block</li>
+    <li>Connect to <b>MailerLite</b> (native integration on Pro)</li>
+    <li>Pick the "Unbarrier newsletter" form/group as the destination</li>
+    <li>Now people who subscribe from Linktree go straight into the same Welcome automation as website subscribers</li>
+  </ol>
+  <p>One list, multiple entry points — the same 3-email welcome fires for everyone.</p>
+</section>
+
+</div>
+
+<script>
+function copyPaste(id, btn) {
+  const el = document.getElementById(id);
+  const clone = el.cloneNode(true);
+  const lbl = clone.querySelector('.lbl');
+  if (lbl) lbl.remove();
+  const text = clone.textContent.trim();
+  navigator.clipboard.writeText(text).then(() => {
+    const original = btn.textContent;
+    btn.textContent = 'Copied ✓';
+    setTimeout(() => { btn.textContent = original; }, 1800);
+  });
+}
+</script>
+</body>
+</html>

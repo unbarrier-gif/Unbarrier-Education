@@ -1,0 +1,452 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Newsletter — Opt-in & Welcome Sequence · unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 960px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.25rem,5vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 14px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.2rem,5vw,3.2rem); letter-spacing: -0.025em; line-height: 1.06; margin: 0 0 1rem; }
+  .sub { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1rem; line-height: 1.75; margin: 0 0 2.4rem; max-width: 640px; }
+
+  section.block { padding: 2rem 0 2.2rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.block > .rail { position: absolute; top: -1px; left: 0; width: 80px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .block-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 8px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3.2vw,2.1rem); letter-spacing: -0.025em; line-height: 1.1; margin: 0 0 0.5rem; }
+  p.summary { font-family: "Comfortaa"; font-size: 0.94rem; line-height: 1.75; color: var(--text-muted); margin: 0 0 1.4rem; max-width: 720px; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.4rem 0 0.6rem; color: var(--text); }
+  p, li { font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.75; color: var(--text-muted); }
+  ul.plan, ol.plan { padding: 0 0 0 1.1rem; margin: 0 0 1rem; }
+  ul.plan li, ol.plan li { margin-bottom: 6px; }
+  code { font-family: ui-monospace, "SF Mono", Menlo, monospace; font-size: 0.82rem; color: var(--pearl-aqua); background: rgba(105,217,209,0.08); padding: 1px 6px; border-radius: 4px; }
+
+  /* ══ OPT-IN COMPONENT ══════════════════════════════════════════════ */
+  .optin-wrap {
+    margin: 0 0 1.4rem;
+    padding: 24px;
+    background: rgba(255,255,255,0.02);
+    border: 1px dashed rgba(255,255,255,0.1);
+    border-radius: 20px;
+  }
+  .optin-tag {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-subtle); margin: 0 0 10px;
+  }
+
+  /* Variant A: Homepage — wide, quiet, centred */
+  .optin.a {
+    background: radial-gradient(ellipse at top left, rgba(56,255,153,0.06), transparent 55%),
+                radial-gradient(ellipse at bottom right, rgba(219,125,204,0.05), transparent 60%),
+                var(--amethyst-deep);
+    border: 1px solid rgba(56,255,153,0.16);
+    border-radius: 22px;
+    padding: clamp(2rem, 4vw, 3rem);
+    text-align: center;
+  }
+  .optin.a .kicker {
+    font-family: "Outfit"; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--spring-green); margin: 0 0 12px;
+  }
+  .optin.a h3.hdr {
+    font-family: "Outfit"; font-weight: 800;
+    font-size: clamp(1.6rem, 3.2vw, 2.2rem); letter-spacing: -0.02em;
+    line-height: 1.15; margin: 0 auto 12px; max-width: 520px; color: var(--text);
+  }
+  .optin.a p.promise {
+    font-family: "Comfortaa"; font-size: 0.96rem; line-height: 1.75;
+    color: var(--text); margin: 0 auto 22px; max-width: 480px;
+  }
+  .optin.a form {
+    display: flex; gap: 8px; max-width: 460px; margin: 0 auto;
+    background: var(--amethyst); border: 1px solid rgba(255,255,255,0.12);
+    padding: 6px; border-radius: 100px;
+  }
+  .optin.a input {
+    flex: 1; background: transparent; border: 0; outline: 0;
+    color: var(--text); padding: 12px 18px;
+    font-family: "Comfortaa"; font-size: 15px;
+  }
+  .optin.a input::placeholder { color: var(--text-subtle); }
+  .optin.a input:focus-visible { outline: 2px solid var(--spring-green); outline-offset: 2px; border-radius: 100px; }
+  .optin.a button {
+    background: var(--spring-green); color: var(--amethyst);
+    border: 0; border-radius: 100px; padding: 12px 22px;
+    font-family: "Outfit"; font-weight: 700; font-size: 14px;
+    cursor: pointer; letter-spacing: 0.01em;
+  }
+  .optin.a button:hover { background: #54ffa8; }
+  .optin.a .micro {
+    font-family: "Comfortaa"; font-size: 12px; color: var(--text-subtle);
+    margin: 14px auto 0; max-width: 420px;
+  }
+
+  /* Variant B: Blog footer — inline, left aligned */
+  .optin.b {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-left: 3px solid var(--spring-green);
+    border-radius: 14px;
+    padding: 24px 26px;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    max-width: 560px;
+  }
+  .optin.b h3.hdr {
+    font-family: "Outfit"; font-weight: 800;
+    font-size: 1.15rem; margin: 0; letter-spacing: -0.01em; color: var(--text);
+  }
+  .optin.b p.promise {
+    font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.7;
+    color: var(--text-muted); margin: 0;
+  }
+  .optin.b form { display: flex; gap: 8px; }
+  .optin.b input {
+    flex: 1; background: var(--amethyst); border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text); padding: 11px 16px; border-radius: 10px;
+    font-family: "Comfortaa"; font-size: 14px; outline: 0;
+  }
+  .optin.b input:focus-visible { border-color: var(--spring-green); outline: 2px solid rgba(56,255,153,0.35); }
+  .optin.b button {
+    background: var(--spring-green); color: var(--amethyst);
+    border: 0; border-radius: 10px; padding: 11px 18px;
+    font-family: "Outfit"; font-weight: 700; font-size: 13px;
+    cursor: pointer;
+  }
+  .optin.b .micro { font-family: "Comfortaa"; font-size: 11.5px; color: var(--text-subtle); margin: 0; }
+
+  /* Variant C: Loop Breakers sidebar — quiet, yellow accent */
+  .optin.c {
+    background: linear-gradient(135deg, rgba(255,194,3,0.05), rgba(219,125,204,0.03));
+    border: 1px solid rgba(255,194,3,0.22);
+    border-radius: 20px;
+    padding: 22px 24px;
+    max-width: 420px;
+  }
+  .optin.c .kicker {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--school-bus-yellow); margin: 0 0 8px;
+  }
+  .optin.c h3.hdr {
+    font-family: "Outfit"; font-weight: 800; font-size: 1.2rem;
+    margin: 0 0 8px; letter-spacing: -0.01em; color: var(--text);
+  }
+  .optin.c p.promise { font-family: "Comfortaa"; font-size: 0.88rem; line-height: 1.65; color: var(--text-muted); margin: 0 0 16px; }
+  .optin.c form { display: flex; gap: 8px; flex-direction: column; }
+  .optin.c input {
+    background: var(--amethyst); border: 1px solid rgba(255,255,255,0.14);
+    color: var(--text); padding: 11px 16px; border-radius: 10px;
+    font-family: "Comfortaa"; font-size: 14px; outline: 0;
+  }
+  .optin.c input:focus-visible { border-color: var(--school-bus-yellow); outline: 2px solid rgba(255,194,3,0.35); }
+  .optin.c button {
+    background: var(--school-bus-yellow); color: var(--amethyst);
+    border: 0; border-radius: 10px; padding: 11px 18px;
+    font-family: "Outfit"; font-weight: 700; font-size: 13px;
+    cursor: pointer;
+  }
+  .optin.c .micro { font-family: "Comfortaa"; font-size: 11.5px; color: var(--text-subtle); margin: 10px 0 0; }
+
+  /* ══ EMAIL MOCKUPS ══════════════════════════════════════════════════ */
+  .email-stack { display: grid; grid-template-columns: 1fr; gap: 30px; margin-top: 12px; }
+  @media (min-width: 900px) { .email-stack { grid-template-columns: 1fr 1fr; } .email-stack > .email.tall { grid-column: span 2; max-width: 640px; } }
+
+  .email {
+    background: #faf6f0;
+    color: #1a0f28;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.35), 0 2px 6px rgba(0,0,0,0.2);
+    border: 1px solid rgba(255,255,255,0.08);
+    max-width: 620px;
+  }
+  .email .meta {
+    padding: 14px 20px;
+    background: #ffffff;
+    border-bottom: 1px solid #e8e2da;
+    font-family: "Comfortaa"; font-size: 12px; color: #6b5d70;
+    display: flex; justify-content: space-between; gap: 10px;
+  }
+  .email .meta .from { color: #210a33; font-weight: 700; }
+  .email .subject {
+    padding: 18px 24px 6px;
+    font-family: "Outfit"; font-weight: 800; font-size: 1.15rem;
+    color: #210a33; letter-spacing: -0.01em; line-height: 1.25;
+  }
+  .email .preview {
+    padding: 0 24px 16px; font-family: "Comfortaa"; font-size: 13px;
+    color: #6b5d70; border-bottom: 1px solid #e8e2da;
+  }
+  .email .body {
+    padding: 22px 24px 6px;
+    font-family: "Comfortaa"; font-size: 14.5px; line-height: 1.75;
+    color: #2b1a3d;
+  }
+  .email .body p { margin: 0 0 14px; color: #2b1a3d; font-size: 14.5px; line-height: 1.75; }
+  .email .body p.sig { font-style: italic; color: #6b5d70; }
+  .email .body a { color: #8a2bc7; font-weight: 600; }
+  .email .body .btn {
+    display: inline-block; margin: 6px 0 10px;
+    background: #210a33; color: #38ff99;
+    padding: 12px 22px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 13px;
+    text-decoration: none;
+  }
+  .email .footer {
+    padding: 18px 24px 22px; border-top: 1px solid #e8e2da;
+    font-family: "Comfortaa"; font-size: 11.5px; color: #8a7c90;
+    line-height: 1.65;
+  }
+  .email .footer a { color: #8a2bc7; }
+
+  .email-tag {
+    display: inline-block; padding: 4px 10px; border-radius: 100px;
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    margin-bottom: 12px;
+  }
+  .tag-1 { background: rgba(56,255,153,0.14); color: var(--spring-green); border: 1px solid rgba(56,255,153,0.35); }
+  .tag-2 { background: rgba(219,125,204,0.14); color: var(--orchid-mist); border: 1px solid rgba(219,125,204,0.35); }
+  .tag-3 { background: rgba(255,194,3,0.14); color: var(--school-bus-yellow); border: 1px solid rgba(255,194,3,0.35); }
+
+  table.cfg {
+    width: 100%; border-collapse: collapse; margin: 0 0 1rem;
+  }
+  table.cfg th, table.cfg td {
+    text-align: left; padding: 10px 12px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-family: "Comfortaa"; font-size: 0.86rem; vertical-align: top;
+    color: var(--text-muted);
+  }
+  table.cfg th {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle);
+  }
+</style>
+</head>
+<body>
+
+<div class="page">
+
+<p class="doc-eyebrow">Newsletter · designed &amp; drafted · v1 · 23 Apr 2026</p>
+<h1>One note from me,<br/><span style="color:var(--spring-green)">once a month.</span></h1>
+<p class="sub">
+  Newsletter block designed in three variants for the three places it lives.
+  Full three-email welcome sequence drafted in your voice, live in MailerLite.
+  Copy is a draft — rewrite anything that doesn't sound like you.
+</p>
+
+<!-- ══ OPT-IN COMPONENT — Variant A ════════════════════════════════════ -->
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">01 · Opt-in component — homepage</p>
+  <h2>Wide, quiet, centred — lives below the fold</h2>
+  <p class="summary">One band on the homepage. Not a popup. Never a popup. Signs up to your MailerLite list, triggers the welcome sequence.</p>
+
+  <div class="optin-wrap">
+    <p class="optin-tag">Preview · at the bottom of the homepage</p>
+    <div class="optin a">
+      <p class="kicker">Quiet letters from Nici</p>
+      <h3 class="hdr">One note from me, once a month.<br/>Maybe less. Never more.</h3>
+      <p class="promise">No schedule. No pressure. Written when I have something worth saying — about designing a life and business that works for your brain.</p>
+      <form onsubmit="event.preventDefault()">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" />
+        <button type="submit">Subscribe →</button>
+      </form>
+      <p class="micro">One email address. I'll never sell it or spam you. Unsubscribe in one click.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OPT-IN COMPONENT — Variant B ════════════════════════════════════ -->
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">02 · Opt-in component — blog footer</p>
+  <h2>Inline variant — appears under every post</h2>
+  <p class="summary">Smaller footprint, left-aligned, green accent rail. Sits at the end of every blog post, after the content.</p>
+
+  <div class="optin-wrap">
+    <p class="optin-tag">Preview · end of blog post</p>
+    <div class="optin b">
+      <h3 class="hdr">Liked this? Get the next one.</h3>
+      <p class="promise">One note from me, once a month. Maybe less. Never more.</p>
+      <form onsubmit="event.preventDefault()">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" />
+        <button type="submit">Subscribe</button>
+      </form>
+      <p class="micro">Unsubscribe in one click. I'll never share your address.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ OPT-IN COMPONENT — Variant C ════════════════════════════════════ -->
+<section class="block" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="block-eyebrow">03 · Opt-in component — Loop Breakers page</p>
+  <h2>Yellow variant — for people not ready to book</h2>
+  <p class="summary">Lives on the Loop Breakers sessions page for people who want to stay close but aren't booking yet. Softer framing.</p>
+
+  <div class="optin-wrap">
+    <p class="optin-tag">Preview · side of sessions page</p>
+    <div class="optin c">
+      <p class="kicker">Not booking yet?</p>
+      <h3 class="hdr">Stay in the loop.</h3>
+      <p class="promise">One note from me, once a month. Maybe less. Never more. I'll tell you when a session with your name on it opens up.</p>
+      <form onsubmit="event.preventDefault()">
+        <input type="email" placeholder="your@email.com" aria-label="Email address" />
+        <button type="submit">Stay close →</button>
+      </form>
+      <p class="micro">Unsubscribe in one click. Always.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══ TECHNICAL CONFIG ══════════════════════════════════════════════ -->
+<section class="block" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="block-eyebrow">04 · MailerLite wiring</p>
+  <h2>How the form actually sends</h2>
+  <p class="summary">Claude Code wires each variant to the same MailerLite form. My recommendation: one form, three <code>source</code> field values so we can see where each subscriber came in.</p>
+
+  <table class="cfg">
+    <thead><tr><th>Field</th><th>Value</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Form endpoint</td><td><code>https://connect.mailerlite.com/api/subscribers</code></td><td>Server-side, via /api/subscribe route</td></tr>
+      <tr><td>Form ID</td><td><code>185568935471482009</code></td><td>Live — "Unbarrier newsletter"</td></tr>
+      <tr><td>Tag (homepage)</td><td><code>source: homepage</code></td><td>Know where they came in</td></tr>
+      <tr><td>Tag (blog)</td><td><code>source: blog</code></td><td>Attributes reader interest</td></tr>
+      <tr><td>Tag (loop-breakers)</td><td><code>source: loop-breakers</code></td><td>Warmer list — more likely to book</td></tr>
+      <tr><td>Sequence trigger</td><td>Welcome sequence (3 emails, below)</td><td>Fires on form submission</td></tr>
+      <tr><td>Double opt-in</td><td><b>Off</b> (UK soft-opt allowed for transactional content)</td><td>Reduce drop-off. Still show confirmation screen.</td></tr>
+      <tr><td>Confirmation behaviour</td><td>Inline success message — not redirect</td><td>Respects reduced-motion + avoids disorientation</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<!-- ══ WELCOME SEQUENCE ══════════════════════════════════════════════ -->
+<section class="block" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="block-eyebrow">05 · Welcome sequence</p>
+  <h2>Three emails. Then I stop.</h2>
+  <p class="summary">Drafted in your voice. Plain text with one link per email. No images, no fancy layout — just a letter. Rewrite freely.</p>
+
+  <div class="email-stack">
+    <!-- EMAIL 1 -->
+    <div class="email">
+      <span class="email-tag tag-1" style="margin:18px 24px 0; display:inline-block">Email 1 · sends instantly</span>
+      <div class="meta">
+        <span class="from">Nici at Unbarrier &lt;nici@unbarrier.me&gt;</span>
+        <span>just now</span>
+      </div>
+      <div class="subject">You're in. Here's the one thing I'd read first.</div>
+      <p class="preview">No spam, no schedule, no 37-step onboarding. Just this.</p>
+      <div class="body">
+        <p>Hi — it's Nici.</p>
+        <p>Thanks for signing up. I kept my promise short for a reason: <b>one note from me, once a month. Maybe less. Never more.</b></p>
+        <p>No welcome-series avalanche. No "5-day challenge." No dashboard. If you're neurodivergent, you already have enough open tabs.</p>
+        <p>If you want to start somewhere, this is the piece I'd read first — it explains why I started Unbarrier, in plain English:</p>
+        <p><a href="https://unbarrier.me/vision" class="btn">Read the manifesto →</a></p>
+        <p>That's it for now. I'll be in your inbox again in a few days with a shorter one.</p>
+        <p class="sig">— Nici</p>
+      </div>
+      <div class="footer">
+        <p style="margin:0 0 6px">You're getting this because you signed up at unbarrier.me. <a href="#">Unsubscribe</a> in one click, any time.</p>
+        <p style="margin:0">Unbarrier Education Ltd · Company No. 16603630 · 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</p>
+      </div>
+    </div>
+
+    <!-- EMAIL 2 -->
+    <div class="email">
+      <span class="email-tag tag-2" style="margin:18px 24px 0; display:inline-block">Email 2 · sends day 3</span>
+      <div class="meta">
+        <span class="from">Nici at Unbarrier &lt;nici@unbarrier.me&gt;</span>
+        <span>3 days later</span>
+      </div>
+      <div class="subject">What's looping for you right now?</div>
+      <p class="preview">Short one. A question, not a pitch.</p>
+      <div class="body">
+        <p>Hi again.</p>
+        <p>A short email this time — because I promised, and because short is the whole point.</p>
+        <p>Most people who sign up are carrying one idea around with them. A thing they've started and stopped. A business they keep rewriting the landing page for. A report they keep not writing. A life they keep almost redesigning.</p>
+        <p>I'd love to know — <b>what's looping for you right now?</b></p>
+        <p>Just hit reply. I read every one. I don't always answer fast (ADHD, a small business, a dog) — but I do read.</p>
+        <p>No pressure to reply. If you'd rather lurk, lurk.</p>
+        <p class="sig">— Nici</p>
+      </div>
+      <div class="footer">
+        <p style="margin:0 0 6px">You're getting this because you signed up at unbarrier.me. <a href="#">Unsubscribe</a> in one click.</p>
+        <p style="margin:0">Unbarrier Education Ltd · Company No. 16603630 · 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</p>
+      </div>
+    </div>
+
+    <!-- EMAIL 3 -->
+    <div class="email tall">
+      <span class="email-tag tag-3" style="margin:18px 24px 0; display:inline-block">Email 3 · sends day 7</span>
+      <div class="meta">
+        <span class="from">Nici at Unbarrier &lt;nici@unbarrier.me&gt;</span>
+        <span>10 days later</span>
+      </div>
+      <div class="subject">There's a room for the looping.</div>
+      <p class="preview">One invitation. Zero pressure.</p>
+      <div class="body">
+        <p>Hi.</p>
+        <p>Last one in the welcome sequence — then I'm out of your inbox until I have something worth saying.</p>
+        <p>I run small sessions called <b>Loop Breakers</b>. 90 minutes. Up to 10 people, hard cap. A room of (mostly) neurodivergent folks who have been circling the same idea for months, sometimes years.</p>
+        <p>You bring the one thing you've been stuck on. You leave with it moved forward — not finished, not perfect, <em>moved</em>. That's the whole brief.</p>
+        <p>There's a menu of upcoming sessions here. Have a look. Or don't. Either's fine:</p>
+        <p><a href="https://loop.unbarrier.me" class="btn">See the sessions →</a></p>
+        <p>If now's not the time — no worries. I'll only be in your inbox when I have something real. That's the deal.</p>
+        <p class="sig">— Nici</p>
+      </div>
+      <div class="footer">
+        <p style="margin:0 0 6px">You're getting this because you signed up at unbarrier.me. <a href="#">Unsubscribe</a> in one click. <a href="#">Update preferences</a>.</p>
+        <p style="margin:0">Unbarrier Education Ltd · Company No. 16603630 · 45–47 The Triangle, Malmesbury, Wiltshire, SN16 0AH</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══ HANDOVER NOTES ══════════════════════════════════════════════ -->
+<section class="block" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="block-eyebrow">06 · For you &amp; Claude Code</p>
+  <h2>How this ships</h2>
+
+  <h3>Your job (20 minutes total)</h3>
+  <ol class="plan">
+    <li><s>Log into MailerLite. Finish the sender authentication (SPF, DKIM for unbarrier.me)</s> — <b>done 24 Apr 2026</b></li>
+    <li><s>Create one Form called "Unbarrier newsletter"</s> — <b>done, ID 185568935471482009</b></li>
+    <li><s>Create one Automation called "Welcome" — paste the three email drafts above, in order, with the send delays (instant / day 3 / day 7)</s> — <b>done, tested end-to-end 24 Apr 2026</b></li>
+    <li><s>In Automation settings: trigger on form subscription</s> — <b>done</b></li>
+    <li>Rewrite anything in the drafts that doesn't sound like you</li>
+    <li>Send me the form ID — Claude Code wires it in</li>
+  </ol>
+
+  <h3>Claude Code's job</h3>
+  <ol class="plan">
+    <li>Build the three opt-in components in <code>packages/design-system</code>, one React component with a <code>variant="a|b|c"</code> prop</li>
+    <li>Wire form submission server-side via <code>/api/subscribe</code> → MailerLite REST API, with a <code>source</code> field value per variant</li>
+    <li>Inline success state (no redirect), keyboard accessible, reduced-motion friendly</li>
+    <li>Place component on homepage, every blog post footer, and Loop Breakers sessions page</li>
+  </ol>
+
+  <h3>Measuring (in Plausible)</h3>
+  <ul class="plan">
+    <li>Goal: <code>newsletter_subscribe</code> event fired on successful form submit</li>
+    <li>Segment by <code>source</code> to see which surface converts best</li>
+    <li>Target: 2.5% visit-to-subscribe rate (industry median for values-first newsletters is 1.5–3%)</li>
+  </ul>
+</section>
+
+</div>
+</body>
+</html>

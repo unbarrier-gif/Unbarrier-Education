@@ -1,0 +1,681 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>TidyCal · Setup Pack · Unbarrier</title>
+<link rel="stylesheet" href="colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+
+  .page { max-width: 1080px; margin: 0 auto; padding: 4rem clamp(1.5rem,4vw,3rem) 6rem; }
+
+  .doc-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--mint); margin: 0 0 16px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,5vw,3.4rem); letter-spacing: -0.025em; line-height: 1.05; margin: 0 0 1.4rem; }
+  h1 em { font-style: normal; color: var(--mint); }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.5rem,3vw,2rem); letter-spacing: -0.015em; line-height: 1.15; margin: 2.6rem 0 1rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.1rem; letter-spacing: -0.01em; margin: 1.6rem 0 0.6rem; color: var(--text); }
+  h4 { font-family: "Outfit"; font-weight: 700; font-size: 0.92rem; letter-spacing: 0.04em; margin: 1.2rem 0 0.5rem; color: var(--mint); text-transform: uppercase; }
+  p { font-family: "Comfortaa"; font-size: 0.97rem; line-height: 1.78; color: var(--text-muted); margin: 0 0 1rem; }
+  p.lede { font-size: 1.08rem; color: var(--text); }
+  p b { color: var(--text); }
+  code { font-family: "JetBrains Mono", "SF Mono", monospace; font-size: 0.85em; padding: 1px 6px; border-radius: 4px; background: rgba(105,217,209,0.08); color: var(--mint); }
+
+  /* TOC */
+  .toc { padding: 22px 26px; border-radius: 14px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.08); margin: 1.5rem 0 2.5rem; }
+  .toc h4 { color: var(--text); margin: 0 0 8px; font-size: 0.78rem; letter-spacing: 0.16em; }
+  .toc ol { margin: 0; padding-left: 1.4rem; font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.95; color: var(--text); }
+  .toc ol a { color: var(--spring-green); text-decoration: none; }
+  .toc ol a:hover { text-decoration: underline; }
+
+  /* page card */
+  .page-card {
+    margin: 1.6rem 0;
+    padding: 28px 30px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px solid rgba(255,255,255,0.08);
+    border-left: 4px solid var(--c, var(--mint));
+  }
+  .page-card .pid {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.2em; text-transform: uppercase; color: var(--c, var(--mint));
+    margin: 0 0 4px;
+  }
+  .page-card .name {
+    font-family: "Outfit"; font-weight: 800; font-size: 1.4rem; letter-spacing: -0.01em; color: var(--text);
+    margin: 0 0 2px;
+  }
+  .page-card .name code { background: rgba(255,255,255,0.05); color: var(--text-muted); font-size: 0.62em; padding: 3px 9px; margin-left: 8px; vertical-align: 4px; font-weight: 400; }
+  .page-card .stub {
+    font-family: "Comfortaa"; font-size: 0.92rem; color: var(--text-muted); margin: 0 0 1.2rem;
+  }
+
+  /* settings grid */
+  .settings {
+    display: grid; grid-template-columns: 200px 1fr; gap: 8px 16px;
+    margin: 1rem 0;
+    font-family: "Comfortaa"; font-size: 0.9rem; line-height: 1.6;
+  }
+  .settings dt { color: var(--text-subtle); font-weight: 700; }
+  .settings dd { margin: 0; color: var(--text); }
+  .settings dd code { color: var(--text); }
+  .settings dd b { color: var(--text); }
+  .settings dd small { color: var(--text-muted); }
+
+  /* copy blocks */
+  .copy-label {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--text-subtle);
+    margin: 1.1rem 0 6px;
+  }
+  .copy-label .stamp {
+    color: var(--mint); font-weight: 700; font-size: 0.86em; letter-spacing: 0.12em; margin-left: 8px;
+  }
+  .copy-label .stamp.public { color: var(--spring-green); }
+  .copy-label .stamp.internal { color: var(--princeton-orange); }
+  .copy-block {
+    font-family: "Comfortaa"; font-size: 0.92rem; line-height: 1.7; color: var(--text);
+    padding: 14px 18px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 10px;
+    white-space: pre-wrap;
+    margin: 0 0 0.6rem;
+  }
+  .copy-block.short { padding: 10px 14px; font-size: 0.9rem; }
+  .copy-block.internal {
+    background: rgba(255,138,28,0.05);
+    border-color: rgba(255,138,28,0.2);
+  }
+
+  /* boxes */
+  .box {
+    padding: 16px 22px;
+    border-radius: 12px;
+    margin: 1rem 0;
+    font-family: "Comfortaa"; font-size: 0.92rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+  .box h4 { margin: 0 0 6px; font-size: 0.78rem; letter-spacing: 0.14em; }
+  .box.good { background: rgba(56,255,153,0.06); border-left: 3px solid var(--spring-green); }
+  .box.good h4 { color: var(--spring-green); }
+  .box.warn { background: rgba(255,138,28,0.06); border-left: 3px solid var(--princeton-orange); }
+  .box.warn h4 { color: var(--princeton-orange); }
+  .box.lock { background: rgba(105,217,209,0.06); border-left: 3px solid var(--mint); }
+  .box.lock h4 { color: var(--mint); }
+  .box.delete { background: rgba(255,107,107,0.06); border-left: 3px solid #ff6b6b; }
+  .box.delete h4 { color: #ff6b6b; }
+  .box ul { margin: 6px 0 0; padding-left: 1.2rem; }
+  .box li { margin-bottom: 4px; }
+  .box li b { color: var(--text); }
+  .box li code { background: rgba(0,0,0,0.2); }
+
+  /* tables */
+  table { width: 100%; border-collapse: collapse; margin: 0 0 1rem; font-family: "Comfortaa"; font-size: 0.88rem; }
+  table th { font-family: "Outfit"; font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); text-align: left; padding: 8px 10px; border-bottom: 1px solid rgba(255,255,255,0.1); font-weight: 700; }
+  table td { padding: 10px; border-bottom: 1px solid rgba(255,255,255,0.04); color: var(--text); vertical-align: top; }
+  table td code { font-size: 0.86em; }
+  table td b { color: var(--text); }
+
+  .duo {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px;
+    margin: 0 0 0.6rem;
+  }
+  .duo > div .copy-label { margin-top: 0; }
+  @media (max-width: 720px) { .duo { grid-template-columns: 1fr; } }
+
+  .footer-meta { margin-top: 4rem; padding-top: 1.5rem; border-top: 1px solid rgba(255,255,255,0.08); font-family: "Comfortaa"; font-size: 0.84rem; color: var(--text-subtle); line-height: 1.7; }
+</style>
+</head>
+<body>
+<div class="page">
+
+<p class="doc-eyebrow">Unbarrier · Booking · v2.0 · 25 April 2026</p>
+<h1>TidyCal <em>Setup Pack.</em></h1>
+<p class="lede">Single source of truth for booking, payments, and confirmation copy. TidyCal is the front door — it auto-creates Stripe products and processes payments. You build it once from this doc and don't touch Stripe directly.</p>
+
+<div class="box lock">
+  <h4>How TidyCal + Stripe actually fit together</h4>
+  <p style="margin: 0;">TidyCal connects to your Stripe account once. After that, every paid booking type you create in TidyCal <em>automatically</em> creates the matching Stripe product and payment intent. <b>You don't build anything in Stripe directly</b>, you just monitor revenue there. Subscriptions (Accessible Coaching) live in TidyCal's Subscriptions tab and run on Stripe Billing under the hood. This is why we deleted the separate Stripe Product Catalogue — it was duplicating work TidyCal does for you.</p>
+</div>
+
+<!-- TOC -->
+<div class="toc">
+  <h4>What's in this doc</h4>
+  <ol>
+    <li><a href="#cleanup">First — clean up the AI-bot phantom pages</a></li>
+    <li><a href="#account">Account-level settings</a> — branding, calendar sync, accessibility intake</li>
+    <li><a href="#page1">Page 01 · Tuesday Loop Breakers</a> — group · £10 / £5 access</li>
+    <li><a href="#page2">Page 02 · Wednesday Guest Stage</a> — per-event template · £15 / £25 / £40</li>
+    <li><a href="#page3">Page 03 · 1:1 with Nici</a> — one-off · £120</li>
+    <li><a href="#page4">Page 04 · Accessible Coaching</a> — per-client subscription + booking page · from £55/mo</li>
+    <li><a href="#page5">Page 05 · Audit · discovery</a> — free 30 min</li>
+    <li><a href="#page6">Page 06 · Access · discovery</a> — free 30 min</li>
+    <li><a href="#page7">Page 07 · Voice · discovery</a> — free 30 min</li>
+    <li><a href="#handoff">Handoff — what to send Claude when it's all live</a></li>
+  </ol>
+</div>
+
+<!-- ═══════════ CLEAN UP ═══════════ -->
+<section class="page-card" id="cleanup" style="--c: #ff6b6b">
+  <p class="pid">00a · Clean up first — delete what the TidyCal AI bot invented</p>
+  <h2 class="name" style="font-size: 1.2rem;">These three booking types do not match the system. Delete them.</h2>
+
+  <div class="box delete">
+    <h4>Delete from TidyCal · booking types</h4>
+    <ul>
+      <li><b>Free intro walkthrough</b> — 15 min · disabled · <em>not part of the system, the discoveries replace this</em></li>
+      <li><b>Inclusion &amp; accessibility coaching session</b> — 1 hour · £120 · disabled · <em>same product as the new "1:1 with Nici" page below — duplicate, delete this one</em></li>
+      <li><b>Monthly accessibility coaching package</b> — £199/mo · ENABLED · <em>wrong price, wrong shape, wrong audience — Accessible Coaching is per-client invitation, not a public £199 subscription. Replace with the Page 04 setup below.</em></li>
+    </ul>
+    <p style="margin: 8px 0 0;"><b>Action:</b> TidyCal → Booking types → three-dot menu on each → Delete. Existing booking links break, but none have been shared publicly.</p>
+  </div>
+
+  <div class="box warn">
+    <h4>Two pages already live — keep, but rename / reprice</h4>
+    <ul>
+      <li><b>Loop Breakers: Sketch-noting (for joy and for thinking)</b> · £15 ✅ price corrected · this is your <a href="#page2">Page 02 instance for 20 May</a> — leave the URL alone, just update the description from Page 02 below</li>
+      <li><b>Loop Breakers Sessions: Vision to Launch</b> · £10 · Daily · 10 seats · this is your <a href="#page1">Page 01 (Tuesday Loop Breakers)</a> — rename + redescribe per Page 01 below; URL stays the same so anything you've already shared still works</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ═══════════ ACCOUNT SETTINGS ═══════════ -->
+<section class="page-card" id="account" style="--c: var(--school-bus-yellow)">
+  <p class="pid">00b · Account-level settings — do these once, before pages</p>
+  <h2 class="name" style="font-size: 1.2rem;">Branding, calendar sync, Stripe, accessibility intake</h2>
+
+  <h4>Brand</h4>
+  <dl class="settings">
+    <dt>Username / handle</dt>      <dd><code>nici</code> <small>→ all booking pages live at <code>tidycal.com/nici/[slug]</code></small></dd>
+    <dt>Display name</dt>           <dd><code>Nici Foote · Unbarrier</code></dd>
+    <dt>Profile photo</dt>          <dd>Headshot <small>(square, the warm one — same one used on the about page)</small></dd>
+    <dt>Bio</dt>                    <dd>Founder of Unbarrier. Multiply ND. Twenty years in education. Building the room I wish had existed when I was 25.</dd>
+    <dt>Logo</dt>                   <dd>Unbarrier wordmark (PNG, transparent bg)</dd>
+    <dt>Brand colour</dt>           <dd><code>#69d9d1</code> <small>(mint — TidyCal accent)</small></dd>
+    <dt>Custom domain</dt>          <dd><b>Phase 2.</b> Stay on <code>tidycal.com/nici</code> for launch — adds a CNAME to <code>book.unbarrier.me</code> later, free on lifetime tier.</dd>
+  </dl>
+
+  <h4>Calendar sync</h4>
+  <dl class="settings">
+    <dt>Connect</dt>                <dd>Google Workspace · <code>nici@unbarrier.me</code> · two-way sync</dd>
+    <dt>Block weekends</dt>         <dd>Yes — Phase 1. Tuesday + Wednesday + Friday admin only.</dd>
+    <dt>Min notice (default)</dt>   <dd>4 hours <small>(per-page overrides below)</small></dd>
+    <dt>Max booking window</dt>     <dd>60 days out</dd>
+    <dt>Buffer (default)</dt>       <dd>15 min <small>(per-page overrides below)</small></dd>
+  </dl>
+
+  <h4>Stripe connection</h4>
+  <dl class="settings">
+    <dt>Connect</dt>                <dd>TidyCal → Integrations → Stripe → connect <code>nici@unbarrier.me</code> Stripe account</dd>
+    <dt>Behaviour</dt>              <dd><b>Required at booking</b> for paid pages · free pages skip Stripe entirely · subscriptions handled via TidyCal Subscriptions tab</dd>
+  </dl>
+
+  <h4>Notifications</h4>
+  <dl class="settings">
+    <dt>To attendee</dt>            <dd>Booking confirmation (custom copy per page) · 24h reminder (TidyCal default) · 2h reminder for 1:1s only</dd>
+    <dt>To Nici</dt>                <dd>Email + browser push on every booking · daily summary at 8pm</dd>
+  </dl>
+
+  <h4>Accessibility intake — add to <em>every</em> page</h4>
+  <div class="box lock">
+    <p style="margin: 0;">Settings → Booking form → Custom question → add this on every booking type:</p>
+    <div class="copy-block short" style="margin-top: 8px;">Anything about how you want to be in the room? (e.g. cameras off is fine, screen-readers, BSL, prefer chat over voice, anything else.) Optional.</div>
+    <p style="margin: 6px 0 0;"><b>Long text · not required.</b> You read these the morning of.</p>
+  </div>
+</section>
+
+<!-- ═══════════ PAGE 1 — TUESDAY ═══════════ -->
+<section class="page-card" id="page1" style="--c: var(--orchid-mist)">
+  <p class="pid">Page 01 · Tuesday Loop Breakers — the regular room</p>
+  <h2 class="name">Loop Breakers · Tuesday session <code>group · 10 cap · £10 / £5</code></h2>
+  <p class="stub">Weekly recurring group booking. Every Tuesday is a date on the page; attendees pick a date, pay £10 via Stripe, land in the same Google Meet.</p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name (rename existing)</dt> <dd><code>Loop Breakers · Tuesday session</code></dd>
+    <dt>Slug</dt>                   <dd>Keep the existing one: <code>loop-breakers-sessions-vision-to-launch</code> <small>so any link you've shared still works. Or rename to <code>loop-breakers-tuesday</code> if you haven't shared it yet.</small></dd>
+    <dt>Booking type</dt>           <dd><b>Group</b></dd>
+    <dt>Duration</dt>               <dd>90 min</dd>
+    <dt>Capacity per slot</dt>      <dd><b>10</b> hard cap (auto-closes)</dd>
+    <dt>Recurrence</dt>             <dd>Weekly · Tuesdays · 10:30am UK · open through 7 July</dd>
+    <dt>Location</dt>               <dd>Google Meet · auto-generated · link in confirmation</dd>
+    <dt>Buffers</dt>                <dd>30 / 30</dd>
+    <dt>Min notice</dt>             <dd>2 hours <small>(override — lets people grab a same-morning seat if one's open)</small></dd>
+    <dt>Cancellation</dt>           <dd>Up to 24h — full refund · after that — credit to next session</dd>
+  </dl>
+
+  <h4>Payment</h4>
+  <dl class="settings">
+    <dt>Default price</dt>          <dd><b>£10</b> · auto-creates Stripe product on first booking</dd>
+    <dt>Access seat</dt>            <dd><b>£5</b> · TidyCal lets you create a <em>second</em> identical booking type with the same calendar, set to £5, marked <b>private / unlisted</b>. Slug it <code>loop-breakers-tuesday-access</code>. You send this link by reply when someone asks. <small>Both seats count toward the same 10-person cap because they share Nici's calendar.</small></dd>
+  </dl>
+
+  <p class="copy-label">Page title (shown to bookers) <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block short">Loop Breakers · Tuesday session · 90 min · £10</div>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">A 90-minute weekly group session for neurodivergent adults who've been circling the same idea for months — sometimes years.
+
+You bring one thing you're stuck on. The room helps you move it. Not finished, not perfect. Moved.
+
+Ten seats, hard cap. Online (Google Meet). Hosted by Nici Foote — multiply ND, twenty years in education, building the room she wishes had existed.
+
+If £10 is the difference between coming back and not, the £5 access seat is here. No application, no questions — book the £10, reply to your confirmation, and we'll swap you over. That's it.</div>
+
+  <p class="copy-label">Confirmation email subject <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block short">You're in for Tuesday — Loop Breakers</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing · paste into TidyCal</span></p>
+  <div class="copy-block">You're in.
+
+You've booked Tuesday's Loop Breakers — the small room, with me, 10:30am UK on Google Meet. The link's in your calendar invite. Show up however you are. No prep, no homework.
+
+If something's come up by Tuesday morning and the room is too much, that's fine — reply to this and I'll move you to the next one. Better that than guilt.
+
+Two things you might want to know:
+
+· If £10 is going to be the difference between coming back and not, the £5 access seat is there. No application, no questions — just reply and ask.
+
+· If you want the wider room — the slow-pace WhatsApp space and first dibs on Wednesday Guest Stages — Founding Membership is £180 lifetime. Twenty seats, ever. (No pressure.)
+
+See you Tuesday.
+
+— Nici
+unbarrier.me · Loop Breakers
+[Founding Member info → unbarrier.me/founding]</div>
+</section>
+
+<!-- ═══════════ PAGE 2 — WEDNESDAY ═══════════ -->
+<section class="page-card" id="page2" style="--c: var(--princeton-orange)">
+  <p class="pid">Page 02 · Wednesday Guest Stage — premium room</p>
+  <h2 class="name">Loop Breakers · Guest Stage · [topic] (with [guest]) <code>group · 40 cap · £15 / £25 / £40</code></h2>
+  <p class="stub">One TidyCal page per Guest Stage event, not recurring. Use this card as a template; duplicate when each new guest is signed. <b>First instance live: 20 May 2026 — Sketch-noting with Nicki Hambleton.</b></p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name pattern</dt>      <dd><code>Loop Breakers · Guest Stage · [topic] (with [guest])</code></dd>
+    <dt>First instance — rename</dt> <dd>Existing live page is <em>"Loop Breakers: Sketch-noting (for joy and for thinking)"</em>. Update display name to: <code>Loop Breakers · Guest Stage · Sketch-noting (with Nicki Hambleton)</code>. Keep the URL.</dd>
+    <dt>Booking type</dt>           <dd><b>Group</b></dd>
+    <dt>Duration</dt>               <dd>90 min</dd>
+    <dt>Capacity per slot</dt>      <dd><b>40</b> (soft cap)</dd>
+    <dt>Recurrence</dt>             <dd>None · single date · 10:30am UK</dd>
+    <dt>Location</dt>               <dd>Zoom <small>(handles 40+ people more gracefully than Meet)</small></dd>
+    <dt>Buffers</dt>                <dd>60 before / 30 after <small>(setup with guest, mic check)</small></dd>
+    <dt>Cancellation</dt>           <dd>Up to 48h — full refund · after — credit + recording</dd>
+    <dt>Recording</dt>              <dd>Yes · attendees only · 14-day expiry</dd>
+  </dl>
+
+  <h4>Payment — three tiers</h4>
+  <div class="box warn">
+    <h4>How TidyCal handles 3 prices on one event</h4>
+    <p style="margin: 0;">TidyCal doesn't have native price-tiers on one booking page. Cleanest pattern:</p>
+    <ul>
+      <li><b>Three duplicate booking types</b>, all pointing at the same date/time/Zoom link. <small>This works because TidyCal counts all three against the same calendar slot.</small></li>
+      <li>Slug them: <code>guest-stage-[topic]-access</code> (£15) · <code>guest-stage-[topic]</code> (£25, the canonical link to share) · <code>guest-stage-[topic]-supporter</code> (£40)</li>
+      <li>On the public sessions page, the £25 link is the primary CTA. The page description tells visitors the other two tiers exist and how to choose.</li>
+    </ul>
+  </div>
+
+  <p class="copy-label">Page title <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block short">Loop Breakers · Guest Stage · [topic] · with [guest] · Wed [date] · 90 min</div>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing · template</span></p>
+  <div class="copy-block">A 90-minute themed session with [guest name] — [one-line guest credibility].
+
+This is a Guest Stage — Loop Breakers' larger Wednesday format. Up to 40 seats. Expert-led talk + a held Q&amp;A in the second half, not small-group coaching. You'll come away with [specific take-home].
+
+Wednesday [date] · 10:30am UK · Zoom · sliding scale £15 / £25 / £40 — pick what's true for you, no questions.
+
+Hosted by [guest] in conversation with Nici Foote (founder, Unbarrier).
+
+Why three prices: £15 is the access tier — pick it if money's tight. £25 is the standard sticker. £40 is the supporter tier — picking it helps fund the £15 seats. They all get you the same room.</div>
+
+  <p class="copy-label">Confirmation email subject <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block short">You're in for Wednesday — [topic] with [guest]</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing · paste into TidyCal</span></p>
+  <div class="copy-block">You're in.
+
+You've booked Wednesday's Guest Stage — [topic], with [guest first name]. Wednesday [date] · 10:30am UK · Zoom. The calendar invite has the joining link.
+
+What to expect: [guest] for ~50 minutes, then a held Q&amp;A — meaning I'm in the room with you, holding the structure so questions get answered without anyone having to fight for airtime.
+
+If you want to send a question ahead, just reply to this email — first names only, anonymised at the session.
+
+A recording goes out to attendees the week after. Link expires 14 days later.
+
+Two soft things:
+
+· If you've never been in a Loop Breakers room before, the Tuesday weekly is the small one (10 seats, with me, £10 PAYG). Different vibe, same care.
+
+· If you missed the last Guest Stage, recordings are still up for attendees of that one too.
+
+See you Wednesday.
+
+— Nici
+unbarrier.me · Loop Breakers · Guest Stage
+[Tuesday weekly → unbarrier.me/loop-breakers]</div>
+</section>
+
+<!-- ═══════════ PAGE 3 — 1:1 ═══════════ -->
+<section class="page-card" id="page3" style="--c: var(--school-bus-yellow)">
+  <p class="pid">Page 03 · 1:1 with Nici (one-off)</p>
+  <h2 class="name">1:1 with Nici · one-off <code>1:1 · £120</code></h2>
+  <p class="stub">Single 60-minute conversation. For decision-points, transitions, when group is the wrong shape this week. <b>Distinct from Accessible Coaching.</b></p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name</dt>              <dd><code>1:1 with Nici</code></dd>
+    <dt>Slug</dt>                   <dd><code>1to1-with-nici</code></dd>
+    <dt>Booking type</dt>           <dd><b>1:1</b></dd>
+    <dt>Duration</dt>               <dd>60 min</dd>
+    <dt>Availability</dt>           <dd>Friday afternoons + scattered Tuesday/Wednesday afternoons (after group finishes)</dd>
+    <dt>Location</dt>               <dd>Google Meet</dd>
+    <dt>Buffers</dt>                <dd>30 / 60 <small>(decompression after deep work)</small></dd>
+    <dt>Min notice</dt>             <dd>24 hours</dd>
+    <dt>Payment</dt>                <dd><b>£120</b> · auto-creates Stripe product</dd>
+  </dl>
+
+  <p class="copy-label">Page title <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block short">1:1 with Nici · 60 min · £120</div>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">A single 60-minute conversation with Nici Foote — for the kind of moment a group room can't hold. A decision point. A transition. The week the loop is too big to bring to Tuesday.
+
+Online (Google Meet). Booked when you need it; no minimum, no package.
+
+If you're looking for sustained ongoing support — regular sessions and WhatsApp between — Accessible Coaching is the better shape. It's invitation-based after a discovery conversation; ask and we'll talk.</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing · paste into TidyCal</span></p>
+  <div class="copy-block">You're in.
+
+You've booked a 1:1 — [date · time UK] · 60 min · Google Meet. The calendar invite has the joining link.
+
+There's no prep. Bring whatever you bring. If you want me to know one thing in advance, reply with a sentence.
+
+If something comes up and you need to move it, the calendar invite has a reschedule link. Up to 24 hours before is fine; closer than that, reply and we'll find a way.
+
+See you then.
+
+— Nici
+unbarrier.me · 1:1
+[Reschedule → calendar link]</div>
+</section>
+
+<!-- ═══════════ PAGE 4 — ACCESSIBLE COACHING ═══════════ -->
+<section class="page-card" id="page4" style="--c: var(--spring-green)">
+  <p class="pid">Page 04 · Accessible Coaching — per-client subscription + booking page</p>
+  <h2 class="name">Accessible Coaching · per-client <code>subscription + 1:1 page · from £55/mo</code></h2>
+  <p class="stub">Sustained 1:1 support — two sessions a week + WhatsApp between. <b>Per-client</b>: each client gets their own TidyCal subscription, their own unlisted booking page, their own WhatsApp thread. Unlimited "instances" of this template, but never more than 5 active clients.</p>
+
+  <div class="box warn">
+    <h4>Internal positioning — for your eyes, never client-facing</h4>
+    <p style="margin: 0;">For ND people who are spiralling or need help to land, then hold their space. The work is in <em>making coaching itself accessible to ND life</em> — sessions move, weeks slip, the WhatsApp thread holds the gap. Application-by-conversation. 3–5 active clients ever. £55/mo is the Gemma template (Phase 1 floor); price is set per client at intake based on shape of need (more sessions, heavier WhatsApp, longer sequence — adjust up).</p>
+  </div>
+
+  <h4>How it works in TidyCal — two pieces, working together</h4>
+  <table>
+    <thead><tr><th>Piece</th><th>Where</th><th>What it does</th></tr></thead>
+    <tbody>
+      <tr>
+        <td><b>1. The Subscription</b><br/>(payment side)</td>
+        <td>TidyCal → Subscriptions</td>
+        <td>One subscription product per client. £55/mo (or per-client agreed amount). Sends them a single Stripe-backed payment link. They sign up once → billed monthly → cancellable any time. <b>This is just billing, not booking.</b></td>
+      </tr>
+      <tr>
+        <td><b>2. The Booking Page</b><br/>(scheduling side)</td>
+        <td>TidyCal → Booking types</td>
+        <td>A 1:1 booking page <b>marked unlisted / hidden</b>. Set to <b>FREE</b> (no payment at booking — they're already paying via subscription). They bookmark this page and self-book their two slots a week from your live calendar.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>The two pieces never directly link to each other inside TidyCal — they're connected by the human handshake. After a discovery conversation, you send both links in one email. They subscribe via Link 1, then bookmark Link 2 and start using it.</p>
+
+  <!-- ═══ Per-client template ═══ -->
+  <div style="margin-top: 1.6rem; padding: 24px 26px; border-radius: 14px; background: rgba(56,255,153,0.05); border: 1.5px solid rgba(56,255,153,0.25);">
+
+    <p style="font-family: 'Outfit'; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 6px;">Per-client template — duplicate for each new client</p>
+    <h3 style="margin-top: 0;">Replace <code>[FirstName]</code> with the client's first name everywhere below.</h3>
+
+    <h4 style="color: var(--spring-green);">Step 1 — Create the Subscription</h4>
+    <dl class="settings">
+      <dt>Where</dt>                  <dd>TidyCal → Subscriptions tab → New subscription</dd>
+      <dt>Name</dt>                   <dd><code>Accessible Coaching · [FirstName]</code></dd>
+      <dt>Price</dt>                  <dd><b>£55/month</b> default <small>(or agreed amount)</small> · GBP · recurring</dd>
+      <dt>Description</dt>            <dd>See client-facing copy below — paste in</dd>
+      <dt>Cancellation</dt>           <dd>Allow cancel any time · prorate? <b>No</b> — final month runs out</dd>
+    </dl>
+
+    <h4 style="color: var(--spring-green);">Step 2 — Create the unlisted Booking Page</h4>
+    <dl class="settings">
+      <dt>Where</dt>                  <dd>TidyCal → Booking types → New booking type</dd>
+      <dt>Name</dt>                   <dd><code>Accessible Coaching · [FirstName]</code></dd>
+      <dt>Slug</dt>                   <dd><code>[firstname]-coaching</code> <small>e.g. <code>tidycal.com/nici/gemma-coaching</code></small></dd>
+      <dt>Visibility</dt>             <dd><b>Unlisted / hidden from public profile</b> <small>(Settings → Visibility)</small></dd>
+      <dt>Booking type</dt>           <dd>1:1</dd>
+      <dt>Duration</dt>               <dd>60 min</dd>
+      <dt>Capacity</dt>               <dd>2 slots/week available <small>(give them a wide window — Tue/Wed/Thu/Fri afternoons; they pick)</small></dd>
+      <dt>Location</dt>               <dd>Google Meet · auto-generated</dd>
+      <dt>Buffers</dt>                <dd>15 / 30</dd>
+      <dt>Min notice</dt>             <dd>4 hours <small>(generous — coaching life moves fast)</small></dd>
+      <dt>Payment</dt>                <dd><b>FREE — no payment at booking</b> <small>(they're paying via the subscription)</small></dd>
+      <dt>Cancellation</dt>           <dd>Open · they can move slots freely · we'll talk patterns in WhatsApp, not block bookings</dd>
+    </dl>
+
+    <h4 style="color: var(--spring-green);">Step 3 — Send the welcome email</h4>
+    <p>Manual email from your inbox to <code>[client@email]</code>. Both links in one place, plus the WhatsApp invite.</p>
+
+    <p class="copy-label">Subscription page description <span class="stamp public">· client-facing · paste into TidyCal Subscription</span></p>
+    <div class="copy-block">Sustained 1:1 coaching with Nici, made for ND life.
+
+Two 60-minute sessions a week, plus voice/text WhatsApp between sessions when something needs unsticking before the next slot. A six-month sequence to start, then we review together.
+
+Sessions can be moved month to month — life happens, ND life happens more — and we look at the pattern together if it becomes one. Not the missed slot.
+
+You stay part of the Loop Breakers community alongside this — Tuesday weekly is yours when you want it.
+
+This is a per-client subscription. You're here because we've already had a conversation about whether this is the right shape for you.</div>
+
+    <p class="copy-label">Booking page description <span class="stamp public">· client-facing · paste into TidyCal Booking type</span></p>
+    <div class="copy-block">[FirstName]'s session calendar.
+
+Pick two slots a week that work for you. Move them whenever you need to. If you need a slot outside what's showing here, send me a WhatsApp and we'll find one.
+
+— Nici</div>
+
+    <p class="copy-label">Welcome email subject <span class="stamp public">· client-facing</span></p>
+    <div class="copy-block short">You're in — Accessible Coaching, [FirstName]</div>
+
+    <p class="copy-label">Welcome email body <span class="stamp public">· client-facing · send manually</span></p>
+    <div class="copy-block">[FirstName],
+
+That's it — the start of our six months. Here's everything in one place.
+
+Subscription: £55/month, billed today and on the same day each month. Stripe handles it; you'll get a receipt every time. Cancel any time from your Stripe portal — link's in the receipts.
+[Subscribe → tidycal.com/nici/subscribe/[firstname]-coaching]
+
+Your session calendar — bookmark this. Pick two slots a week. Move them whenever you need to.
+[Book sessions → tidycal.com/nici/[firstname]-coaching]
+
+WhatsApp — I'll add you to a thread today. Voice or text, whichever works on the day. Reasonable hours, but not rigid ones; if something's stuck at 10pm, send the voice note. I'll reply when I'm at the desk.
+
+For our first session: nothing more than land. No agenda. We work out together what you need this six months for.
+
+About the rhythm: sessions can move. If you need to push a week, push a week. We'll only look at the pattern if it's consistent — and we'll look at it together. Stuff happens. ND life happens more.
+
+See you soon.
+
+— Nici
+unbarrier.me · Accessible Coaching</div>
+
+    <p class="copy-label">Internal note for your records <span class="stamp internal">· not client-facing</span></p>
+    <div class="copy-block internal">Accessible Coaching client [N] of 5 max active.
+Started: [date]. 6-month review: [date + 6mo].
+Price: £[55 or agreed]/mo. Cadence: 2× weekly + WhatsApp.
+Booking page: tidycal.com/nici/[firstname]-coaching (unlisted).
+Subscription: TidyCal → Subscriptions → "Accessible Coaching · [FirstName]"
+Notes: [shape of need at intake, anything to remember]</div>
+  </div>
+
+  <!-- Live now: Gemma -->
+  <div class="box good" style="margin-top: 1.4rem;">
+    <h4>Live now — Gemma is the first instance of this template</h4>
+    <p style="margin: 0;">Treat the steps above as your build instructions for Gemma. Her booking page lives at <code>tidycal.com/nici/gemma-coaching</code>. Her subscription is <code>Accessible Coaching · Gemma</code> at £55/mo. When client 2 lands, duplicate everything with their first name.</p>
+  </div>
+</section>
+
+<!-- ═══════════ PAGE 5 — AUDIT ═══════════ -->
+<section class="page-card" id="page5" style="--c: var(--mint)">
+  <p class="pid">Page 05 · Audit · discovery (free)</p>
+  <h2 class="name">Audit · discovery <code>1:1 · 30 min · free</code></h2>
+  <p class="stub">For schools and orgs interested in a digital / SEND audit. No payment. Conversation-only — outcome is a written audit proposal sent after.</p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name</dt>              <dd><code>Audit · discovery</code></dd>
+    <dt>Slug</dt>                   <dd><code>audit-discovery</code></dd>
+    <dt>Type / Duration</dt>        <dd>1:1 · 30 min</dd>
+    <dt>Availability</dt>           <dd>Wednesday afternoon + Friday morning</dd>
+    <dt>Location</dt>               <dd>Google Meet</dd>
+    <dt>Min notice</dt>             <dd>24h</dd>
+    <dt>Payment</dt>                <dd><b>Free</b></dd>
+    <dt>Custom intake</dt>          <dd>Required: Org name · role · "What's the one outcome you'd want from an audit?" (long text)</dd>
+  </dl>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">A 30-minute conversation about whether an Unbarrier audit fits what you're trying to do. No charge, no commitment, no slide deck — just a real conversation.
+
+After the call, if it's a fit, I'll send you a written audit proposal. If it's not, I'll point you toward someone who's a better match.</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">You're in.
+
+We're talking [date · time UK] · 30 min · Google Meet. Calendar invite has the link.
+
+You don't need to prep anything. If you want to send me one thing to look at beforehand — a website page, a brief, a problem in your own words — just reply to this with it.
+
+See you then.
+
+— Nici
+unbarrier.me</div>
+</section>
+
+<!-- ═══════════ PAGE 6 — ACCESS ═══════════ -->
+<section class="page-card" id="page6" style="--c: var(--mint)">
+  <p class="pid">Page 06 · Access · discovery (free)</p>
+  <h2 class="name">Access · discovery <code>1:1 · 30 min · free</code></h2>
+  <p class="stub">For training / curriculum / accessibility consultancy enquiries. Conversation-only — outcome is a scoped proposal sent after.</p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name</dt>              <dd><code>Access · discovery</code></dd>
+    <dt>Slug</dt>                   <dd><code>access-discovery</code></dd>
+    <dt>Type / Duration</dt>        <dd>1:1 · 30 min</dd>
+    <dt>Availability</dt>           <dd>Wednesday afternoon + Friday morning <small>(same windows as Audit)</small></dd>
+    <dt>Location</dt>               <dd>Google Meet</dd>
+    <dt>Payment</dt>                <dd><b>Free</b></dd>
+  </dl>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">A 30-minute conversation about training, curriculum, or making your existing work more accessible to neurodivergent learners. No charge, no commitment.
+
+We talk about what you're trying to do. After the call, if it's a fit, I send a scoped proposal. If it's not, I tell you so and point you somewhere better.</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">You're in.
+
+We're talking [date · time UK] · 30 min · Google Meet. Calendar invite has the link.
+
+If you want to send me anything beforehand — a brief, a page, a question in your words — reply to this with it. Otherwise just turn up.
+
+See you then.
+
+— Nici
+unbarrier.me</div>
+</section>
+
+<!-- ═══════════ PAGE 7 — VOICE ═══════════ -->
+<section class="page-card" id="page7" style="--c: var(--mint)">
+  <p class="pid">Page 07 · Voice · discovery (free)</p>
+  <h2 class="name">Voice · discovery <code>1:1 · 30 min · free</code></h2>
+  <p class="stub">For lived-experience research, podcast/article interviews, speaking enquiries.</p>
+
+  <h4>TidyCal page settings</h4>
+  <dl class="settings">
+    <dt>Page name</dt>              <dd><code>Voice · discovery</code></dd>
+    <dt>Slug</dt>                   <dd><code>voice-discovery</code></dd>
+    <dt>Type / Duration</dt>        <dd>1:1 · 30 min</dd>
+    <dt>Availability</dt>           <dd>Friday morning</dd>
+    <dt>Min notice</dt>             <dd>48h</dd>
+    <dt>Payment</dt>                <dd><b>Free</b></dd>
+    <dt>Custom intake</dt>          <dd>Required: Org / publication · format (research / interview / panel / keynote / other) · "What are you working on?" (long text)<br/>Optional: deadline · honorarium / fee status</dd>
+  </dl>
+
+  <p class="copy-label">Page description <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">A 30-minute conversation about whether a lived-experience contribution fits what you're working on — research, interview, panel, or keynote.
+
+I'm a multiply ND adult (dyslexia, ADHD, dyscalculia, APD), a teacher of two decades, and the founder of Unbarrier. I have opinions. I'm careful with them.
+
+After the call, if it's a fit, we agree scope. Most things have a fee; some research participation does not — we figure that out together.</div>
+
+  <p class="copy-label">Confirmation email body <span class="stamp public">· client-facing</span></p>
+  <div class="copy-block">You're in.
+
+We're talking [date · time UK] · 30 min · Google Meet. Calendar invite has the link.
+
+Send me anything that helps me prepare — a brief, an article, a research question — by reply.
+
+See you then.
+
+— Nici
+unbarrier.me</div>
+</section>
+
+<!-- ═══════════ HANDOFF ═══════════ -->
+<section class="page-card" id="handoff" style="--c: var(--spring-green)">
+  <p class="pid">08 · Handoff — when everything is built</p>
+  <h2 class="name" style="font-size: 1.2rem;">Send these URLs back to Claude — I wire them into the website</h2>
+
+  <p>Once the pages are live in TidyCal, paste this list in chat. I'll wire each URL into the right place across the site (sessions page CTAs, the Founding card, the about page).</p>
+
+  <table>
+    <thead><tr><th>What to send</th><th>Where it goes</th></tr></thead>
+    <tbody>
+      <tr><td><b>Page 01 · Tuesday</b><br/><code>tidycal.com/nici/[your-tuesday-slug]</code></td><td>Sessions page · Tuesday card primary CTA</td></tr>
+      <tr><td><b>Page 02 · Sketch-noting (20 May)</b><br/><code>tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking</code></td><td>Sessions page · Wednesday card · 20 May spotlight</td></tr>
+      <tr><td><b>Page 03 · 1:1 with Nici</b><br/><code>tidycal.com/nici/1to1-with-nici</code></td><td>Sessions page · "Need more than group" CTA</td></tr>
+      <tr><td><b>Pages 05/06/07 · Discoveries</b><br/><code>tidycal.com/nici/{audit,access,voice}-discovery</code></td><td>Hire-Nici page (Phase 2) · footer CTAs</td></tr>
+      <tr><td><b>Founding Member</b><br/><em>Note: Founding Member doesn't sit in TidyCal — it's a Stripe payment link only. Build it in Stripe directly: one product, £180 one-time, inventory cap 20.</em></td><td>Sessions page Founding card · landing page CTA</td></tr>
+    </tbody>
+  </table>
+
+  <div class="box good">
+    <h4>Estimated build time</h4>
+    <ul>
+      <li><b>Cleanup</b> (delete 3 phantom pages) — 5 min</li>
+      <li><b>Account-level settings</b> (brand, intake question) — 15 min</li>
+      <li><b>Pages 1–3</b> (Tuesday rename + 1:1) — 20 min</li>
+      <li><b>Page 02</b> (Sketch-noting rename + duplicate for tier pricing) — 15 min</li>
+      <li><b>Page 04 · Gemma</b> (subscription + booking page + welcome email) — 20 min</li>
+      <li><b>Pages 5–7</b> (three discoveries) — 20 min</li>
+      <li><b>Founding Member Stripe link</b> — 10 min</li>
+      <li><b>Send URLs to Claude</b> — 5 min</li>
+    </ul>
+    <p style="margin: 8px 0 0;"><b>Total: ~110 min</b> in one focused sit-down. Every field is pre-decided in this doc.</p>
+  </div>
+</section>
+
+<p class="footer-meta">
+  <b>TidyCal Setup Pack · v2.0 · 25 April 2026</b><br/>
+  Replaces: <code>archive/Google Appointment Schedule Setup (superseded by TidyCal).html</code> · <code>archive/Stripe Product Catalogue (folded into TidyCal Setup Pack).html</code><br/>
+  Source of Truth: <a href="Loop Breakers - Source of Truth.html">Loop Breakers - Source of Truth.html</a> · §02 Pricing · §03 Capacity · §08 Brand basics<br/>
+  Maintained by: Nici Foote · Unbarrier Education Ltd · Companies House 16603630
+</p>
+
+</div>
+</body>
+</html>
