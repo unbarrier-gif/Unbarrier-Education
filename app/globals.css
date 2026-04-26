@@ -1,0 +1,183 @@
+/* ========================================================================
+   Unbarrier Design System — Colors & Type
+   Single source of truth. Imported via app/layout.tsx.
+   Verbatim paste from colors_and_type.css with one change:
+   @font-face blocks removed — fonts loaded via next/font/google in layout.tsx
+   and exposed as the CSS variables --font-outfit / --font-comfortaa /
+   --font-cherry-bomb. Family tokens below reference those.
+   ======================================================================== */
+
+:root {
+  /* ── CORE BRAND COLORS ─────────────────────────────────────────────── */
+  --amethyst:          #210a33;   /* page background, structure         */
+  --amethyst-deep:     #150520;   /* deeper pockets, contrast wells     */
+  --antique-white:     #fceddb;   /* warm cream accent, text alt        */
+  --text:              #f0ebe5;   /* primary text on amethyst           */
+
+  /* Brand accent palette — vibrant, each maps to a service */
+  --spring-green:      #38ff99;   /* primary action, CTA, hero highlight */
+  --pearl-aqua:        #69d9d1;   /* unbarrier.audit — calm, evidence    */
+  --princeton-orange:  #ff8a1c;   /* unbarrier.access — premium, energy  */
+  --orchid-mist:       #db7dcc;   /* unbarrier.voice / Nici — human      */
+  --school-bus-yellow: #ffc203;   /* payoff, community, Loop Breakers    */
+  --pink-mist:         #e3a1b0;   /* supporting soft accent              */
+
+  /* ── FUNCTIONAL TEXT/BORDER TOKENS ─────────────────────────────────── */
+  --text-muted:     rgba(240, 235, 229, 0.65);
+  --text-subtle:    rgba(240, 235, 229, 0.45);
+  --text-faint:     rgba(240, 235, 229, 0.32);
+  --text-inverse:   #210a33;     /* for text on green/yellow bg        */
+
+  --border-default: rgba(255, 255, 255, 0.08);
+  --border-subtle:  rgba(255, 255, 255, 0.05);
+  --border-strong:  rgba(255, 255, 255, 0.18);
+
+  --surface-raised: rgba(255, 255, 255, 0.03);
+  --surface-lift:   rgba(255, 255, 255, 0.06);
+
+  /* ── SEMANTIC ROLES ────────────────────────────────────────────────── */
+  --bg:               var(--amethyst);
+  --bg-alt:           var(--amethyst-deep);
+  --fg:               var(--text);
+  --fg-muted:         var(--text-muted);
+  --action:           var(--spring-green);
+  --action-fg:        var(--amethyst);
+  --payoff:           var(--school-bus-yellow);
+  --human:            var(--orchid-mist);
+  --quiet:            var(--pearl-aqua);
+  --premium:          var(--princeton-orange);
+
+  /* Focus ring */
+  --focus-ring:       var(--spring-green);
+
+  /* ── TYPE FAMILIES ─────────────────────────────────────────────────── */
+  --font-heading:     var(--font-outfit), system-ui, -apple-system, sans-serif;
+  --font-body:        var(--font-comfortaa), system-ui, -apple-system, sans-serif;
+  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;    /* logo wordmark */
+  --font-decorative:  var(--font-cherry-bomb), var(--font-outfit), cursive;  /* "bring the joy" only */
+
+  /* ── TYPE SCALE ────────────────────────────────────────────────────── */
+  --fs-display: clamp(3rem, 7vw, 4.5rem);   /* hero */
+  --fs-h1:      clamp(2.4rem, 6vw, 4rem);
+  --fs-h2:      clamp(1.8rem, 3.5vw, 2.8rem);
+  --fs-h3:      clamp(1.3rem, 2.4vw, 1.75rem);
+  --fs-h4:      clamp(1.05rem, 1.8vw, 1.25rem);
+  --fs-body:    1rem;
+  --fs-body-lg: 1.1rem;
+  --fs-small:   0.88rem;
+  --fs-eyebrow: 0.72rem;
+  --fs-caption: 0.78rem;
+
+  --lh-tight:   1.06;
+  --lh-snug:    1.3;
+  --lh-body:    1.75;
+  --lh-loose:   1.85;
+
+  --ls-tight:   -0.025em;
+  --ls-normal:  0;
+  --ls-loose:   0.04em;
+  --ls-eyebrow: 0.14em;
+
+  /* ── SPACING & RADII ───────────────────────────────────────────────── */
+  --space-1:  4px;
+  --space-2:  8px;
+  --space-3:  12px;
+  --space-4:  16px;
+  --space-5:  24px;
+  --space-6:  32px;
+  --space-8:  48px;
+  --space-10: 64px;
+  --space-12: 96px;
+
+  --radius-sm:    6px;
+  --radius-md:    12px;   /* site default */
+  --radius-lg:    18px;
+  --radius-xl:    24px;
+  --radius-pill:  100px;
+
+  /* ── ELEVATION ─────────────────────────────────────────────────────── */
+  --shadow-sm:   0 1px 2px rgba(0,0,0,0.25);
+  --shadow-md:   0 6px 20px rgba(0,0,0,0.3);
+  --shadow-lg:   0 20px 50px rgba(0,0,0,0.4);
+  --glow-green:  0 0 40px rgba(56, 255, 153, 0.35);
+  --glow-orchid: 0 0 40px rgba(219, 125, 204, 0.35);
+  --glow-yellow: 0 0 40px rgba(255, 194, 3, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+}
+
+/* ── SEMANTIC TYPE DEFAULTS ─────────────────────────────────────────────── */
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--fg);
+  margin: 0;
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); font-weight: 700; }
+h4 { font-size: var(--fs-h4); font-weight: 700; letter-spacing: var(--ls-normal); }
+
+p  { font-family: var(--font-body); line-height: var(--lh-body); color: var(--fg-muted); margin: 0; }
+
+/* Eyebrow — tiny uppercase label above a heading */
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--action);
+  margin: 0 0 12px;
+}
+
+/* Cherry Bomb — reserved for the "bring the joy" moment */
+.joy {
+  font-family: var(--font-decorative);
+  color: var(--spring-green);
+  line-height: 1.05;
+  font-weight: 400;
+}
+
+/* Focus */
+:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+a {
+  color: inherit;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
