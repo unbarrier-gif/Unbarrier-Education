@@ -1,0 +1,45 @@
+.wrap {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: var(--space-5);
+  padding: var(--space-8) var(--space-5);
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+.wordmark {
+  font-family: var(--font-brand);
+  font-size: var(--fs-small);
+  letter-spacing: var(--ls-loose);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.heading {
+  font-size: var(--fs-h1);
+  color: var(--fg);
+  margin: 0;
+}
+
+.body {
+  font-size: var(--fs-body-lg);
+  color: var(--fg-muted);
+  margin: 0;
+  max-width: 48ch;
+}
+
+.cta {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: var(--space-3) var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--action);
+  color: var(--action-fg);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-decoration: none;
+}
