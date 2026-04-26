@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { Glow } from './Glow';
+import { Wordmark } from './Wordmark';
 import styles from './HelloHero.module.css';
 
 export function HelloHero() {
@@ -8,7 +9,9 @@ export function HelloHero() {
       <Glow color="var(--spring-green)" top="10%" left="-120px" />
       <Glow color="var(--orchid-mist)" top="28%" left="42%" />
 
-      <p className={styles.wordmark}>unbarrier.me</p>
+      <div className={styles.wordmarkRow}>
+        <Wordmark size="md" />
+      </div>
 
       <div className={styles.row}>
         <div className={styles.copy}>
@@ -33,9 +36,10 @@ export function HelloHero() {
         <Image
           src="/assets/illustrations/hero-bring-the-joy.png"
           alt=""
-          width={380}
-          height={420}
+          width={4961}
+          height={3508}
           priority
+          sizes="(min-width: 720px) 380px, 0px"
           className={styles.spotlight}
         />
       </div>

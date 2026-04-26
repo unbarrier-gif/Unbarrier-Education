@@ -1,0 +1,15 @@
+.wordmark {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  letter-spacing: -0.012em;
+  line-height: 1;
+  white-space: nowrap;
+  display: inline-flex;
+  align-items: baseline;
+}
+
+.link {
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+}

@@ -8,14 +8,6 @@
   gap: var(--space-5);
 }
 
-.wordmark {
-  font-family: var(--font-brand);
-  font-size: var(--fs-small);
-  letter-spacing: var(--ls-loose);
-  color: var(--text-muted);
-  margin: 0;
-}
-
 .heading {
   font-size: var(--fs-h1);
   color: var(--fg);

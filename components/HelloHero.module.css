@@ -4,11 +4,7 @@
   overflow: hidden;
 }
 
-.wordmark {
-  font-family: var(--font-brand);
-  font-size: var(--fs-small);
-  letter-spacing: var(--ls-loose);
-  color: var(--text-muted);
+.wordmarkRow {
   margin: 0 0 var(--space-6);
   position: relative;
   z-index: 1;

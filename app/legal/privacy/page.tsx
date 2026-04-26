@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Wordmark } from '@/components/Wordmark';
 import styles from '../legal.module.css';
 
 export const metadata: Metadata = {
@@ -11,7 +12,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <main className={styles.wrap}>
-      <p className={styles.wordmark}>unbarrier.me</p>
+      <Wordmark size="md" />
       <h1 className={styles.heading}>Privacy &mdash; coming soon.</h1>
       <p className={styles.body}>
         Full text by 6 May 2026 (legal review in progress). In the meantime, any
