@@ -1,46 +1,41 @@
 .hero {
-  position: relative;
   padding: var(--space-6) 0 var(--space-8);
-  overflow: hidden;
 }
 
-.wordmarkRow {
-  margin: 0 0 var(--space-6);
-  position: relative;
-  z-index: 1;
-}
-
-.row {
-  position: relative;
-  z-index: 1;
-}
-
-.copy {
+.brand {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  min-width: 0;
-  position: relative;
-  z-index: 2;
+  align-items: center;
+  gap: 12px;
+  margin: 0 0 28px;
 }
 
-.eyebrow {
-  font-family: var(--font-heading);
-  font-size: var(--fs-eyebrow);
+.dot {
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  background: var(--spring-green);
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.brandText {
+  font-family: var(--font-brand);
   font-weight: 700;
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--spring-green);
-  margin: 0;
+  font-size: 1.4rem;
+  letter-spacing: -0.012em;
+  line-height: 1;
+  color: var(--text);
+  white-space: nowrap;
 }
 
 .headline {
-  font-size: var(--fs-display);
-  line-height: var(--lh-tight);
-  letter-spacing: var(--ls-tight);
-  color: var(--fg);
-  margin: 0;
+  font-family: var(--font-heading);
   font-weight: 800;
+  font-size: clamp(2.4rem, 8vw, 3.6rem);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--fg);
+  margin: 0 0 20px;
 }
 
 .headlineAccent {
@@ -49,37 +44,21 @@
 }
 
 .bio {
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-body);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: 1.7;
   color: var(--fg-muted);
-  max-width: 52ch;
-  margin: 0;
+  margin: 0 0 44px;
+  max-width: 42ch;
 }
 
-.spotlight {
-  display: none;
+.loopBreakers {
+  color: var(--text);
+  font-weight: 700;
 }
 
 @media (min-width: 720px) {
   .hero {
     padding: var(--space-10) 0 var(--space-12);
-  }
-
-  .copy {
-    max-width: 60%;
-  }
-
-  .spotlight {
-    display: block;
-    position: absolute;
-    top: 50%;
-    right: 0;
-    transform: translateY(-30%);
-    width: clamp(220px, 38vw, 380px);
-    height: auto;
-    object-fit: contain;
-    pointer-events: none;
-    user-select: none;
-    z-index: 1;
   }
 }
