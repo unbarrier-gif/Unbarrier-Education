@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Loop Breakers — Upcoming Sessions</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: inherit; }
+  @keyframes fadein { from { opacity: 0; transform: translateX(12px); } to { opacity: 1; transform: none; } }
+
+  .page-hero {
+    padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem) 2rem;
+    max-width: 920px; margin: 0 auto; position: relative;
+  }
+  .crumbs {
+    font-family: "Outfit"; font-size: 11px; font-weight: 600;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--text-subtle); margin-bottom: 24px;
+  }
+  .crumbs a { color: var(--text-subtle); text-decoration: none; }
+  .crumbs a:hover { color: var(--spring-green); }
+
+  .band {
+    max-width: 920px; margin: 0 auto;
+    padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 3rem);
+  }
+  .rule {
+    max-width: 920px; margin: 0 auto;
+    height: 1px; background: rgba(255,255,255,0.08);
+  }
+  .band-eyebrow {
+    font-family: "Outfit"; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent, var(--spring-green));
+    margin: 0 0 12px;
+  }
+  .band h2 {
+    font-family: "Outfit"; font-weight: 800;
+    font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+    letter-spacing: -0.025em; line-height: 1.12;
+    margin: 0 0 14px;
+  }
+  .band p.lead {
+    font-family: "Comfortaa"; font-size: 0.98rem;
+    line-height: 1.75; color: var(--text-muted);
+    max-width: 620px; margin: 0 0 1.4rem;
+  }
+
+  /* Who-comes cards */
+  .who-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 12px;
+  }
+  .who {
+    padding: 20px 20px;
+    border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    display: flex; flex-direction: column; gap: 8px;
+  }
+  .who .avatar {
+    width: 40px; height: 40px; border-radius: 50%;
+    display: grid; place-items: center;
+    font-family: "Outfit"; font-weight: 800; font-size: 14px;
+  }
+  .who .name { font-family: "Outfit"; font-weight: 700; font-size: 14px; color: var(--text); }
+  .who .role { font-family: "Comfortaa"; font-size: 12px; color: var(--text-subtle); }
+  .who .quote { font-family: "Comfortaa"; font-size: 13.5px; line-height: 1.65; color: var(--text); font-style: italic; margin-top: 6px; }
+
+  /* Become a Loop Breaker block */
+  .become {
+    border: 1.5px solid rgba(56,255,153,0.3);
+    background: linear-gradient(135deg, rgba(56,255,153,0.06), rgba(255,194,3,0.04));
+    border-radius: 24px;
+    padding: clamp(2rem, 5vw, 3rem);
+    position: relative; overflow: hidden;
+  }
+  .become::after {
+    content: ""; position: absolute; right: -120px; top: -120px;
+    width: 360px; height: 360px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(56,255,153,0.18), transparent 70%);
+    filter: blur(40px); pointer-events: none;
+  }
+  .become h2 { max-width: 560px; }
+  .become .row { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 22px; }
+  .btn-pri {
+    background: var(--spring-green); color: var(--amethyst);
+    padding: 14px 24px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 14px;
+    text-decoration: none;
+  }
+  .btn-ghost {
+    background: transparent; color: var(--text);
+    padding: 14px 24px; border-radius: 100px;
+    font-family: "Outfit"; font-weight: 700; font-size: 14px;
+    text-decoration: none; border: 1.5px solid rgba(255,255,255,0.2);
+  }
+
+  /* After the session block */
+  .after-grid {
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 14px;
+  }
+  .after {
+    padding: 22px; border-radius: 18px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-top: 3px solid var(--c, var(--spring-green));
+  }
+  .after .step {
+    font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--c, var(--spring-green)); margin-bottom: 8px;
+  }
+  .after h4 { font-family: "Outfit"; font-weight: 800; font-size: 1.05rem; margin: 0 0 8px; }
+  .after p { font-family: "Comfortaa"; font-size: 0.86rem; line-height: 1.65; color: var(--text-muted); margin: 0; }
+
+  footer.mini {
+    max-width: 920px; margin: 0 auto;
+    padding: 2rem clamp(1.25rem, 5vw, 3rem) 3rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-family: "Comfortaa"; font-size: 12px; color: var(--text-faint);
+    display: flex; justify-content: space-between; flex-wrap: wrap; gap: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="page-hero">
+  <p class="crumbs"><a href="../index.html">loop breakers</a> · upcoming sessions</p>
+  <h1 style="font-family:'Outfit'; font-weight:800; font-size:clamp(2.2rem, 5vw, 3.4rem); letter-spacing:-0.025em; line-height:1.06; margin:0 0 16px;">
+    Easy to see.<br/>
+    <span style="color:var(--spring-green)">Easy to book.</span>
+  </h1>
+  <p style="font-family:'Comfortaa'; font-size:1.02rem; line-height:1.8; color:var(--text-muted); max-width:560px; margin:0;">
+    Every Loop Breakers session in one place. Pick one, tap book, show up.
+    Each card tells you who's hosting, what you'll work on, and one next step
+    before you leave.
+  </p>
+</div>
+
+<div id="root"></div>
+
+<div class="rule"></div>
+
+<!-- WHO COMES -->
+<section class="band" style="--accent:#db7dcc">
+  <p class="band-eyebrow">Who's in the room</p>
+  <h2>You won't be the only one who <span style="color:#db7dcc">circles an idea for months</span>.</h2>
+  <p class="lead">Not a hypothetical audience. Real attendees and incoming guest hosts, in their own words. (Nicki's words below are from our prep conversation — used with her permission.)</p>
+  <div class="who-grid">
+    <div class="who">
+      <div class="avatar" style="background:rgba(56,255,153,0.18); color:#38ff99; border:1px solid rgba(56,255,153,0.4);">G</div>
+      <div class="name">Gemma</div>
+      <div class="role">ADHD founder · coaching practice</div>
+      <div class="quote">"I stopped circling the thing. Ninety minutes, a room of women who got it. I left with one next step I'd been avoiding for months."</div>
+    </div>
+    <div class="who">
+      <div class="avatar" style="background:rgba(219,125,204,0.18); color:#db7dcc; border:1px solid rgba(219,125,204,0.4);">N</div>
+      <div class="name">Nicki Hambleton</div>
+      <div class="role">Educator · illustrator · 20 May guest host</div>
+      <div class="quote">"What I struggle with is the starting point, even though I know where I am. I may be an octopus with lots of different arms, but even one octopus can only go down one rabbit hole at a time."</div>
+    </div>
+    <div class="who">
+      <div class="avatar" style="background:rgba(255,138,28,0.18); color:#ff8a1c; border:1px solid rgba(255,138,28,0.4);">S</div>
+      <div class="name">Sana</div>
+      <div class="role">Teacher turned consultant</div>
+      <div class="quote">"I'd been rewriting the same landing page for three months. In one session it was done. Not perfect. Done."</div>
+    </div>
+    <div class="who">
+      <div class="avatar" style="background:rgba(255,194,3,0.18); color:#ffc203; border:1px solid rgba(255,194,3,0.4);">E</div>
+      <div class="name">Ellie</div>
+      <div class="role">Illustrator · shelved 4 launches</div>
+      <div class="quote">"The first space where 'started and stopped' wasn't a confession. It was the whole point."</div>
+    </div>
+  </div>
+  <p style="font-family:'Comfortaa'; font-size:0.82rem; color:var(--text-subtle); margin-top:16px;">Names and photos shared with consent. More stories as the community grows.</p>
+</section>
+
+<div class="rule"></div>
+
+<!-- AFTER THE SESSION -->
+<section class="band" style="--accent:#69d9d1">
+  <p class="band-eyebrow">You're not on your own after</p>
+  <h2>The <span style="color:#69d9d1">90-day loop</span> — what happens after the session.</h2>
+  <p class="lead">You don't book a session and disappear. You get three things — gentle, useful, no spam.</p>
+  <div class="after-grid">
+    <div class="after" style="--c:#38ff99">
+      <div class="step">Day 0</div>
+      <h4>Session notes</h4>
+      <p>A one-page recap of your idea, your next step, and a link to your breakout partners' notes. In your inbox within 24 hours.</p>
+    </div>
+    <div class="after" style="--c:#69d9d1">
+      <div class="step">Days 1–30</div>
+      <h4>The WhatsApp group</h4>
+      <p>A small, moderated WhatsApp group for the cohort — where you already are, no new app to learn. Ask a question, share a win, request a nudge. 30-day access.</p>
+    </div>
+    <div class="after" style="--c:#ffc203">
+      <div class="step">Day 60</div>
+      <h4>One nudge</h4>
+      <p>A single "how's it going?" email with your original one-next-step attached. No guilt, no dashboard. Just a check-in.</p>
+    </div>
+    <div class="after" style="--c:#db7dcc">
+      <div class="step">Day 90</div>
+      <h4>Invitation back</h4>
+      <p>Either as an attendee with a new loop, or — if you're ready — as a guest host.</p>
+    </div>
+  </div>
+</section>
+
+<div class="rule"></div>
+
+<!-- BECOME A LOOP BREAKER -->
+<section class="band" id="become-loop-breaker" style="--accent:#38ff99">
+  <div class="become">
+    <p class="band-eyebrow">Identity, not transaction</p>
+    <h2 style="margin-bottom:14px">Stop buying coaching.<br/><span style="color:var(--spring-green)">Become a Loop Breaker.</span></h2>
+    <p style="font-family:'Comfortaa'; font-size:1rem; line-height:1.8; color:var(--text); max-width:580px; margin:0 0 10px;">
+      A Loop Breaker is someone who has decided that circling the same idea
+      is the problem — and that doing <b>one thing, properly</b>, with a room of
+      people who get it, is the answer.
+    </p>
+    <p style="font-family:'Comfortaa'; font-size:0.95rem; line-height:1.75; color:var(--text-muted); max-width:580px; margin:0;">
+      Book any session. Show up. You're one of us now.
+    </p>
+    <div class="row">
+      <a class="btn-pri" href="#sessions">See the menu →</a>
+      <a class="btn-ghost" href="mailto:hello@unbarrier.me?subject=Guest host enquiry">Host a session →</a>
+    </div>
+  </div>
+</section>
+
+<footer class="mini">
+  <span>© 2026 Unbarrier Education Ltd · Company No. 16603630 · Registered in England &amp; Wales.</span>
+  <span>Loop Breakers · part of unbarrier.me</span>
+</footer>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="SessionsData.jsx"></script>
+<script type="text/babel" src="SessionsMenu.jsx"></script>
+
+<script type="text/babel">
+  ReactDOM.createRoot(document.getElementById("root")).render(<SessionsMenu />);
+</script>
+</body>
+</html>

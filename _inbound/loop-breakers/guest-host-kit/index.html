@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guest Host Kit · Loop Breakers</title>
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); }
+  * { box-sizing: border-box; }
+  a { color: var(--spring-green); }
+  .page { max-width: 760px; margin: 0 auto; padding: clamp(3rem,6vw,5rem) clamp(1.5rem,5vw,3rem) 6rem; }
+
+  /* Cover */
+  .cover { padding-bottom: 2.5rem; border-bottom: 1px solid rgba(255,255,255,0.1); margin-bottom: 2.5rem; }
+  .eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--spring-green); margin: 0 0 18px; }
+  h1 { font-family: "Outfit"; font-weight: 800; font-size: clamp(2.4rem,6vw,3.8rem); letter-spacing: -0.03em; line-height: 1.02; margin: 0 0 1.2rem; }
+  h1 em { font-style: normal; color: var(--spring-green); }
+  .deck { font-family: "Comfortaa"; color: var(--text-muted); font-size: 1.05rem; line-height: 1.7; margin: 0 0 1rem; max-width: 620px; }
+
+  /* Letter sections */
+  section.letter { padding: 2rem 0 2.4rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; }
+  section.letter > .rail { position: absolute; top: -1px; left: 0; width: 72px; height: 2px; background: linear-gradient(90deg, var(--accent, var(--spring-green)) 0%, transparent 100%); }
+  .sec-eyebrow { font-family: "Outfit"; font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent, var(--spring-green)); margin: 0 0 10px; }
+  h2 { font-family: "Outfit"; font-weight: 800; font-size: clamp(1.6rem,3.4vw,2.2rem); letter-spacing: -0.02em; line-height: 1.12; margin: 0 0 0.8rem; }
+  h3 { font-family: "Outfit"; font-weight: 700; font-size: 1.05rem; margin: 1.6rem 0 0.6rem; color: var(--text); letter-spacing: -0.005em; }
+  p, li { font-family: "Comfortaa"; font-size: 0.96rem; line-height: 1.8; color: var(--text-muted); }
+  p { margin: 0 0 1rem; }
+  p b, li b { color: var(--text); font-weight: 700; }
+  ul, ol { padding: 0 0 0 1.3rem; margin: 0 0 1rem; }
+  li { margin-bottom: 4px; }
+
+  /* Key-value grids */
+  .specs {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 14px 22px;
+    margin: 1rem 0 1.5rem;
+    padding: 20px 24px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+  }
+  .specs .kv .k { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-subtle); display: block; margin-bottom: 3px; }
+  .specs .kv .v { font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); line-height: 1.5; }
+
+  /* Deal box */
+  .deal {
+    padding: 22px 26px; border-radius: 16px;
+    background: linear-gradient(135deg, rgba(56,255,153,0.06), rgba(219,125,204,0.04));
+    border: 1.5px solid rgba(56,255,153,0.3);
+    margin: 1rem 0 1.5rem;
+  }
+  .deal h3 { margin-top: 0; color: var(--spring-green); }
+  .deal .line { display: grid; grid-template-columns: 200px 1fr; gap: 6px 20px; margin-bottom: 10px; font-family: "Comfortaa"; font-size: 0.9rem; }
+  .deal .line b { font-family: "Outfit"; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-subtle); padding-top: 2px; }
+
+  /* Easy-no box */
+  .easy-no {
+    padding: 22px 26px; border-radius: 16px;
+    background: rgba(255,194,3,0.05);
+    border: 1px solid rgba(255,194,3,0.2);
+    border-left: 3px solid var(--school-bus-yellow);
+    margin: 1.5rem 0;
+    font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); line-height: 1.75;
+  }
+  .easy-no h3 { margin-top: 0; color: var(--school-bus-yellow); }
+
+  /* Timeline */
+  .timeline { margin: 1rem 0 1.5rem; }
+  .timeline .row { display: grid; grid-template-columns: 130px 1fr; gap: 8px 22px; padding: 14px 0; border-bottom: 1px dashed rgba(255,255,255,0.08); }
+  .timeline .row:last-child { border-bottom: none; }
+  .timeline .when { font-family: "Outfit"; font-weight: 800; color: var(--spring-green); font-size: 0.9rem; letter-spacing: -0.005em; }
+  .timeline .what { font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text); line-height: 1.6; }
+  .timeline .what small { display: block; color: var(--text-subtle); font-size: 0.8rem; margin-top: 2px; }
+
+  /* CTA */
+  .sign-off {
+    padding: 2.4rem 0 1rem;
+    font-family: "Comfortaa"; font-size: 1rem; color: var(--text);
+  }
+  .sign-off em { color: var(--spring-green); font-style: normal; font-family: "Outfit"; font-weight: 700; }
+  .nav-forward {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 1.5rem 0 0;
+  }
+  .nav-forward a {
+    display: block; padding: 16px 20px; border-radius: 12px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    text-decoration: none;
+    font-family: "Comfortaa"; font-size: 0.9rem; color: var(--text);
+    transition: all 0.2s ease;
+  }
+  .nav-forward a:hover {
+    background: rgba(56,255,153,0.08);
+    border-color: var(--spring-green);
+  }
+  .nav-forward a small {
+    display: block; font-family: "Outfit"; font-size: 10px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--spring-green); margin-bottom: 4px;
+  }
+
+  @media (max-width: 640px) {
+    .specs { grid-template-columns: 1fr; }
+    .deal .line { grid-template-columns: 1fr; gap: 2px; }
+    .deal .line b { padding-top: 0; }
+    .timeline .row { grid-template-columns: 1fr; gap: 2px; }
+    .nav-forward { grid-template-columns: 1fr; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- ═══════════ COVER ═══════════ -->
+<header class="cover">
+  <p class="eyebrow">Loop Breakers · Guest Host Kit</p>
+  <h1>Come host a room<br/><em>of the people you're for.</em></h1>
+  <p class="deck">You've got a topic, a practice, a story. Loop Breakers is the room to bring it to. <b>Two formats:</b> regular sessions (10 max, hard cap, properly small) and Guest Stages (up to 40, talk + held Q&amp;A, when we want to open it wider). 90 minutes on Google Meet, all the admin already handled. This is the deal, in plain view.</p>
+</header>
+
+<!-- ═══════════ WHAT IT IS ═══════════ -->
+<section class="letter" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">01 · What Loop Breakers is</p>
+  <h2>A small room for the looping.</h2>
+
+  <p>Loop Breakers is a series of small-group coaching sessions for neurodivergent adults — founders, educators, writers, designers, parents — who've been circling the same idea for months, sometimes years.</p>
+
+  <p>The format is deliberately simple. <b>90 minutes. Google Meet.</b> Two room sizes — a regular Loop Breakers room (10 max, hard cap, round-the-room) or a Guest Stage (up to 40, talk + held Q&amp;A). People bring one thing they're stuck on. They leave with it moved forward — not finished, not perfect, <em>moved</em>.</p>
+
+  <p>I run most of them. I'd like to hand some to you.</p>
+</section>
+
+<!-- ═══════════ WHY YOU ═══════════ -->
+<section class="letter" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">02 · Why host one</p>
+  <h2>What's in it for you.</h2>
+
+  <ul>
+    <li><b>Reach an audience who already gets it.</b> Our cohort is pre-filtered for "gets neurodivergence", "values slow, careful work", and "actually shows up". No convincing, no defending your premise.</li>
+    <li><b>Test a session format with low stakes.</b> Want to try running your own thing someday? Borrow our room, our framework, our production. See if it lands.</li>
+    <li><b>Paid work.</b> See §04.</li>
+    <li><b>Own your content.</b> You keep the IP on what you teach. We keep the recording; you get a copy to reuse wherever you like.</li>
+    <li><b>No admin.</b> We handle sign-ups, payment, calendar, tech, follow-up. You show up and host.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ THE SESSION ═══════════ -->
+<section class="letter" style="--accent:#69d9d1">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">03 · What a session looks like</p>
+  <h2>The shape.</h2>
+
+  <div class="specs">
+    <div class="kv"><span class="k">Duration</span><span class="v">90 minutes</span></div>
+    <div class="kv"><span class="k">Capacity</span><span class="v">Regular: 10 max (hard cap) · Guest Stage: up to 40</span></div>
+    <div class="kv"><span class="k">Platform</span><span class="v">Google Meet (link auto-generated)</span></div>
+    <div class="kv"><span class="k">Recording</span><span class="v">Optional — attendees consent, you decide</span></div>
+    <div class="kv"><span class="k">Format</span><span class="v">Flexible — propose what fits your topic</span></div>
+    <div class="kv"><span class="k">Framework</span><span class="v">Session template provided (open → teach → practise → reflect). Adapt freely.</span></div>
+  </div>
+
+  <p>You can run it however you like within that container — lecture-style, workshop, held conversation, worked example, Q&amp;A. Pick what your topic needs. We'll talk through your plan in a 30-min prep call.</p>
+</section>
+
+<!-- ═══════════ THE DEAL ═══════════ -->
+<section class="letter" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">04 · The deal</p>
+  <h2>What we give each other.</h2>
+
+  <div class="deal">
+    <h3>Money — said honestly, by phase</h3>
+    <p style="font-family:'Comfortaa'; font-size:0.9rem; color: var(--text); margin: 6px 0 14px; line-height: 1.55;">We're being straight with you. Loop Breakers is in <b>Phase 1 of 3</b> right now. Pricing is deliberately low to fill the room. So the guest-host fee at this stage is <b>not a split of takings</b> — it's a flat fee Unbarrier pays you, regardless of seats sold. Here's how it grows.</p>
+
+    <div class="line" style="background: rgba(255,194,3,0.08); border-color: rgba(255,194,3,0.3);">
+      <b style="color: var(--school-bus-yellow);">Phase 1 · Now → 10 regulars</b>
+      <span><b style="color:var(--spring-green)">£75 flat fee per session</b> · paid within 7 days · regardless of attendance · no-shows don't land on you.<br/><em style="opacity:0.8; font-size:0.85em;">Tickets are £15 (sliding scale £8 / £15 / £25 for accessibility). At a Guest Stage of 20+ paying attendees, the session covers your fee with margin. At a regular session of 10, Unbarrier tops up the gap — deliberate, sustainable, honest about Phase 1.</em><br/><b style="color: var(--school-bus-yellow); font-size:0.85em;">A small ask:</b><em style="opacity:0.9; font-size:0.85em;"> we'd love your help getting the word out — to your list, your socials, the corners of the internet you live in. We'll give you everything you need to make it frictionless: a ready-to-send email, social graphics in three formats, a one-line pitch, and a custom booking link with your name on it. You forward / share / post. We do the rest.</em></span>
+    </div>
+
+    <div class="line" style="background: rgba(105,217,209,0.08); border-color: rgba(105,217,209,0.3);">
+      <b style="color: var(--mint);">Phase 2 · 10+ regulars + 3 sold-out sessions in a row</b>
+      <span><b style="color:var(--spring-green)">£125 flat fee per session</b> · same flat-fee model · no risk to you. Triggered when Wednesday Guest Stage tickets move to £35 (sliding £20 / £35 / £50). Tuesday Loop Breakers stays at £10 — that's the access floor.</span>
+    </div>
+
+    <div class="line" style="background: rgba(56,255,153,0.08); border-color: rgba(56,255,153,0.3);">
+      <b style="color: var(--spring-green);">Phase 3 · 20+ members, weekly cadence</b>
+      <span><b style="color:var(--spring-green)">£200 base + 50% of revenue above base</b> · the room is established, real splits become fair. We'll renegotiate this in writing before we get there.</span>
+    </div>
+
+    <div class="line"><b>Paid</b><span>Within 7 days of the session · bank transfer · invoice not required (you can send one if you prefer)</span></div>
+    <div class="line"><b>Locked in writing</b><span>The phase trigger (10 regulars / 20 members) is measurable. You'll see the count. No moving goalposts.</span></div>
+  </div>
+
+  <p style="font-family:'Comfortaa'; font-size:0.88rem; color: var(--text-subtle); margin-top: 10px; line-height: 1.5; font-style: italic;">Why we're showing you all three phases: because "we'll pay more later" is the kind of thing people say and don't honour. Putting the numbers on paper, with the trigger criteria written down, is how we mean it.</p>
+
+  <h3>What you bring</h3>
+  <ul>
+    <li>Your topic / thing you want to teach or run</li>
+    <li>Your brand and credibility</li>
+    <li><b>Help getting the word out.</b> A forward to your newsletter list, a post or two to your socials, a mention in the corners of the internet you live in. <em>You don't have to be a marketer about it</em> — we'll give you everything ready-to-share (copy, graphics, your own booking link). You just press send.</li>
+    <li>Show up on the day, 10 minutes early for tech check</li>
+  </ul>
+
+  <h3>What we bring</h3>
+  <ul>
+    <li>Platform — Google Meet link, calendar invites, reminders</li>
+    <li>Audience — our newsletter list + Loop Breakers community get first shot at seats</li>
+    <li>Session framework — a tested 90-minute container you can adapt</li>
+    <li><b>A full promo pack so sharing is easy:</b> landing page for your session, a drafted invite email you can edit, social graphics (square / portrait / story sizes), a one-line pitch you can paste anywhere, plus a custom booking link with your name on it so you can see what you brought in.</li>
+    <li>Payment processing (Stripe) — goes through us, cleans up your admin</li>
+    <li>Recording + transcript — we capture it, send you a copy</li>
+    <li>Post-session follow-up — attendees get a short summary + any links you share</li>
+    <li>Community access — attendees can join the WhatsApp cohort space if they want ongoing community</li>
+  </ul>
+
+  <h3>IP &amp; ownership</h3>
+  <ul>
+    <li><b>You own your content.</b> Slides, materials, frameworks, worked examples — yours. Use them however you want, before or after the session.</li>
+    <li><b>We own the recording.</b> Edited version lives in the Loop Breakers library for attendees who missed it.</li>
+    <li><b>You get a full copy of the recording</b> to use however you like — promo, your own course, your YouTube channel, wherever.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ BOUNDARIES ═══════════ -->
+<section class="letter" style="--accent:#ff8a1c">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">05 · Straight talk about what we won't do</p>
+  <h2>A few boundaries, said out loud.</h2>
+
+  <ul>
+    <li><b>We approve topic and framing.</b> Not because we don't trust you — because Loop Breakers has a specific audience and tone. If the fit isn't right, we'll say so early (and you keep the idea, obviously).</li>
+    <li><b>Payment goes through our Stripe.</b> Keeps it clean for attendees, means we can do the refund/cancellation handling consistently.</li>
+    <li><b>Loop Breakers stays Loop Breakers.</b> We co-promote, but we don't rebrand the series. Your name is on the session; ours is on the room.</li>
+    <li><b>No minimum audience promise.</b> We'll do our best on promo, but we won't guarantee X attendees. The flat fee (Phase 1: £75 / Phase 2: £125) is how we handle that risk fairly — you're paid whether the room fills or not.</li>
+    <li><b>We don't carry admin beyond production.</b> If someone books and then has an issue with your content, we facilitate the conversation but don't mediate it for you.</li>
+  </ul>
+</section>
+
+<!-- ═══════════ TIMELINE ═══════════ -->
+<section class="letter" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">06 · How it actually runs</p>
+  <h2>Timeline, session to launch.</h2>
+
+  <div class="timeline">
+    <div class="row"><span class="when">4 weeks out</span><span class="what">30-min prep call. You tell us your topic. We agree the format, date, title, short description.<small>15-min ahead of that, I'll send you a one-pager with questions so you come ready.</small></span></div>
+    <div class="row"><span class="when">3 weeks out</span><span class="what">We build your session landing page + open bookings to our list.<small>You get a draft — change anything that doesn't sound like you before we publish.</small></span></div>
+    <div class="row"><span class="when">2 weeks out</span><span class="what">You share the link with your audience. We share with ours.</span></div>
+    <div class="row"><span class="when">3 days out</span><span class="what">Check-in. Attendee count, any final tweaks, tech check booked.</span></div>
+    <div class="row"><span class="when">1 day out</span><span class="what">Attendees get their reminder + any pre-work you've chosen to send.</span></div>
+    <div class="row"><span class="when">Session day</span><span class="what">You arrive 10 mins early. We host the green room while people arrive. You run the session. We handle Q&amp;A moderation if you want us to.</span></div>
+    <div class="row"><span class="when">Next 7 days</span><span class="what">Recording edited + sent. Attendee follow-up sent. Payment to you processed.</span></div>
+  </div>
+</section>
+
+<!-- ═══════════ MAY TIMELINE ═══════════ -->
+<section class="letter" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">07 · When we're aiming for</p>
+  <h2>The May → August ramp.</h2>
+
+  <ul>
+    <li><b>Mid-May 2026</b> — first guest-hosted session</li>
+    <li><b>Late May / June</b> — building cadence, probably one every 2–3 weeks</li>
+    <li><b>July / August</b> — settled rhythm, one session per week, mix of me + guest hosts</li>
+  </ul>
+
+  <p>If mid-May is tight for you, we can target June or July. No pressure to move faster than makes sense for your life.</p>
+</section>
+
+<!-- ═══════════ EASY NO ═══════════ -->
+<section class="letter" style="--accent:#ffc203">
+  <span class="rail"></span>
+  <div class="easy-no">
+    <h3>A note on saying no</h3>
+    <p style="margin:0">If this isn't the right shape, the right season, or the right ask for you — that's genuinely fine. A "not now" or "not this" is useful information, not a failure. Tell me what would be closer to right, or just say no. I won't follow up with a pitch.</p>
+    <p style="margin:10px 0 0">The kit is designed so you can make a decision without needing more info from me. If you want more info, obviously also fine — email me whenever.</p>
+  </div>
+</section>
+
+<!-- ═══════════ SIGN OFF ═══════════ -->
+<section class="letter" style="--accent:#38ff99">
+  <span class="rail"></span>
+  <p class="sec-eyebrow">08 · Next step</p>
+  <h2>If you're in, or curious.</h2>
+
+  <div class="sign-off">
+    <p>Reply to the email this kit came in. One line is enough — <em>"yes, let's talk"</em>, <em>"maybe, ask me again later"</em>, or <em>"not for me, thanks"</em>.</p>
+    <p>If it's a yes-or-maybe, I'll send a prep-call link.</p>
+    <p>— Nici</p>
+  </div>
+
+  <div class="nav-forward">
+    <a href="Nicki Hambleton - Personal Intro.html">
+      <small>Tailored for →</small>
+      Nicki Hambleton
+    </a>
+    <a href="Gemma - Personal Intro.html">
+      <small>Tailored for →</small>
+      Gemma
+    </a>
+  </div>
+</section>
+
+</div>
+</body>
+</html>
