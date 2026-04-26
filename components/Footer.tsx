@@ -7,7 +7,7 @@ export function Footer() {
       <div className={styles.inner}>
         <p className={styles.line}>
           unbarrier.me &middot; Unbarrier Education Ltd &middot; Registered in
-          England &amp; Wales (Co. No. 16603630)
+          England &amp; Wales (Co.&nbsp;No.&nbsp;16603630)
         </p>
         <p className={styles.links}>
           <Link href="/legal/privacy" className={styles.link}>

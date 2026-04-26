@@ -1,5 +1,7 @@
 .hero {
-  padding: var(--space-6) var(--space-5) var(--space-8);
+  position: relative;
+  padding: var(--space-6) 0 var(--space-8);
+  overflow: hidden;
 }
 
 .wordmark {
@@ -8,21 +10,42 @@
   letter-spacing: var(--ls-loose);
   color: var(--text-muted);
   margin: 0 0 var(--space-6);
+  position: relative;
+  z-index: 1;
 }
 
 .row {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: var(--space-4);
+  position: relative;
+  z-index: 1;
 }
 
 .copy {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  flex: 1 1 auto;
   min-width: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--spring-green);
+  margin: 0;
+}
+
+.joy {
+  font-family: var(--font-decorative);
+  color: var(--spring-green);
+  font-size: clamp(2rem, 5vw, 3.4rem);
+  line-height: 1.02;
+  font-weight: 400;
+  margin: 0;
+  text-shadow: 0 0 40px rgba(56, 255, 153, 0.25);
 }
 
 .headline {
@@ -31,6 +54,12 @@
   letter-spacing: var(--ls-tight);
   color: var(--fg);
   margin: 0;
+  font-weight: 800;
+}
+
+.headlineAccent {
+  font-style: normal;
+  color: var(--spring-green);
 }
 
 .bio {
@@ -41,21 +70,30 @@
   margin: 0;
 }
 
-.portrait {
-  flex: 0 0 auto;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid var(--border-strong);
+.spotlight {
+  display: none;
 }
 
 @media (min-width: 720px) {
   .hero {
-    padding: var(--space-10) var(--space-6) var(--space-12);
-    max-width: 920px;
-    margin: 0 auto;
+    padding: var(--space-10) 0 var(--space-12);
   }
-  .portrait {
-    width: 120px;
-    height: 120px;
+
+  .copy {
+    max-width: 60%;
+  }
+
+  .spotlight {
+    display: block;
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-30%);
+    width: clamp(220px, 38vw, 380px);
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    z-index: 1;
   }
 }

@@ -71,8 +71,13 @@ export function SayHiForm() {
 
           {/* honeypot */}
           <label className={styles.honeypot} aria-hidden="true">
-            Company
-            <input type="text" name="company" tabIndex={-1} autoComplete="off" />
+            Website
+            <input
+              type="text"
+              name="website"
+              tabIndex={-1}
+              autoComplete="off"
+            />
           </label>
 
           <SubmitButton />

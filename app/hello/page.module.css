@@ -1,13 +1,16 @@
-.cards {
-  padding: 0 var(--space-5);
-}
-
-.cardsInner {
-  max-width: 640px;
+.main {
+  max-width: 720px;
   margin: 0 auto;
+  padding: 0 var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: clamp(3rem, 6vw, 5rem);
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
 .eyebrow {
@@ -16,7 +19,7 @@
   font-weight: 700;
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
-  color: var(--action);
+  color: var(--school-bus-yellow);
   margin: 0 0 var(--space-2);
 }
 
@@ -24,4 +27,10 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
+}
+
+.bandWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 18px;
 }

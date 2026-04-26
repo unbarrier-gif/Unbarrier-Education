@@ -25,7 +25,7 @@ export async function subscribeAction(
 ): Promise<FormState> {
   const parsed = newsletterSchema.safeParse({
     email: formData.get('email'),
-    honeypot: formData.get('company') ?? '',
+    honeypot: formData.get('website') ?? '',
   });
 
   if (!parsed.success) {
@@ -55,12 +55,12 @@ export async function sayHiAction(
   const parsed = sayHiSchema.safeParse({
     email: formData.get('email'),
     message: formData.get('message'),
-    honeypot: formData.get('company') ?? '',
+    honeypot: formData.get('website') ?? '',
   });
 
   if (!parsed.success) {
     // Honeypot tripped → fake-success so bots don't learn.
-    const honeypot = String(formData.get('company') ?? '');
+    const honeypot = String(formData.get('website') ?? '');
     if (honeypot.length > 0) {
       return { status: 'ok' };
     }
