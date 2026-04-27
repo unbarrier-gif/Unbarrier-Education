@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { AboutBeliefs } from '@/components/AboutBeliefs';
+import { Footer } from '@/components/Footer';
 import { HomeHero } from '@/components/HomeHero';
 import { HomeLoopTease } from '@/components/HomeLoopTease';
 import { PickYourStartingPoint } from '@/components/PickYourStartingPoint';
@@ -23,7 +24,8 @@ export default function HomePage() {
       <AboutBeliefs />
       <PickYourStartingPoint />
       <HomeLoopTease />
-      {/* Footer follows in row 1.7. Nav lands in row 2. */}
+      <Footer variant="full" />
+      {/* Nav lands in row 2. */}
     </main>
   );
 }
