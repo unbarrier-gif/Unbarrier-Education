@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { AboutBeliefs } from '@/components/AboutBeliefs';
 import { HomeHero } from '@/components/HomeHero';
+import { HomeLoopTease } from '@/components/HomeLoopTease';
 import { PickYourStartingPoint } from '@/components/PickYourStartingPoint';
 import { Services } from '@/components/Services';
 import { StatStrip } from '@/components/StatStrip';
@@ -21,8 +22,8 @@ export default function HomePage() {
       <Services />
       <AboutBeliefs />
       <PickYourStartingPoint />
-      {/* HomeLoopTease, Footer follow in subsequent commits.
-          Nav lands in row 2. */}
+      <HomeLoopTease />
+      {/* Footer follows in row 1.7. Nav lands in row 2. */}
     </main>
   );
 }
