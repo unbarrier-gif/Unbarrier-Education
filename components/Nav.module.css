@@ -66,6 +66,19 @@
   color: var(--text);
 }
 
+.link[data-has-dot='true']::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--dot);
+  margin-right: 8px;
+  vertical-align: middle;
+  /* keep the dot legible against the dim default link colour */
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
+}
+
 .pill {
   font-family: var(--font-body);
   font-weight: 700;

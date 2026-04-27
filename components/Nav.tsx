@@ -1,5 +1,6 @@
 'use client';
 
+import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { Wordmark } from './Wordmark';
@@ -8,10 +9,15 @@ import styles from './Nav.module.css';
 // Phase 3 link-swap: audit / access / voice currently anchor-scroll to
 // #services; once /audit, /access, /voice routes ship, swap each href to
 // the real path. Tracked in _inbound/Task List.html.
+//
+// `dot` marks the sub-brand links — each renders a 6px coloured dot via
+// Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
+// --dot CSS var set inline below. Plain links (blog/about) omit `dot`.
 const LINKS = [
-  { key: 'audit', label: 'audit', href: '/#services' },
-  { key: 'access', label: 'access', href: '/#services' },
-  { key: 'voice', label: 'voice', href: '/#services' },
+  { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
+  { key: 'access', label: 'access', href: '/#services', dot: 'var(--princeton-orange)' },
+  { key: 'voice', label: 'voice', href: '/#services', dot: 'var(--orchid-mist)' },
+  { key: 'loop-breakers', label: 'loop breakers', href: '/loop-breakers', dot: 'var(--school-bus-yellow)' },
   { key: 'blog', label: 'blog', href: '/blog' },
   { key: 'about', label: 'about', href: '/#about' },
 ] as const;
@@ -44,11 +50,14 @@ export function Nav({ active }: Props) {
           <ul className={styles.links}>
             {LINKS.map((link) => {
               const isActive = active === link.key;
+              const dot = 'dot' in link ? link.dot : undefined;
               return (
                 <li key={link.key} className={styles.linkItem}>
                   <Link
                     href={link.href}
                     className={`${styles.link} ${isActive ? styles.linkActive : ''}`}
+                    style={dot ? ({ '--dot': dot } as CSSProperties) : undefined}
+                    data-has-dot={dot ? 'true' : undefined}
                     aria-current={isActive ? 'page' : undefined}
                   >
                     {link.label}
