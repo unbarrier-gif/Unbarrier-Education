@@ -16,6 +16,14 @@ export const metadata: Metadata = {
   alternates: { canonical: '/' },
 };
 
+// Cap edge-cache TTL on the homepage at 60s. Vercel's project-level
+// rewrite-caching can lock a stale response (e.g. the previous
+// redirect('/hello') from before Phase 2) for hours despite cache-control
+// headers; capping the TTL here means the worst-case cache lag after a
+// deploy is one minute. Marketing copy doesn't need real-time, but a
+// hot-fix shouldn't take an hour to land either.
+export const revalidate = 60;
+
 export default function HomePage() {
   return (
     <>
