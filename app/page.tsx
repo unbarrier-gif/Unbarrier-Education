@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { HomeHero } from '@/components/HomeHero';
+import { Services } from '@/components/Services';
 import { StatStrip } from '@/components/StatStrip';
 import styles from './page.module.css';
 
@@ -15,8 +16,9 @@ export default function HomePage() {
     <main className={styles.main}>
       <HomeHero />
       <StatStrip />
-      {/* Services, AboutBeliefs, PickYourStartingPoint, HomeLoopTease,
-          Footer follow in subsequent commits. Nav lands in row 2. */}
+      <Services />
+      {/* AboutBeliefs, PickYourStartingPoint, HomeLoopTease, Footer follow
+          in subsequent commits. Nav lands in row 2. */}
     </main>
   );
 }
