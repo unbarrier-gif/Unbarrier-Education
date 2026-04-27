@@ -1,3 +1,4 @@
+/* ── Simple variant (default; used by /hello and small pages) ─────── */
 .footer {
   padding: var(--space-8) 0 var(--space-10);
   border-top: 1px solid var(--border-subtle);
@@ -46,4 +47,92 @@
 
 .copyright {
   color: var(--text-muted);
+}
+
+/* ── Full variant (homepage 4-col) ─────────────────────────────────── */
+.fullFooter {
+  padding: 3rem clamp(1.5rem, 5vw, 5rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.fullGrid {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+}
+
+.brandCol {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.tagline {
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--text-subtle);
+  margin: 0;
+  max-width: 280px;
+}
+
+.linkCol {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.colHeading {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--spring-green);
+  margin: 0 0 4px;
+}
+
+.colList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.colItem {
+  margin: 0;
+}
+
+.colLink {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.colLink:hover {
+  color: var(--spring-green);
+}
+
+.fullBottom {
+  max-width: 1200px;
+  margin: 2rem auto 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  padding-top: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.bottomLine {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-faint);
+  margin: 0;
 }
