@@ -1,0 +1,9 @@
+.bar {
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(
+    90deg,
+    var(--section-bar-color) 0%,
+    transparent 100%
+  );
+}

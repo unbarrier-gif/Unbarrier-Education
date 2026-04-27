@@ -1,5 +1,18 @@
-import { redirect } from 'next/navigation';
+import type { Metadata } from 'next';
+import styles from './page.module.css';
 
-export default function RootPage() {
-  redirect('/hello');
+export const metadata: Metadata = {
+  title: 'Unbarrier · designed for difference.',
+  description:
+    "Inclusion specialist Nici Foote helps schools, families, and EdTech companies remove the barriers that stop children from learning, belonging, and thriving.",
+  alternates: { canonical: '/' },
+};
+
+export default function HomePage() {
+  return (
+    <main className={styles.main}>
+      {/* Sections land in row 1: Hero, StatStrip, Services, AboutBeliefs,
+          PickYourStartingPoint, HomeLoopTease, Footer. Nav lands in row 2. */}
+    </main>
+  );
 }

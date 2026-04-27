@@ -1,0 +1,35 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 28px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+  min-height: 44px;
+}
+
+.btn:hover {
+  opacity: 0.88;
+}
+
+.primary {
+  background: var(--btn-color, var(--spring-green));
+  color: var(--amethyst);
+  border: none;
+}
+
+.ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid rgba(240, 235, 229, 0.22);
+}
+
+.ghost:hover {
+  border-color: rgba(240, 235, 229, 0.4);
+  opacity: 1;
+}
