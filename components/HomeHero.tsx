@@ -29,14 +29,13 @@ export function HomeHero() {
           width={1280}
           height={1280}
           priority
+          unoptimized
           sizes="(max-width: 768px) 0px, 52vw"
         />
       </div>
 
       <div className={styles.content}>
         <Eyebrow>Inclusion · Digital Access · Student Voice</Eyebrow>
-
-        <p className={styles.joy}>bring the joy.</p>
 
         <h1 className={styles.headline}>
           The system wasn&apos;t built
