@@ -42,8 +42,8 @@ export function Services() {
       <SectionBar color="var(--pearl-aqua)" />
       <section id="services" className={styles.section}>
         <div className={styles.head}>
-          <Eyebrow color="var(--pearl-aqua)">How I can help</Eyebrow>
-          <h2 className={styles.heading}>Pick your starting point</h2>
+          <Eyebrow color="var(--pearl-aqua)">Three ways in</Eyebrow>
+          <h2 className={styles.heading}>How I can help</h2>
           <p className={styles.lede}>
             You don&apos;t have to have it figured out. Tell me what&apos;s
             happening and we&apos;ll find where to start.
