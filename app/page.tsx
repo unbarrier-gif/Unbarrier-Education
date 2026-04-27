@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { HomeHero } from '@/components/HomeHero';
+import { StatStrip } from '@/components/StatStrip';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -13,9 +14,9 @@ export default function HomePage() {
   return (
     <main className={styles.main}>
       <HomeHero />
-      {/* StatStrip, Services, AboutBeliefs, PickYourStartingPoint,
-          HomeLoopTease, Footer follow in subsequent commits.
-          Nav lands in row 2. */}
+      <StatStrip />
+      {/* Services, AboutBeliefs, PickYourStartingPoint, HomeLoopTease,
+          Footer follow in subsequent commits. Nav lands in row 2. */}
     </main>
   );
 }
