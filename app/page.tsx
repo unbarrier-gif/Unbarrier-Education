@@ -3,6 +3,7 @@ import { AboutBeliefs } from '@/components/AboutBeliefs';
 import { Footer } from '@/components/Footer';
 import { HomeHero } from '@/components/HomeHero';
 import { HomeLoopTease } from '@/components/HomeLoopTease';
+import { Nav } from '@/components/Nav';
 import { PickYourStartingPoint } from '@/components/PickYourStartingPoint';
 import { Services } from '@/components/Services';
 import { StatStrip } from '@/components/StatStrip';
@@ -17,15 +18,17 @@ export const metadata: Metadata = {
 
 export default function HomePage() {
   return (
-    <main className={styles.main}>
-      <HomeHero />
-      <StatStrip />
-      <Services />
-      <AboutBeliefs />
-      <PickYourStartingPoint />
-      <HomeLoopTease />
-      <Footer variant="full" />
-      {/* Nav lands in row 2. */}
-    </main>
+    <>
+      <Nav />
+      <main className={styles.main}>
+        <HomeHero />
+        <StatStrip />
+        <Services />
+        <AboutBeliefs />
+        <PickYourStartingPoint />
+        <HomeLoopTease />
+        <Footer variant="full" />
+      </main>
+    </>
   );
 }

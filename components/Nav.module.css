@@ -1,0 +1,94 @@
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background: rgba(33, 10, 51, 0.82);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  transition: background 200ms ease, border-color 200ms ease, padding 200ms ease;
+}
+
+.scrolled {
+  background: rgba(33, 10, 51, 0.97);
+  border-bottom-color: rgba(56, 255, 153, 0.15);
+}
+
+.inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0.9rem clamp(1rem, 4vw, 2.5rem);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  transition: padding 200ms ease;
+}
+
+.scrolled .inner {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  gap: 1.4rem;
+}
+
+.links {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: 1.6rem;
+}
+
+.linkItem {
+  margin: 0;
+}
+
+.link {
+  font-family: var(--font-heading);
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: rgba(240, 235, 229, 0.6);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.link:hover,
+.linkActive {
+  color: var(--text);
+}
+
+.pill {
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13.5px;
+  background: var(--spring-green);
+  color: var(--amethyst);
+  padding: 9px 20px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: opacity 150ms ease;
+  white-space: nowrap;
+}
+
+.pill:hover {
+  opacity: 0.88;
+}
+
+@media (max-width: 720px) {
+  .links {
+    display: none;
+  }
+
+  .right {
+    gap: 0.8rem;
+  }
+}
