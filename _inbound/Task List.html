@@ -352,6 +352,25 @@
   </div>
 </section>
 
+<!-- ══════════ PHASE 2 FOLLOW-UPS ══════════ -->
+<section class="group" style="--accent:#db7dcc">
+  <span class="rail"></span>
+  <p class="g-eyebrow">07 · Phase 2 follow-ups</p>
+  <h2>Stubs and placeholders to swap when the next pieces land</h2>
+
+  <div class="task"><span class="box"></span>
+    <div><p class="task-title">Phase 3 link-swap: replace mailto + #services stubs with real /audit, /access, /voice routes <span class="tag tag-cc">Claude Code</span></p>
+      <p class="task-body">Six links across the homepage point at <code>mailto:nici@unbarrier.me?subject=audit|access|voice</code> or <code>/#services</code> until the sub-brand routes ship. When Phase 3 lands the routes, swap each <code>href</code> in one PR — no other changes needed. Search the codebase for <code>"Phase 3 link-swap"</code>; the stubs are tagged in <code>components/Services.tsx</code>, <code>components/PickYourStartingPoint.tsx</code>, <code>components/Footer.tsx</code>, and <code>components/Nav.tsx</code>.</p></div>
+    <p class="task-meta">~6 lines</p>
+  </div>
+
+  <div class="task me"><span class="box"></span>
+    <div><p class="task-title">Supply Nici Foote portrait — replaces NF placeholder on homepage About-Beliefs section <span class="tag tag-nici">You</span></p>
+      <p class="task-body">The About-Beliefs section currently shows an NF-initials circle (orchid mist on amethyst, 1.5px orchid border, 140px diameter) where the real portrait will live. Send a square photo (~600×600 minimum) and Claude Code drops it into <code>public/assets/illustrations/</code> and swaps the placeholder for an <code>&lt;Image&gt;</code>. The TODO comment in <code>components/AboutBeliefs.tsx</code> is the marker. <b>Don't</b> use <code>nicki-portrait.png</code> from the Host Kit — that is Nicki Hambleton, not you.</p></div>
+    <p class="task-meta">Photo ↩</p>
+  </div>
+</section>
+
 </div>
 </body>
 </html>
