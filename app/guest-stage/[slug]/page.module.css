@@ -1,0 +1,21 @@
+.main {
+  padding-top: 0;
+}
+
+.main section {
+  scroll-margin-top: 90px;
+}
+
+.summary {
+  padding: clamp(1rem, 3vw, 2rem) clamp(1.25rem, 5vw, 3rem) clamp(2rem, 4vw, 3rem);
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.summaryBody {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.1rem);
+  line-height: 1.8;
+  color: var(--text-muted);
+  margin: 0;
+}

@@ -1,0 +1,20 @@
+{
+  "letters": [
+    {
+      "slug": "nicki-hambleton",
+      "guestName": "Nicki Hambleton",
+      "title": "For Nicki Hambleton",
+      "accent": "var(--orchid-mist)",
+      "componentKey": "NickiHambletonLetter",
+      "status": "live"
+    },
+    {
+      "slug": "gemma",
+      "guestName": "Gemma",
+      "title": "For Gemma",
+      "accent": "var(--school-bus-yellow)",
+      "componentKey": "GemmaLetter",
+      "status": "live"
+    }
+  ]
+}

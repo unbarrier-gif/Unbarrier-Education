@@ -1,0 +1,54 @@
+.main {
+  padding-top: 0;
+}
+
+.page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 3rem) 6rem;
+}
+
+.cover {
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border-default);
+  margin-bottom: 2.5rem;
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--spring-green);
+  margin: 0 0 18px;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 3.8rem);
+  letter-spacing: -0.03em;
+  line-height: 1.02;
+  margin: 0 0 1.2rem;
+  color: var(--text);
+}
+
+.headingAccent {
+  font-style: normal;
+  color: var(--spring-green);
+}
+
+.deck {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 1.05rem;
+  line-height: 1.7;
+  margin: 0 0 1rem;
+  max-width: 620px;
+}
+
+.deck b {
+  color: var(--text);
+  font-weight: 700;
+}

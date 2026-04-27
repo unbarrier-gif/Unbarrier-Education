@@ -1,10 +1,9 @@
 import { Eyebrow } from '../Eyebrow';
 import { SectionBar } from '../SectionBar';
+import { TIDYCAL } from '@/content/loop-breakers/sessions';
 import { LBPriceCard } from './LBPriceCard';
 import styles from './LBPricing.module.css';
 
-const TIDYCAL_TUESDAY = 'https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch';
-const TIDYCAL_GUEST_STAGE = 'https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking';
 // Founding link is intentionally a mailto until Nici gives the go-live signal
 // (Source of Truth v1.4: "deliberately left blank pending Nici's go-live signal").
 const FOUNDING_HREF = 'mailto:hello@unbarrier.me?subject=Founding';
@@ -39,7 +38,7 @@ export function LBPricing() {
                 '£5 access seat on request',
               ]}
               cta="Book a Tuesday"
-              ctaHref={TIDYCAL_TUESDAY}
+              ctaHref={TIDYCAL.tuesday}
             />
             <LBPriceCard
               color="var(--orchid-mist)"
@@ -54,7 +53,7 @@ export function LBPricing() {
                 'Topic varies — see Upcoming',
               ]}
               cta="See next Guest Stage"
-              ctaHref={TIDYCAL_GUEST_STAGE}
+              ctaHref={TIDYCAL.guestStage}
             />
             <LBPriceCard
               color="var(--spring-green)"

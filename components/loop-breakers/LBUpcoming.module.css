@@ -160,3 +160,24 @@
 .cta:hover {
   opacity: 0.88;
 }
+
+.menuLink {
+  margin: 32px 0 0;
+  text-align: center;
+}
+
+.menuLinkAnchor {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.01em;
+  color: var(--school-bus-yellow);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in srgb, var(--school-bus-yellow) 35%, transparent);
+  padding-bottom: 2px;
+  transition: opacity 150ms ease;
+}
+
+.menuLinkAnchor:hover {
+  opacity: 0.85;
+}

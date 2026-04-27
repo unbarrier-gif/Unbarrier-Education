@@ -1,0 +1,110 @@
+.deal {
+  padding: 22px 26px;
+  border-radius: 16px;
+  background: linear-gradient(
+    135deg,
+    rgba(56, 255, 153, 0.06),
+    rgba(219, 125, 204, 0.04)
+  );
+  border: 1.5px solid rgba(56, 255, 153, 0.3);
+  margin: 1rem 0 1.5rem;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 0 0 0.6rem;
+  color: var(--spring-green);
+}
+
+.intro {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text);
+  margin: 6px 0 14px;
+  line-height: 1.55;
+}
+
+.intro :global(b) {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.line {
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: 6px 20px;
+  margin-bottom: 10px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+}
+
+.line[data-phase='yellow'] {
+  background: rgba(255, 194, 3, 0.08);
+}
+.line[data-phase='aqua'] {
+  background: rgba(105, 217, 209, 0.08);
+}
+.line[data-phase='green'] {
+  background: rgba(56, 255, 153, 0.08);
+}
+
+.phaseLabel {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding-top: 2px;
+}
+
+.line[data-phase='yellow'] .phaseLabel {
+  color: var(--school-bus-yellow);
+}
+.line[data-phase='aqua'] .phaseLabel {
+  color: var(--pearl-aqua);
+}
+.line[data-phase='green'] .phaseLabel {
+  color: var(--spring-green);
+}
+
+.phaseBody {
+  font-family: var(--font-body);
+  color: var(--text);
+  line-height: 1.65;
+}
+
+.phaseBody :global(b) {
+  color: var(--spring-green);
+  font-weight: 700;
+}
+
+.phaseBody :global(em) {
+  color: var(--text-subtle);
+  font-style: italic;
+  display: block;
+  margin-top: 4px;
+  font-size: 0.88em;
+}
+
+.footer {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  color: var(--text-subtle);
+  margin-top: 10px;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+@media (max-width: 640px) {
+  .line {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .phaseLabel {
+    padding-top: 0;
+  }
+}

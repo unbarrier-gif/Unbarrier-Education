@@ -1,0 +1,44 @@
+.timeline {
+  margin: 1rem 0 1.5rem;
+}
+
+.row {
+  display: grid;
+  grid-template-columns: 130px 1fr;
+  gap: 8px 22px;
+  padding: 14px 0;
+  border-bottom: 1px dashed var(--border-default);
+}
+
+.row:last-child {
+  border-bottom: none;
+}
+
+.when {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--spring-green);
+  font-size: 0.9rem;
+  letter-spacing: -0.005em;
+}
+
+.what {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text);
+  line-height: 1.6;
+}
+
+.what :global(small) {
+  display: block;
+  color: var(--text-subtle);
+  font-size: 0.8rem;
+  margin-top: 2px;
+}
+
+@media (max-width: 640px) {
+  .row {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

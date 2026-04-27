@@ -36,8 +36,7 @@ export function LBHero() {
           90 minutes. Up to 10 people. £10. Pay-as-you-go.
         </p>
         <div className={styles.ctas}>
-          {/* PR 3 swaps href to /loop-breakers/sessions once the menu route ships. */}
-          <Button href="#upcoming" color="var(--spring-green)">
+          <Button href="/loop-breakers/sessions" color="var(--spring-green)">
             See upcoming sessions →
           </Button>
           <Button href="#shape-it" variant="ghost">

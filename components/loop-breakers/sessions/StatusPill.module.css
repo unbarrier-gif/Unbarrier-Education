@@ -1,0 +1,37 @@
+.pill {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: var(--radius-pill);
+  white-space: nowrap;
+  background: rgba(56, 255, 153, 0.14);
+  color: var(--spring-green);
+  border: 1px solid rgba(56, 255, 153, 0.35);
+}
+
+.pill[data-status='soon'] {
+  background: rgba(105, 217, 209, 0.14);
+  color: var(--pearl-aqua);
+  border-color: rgba(105, 217, 209, 0.35);
+}
+
+.pill[data-status='waitlist'] {
+  background: rgba(255, 194, 3, 0.14);
+  color: var(--school-bus-yellow);
+  border-color: rgba(255, 194, 3, 0.35);
+}
+
+.pill[data-status='full'] {
+  background: rgba(227, 161, 176, 0.14);
+  color: var(--pink-mist);
+  border-color: rgba(227, 161, 176, 0.4);
+}
+
+.pill[data-status='past'] {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-subtle);
+  border-color: rgba(255, 255, 255, 0.1);
+}

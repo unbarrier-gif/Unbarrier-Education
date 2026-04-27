@@ -1,0 +1,119 @@
+.main {
+  padding-top: 0;
+}
+
+.main section {
+  scroll-margin-top: 90px;
+}
+
+.hero {
+  padding: clamp(4rem, 8vw, 6rem) clamp(1.25rem, 5vw, 3rem) 2rem;
+  max-width: 920px;
+  margin: 0 auto;
+}
+
+.crumbs {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-subtle);
+  margin: 0 0 24px;
+}
+
+.crumbLink {
+  color: var(--text-subtle);
+  text-decoration: none;
+  transition: color 150ms ease;
+}
+
+.crumbLink:hover {
+  color: var(--orchid-mist);
+}
+
+.eyebrow {
+  display: inline-block;
+  background: color-mix(in srgb, var(--orchid-mist) 14%, transparent);
+  border: 1px solid color-mix(in srgb, var(--orchid-mist) 40%, transparent);
+  color: var(--orchid-mist);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  letter-spacing: var(--ls-tight);
+  line-height: 1.06;
+  margin: 18px 0 14px;
+  color: var(--text);
+}
+
+.accent {
+  color: var(--orchid-mist);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 580px;
+  margin: 0;
+}
+
+.list {
+  display: grid;
+  gap: 16px;
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3rem);
+}
+
+.empty {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 1rem;
+  line-height: 1.7;
+  padding: 2rem;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: 18px;
+  text-align: center;
+}
+
+.mailto {
+  color: var(--orchid-mist);
+  text-decoration: none;
+  border-bottom: 1px solid rgba(219, 125, 204, 0.4);
+}
+
+.pastSection {
+  max-width: 920px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 5vw, 3rem);
+  border-top: 1px solid var(--border-default);
+}
+
+.pastHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.4rem;
+  margin: 0 0 16px;
+  color: var(--text-muted);
+  letter-spacing: -0.01em;
+}
+
+.pastGrid {
+  display: grid;
+  gap: 14px;
+  opacity: 0.78;
+}

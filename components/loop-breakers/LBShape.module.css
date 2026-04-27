@@ -42,38 +42,6 @@
   display: block;
 }
 
-.placeholder {
-  padding: 28px 24px;
-  border: 1.5px dashed rgba(219, 125, 204, 0.4);
-  border-radius: 12px;
-  background: var(--surface-raised);
-  margin-bottom: 1rem;
-  text-align: center;
-}
-
-.placeholderTitle {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1rem;
-  color: var(--orchid-mist);
-  margin: 0 0 6px;
-  letter-spacing: 0.04em;
-}
-
-.placeholderBody {
-  font-family: var(--font-body);
-  font-size: 0.92rem;
-  color: var(--text-muted);
-  line-height: 1.7;
-  margin: 0;
-}
-
-.placeholderLink {
-  color: var(--orchid-mist);
-  text-decoration: none;
-  border-bottom: 1px solid rgba(219, 125, 204, 0.4);
-}
-
 .note {
   font-family: var(--font-body);
   font-size: 12.5px;
