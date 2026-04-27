@@ -1,0 +1,58 @@
+.section {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  position: relative;
+}
+
+.inner {
+  max-width: 720px;
+  margin: 3rem auto 0;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+  letter-spacing: var(--ls-tight);
+  line-height: 1.12;
+  margin: 0 0 1.4rem;
+  color: var(--text);
+}
+
+.accent {
+  color: var(--school-bus-yellow);
+}
+
+.list {
+  padding: 0;
+  margin: 0 0 1.4rem;
+  list-style: none;
+}
+
+.item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  margin-bottom: 14px;
+  color: rgba(255, 255, 255, 0.82);
+  font-family: var(--font-body);
+  line-height: 1.7;
+}
+
+.arrow {
+  color: var(--school-bus-yellow);
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.body {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  font-size: 1.02rem;
+  line-height: 1.75;
+  margin: 0;
+}
+
+.bodyStrong {
+  color: var(--text);
+  font-weight: 700;
+}

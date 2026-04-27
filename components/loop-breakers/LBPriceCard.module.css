@@ -1,0 +1,125 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-radius: 18px;
+  padding: 26px 24px 24px;
+  transition: transform 200ms ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+.card[data-featured='true'] {
+  background: color-mix(in srgb, var(--c) 6%, rgba(33, 10, 51, 0.6));
+  border-color: var(--c);
+  box-shadow: 0 8px 40px color-mix(in srgb, var(--c) 18%, transparent);
+}
+
+.recommend {
+  position: absolute;
+  top: -12px;
+  left: 24px;
+  background: var(--c);
+  color: var(--amethyst);
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+}
+
+.tag {
+  font-family: var(--font-heading);
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin: 0 0 8px;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 22px;
+  margin: 0 0 14px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.price {
+  font-family: var(--font-heading);
+  font-size: 44px;
+  font-weight: 800;
+  color: var(--c);
+  line-height: 1;
+  margin: 0 0 4px;
+  letter-spacing: -0.025em;
+}
+
+.priceSub {
+  font-family: var(--font-heading);
+  font-size: 12px;
+  color: var(--text-subtle);
+  margin: 0 0 18px;
+  letter-spacing: 0.02em;
+}
+
+.items {
+  margin: 0 0 22px;
+  padding: 0;
+  list-style: none;
+  flex: 1;
+}
+
+.item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 8px 0;
+  font-family: var(--font-body);
+  font-size: 13.5px;
+  color: var(--text-muted);
+  line-height: 1.55;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c);
+  flex-shrink: 0;
+  margin-top: 8px;
+}
+
+.cta {
+  display: block;
+  text-align: center;
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--c);
+  padding: 12px 22px;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.card[data-featured='true'] .cta {
+  background: var(--c);
+  color: var(--amethyst);
+  border-color: transparent;
+}
+
+.cta:hover {
+  opacity: 0.88;
+}
