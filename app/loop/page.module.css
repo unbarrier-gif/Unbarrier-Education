@@ -1,0 +1,57 @@
+.wrap {
+  min-height: 100dvh;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: var(--space-5);
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--school-bus-yellow);
+  margin: var(--space-6) 0 0;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: var(--ls-tight);
+  color: var(--fg);
+  margin: 0;
+}
+
+.accent {
+  font-style: normal;
+  color: var(--school-bus-yellow);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.link {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  margin: var(--space-8) 0 0;
+}

@@ -18,6 +18,22 @@ The site at **[unbarrier.me](https://unbarrier.me)**. Phase 1 ships a single pag
 - MailerLite REST API (direct fetch, no SDK)
 - Plausible analytics
 - Zod for validation
+- Multi-zone subdomain routing via `middleware.ts` (single Next app serves both `unbarrier.me` and `loop.unbarrier.me`)
+
+## Architecture — multi-zone routing (Phase 2)
+
+One Next.js app, two domains. `middleware.ts` reads the request host and rewrites paths into the right route subtree.
+
+| Host | Resolves from |
+|---|---|
+| `unbarrier.me` (and `www.`) | `app/page.tsx`, `app/hello/`, `app/legal/`, `app/blog/`, &hellip; |
+| `loop.unbarrier.me` (and `www.`) | `app/loop/*` &mdash; middleware silently prepends `/loop` |
+
+Direct hits to `unbarrier.me/loop/*` 308-redirect to the canonical `loop.unbarrier.me/*` URL.
+
+**Vercel previews** don&rsquo;t carry the subdomain &mdash; access loop content on a preview URL by hitting `/loop` directly: `https://<preview>.vercel.app/loop/sessions`.
+
+**Vercel project setup**: both `unbarrier.me` and `loop.unbarrier.me` must be assigned to the same Vercel project (Settings &rarr; Domains). DNS is via Bluehost.
 
 ## Run locally
 
@@ -64,9 +80,14 @@ app/
     page.module.css
     actions.ts            server actions (newsletter + say-hi)
   legal/
-    privacy/page.tsx      stub — Phase 1.5 work
-    terms/page.tsx        stub — Phase 1.5 work
+    privacy/page.tsx      Phase 2: real privacy text from Legal Pages v1
+    terms/page.tsx        Phase 2: real terms text from Legal Pages v1
     legal.module.css
+  loop/                   Phase 2: loop.unbarrier.me content tree
+    layout.tsx
+    page.tsx              "landing soon" placeholder
+    page.module.css
+    not-found.tsx
   api/
     say-hi/route.ts       POST handler — Zod + honeypot + rate limit
 components/
@@ -75,15 +96,31 @@ components/
   NewsletterBand.tsx
   SayHiForm.tsx
   Footer.tsx
+  Wordmark.tsx            shared brand wordmark with coloured-dot variants
+  Glow.tsx                shared blur-disc primitive
 lib/
   mailerlite.ts           addSubscriber (treats 422 as success)
   resend.ts               sendSayHi
   tidycal.ts              re-exports the 3 booking URLs from env
   rateLimit.ts            in-memory map, 5/IP/hour
+middleware.ts             multi-zone subdomain routing
 public/assets/
+  illustrations/          hero-bring-the-joy.png + Phase 2 art
+  logos/                  brand mark
   nici-portrait.png       PLACEHOLDER (replace Mon)
   og-hello.png            PLACEHOLDER
 ```
+
+## Branch / PR model
+
+- Phase 1: `feat/hello` &rarr; PR #1 to `main`. Cardiff hard-deadline 29 Apr.
+- Phase 2: one branch per route, each PR&rsquo;d to `main` independently.
+  - `feat/phase-2/foundation` &mdash; middleware + `/loop` scaffolding.
+  - `feat/phase-2/homepage` &mdash; unbarrier.me homepage (Week 1).
+  - `feat/phase-2/loop-landing` &mdash; loop.unbarrier.me landing + sessions (Week 2).
+  - `feat/phase-2/host-kit` &mdash; guest host kit + Nicki + Gemma (Week 3 / 3.5).
+  - `feat/phase-2/blog` &mdash; blog system + index (Week 4).
+- Phase 3: TBD &mdash; newsletter funnel, content, polish.
 
 ## Phase 1.5 todo
 
