@@ -36,18 +36,23 @@ export function middleware(req: NextRequest) {
   const url = req.nextUrl.clone();
   const host = (req.headers.get('host') ?? '').toLowerCase();
 
+  // /loop and /loop/* match — but /loop-breakers (a sibling route on the
+  // main domain) must NOT, or it gets re-routed to loop.unbarrier.me/-breakers.
+  const isLoopPath =
+    url.pathname === '/loop' || url.pathname.startsWith('/loop/');
+
   // Loop subdomain → rewrite into /loop/* under the hood.
   if (LOOP_HOSTS.has(host)) {
     if (url.pathname === '/' || url.pathname === '') {
       url.pathname = '/loop';
-    } else if (!url.pathname.startsWith('/loop')) {
+    } else if (!isLoopPath) {
       url.pathname = `/loop${url.pathname}`;
     }
     return NextResponse.rewrite(url);
   }
 
   // Main domain hitting /loop/* → redirect to the canonical subdomain URL.
-  if (MAIN_HOSTS.has(host) && url.pathname.startsWith('/loop')) {
+  if (MAIN_HOSTS.has(host) && isLoopPath) {
     const dest = new URL(url.toString());
     dest.host = 'loop.unbarrier.me';
     dest.pathname = url.pathname.replace(/^\/loop/, '') || '/';
