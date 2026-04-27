@@ -1,0 +1,98 @@
+.section {
+  position: relative;
+  min-height: 92vh;
+  display: flex;
+  align-items: center;
+  padding: 9rem clamp(1.5rem, 5vw, 5rem) 4rem;
+  overflow: hidden;
+}
+
+.figureWrap {
+  position: absolute;
+  right: -50px;
+  top: 52%;
+  transform: translateY(-50%);
+  width: clamp(380px, 46vw, 660px);
+  opacity: 0.92;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.figure {
+  width: 100%;
+  height: auto;
+}
+
+.copy {
+  position: relative;
+  z-index: 2;
+  max-width: 660px;
+}
+
+.pill {
+  display: inline-block;
+  background: color-mix(in srgb, var(--school-bus-yellow) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--school-bus-yellow) 40%, transparent);
+  color: var(--school-bus-yellow);
+  padding: 6px 14px;
+  border-radius: var(--radius-pill);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  white-space: nowrap;
+  line-height: 1.2;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 5.6vw, 4rem);
+  font-weight: 800;
+  line-height: 1.04;
+  letter-spacing: var(--ls-tight);
+  margin: 1.4rem 0;
+  color: var(--text);
+}
+
+.accent {
+  color: var(--school-bus-yellow);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.08rem);
+  line-height: 1.8;
+  color: var(--text-muted);
+  max-width: 540px;
+  margin: 0 0 0.8rem;
+}
+
+.terms {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.8;
+  color: var(--text-subtle);
+  max-width: 480px;
+  margin: 0 0 2rem;
+  font-style: italic;
+}
+
+.ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+@media (max-width: 760px) {
+  .section {
+    padding-top: 7rem;
+    min-height: auto;
+  }
+
+  .figureWrap {
+    right: -30%;
+    width: 90vw;
+    opacity: 0.4;
+  }
+}
