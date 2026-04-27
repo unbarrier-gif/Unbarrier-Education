@@ -1,0 +1,82 @@
+.section {
+  padding: 2rem 0 2.4rem;
+  border-top: 1px solid var(--border-default);
+  position: relative;
+}
+
+.rail {
+  position: absolute;
+  top: -1px;
+  left: 0;
+  width: 72px;
+  height: 2px;
+  background: linear-gradient(90deg, var(--c) 0%, transparent 100%);
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin: 0 0 10px;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  letter-spacing: -0.02em;
+  line-height: 1.12;
+  margin: 0 0 0.8rem;
+  color: var(--text);
+}
+
+.body {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  line-height: 1.8;
+}
+
+.body :global(p) {
+  margin: 0 0 1rem;
+  font-size: 0.96rem;
+}
+
+.body :global(p b) {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.body :global(p em) {
+  color: var(--c);
+  font-style: normal;
+  font-weight: 700;
+}
+
+.body :global(ul),
+.body :global(ol) {
+  padding: 0 0 0 1.3rem;
+  margin: 0 0 1rem;
+}
+
+.body :global(li) {
+  margin-bottom: 4px;
+  font-size: 0.96rem;
+  line-height: 1.8;
+}
+
+.body :global(li b) {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.body :global(h3) {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin: 1.6rem 0 0.6rem;
+  color: var(--text);
+  letter-spacing: -0.005em;
+}
