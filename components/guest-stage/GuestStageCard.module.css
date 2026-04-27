@@ -1,0 +1,113 @@
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 24px 22px 24px 24px;
+  border-radius: 18px;
+  border: 1.5px solid var(--border-default);
+  background: var(--surface-raised);
+  text-decoration: none;
+  color: var(--text);
+  transition: border-color 200ms ease, background 200ms ease, transform 200ms ease;
+}
+
+.card:hover {
+  border-color: color-mix(in srgb, var(--c) 40%, transparent);
+  background: color-mix(in srgb, var(--c) 6%, var(--surface-raised));
+  transform: translateY(-2px);
+}
+
+.rail {
+  position: absolute;
+  left: 0;
+  top: 18px;
+  bottom: 18px;
+  width: 3px;
+  background: var(--c);
+  border-radius: 3px;
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin: 0;
+}
+
+.title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.15rem, 2vw, 1.4rem);
+  line-height: 1.18;
+  letter-spacing: -0.018em;
+  margin: 0;
+  color: var(--text);
+}
+
+.subtitle {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  color: var(--text-subtle);
+  margin-top: 4px;
+}
+
+.host {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.dot {
+  color: var(--text-faint);
+}
+
+.role {
+  color: var(--text-subtle);
+}
+
+.dateRow {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid var(--border-default);
+}
+
+.date {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.time {
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  color: var(--text-subtle);
+}
+
+.cta {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--c);
+  margin-top: 6px;
+  letter-spacing: 0.01em;
+}

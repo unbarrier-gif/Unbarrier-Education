@@ -1,0 +1,29 @@
+{
+  "guests": [
+    {
+      "slug": "nicki-hambleton-sketch-noting",
+      "sessionSlug": "may-2026-guest-stage-nicki-hambleton",
+      "guest": {
+        "name": "Nicki Hambleton",
+        "role": "Apple Distinguished Educator · illustrator",
+        "tagline": "Drawing as a thinking tool. Twenty years of teaching it.",
+        "bio": "Nicki teaches drawing as a way of thinking — not as a finishing skill, not as a performance, but as a tool for un-tangling the ideas you can't write your way out of. She's spent two decades inside classrooms watching what happens when a pen replaces a paragraph, and she runs her own practice for the people whose brains move in pictures and arms and rabbit-holes before they move in sentences.",
+        "links": {}
+      },
+      "session": {
+        "title": "Sketch-noting for joy (and for thinking)",
+        "subtitle": "Drawing as a way out of the loop",
+        "longBlurb": "90 minutes for micro-business owners who've been circling an idea for months and can't write their way out of it. Nicki teaches drawing-as-thinking — talk, demo, and held Q&A. You bring a pen and the thing that's stuck. By the end, the tangle is on paper and there's one obvious next step.",
+        "youllLeaveWith": [
+          "Your tangle on paper, in shapes you can move around.",
+          "One next step you've already drawn.",
+          "A simple visual vocabulary you can keep using after the session."
+        ],
+        "whoForExtra": "Not sketch-noting for educators. Sketch-noting for the woman who has rewritten her landing page eleven times and still can't ship it.",
+        "format": "Online · Guest Stage · Zoom · 90 min",
+        "accent": "var(--orchid-mist)"
+      },
+      "status": "live"
+    }
+  ]
+}
