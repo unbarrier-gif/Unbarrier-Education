@@ -50,7 +50,7 @@ export function HomeLoopTease() {
               it out alone.
             </p>
             <Button
-              href="https://loop.unbarrier.me"
+              href="/loop-breakers"
               color="var(--school-bus-yellow)"
             >
               Visit Loop Breakers →
