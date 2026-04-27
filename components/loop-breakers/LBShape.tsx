@@ -2,9 +2,11 @@ import { Eyebrow } from '../Eyebrow';
 import { SectionBar } from '../SectionBar';
 import styles from './LBShape.module.css';
 
-// Placeholder iframe src. PR 4 swaps in the live Google Form URL:
-// https://docs.google.com/forms/d/e/1FAIpQLScVdyBGdlPQAqLhuyrNt08sYQ9QRV1HU_fNNHoB7No7LbtZ6A/viewform?embedded=true
-const GOOGLE_FORM_EMBED_URL = '';
+// Live Google Form embed. Responses land in the linked Sheet; Nici
+// reviews on Friday and pastes themes into the Notion DB. If the form
+// is ever rebuilt, swap this URL only — markup and styles stay.
+const GOOGLE_FORM_EMBED_URL =
+  'https://docs.google.com/forms/d/e/1FAIpQLScVdyBGdlPQAqLhuyrNt08sYQ9QRV1HU_fNNHoB7No7LbtZ6A/viewform?embedded=true';
 
 export function LBShape() {
   return (
@@ -19,30 +21,14 @@ export function LBShape() {
           below — if it lands, it shapes a future Tuesday.
         </p>
 
-        {GOOGLE_FORM_EMBED_URL ? (
-          <iframe
-            src={GOOGLE_FORM_EMBED_URL}
-            title="What are you stuck on? — share your loop"
-            className={styles.iframe}
-            loading="lazy"
-            width="100%"
-            height={852}
-          />
-        ) : (
-          <div className={styles.placeholder} role="status">
-            <p className={styles.placeholderTitle}>Form coming.</p>
-            <p className={styles.placeholderBody}>
-              In the meantime, drop a line to{' '}
-              <a
-                href="mailto:hello@unbarrier.me?subject=What I'm stuck on"
-                className={styles.placeholderLink}
-              >
-                hello@unbarrier.me
-              </a>{' '}
-              — Nici reads every one.
-            </p>
-          </div>
-        )}
+        <iframe
+          src={GOOGLE_FORM_EMBED_URL}
+          title="What are you stuck on? — share your loop"
+          className={styles.iframe}
+          loading="lazy"
+          width="100%"
+          height={852}
+        />
 
         <p className={styles.note}>
           No newsletter, no funnel. Just Nici reading.
