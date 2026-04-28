@@ -96,12 +96,44 @@
   opacity: 0.88;
 }
 
+.hamburger {
+  display: none;
+  background: transparent;
+  border: 0;
+  color: var(--text);
+  padding: 8px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: background 150ms ease;
+}
+
+.hamburger:hover {
+  background: var(--surface-lift);
+}
+
 @media (max-width: 720px) {
   .links {
     display: none;
   }
 
+  .contrastWrap {
+    /* Lives in the drawer on mobile to keep the header tight on small screens. */
+    display: none;
+  }
+
   .right {
-    gap: 0.8rem;
+    gap: 0.4rem;
+  }
+
+  .pill {
+    /* Slightly tighter pill so Wordmark + pill + hamburger fit on 360px. */
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+
+  .hamburger {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 }
