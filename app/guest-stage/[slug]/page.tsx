@@ -5,6 +5,7 @@ import { Nav } from '@/components/Nav';
 import { GuestBio } from '@/components/guest-stage/GuestBio';
 import { GuestStageBookingBlock } from '@/components/guest-stage/GuestStageBookingBlock';
 import { GuestStageHero } from '@/components/guest-stage/GuestStageHero';
+import { SketchNoteGallery } from '@/components/guest-stage/SketchNoteGallery';
 import { WhatYoullLeaveWith } from '@/components/guest-stage/WhatYoullLeaveWith';
 import {
   findGuestBySlug,
@@ -53,6 +54,12 @@ export default function GuestStagePage({ params }: { params: Params }) {
 
         <WhatYoullLeaveWith guest={guest} />
         <GuestBio guest={guest} />
+        {guest.guest.sketchNoteExamples && guest.guest.sketchNoteExamples.length > 0 ? (
+          <SketchNoteGallery
+            items={guest.guest.sketchNoteExamples}
+            accent={guest.session.accent}
+          />
+        ) : null}
         <GuestStageBookingBlock guest={guest} session={session} />
 
         <Footer variant="full" />
