@@ -7,42 +7,6 @@
   overflow: hidden;
 }
 
-.illustration {
-  position: absolute;
-  left: 58%;
-  top: 50%;
-  transform: translateY(-50%);
-  width: clamp(200px, 19vw, 280px);
-  z-index: 1;
-  pointer-events: none;
-}
-
-/* Soft spring-green halo behind the wordmark — same pattern used on
-   HelloNickiFeature, LBMeetNici, and the loop-breakers cards. The
-   illustration container is positioned, so a sibling pseudo-element
-   sits inside it without affecting layout. */
-.illustration::before {
-  content: '';
-  position: absolute;
-  inset: -12%;
-  background: radial-gradient(
-    circle,
-    rgba(56, 255, 153, 0.32) 0%,
-    rgba(56, 255, 153, 0) 65%
-  );
-  filter: blur(30px);
-  pointer-events: none;
-  z-index: -1;
-}
-
-.illustration :global(img) {
-  width: 100%;
-  height: auto;
-  display: block;
-  position: relative;
-  z-index: 1;
-}
-
 .content {
   position: relative;
   z-index: 2;
@@ -92,9 +56,5 @@
   .hero {
     padding: 7rem clamp(1.5rem, 5vw, 5rem) 3rem;
     min-height: auto;
-  }
-
-  .illustration {
-    display: none;
   }
 }

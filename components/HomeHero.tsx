@@ -1,4 +1,3 @@
-import Image from 'next/image';
 import { Button } from './Button';
 import { Eyebrow } from './Eyebrow';
 import { Glow } from './Glow';
@@ -21,20 +20,6 @@ export function HomeHero() {
         size={500}
         opacity={0.09}
       />
-
-      <div className={styles.illustration} aria-hidden="true">
-        {/* SVG wordmark — replaces the multi-element hero-bring-the-joy.png.
-            That PNG stays on disk for now (may resurface in another iteration). */}
-        <Image
-          src="/assets/illustrations/bring-the-joy-wordmark-white.svg"
-          alt=""
-          width={1280}
-          height={1280}
-          priority
-          unoptimized
-          sizes="(max-width: 768px) 0px, 34vw"
-        />
-      </div>
 
       <div className={styles.content}>
         <Eyebrow>Inclusion · Digital Access · Student Voice</Eyebrow>
