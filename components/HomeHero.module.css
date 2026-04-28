@@ -9,10 +9,10 @@
 
 .illustration {
   position: absolute;
-  right: -60px;
+  right: clamp(1rem, 3vw, 3rem);
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(440px, 52vw, 780px);
+  width: clamp(340px, 38vw, 560px);
   z-index: 1;
   pointer-events: none;
 }
