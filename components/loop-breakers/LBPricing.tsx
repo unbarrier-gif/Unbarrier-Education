@@ -64,7 +64,7 @@ export function LBPricing() {
               items={[
                 'Every Tuesday Loop Breakers session, £0 at the door',
                 'Wednesday Guest Stages at £15 sliding tier',
-                'Slow-pace WhatsApp room with the cohort',
+                'Guest Stage monthly access',
                 'Voice on what Loop Breakers becomes',
               ]}
               cta="Claim a founding seat"

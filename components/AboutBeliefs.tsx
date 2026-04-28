@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Button } from './Button';
 import { Eyebrow } from './Eyebrow';
 import { SectionBar } from './SectionBar';
@@ -19,14 +20,15 @@ export function AboutBeliefs() {
       <section id="about" className={styles.section}>
         <div className={styles.grid}>
           <div className={styles.col}>
-            {/* TODO: replace NF placeholder with real Nici Foote portrait once
-                supplied. Tracked in _inbound/Task List.html. */}
-            <div
-              className={styles.portraitPlaceholder}
-              role="img"
-              aria-label="Portrait placeholder for Nici Foote — actual photo coming soon"
-            >
-              <span aria-hidden="true">NF</span>
+            <div className={styles.portraitWrap}>
+              <Image
+                src="/assets/portraits/nici-facing-profile-hero.png"
+                alt="Nici Foote"
+                width={420}
+                height={420}
+                className={styles.portrait}
+                sizes="(max-width: 768px) 60vw, 320px"
+              />
             </div>
 
             <Eyebrow color="var(--orchid-mist)">About Nici</Eyebrow>

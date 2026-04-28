@@ -23,8 +23,10 @@ export function HomeHero() {
       />
 
       <div className={styles.illustration} aria-hidden="true">
+        {/* SVG wordmark — replaces the multi-element hero-bring-the-joy.png.
+            That PNG stays on disk for now (may resurface in another iteration). */}
         <Image
-          src="/assets/illustrations/hero-bring-the-joy.png"
+          src="/assets/illustrations/bring-the-joy-wordmark-white.svg"
           alt=""
           width={1280}
           height={1280}

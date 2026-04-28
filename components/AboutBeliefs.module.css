@@ -21,21 +21,23 @@
   min-width: 0;
 }
 
-.portraitPlaceholder {
-  width: 140px;
-  height: 140px;
-  border-radius: 50%;
-  background: var(--amethyst);
-  border: 1.5px solid var(--orchid-mist);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.portraitWrap {
+  width: 100%;
+  max-width: 320px;
   margin-bottom: 1.6rem;
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: 3rem;
-  letter-spacing: 0.04em;
-  color: var(--orchid-mist);
+  border-radius: 24px;
+  overflow: hidden;
+  background: var(--spring-green);
+  /* Photo background is already spring-green; matching the wrapper bg
+     hides any sub-pixel rendering edges. */
+}
+
+.portrait {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
 }
 
 .heading {
