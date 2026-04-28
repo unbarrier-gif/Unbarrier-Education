@@ -3,7 +3,7 @@
 const FALLBACKS = {
   tuesday: 'https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch',
   guest: 'https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking',
-  coaching: 'https://tidycal.com/nici/accessible-coaching-monthly',
+  coaching: 'https://tidycal.com/nici/chat-with-nici',
 } as const;
 
 export const TIDYCAL_LINKS = {

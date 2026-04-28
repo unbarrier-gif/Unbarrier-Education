@@ -45,8 +45,8 @@ export default function HelloPage() {
             />
             <CtaCard
               card="coaching"
-              title="1:1 with Nici · Accessible Coaching"
-              meta="monthly subscription · 1 hour"
+              title="Coaching for women holding it all"
+              meta="£100/month · with Nici · book a free chat first"
               href={TIDYCAL_LINKS.coaching}
             />
             <CtaCard
