@@ -16,9 +16,9 @@ const FOOTER_LINK_GROUPS = [
   {
     heading: 'Services',
     links: [
-      { label: 'unbarrier.audit', href: 'mailto:nici@unbarrier.me?subject=audit' },
-      { label: 'unbarrier.access', href: 'mailto:nici@unbarrier.me?subject=access' },
-      { label: 'unbarrier.voice', href: 'mailto:nici@unbarrier.me?subject=voice' },
+      { label: 'unbarrier.audit', href: '/#services' },
+      { label: 'unbarrier.access', href: '/#services' },
+      { label: 'unbarrier.voice', href: '/voice' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
   },
