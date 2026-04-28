@@ -10,17 +10,14 @@ export function LBHero() {
       <Glow color="var(--spring-green)" left="35%" top="55%" size={420} opacity={0.07} />
 
       <div aria-hidden="true" className={styles.figureWrap}>
-        {/* SVG wordmark — vector, so no Next.js optimisation (it would
-            balloon, not shrink). bring-the-joy-figure.png stays on disk;
-            reusable for future iterations elsewhere. */}
         <Image
-          src="/assets/illustrations/bring-the-joy-wordmark-white.svg"
+          src="/assets/illustrations/bring-the-joy-non-binary-human-transparent.png"
           alt=""
-          width={720}
-          height={720}
+          width={1980}
+          height={2000}
           className={styles.figure}
           priority
-          unoptimized
+          sizes="(max-width: 760px) 90vw, 46vw"
         />
       </div>
 
