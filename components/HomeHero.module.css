@@ -12,7 +12,7 @@
   left: 58%;
   top: 50%;
   transform: translateY(-50%);
-  width: clamp(260px, 26vw, 380px);
+  width: clamp(200px, 19vw, 280px);
   z-index: 1;
   pointer-events: none;
 }
