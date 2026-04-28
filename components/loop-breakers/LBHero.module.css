@@ -4,30 +4,57 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   padding: 7rem clamp(1.5rem, 5vw, 5rem) 4rem;
   overflow: hidden;
-  text-align: center;
+}
+
+.heroRow {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: clamp(2rem, 4vw, 4rem);
+  width: 100%;
+  max-width: 1120px;
 }
 
 .banner {
   position: relative;
-  z-index: 2;
-  width: 100%;
-  max-width: clamp(560px, 78vw, 880px);
-  margin: 0 auto 1.5rem;
+  flex: 0 1 clamp(280px, 38vw, 480px);
+  max-height: 480px;
+}
+
+/* Spring-green halo behind the banner — matches the brand pattern used
+   on HelloNickiFeature, LBMeetNici, and the loop-breakers cards. */
+.banner::before {
+  content: '';
+  position: absolute;
+  inset: -8%;
+  background: radial-gradient(
+    circle,
+    rgba(56, 255, 153, 0.32) 0%,
+    rgba(56, 255, 153, 0) 65%
+  );
+  filter: blur(36px);
+  pointer-events: none;
+  z-index: -1;
 }
 
 .bannerImg {
   width: 100%;
   height: auto;
   display: block;
+  position: relative;
+  z-index: 1;
 }
 
 .copy {
-  position: relative;
-  z-index: 2;
-  max-width: 660px;
-  margin: 0 auto;
+  flex: 1 1 0;
+  min-width: 0;
+  text-align: left;
+  max-width: 560px;
 }
 
 .pill {
@@ -66,7 +93,7 @@
   line-height: 1.8;
   color: var(--text-muted);
   max-width: 540px;
-  margin: 0 auto 0.8rem;
+  margin: 0 0 0.8rem;
 }
 
 .terms {
@@ -75,7 +102,7 @@
   line-height: 1.8;
   color: var(--text-subtle);
   max-width: 480px;
-  margin: 0 auto 2rem;
+  margin: 0 0 2rem;
   font-style: italic;
 }
 
@@ -83,12 +110,39 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  justify-content: center;
 }
 
 @media (max-width: 760px) {
   .section {
     padding-top: 6rem;
     min-height: auto;
+  }
+
+  .heroRow {
+    flex-direction: column;
+    align-items: center;
+    gap: 1.5rem;
+  }
+
+  .banner {
+    order: -1;
+    flex: 0 0 auto;
+    width: 100%;
+    max-width: clamp(320px, 80vw, 560px);
+  }
+
+  .copy {
+    text-align: center;
+    max-width: 660px;
+  }
+
+  .body,
+  .terms {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .ctas {
+    justify-content: center;
   }
 }
