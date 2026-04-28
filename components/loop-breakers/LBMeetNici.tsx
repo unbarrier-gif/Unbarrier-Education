@@ -17,7 +17,7 @@ export function LBMeetNici() {
           <div className={styles.portraitWrap}>
             <span aria-hidden="true" className={styles.halo} />
             <Image
-              src="/assets/nici-portrait.png"
+              src="/assets/portraits/nici-facing-transparent.png"
               alt="Nici Foote"
               width={460}
               height={460}

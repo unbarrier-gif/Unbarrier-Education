@@ -36,10 +36,10 @@
   z-index: 1;
   width: 100%;
   height: auto;
-  aspect-ratio: 1 / 1;
-  object-fit: cover;
-  border-radius: 50%;
   display: block;
+  /* Transparent PNG — no circle crop. Halo behind already does the
+     orb/spotlight job. Drop-shadow keeps the figure legible against
+     the amethyst page bg. */
   filter: drop-shadow(0 20px 50px rgba(0, 0, 0, 0.35));
 }
 
