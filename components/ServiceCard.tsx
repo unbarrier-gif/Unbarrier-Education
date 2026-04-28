@@ -13,6 +13,8 @@ type Props = {
   accentRgb: string;
   /** Show the "In build" pill. */
   soon?: boolean;
+  /** Override the default "Find out more →" CTA label. */
+  cta?: string;
 };
 
 export function ServiceCard({
@@ -24,6 +26,7 @@ export function ServiceCard({
   accent,
   accentRgb,
   soon,
+  cta = 'Find out more →',
 }: Props) {
   const style = {
     '--accent': accent,
@@ -48,7 +51,7 @@ export function ServiceCard({
       <span className={styles.label}>{label}</span>
       <span className={styles.sub}>{sub}</span>
       <span className={styles.desc}>{desc}</span>
-      <span className={styles.cta}>Find out more →</span>
+      <span className={styles.cta}>{cta}</span>
     </a>
   );
 }

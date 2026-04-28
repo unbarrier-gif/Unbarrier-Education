@@ -2,31 +2,32 @@
   position: relative;
   min-height: 92vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  padding: 9rem clamp(1.5rem, 5vw, 5rem) 4rem;
+  padding: 7rem clamp(1.5rem, 5vw, 5rem) 4rem;
   overflow: hidden;
+  text-align: center;
 }
 
-.figureWrap {
-  position: absolute;
-  right: -50px;
-  top: 52%;
-  transform: translateY(-50%);
-  width: clamp(380px, 46vw, 660px);
-  opacity: 0.92;
-  z-index: 1;
-  pointer-events: none;
+.banner {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: clamp(560px, 78vw, 880px);
+  margin: 0 auto 1.5rem;
 }
 
-.figure {
+.bannerImg {
   width: 100%;
   height: auto;
+  display: block;
 }
 
 .copy {
   position: relative;
   z-index: 2;
   max-width: 660px;
+  margin: 0 auto;
 }
 
 .pill {
@@ -65,7 +66,7 @@
   line-height: 1.8;
   color: var(--text-muted);
   max-width: 540px;
-  margin: 0 0 0.8rem;
+  margin: 0 auto 0.8rem;
 }
 
 .terms {
@@ -74,7 +75,7 @@
   line-height: 1.8;
   color: var(--text-subtle);
   max-width: 480px;
-  margin: 0 0 2rem;
+  margin: 0 auto 2rem;
   font-style: italic;
 }
 
@@ -82,17 +83,12 @@
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+  justify-content: center;
 }
 
 @media (max-width: 760px) {
   .section {
-    padding-top: 7rem;
+    padding-top: 6rem;
     min-height: auto;
-  }
-
-  .figureWrap {
-    right: -30%;
-    width: 90vw;
-    opacity: 0.4;
   }
 }

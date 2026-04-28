@@ -6,6 +6,7 @@ import { LBProblem } from '@/components/loop-breakers/LBProblem';
 import { LBHow } from '@/components/loop-breakers/LBHow';
 import { LBUpcoming } from '@/components/loop-breakers/LBUpcoming';
 import { LBPricing } from '@/components/loop-breakers/LBPricing';
+import { LBOneToOne } from '@/components/loop-breakers/LBOneToOne';
 import { LBTestimonial } from '@/components/loop-breakers/LBTestimonial';
 import { LBShape } from '@/components/loop-breakers/LBShape';
 import { LBMeetNici } from '@/components/loop-breakers/LBMeetNici';
@@ -32,6 +33,7 @@ export default function LoopBreakersPage() {
         <LBHow />
         <LBUpcoming />
         <LBPricing />
+        <LBOneToOne />
         <LBTestimonial />
         <LBShape />
         <LBMeetNici />

@@ -27,12 +27,9 @@ export const metadata: Metadata = {
 //
 // TODO: when Cosmo permission lands, swap "an EdTech team" → "Cosmo" in
 // the lede paragraph below, optionally pull one direct quote.
-//
-// TODO: when an EdTech-discovery TidyCal slot exists, swap the secondary
-// CTA's mailto for the TidyCal href.
 
 const SECONDARY_CTA_HREF =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20discovery%20call';
+  'https://tidycal.com/nici/unbarriervoice-discovery-call';
 const PRIMARY_CTA_HREF =
   'mailto:nici@unbarrier.me?subject=unbarrier.voice%20—%20partnership';
 
@@ -117,8 +114,13 @@ export default function VoicePage() {
           <a href={PRIMARY_CTA_HREF} className={styles.ctaPrimary}>
             Email Nici <span aria-hidden="true">→</span>
           </a>
-          <a href={SECONDARY_CTA_HREF} className={styles.ctaGhost}>
-            Book a 30-min discovery call <span aria-hidden="true">→</span>
+          <a
+            href={SECONDARY_CTA_HREF}
+            className={styles.ctaGhost}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book a 25-min discovery call <span aria-hidden="true">→</span>
           </a>
         </section>
 
