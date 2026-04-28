@@ -38,8 +38,8 @@ export function LBHero() {
           <Image
             src="/assets/illustrations/where-old-stories-become-bold-stories.png"
             alt=""
-            width={400}
-            height={300}
+            width={1600}
+            height={1200}
             className={styles.bannerImg}
             priority
             sizes="(max-width: 760px) 92vw, (max-width: 1200px) 38vw, 480px"
