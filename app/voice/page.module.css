@@ -1,0 +1,154 @@
+.main {
+  position: relative;
+  padding-top: 0;
+  overflow-x: hidden;
+}
+
+.main section,
+.main header {
+  scroll-margin-top: 90px;
+}
+
+.hero {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 3rem) 2rem;
+  position: relative;
+  z-index: 1;
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--orchid-mist);
+  margin: 0 0 18px;
+}
+
+.dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--orchid-mist);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.4rem, 6vw, 4rem);
+  letter-spacing: var(--ls-tight);
+  line-height: 1.04;
+  margin: 0 0 1.4rem;
+  color: var(--text);
+}
+
+.accent {
+  color: var(--orchid-mist);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: clamp(1.1rem, 2vw, 1.25rem);
+  line-height: 1.6;
+  color: var(--text);
+  font-style: italic;
+  margin: 0;
+  border-left: 3px solid var(--orchid-mist);
+  padding-left: 18px;
+}
+
+.body {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 5vw, 3rem) 1rem;
+  position: relative;
+  z-index: 1;
+}
+
+.body p {
+  font-family: var(--font-body);
+  font-size: 1.02rem;
+  line-height: 1.85;
+  color: var(--text-muted);
+  margin: 0 0 1.4rem;
+}
+
+.body p strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.body p em {
+  color: var(--orchid-mist);
+  font-style: italic;
+  font-weight: 600;
+}
+
+.pullQuote {
+  margin: 2rem 0 2.4rem;
+  padding: 1.5rem 1.8rem;
+  border-left: 3px solid var(--orchid-mist);
+  background: color-mix(in srgb, var(--orchid-mist) 6%, transparent);
+  border-radius: 0 12px 12px 0;
+}
+
+.pullQuote p {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: clamp(1.1rem, 1.9vw, 1.3rem);
+  line-height: 1.45;
+  color: var(--text);
+  letter-spacing: -0.005em;
+  margin: 0;
+}
+
+.ctas {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 5vw, 3rem) clamp(4rem, 8vw, 6rem);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  position: relative;
+  z-index: 1;
+}
+
+.ctaPrimary,
+.ctaGhost {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 15px;
+  padding: 13px 28px;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  transition: opacity 150ms ease, background 150ms ease;
+}
+
+.ctaPrimary {
+  background: var(--orchid-mist);
+  color: var(--amethyst);
+  border: 1.5px solid var(--orchid-mist);
+}
+
+.ctaPrimary:hover {
+  opacity: 0.88;
+}
+
+.ctaGhost {
+  background: transparent;
+  color: var(--text);
+  border: 1.5px solid var(--border-strong);
+}
+
+.ctaGhost:hover {
+  border-color: var(--orchid-mist);
+  background: color-mix(in srgb, var(--orchid-mist) 8%, transparent);
+}
