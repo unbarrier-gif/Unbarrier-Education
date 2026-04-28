@@ -25,6 +25,7 @@ const FOOTER_LINK_GROUPS = [
   {
     heading: 'Get in touch',
     links: [
+      { label: 'Hello →', href: '/hello' },
       { label: 'nici@unbarrier.me', href: 'mailto:nici@unbarrier.me' },
       { label: 'Loop Breakers →', href: '/loop-breakers' },
     ],
