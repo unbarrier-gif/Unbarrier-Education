@@ -17,8 +17,6 @@ export const metadata: Metadata = {
   alternates: { canonical: '/hello' },
 };
 
-const SCHOOLS_MAILTO = 'mailto:hello@unbarrier.me?subject=Schools%20%26%20orgs';
-
 export default function HelloPage() {
   return (
     <>
@@ -50,11 +48,10 @@ export default function HelloPage() {
               href={TIDYCAL_LINKS.coaching}
             />
             <CtaCard
-              card="schools"
-              title="Schools & organisations"
-              meta="audit · access · voice — get in touch"
-              href={SCHOOLS_MAILTO}
-              external={false}
+              card="ehcp_fit_call"
+              title="EHCP & Section 7 reports"
+              meta="for families fighting for the right provision · book a free 15-min fit call"
+              href={TIDYCAL_LINKS.ehcpFitCall}
             />
           </div>
         </section>
