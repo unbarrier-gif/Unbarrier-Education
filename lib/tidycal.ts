@@ -3,13 +3,15 @@
 const FALLBACKS = {
   tuesday: 'https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch',
   guest: 'https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking',
-  coaching: 'https://tidycal.com/nici/accessible-coaching-monthly',
+  coaching: 'https://tidycal.com/nici/chat-with-nici',
+  ehcpFitCall: 'https://tidycal.com/nici/chat-about-your-child',
 } as const;
 
 export const TIDYCAL_LINKS = {
   tuesday: process.env.NEXT_PUBLIC_TIDYCAL_TUESDAY || FALLBACKS.tuesday,
   guest: process.env.NEXT_PUBLIC_TIDYCAL_GUEST || FALLBACKS.guest,
   coaching: process.env.NEXT_PUBLIC_TIDYCAL_COACHING || FALLBACKS.coaching,
+  ehcpFitCall: process.env.NEXT_PUBLIC_TIDYCAL_EHCP_FIT_CALL || FALLBACKS.ehcpFitCall,
 } as const;
 
 export type TidyCalKey = keyof typeof TIDYCAL_LINKS;
