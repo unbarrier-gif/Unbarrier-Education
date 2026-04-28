@@ -102,6 +102,33 @@
   --glow-green:  0 0 40px rgba(56, 255, 153, 0.35);
   --glow-orchid: 0 0 40px rgba(219, 125, 204, 0.35);
   --glow-yellow: 0 0 40px rgba(255, 194, 3, 0.35);
+
+  /* Multiplier consumed by <Glow> + any other ambient orb. Default 1;
+     high-contrast mode sets it to 0 so background blur orbs disappear
+     without affecting the brand-coloured CTAs. */
+  --glow-opacity-multiplier: 1;
+}
+
+/* ── HIGH-CONTRAST OVERRIDES ────────────────────────────────────────────── */
+/* Class is applied to <html> by app/layout.tsx's pre-paint script and
+   maintained by lib/useContrast.ts. Brand accent colours (spring-green,
+   orchid-mist, etc.) intentionally stay on-brand — what changes is text
+   legibility, border weight, and ambient-orb visibility. */
+html.contrast-high {
+  --text:           #ffffff;
+  --text-muted:     rgba(255, 255, 255, 0.92);
+  --text-subtle:    rgba(255, 255, 255, 0.78);
+  --text-faint:     rgba(255, 255, 255, 0.62);
+
+  --border-default: rgba(255, 255, 255, 0.45);
+  --border-subtle:  rgba(255, 255, 255, 0.32);
+  --border-strong:  rgba(255, 255, 255, 0.7);
+
+  --surface-raised: rgba(255, 255, 255, 0.08);
+  --surface-lift:   rgba(255, 255, 255, 0.12);
+
+  /* Disable ambient blur orbs — they reduce edge contrast on text. */
+  --glow-opacity-multiplier: 0;
 }
 
 *,

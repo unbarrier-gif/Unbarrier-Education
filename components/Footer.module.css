@@ -136,3 +136,10 @@
   color: var(--text-faint);
   margin: 0;
 }
+
+.bottomRow {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}

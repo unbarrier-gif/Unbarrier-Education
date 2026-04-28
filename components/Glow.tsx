@@ -40,7 +40,10 @@ export function Glow({
         width: size,
         height: size,
         background: color,
-        opacity,
+        // Multiplier comes from globals.css — `1` by default, `0` in
+        // high-contrast mode. Lets the contrast toggle disable ambient
+        // orbs without changing every Glow callsite.
+        opacity: `calc(${opacity} * var(--glow-opacity-multiplier, 1))`,
         filter: `blur(${blur}px)`,
       }}
     />

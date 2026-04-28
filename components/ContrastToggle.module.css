@@ -1,0 +1,45 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: rgba(240, 235, 229, 0.6);
+  background: transparent;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 6px 12px;
+  cursor: pointer;
+  transition: color 150ms ease, border-color 150ms ease, background 150ms ease;
+}
+
+.btn:hover {
+  color: var(--text);
+  border-color: var(--border-strong);
+}
+
+.btn[data-on='true'] {
+  color: var(--amethyst);
+  background: var(--text);
+  border-color: var(--text);
+}
+
+/* Footer variant — slightly larger, less padded */
+.footer {
+  font-size: 13px;
+  padding: 8px 14px;
+}
+
+@media (max-width: 720px) {
+  /* Nav variant hides its label on narrow screens to match the existing
+     nav-link hide-below-720 pattern; the icon stays as the affordance. */
+  .nav .label {
+    display: none;
+  }
+
+  .nav {
+    padding: 6px 8px;
+  }
+}
