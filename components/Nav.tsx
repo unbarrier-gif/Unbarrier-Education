@@ -3,6 +3,7 @@
 import type { CSSProperties } from 'react';
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
+import { ContrastToggle } from './ContrastToggle';
 import { Wordmark } from './Wordmark';
 import styles from './Nav.module.css';
 
@@ -66,6 +67,7 @@ export function Nav({ active }: Props) {
               );
             })}
           </ul>
+          <ContrastToggle variant="nav" />
           <a
             href="mailto:nici@unbarrier.me"
             className={styles.pill}

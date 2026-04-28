@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import { ContrastToggle } from './ContrastToggle';
 import { Wordmark } from './Wordmark';
 import styles from './Footer.module.css';
 
@@ -97,7 +98,10 @@ function FullFooter() {
           &copy; 2026 Nici Foote / unbarrier.me · Unbarrier Education Ltd ·
           Co.&nbsp;No.&nbsp;16603630
         </p>
-        <p className={styles.bottomLine}>Built with inclusion first.</p>
+        <div className={styles.bottomRow}>
+          <ContrastToggle variant="footer" />
+          <p className={styles.bottomLine}>Built with inclusion first.</p>
+        </div>
       </div>
     </footer>
   );

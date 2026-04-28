@@ -65,6 +65,18 @@ export const viewport: Viewport = {
 
 const PLAUSIBLE_DOMAIN = process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN;
 
+// Pre-paint script: applies the .contrast-high class on <html> before
+// first paint so high-contrast users never see a flash of low-contrast
+// content. Reads the same localStorage key + media query as
+// lib/useContrast.ts — keep both in sync.
+const CONTRAST_BOOTSTRAP = `(function(){
+  try {
+    var s = localStorage.getItem('unbarrier:contrast');
+    var hi = s === 'high' || (s !== 'default' && window.matchMedia && window.matchMedia('(prefers-contrast: more)').matches);
+    if (hi) document.documentElement.classList.add('contrast-high');
+  } catch (e) {}
+})();`;
+
 export default function RootLayout({
   children,
 }: {
@@ -75,6 +87,10 @@ export default function RootLayout({
       lang="en-GB"
       className={`${outfit.variable} ${comfortaa.variable} ${cherryBomb.variable}`}
     >
+      <head>
+        {/* eslint-disable-next-line react/no-danger */}
+        <script dangerouslySetInnerHTML={{ __html: CONTRAST_BOOTSTRAP }} />
+      </head>
       <body>
         {children}
         {PLAUSIBLE_DOMAIN && (
