@@ -7,9 +7,10 @@ import { ContrastToggle } from './ContrastToggle';
 import { Wordmark } from './Wordmark';
 import styles from './Nav.module.css';
 
-// Phase 3 link-swap: audit / access / voice currently anchor-scroll to
-// #services; once /audit, /access, /voice routes ship, swap each href to
-// the real path. Tracked in _inbound/Task List.html.
+// Phase 3 link-swap: audit / access still anchor-scroll to #services
+// until those routes ship. voice now points at the live /voice holding
+// page (partnership invitation, not a full product page). Tracked in
+// _inbound/Task List.html.
 //
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
@@ -17,7 +18,7 @@ import styles from './Nav.module.css';
 const LINKS = [
   { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/#services', dot: 'var(--princeton-orange)' },
-  { key: 'voice', label: 'voice', href: '/#services', dot: 'var(--orchid-mist)' },
+  { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
   { key: 'loop-breakers', label: 'loop breakers', href: '/loop-breakers', dot: 'var(--school-bus-yellow)' },
   { key: 'blog', label: 'blog', href: '/blog' },
   { key: 'about', label: 'about', href: '/#about' },
