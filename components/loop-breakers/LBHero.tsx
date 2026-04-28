@@ -11,13 +11,13 @@ export function LBHero() {
 
       <div aria-hidden="true" className={styles.figureWrap}>
         <Image
-          src="/assets/illustrations/hero-bring-the-joy.png"
+          src="/assets/illustrations/bring-the-joy-figure.png"
           alt=""
-          width={840}
-          height={840}
+          width={720}
+          height={720}
           className={styles.figure}
           priority
-          sizes="(max-width: 768px) 70vw, 50vw"
+          sizes="(max-width: 768px) 60vw, 42vw"
         />
       </div>
 

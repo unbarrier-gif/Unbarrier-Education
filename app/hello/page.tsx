@@ -3,6 +3,7 @@ import { CtaCard } from '@/components/CtaCard';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { HelloHero } from '@/components/HelloHero';
+import { HelloNickiFeature } from '@/components/HelloNickiFeature';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { SayHiForm } from '@/components/SayHiForm';
@@ -57,6 +58,8 @@ export default function HelloPage() {
             />
           </div>
         </section>
+
+        <HelloNickiFeature />
 
         <section className={styles.bandWrap}>
           <Glow
