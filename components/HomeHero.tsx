@@ -32,7 +32,7 @@ export function HomeHero() {
           height={1280}
           priority
           unoptimized
-          sizes="(max-width: 768px) 0px, 38vw"
+          sizes="(max-width: 768px) 0px, 34vw"
         />
       </div>
 
