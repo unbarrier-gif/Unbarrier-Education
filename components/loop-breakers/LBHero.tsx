@@ -36,10 +36,10 @@ export function LBHero() {
 
         <div className={styles.banner} aria-hidden="true">
           <Image
-            src="/assets/illustrations/old-stories-become-bold-stories.png"
+            src="/assets/illustrations/where-old-stories-become-bold-stories.png"
             alt=""
-            width={4961}
-            height={3508}
+            width={400}
+            height={300}
             className={styles.bannerImg}
             priority
             sizes="(max-width: 760px) 92vw, (max-width: 1200px) 38vw, 480px"
