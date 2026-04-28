@@ -7,6 +7,11 @@ import { SESSIONS, type LBSession } from './sessions';
 
 export type GuestStatus = 'live' | 'draft' | 'past';
 
+export type SketchNoteExample = {
+  src: string;
+  alt: string;
+};
+
 export type GuestStage = {
   slug: string;
   sessionSlug: string;
@@ -17,6 +22,7 @@ export type GuestStage = {
     bio: string;
     photo?: string;
     links?: Record<string, string>;
+    sketchNoteExamples?: SketchNoteExample[];
   };
   session: {
     title: string;

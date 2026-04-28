@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import type { GuestStage } from '@/content/loop-breakers/guests';
 import styles from './GuestBio.module.css';
 
@@ -11,6 +12,19 @@ export function GuestBio({ guest }: Props) {
       className={styles.section}
       style={{ ['--c' as string]: guest.session.accent }}
     >
+      {guest.guest.photo ? (
+        <div className={styles.portraitWrap}>
+          <span aria-hidden="true" className={styles.halo} />
+          <Image
+            src={guest.guest.photo}
+            alt={guest.guest.name}
+            width={200}
+            height={200}
+            className={styles.portrait}
+            sizes="200px"
+          />
+        </div>
+      ) : null}
       <p className={styles.eyebrow}>Your guest host</p>
       <h2 className={styles.name}>{guest.guest.name}</h2>
       <p className={styles.role}>{guest.guest.role}</p>
