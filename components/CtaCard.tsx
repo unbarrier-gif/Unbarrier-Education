@@ -3,7 +3,7 @@
 import type { CSSProperties } from 'react';
 import styles from './CtaCard.module.css';
 
-type CardKey = 'tuesday' | 'guest' | 'coaching' | 'ehcp_fit_call';
+type CardKey = 'tuesday' | 'guest' | 'coaching' | 'ehcp_fit_call' | 'template';
 
 type Props = {
   card: CardKey;
@@ -18,6 +18,7 @@ const ACCENT: Record<CardKey, string> = {
   guest: 'var(--orchid-mist)',
   coaching: 'var(--pearl-aqua)',
   ehcp_fit_call: 'var(--princeton-orange)',
+  template: 'var(--school-bus-yellow)',
 };
 
 const ACCENT_RGB: Record<CardKey, string> = {
@@ -25,6 +26,7 @@ const ACCENT_RGB: Record<CardKey, string> = {
   guest: '219, 125, 204',
   coaching: '105, 217, 209',
   ehcp_fit_call: '255, 138, 28',
+  template: '255, 194, 3',
 };
 
 export function CtaCard({ card, title, meta, href, external = true }: Props) {
