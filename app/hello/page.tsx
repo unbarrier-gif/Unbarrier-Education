@@ -39,7 +39,8 @@ export default function HelloPage() {
               card="guest"
               title="Wed Guest Stage · Sketch-noting"
               meta="20 May · with Nicki Hambleton · £15 · 90 min"
-              href={TIDYCAL_LINKS.guest}
+              href="/guest-stage/nicki-hambleton-sketch-noting"
+              external={false}
             />
             <CtaCard
               card="coaching"
