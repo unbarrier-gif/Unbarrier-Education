@@ -45,11 +45,11 @@ export function LBPricing() {
               tag="Wednesday · off-cadence"
               title="Guest Stage"
               price="£25"
-              priceSub="sliding · £15 / £25 / £40 tiers"
+              priceSub="flat · one seat"
               items={[
                 'Up to 40 people',
                 'Invited neurodivergent practitioners',
-                'You pick the tier at checkout',
+                '£5 access seats on request, no questions',
                 'Topic varies — see Upcoming',
               ]}
               cta="See next Guest Stage"
@@ -63,7 +63,7 @@ export function LBPricing() {
               priceSub="lifetime · locked at signup"
               items={[
                 'Every Tuesday Loop Breakers session, £0 at the door',
-                'Wednesday Guest Stages at £15 sliding tier',
+                'Wednesday Guest Stages included (no extra seat fee)',
                 'Guest Stage monthly access',
                 'Voice on what Loop Breakers becomes',
               ]}

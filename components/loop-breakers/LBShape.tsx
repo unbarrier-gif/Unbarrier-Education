@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import { Eyebrow } from '../Eyebrow';
 import { SectionBar } from '../SectionBar';
 import styles from './LBShape.module.css';
@@ -12,6 +13,16 @@ export function LBShape() {
   return (
     <section id="shape-it" className={styles.section}>
       <SectionBar color="var(--orchid-mist)" />
+      <div className={styles.banner} aria-hidden="true">
+        <Image
+          src="/assets/banner/loop-breakers-form-banner.png"
+          alt=""
+          width={3200}
+          height={800}
+          sizes="(max-width: 760px) 100vw, 760px"
+          className={styles.bannerImage}
+        />
+      </div>
       <div className={styles.card}>
         <Eyebrow color="var(--orchid-mist)">Shape the next session</Eyebrow>
         <h2 className={styles.heading}>What are you stuck on?</h2>

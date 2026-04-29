@@ -21,6 +21,7 @@ export type GuestStage = {
     tagline: string;
     bio: string;
     photo?: string;
+    heroImage?: { src: string; alt: string };
     links?: Record<string, string>;
     sketchNoteExamples?: SketchNoteExample[];
   };

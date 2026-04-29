@@ -25,18 +25,12 @@ export function GuestStageBookingBlock({ guest, session }: Props) {
               <span className={styles.price}>
                 {session.price.currency}
                 {session.price.amount}
-                {session.price.sliding ? ' sliding' : ''}
               </span>
-              {session.price.sliding && session.price.slidingTiers ? (
-                <span className={styles.tiers}>
-                  {' '}
-                  · {session.price.currency}
-                  {session.price.slidingTiers.join(
-                    ` / ${session.price.currency}`,
-                  )}{' '}
-                  — pick at checkout
-                </span>
-              ) : null}
+              <span className={styles.priceSub}>
+                {' '}· One seat ·{' '}
+                {session.durationMin} minutes with{' '}
+                {guest.guest.name.split(' ')[0]}
+              </span>
             </p>
           ) : null}
         </div>
@@ -71,7 +65,17 @@ export function GuestStageBookingBlock({ guest, session }: Props) {
           </p>
         )}
         <p className={styles.note}>
-          Payment via TidyCal at booking. Free reschedule up to 24h before.
+          Payment via Stripe at booking. Free reschedule up to 24h before.
+        </p>
+        <p className={styles.accessNote}>
+          Need a £5 access seat? Email{' '}
+          <a
+            className={styles.mailto}
+            href="mailto:nici@unbarrier.me?subject=Access%20seat%20-%20Guest%20Stage"
+          >
+            nici@unbarrier.me
+          </a>{' '}
+          — quietly, no questions.
         </p>
       </div>
     </section>

@@ -198,15 +198,15 @@ export function NickiHambletonLetter() {
         <li>
           <b>Phase 1 (now)</b> — £75 per session. Tuesday Loop Breakers at £10
           (£5 access seat). Wednesday Guest Stages — like ours on 20 May — at
-          £25 sliding (£15 / £25 / £40).
+          flat <b>£25</b> (£5 access seats by email request).
         </li>
         <li>
           <b>
             Phase 2 (when we hit 10 Tuesday regulars + 2 sold-out Guest Stages
             in a row)
           </b>{' '}
-          — your fee rises to <b>£125</b>. Wednesday tickets move to £35
-          sliding. Tuesday stays £10 — that&apos;s the access promise.
+          — your fee rises to <b>£125</b>. Wednesday tickets move to £35.
+          Tuesday stays £10 — that&apos;s the access promise.
         </li>
         <li>
           <b>Phase 3 (subscription model, weekly cadence, 20+ members)</b> —{' '}

@@ -3,9 +3,23 @@
   position: relative;
 }
 
+.banner {
+  max-width: 760px;
+  margin: 2rem auto 0;
+  border-radius: 18px;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.bannerImage {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
 .card {
   max-width: 760px;
-  margin: 3rem auto 0;
+  margin: 1rem auto 0;
   background: linear-gradient(
     135deg,
     rgba(219, 125, 204, 0.1),

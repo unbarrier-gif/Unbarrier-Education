@@ -205,11 +205,11 @@ export default function GuestHostKitPage() {
                       regardless of attendance · no-shows don&apos;t land on
                       you.
                       <em>
-                        Tickets are £15 (sliding scale £8 / £15 / £25 for
-                        accessibility). At a Guest Stage of 20+ paying
-                        attendees, the session covers your fee with margin.
-                        At a regular session of 10, Unbarrier tops up the
-                        gap — deliberate, sustainable, honest about Phase 1.
+                        Tickets are flat £25 (£5 access seats on request, no
+                        questions). At a Guest Stage of 20+ paying attendees,
+                        the session covers your fee with margin. At a regular
+                        session of 10, Unbarrier tops up the gap —
+                        deliberate, sustainable, honest about Phase 1.
                       </em>
                     </>
                   ),
@@ -223,9 +223,8 @@ export default function GuestHostKitPage() {
                     <>
                       <b>£125 flat fee per session</b> · same flat-fee model
                       · no risk to you. Triggered when Wednesday Guest Stage
-                      tickets move to £35 (sliding £20 / £35 / £50). Tuesday
-                      Loop Breakers stays at £10 — that&apos;s the access
-                      floor.
+                      tickets move to flat £35. Tuesday Loop Breakers stays
+                      at £10 — that&apos;s the access floor.
                     </>
                   ),
                 },

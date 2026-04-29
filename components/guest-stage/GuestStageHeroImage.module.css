@@ -1,0 +1,17 @@
+.section {
+  padding: clamp(1rem, 2vw, 1.5rem) clamp(1.25rem, 5vw, 3rem);
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.frame {
+  border-radius: 20px;
+  overflow: hidden;
+  background: var(--amethyst);
+}
+
+.image {
+  width: 100%;
+  height: auto;
+  display: block;
+}

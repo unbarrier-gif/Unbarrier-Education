@@ -79,7 +79,7 @@
       "seats": 40,
       "seatsLeft": 40,
       "isGuestStage": true,
-      "price": { "amount": 25, "currency": "£", "note": "Sliding £15 / £25 / £40 — pick at checkout", "sliding": true, "slidingTiers": [15, 25, 40] },
+      "price": { "amount": 25, "currency": "£", "note": "One seat · 90 minutes", "sliding": false },
       "status": "soon",
       "tags": ["Guest Stage", "Visual thinking", "Creativity"],
       "accent": "var(--orchid-mist)",

@@ -51,9 +51,10 @@
   letter-spacing: -0.02em;
 }
 
-.tiers {
+.priceSub {
   color: var(--text-subtle);
   font-size: 0.85rem;
+  font-weight: 400;
 }
 
 .summary {
@@ -99,4 +100,12 @@
   font-size: 0.82rem;
   color: var(--text-subtle);
   margin: 14px 0 0;
+}
+
+.accessNote {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-subtle);
+  margin: 6px 0 0;
+  opacity: 0.85;
 }
