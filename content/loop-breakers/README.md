@@ -29,4 +29,4 @@ The `tidycal` block at the top of `sessions.json` is the source of truth for boo
 |---|---|
 | `tuesday` | https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch |
 | `guestStage` | https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking |
-| `oneToOne` | https://tidycal.com/nici/accessible-coaching-monthly |
+| `oneToOne` | https://tidycal.com/nici/chat-with-nici |
