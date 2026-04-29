@@ -79,10 +79,8 @@ export default function VoicePage() {
           </p>
         </header>
 
-        {/* 2. WHAT I SEE — no SectionBar between hero and this section.
-            Hero flows straight into the observations. The other section
-            transitions on the page still use SectionBar per the design
-            system. */}
+        {/* 2. WHAT I SEE */}
+        <SectionBar color="var(--orchid-mist)" />
         <section id="voice-what-i-see" className={styles.observations}>
           <div className={styles.observationsHead}>
             <Eyebrow color="var(--orchid-mist)">What I see, again and again</Eyebrow>
