@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>unbarrier.voice — for EdTech companies</title>
+<meta name="description" content="I help EdTech teams build products people actually use, understand, and benefit from. The bit between a product launch and a child who's actually using it." />
+<link rel="stylesheet" href="../../colors_and_type.css" />
+<style>
+  html, body { margin: 0; padding: 0; background: var(--amethyst); color: var(--text); font-family: Comfortaa, system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  a { color: inherit; }
+  section { scroll-margin-top: 80px; }
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" crossorigin="anonymous"></script>
+
+<!-- Shared primitives + nav + footer from the main UI kit -->
+<script type="text/babel" src="../unbarrier-website/Primitives.jsx"></script>
+<script type="text/babel" src="../unbarrier-website/Nav.jsx"></script>
+<script type="text/babel" src="../unbarrier-website/Sections.jsx"></script>
+
+<!-- Holding page -->
+<script type="text/babel" src="VoiceHolding.jsx"></script>
+
+<script type="text/babel">
+  ReactDOM.createRoot(document.getElementById("root")).render(<VoiceHolding />);
+</script>
+</body>
+</html>
