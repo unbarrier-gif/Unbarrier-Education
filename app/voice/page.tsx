@@ -28,8 +28,6 @@ export const metadata: Metadata = {
   },
 };
 
-const HERO_EMAIL =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20a%20conversation';
 const CTA_EMAIL =
   'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello';
 
@@ -61,39 +59,30 @@ export default function VoicePage() {
     <>
       <Nav active="voice" />
       <main className={styles.main}>
-        {/* 1. HERO */}
-        <section id="voice-home" className={styles.hero}>
-          <Glow color="var(--orchid-mist)" left="-120px" top="14%" size={680} opacity={0.1} />
-          <Glow color="var(--spring-green)" left="58%" top="38%" size={460} opacity={0.06} />
+        <Glow color="var(--orchid-mist)" left="-120px" top="6%" size={620} opacity={0.1} />
+        <Glow color="var(--spring-green)" right="-100px" top="40%" size={460} opacity={0.07} />
 
-          <div className={styles.heroInner}>
-            <Eyebrow color="var(--orchid-mist)">unbarrier.voice — for EdTech companies</Eyebrow>
+        {/* 1. HERO — deployed structure: eyebrow with bullet dot, Cherry Bomb
+            sentence-case two-tone H1, blockquote-style tagline. Three elements,
+            nothing more. */}
+        <header className={styles.hero}>
+          <p className={styles.eyebrow}>
+            <span aria-hidden="true" className={styles.dot} />
+            unbarrier.voice — partnership invitation
+          </p>
+          <h1 className={styles.heading}>
+            Students are <span className={styles.accent}>the why.</span>
+          </h1>
+          <p className={styles.lede}>
+            I help you build products people actually use, understand, trust,
+            and benefit from.
+          </p>
+        </header>
 
-            <p className={styles.cherryLine}>students are the why.</p>
-
-            <h1 className={styles.heading}>
-              I help EdTech teams build products people
-              <br />
-              <span className={styles.accent}>actually use, understand, and benefit from.</span>
-            </h1>
-
-            <p className={styles.lede}>
-              I&apos;m Nici — an early-years specialist, Apple Professional Learning
-              Specialist, and educator with dyslexia and ADHD. I work inside
-              EdTech product rooms on the bit most companies miss: what children
-              actually do with the thing you&apos;ve built — not what adults guess
-              they do.
-            </p>
-
-            <div className={styles.heroCtas}>
-              <Button href={HERO_EMAIL} color="var(--orchid-mist)">Email Nici</Button>
-              <Button href="#voice-what-i-see" variant="ghost">What I see →</Button>
-            </div>
-          </div>
-        </section>
-
-        {/* 2. WHAT I SEE */}
-        <SectionBar color="var(--orchid-mist)" />
+        {/* 2. WHAT I SEE — no SectionBar between hero and this section.
+            Hero flows straight into the observations. The other section
+            transitions on the page still use SectionBar per the design
+            system. */}
         <section id="voice-what-i-see" className={styles.observations}>
           <div className={styles.observationsHead}>
             <Eyebrow color="var(--orchid-mist)">What I see, again and again</Eyebrow>
@@ -113,9 +102,10 @@ export default function VoicePage() {
           <ol className={styles.observationsList}>
             {OBSERVATIONS.map(({ n, text }) => (
               <li key={n} className={styles.observation}>
-                <span className={styles.observationNumber} aria-hidden="true">
+                <span aria-hidden="true" className={styles.bigNum}>
                   {n}
                 </span>
+                <p className={styles.observationLabel}>observation {n}</p>
                 <p className={styles.observationText}>{text}</p>
               </li>
             ))}
