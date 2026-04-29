@@ -43,24 +43,32 @@ export function NickiHambletonLetter() {
       <h2>A session I&apos;d love to co-craft with you</h2>
 
       <div className={styles.sessionIdea}>
-        <h3>Proposed working title:</h3>
+        <h3>Working title (yours, kept):</h3>
         <p>
           <em className={styles.accent}>
-            &ldquo;Sketch-noting for joy (and for thinking) — drawing as a way
-            out of the loop&rdquo;
+            &ldquo;Sketch-noting for joy (and for thinking)&rdquo;
           </em>
         </p>
         <p>
           90 minutes. For micro-business owners who&apos;ve been circling an
           idea for months and can&apos;t write their way out of it. You teach
-          drawing-as-thinking. They bring a pen and the thing that&apos;s stuck.
-          By the end of the session, the tangle is on paper and there&apos;s one
-          obvious next step.
+          drawing-as-thinking — and you&apos;ve already shown me the running
+          order you&apos;d want.
+        </p>
+        <p>
+          <b>Settle first</b> — that quiet line work you did in your workshop,
+          a meditative few minutes before anyone has to think hard. <b>Then
+          surface the tangle</b> — boxes, simple shapes, getting whatever
+          they&apos;re stuck on out of their head and onto paper.{' '}
+          <b>Then the path</b> — metaphor drawing, the mountain or the rabbit
+          holes or whatever lands. They leave with the tangle visible, in
+          shapes they can move and label, and one obvious next step.
         </p>
         <p>
           This is <em className={styles.accent}>not</em> sketch-noting for
           educators. It&apos;s sketch-noting for the woman who has rewritten her
-          landing page eleven times and still can&apos;t ship it.
+          landing page eleven times and still can&apos;t ship it.{' '}
+          <em>You teach for 60. I hold the Q&amp;A for the last 30.</em>
         </p>
       </div>
 
@@ -88,7 +96,7 @@ export function NickiHambletonLetter() {
         </li>
         <li>
           <b>You&apos;ve been the woman with eleven rabbit holes too.</b>{' '}
-          That&apos;s not a credential, it&apos;s a credibility — and it&apos;s
+          That&apos;s not a credential, it&apos;s credibility — and it&apos;s
           what this room is hungry for.
         </li>
         <li>
@@ -126,6 +134,23 @@ export function NickiHambletonLetter() {
           <em>see what we get</em> when the audience is yours, not just mine.
         </p>
       </div>
+
+      <h2>One thing to say plainly — this isn&apos;t a one-off in my head</h2>
+
+      <p>
+        I want you to know I&apos;m holding May 20 as <em>the first session</em>,
+        not the only one. We talked about a series, about regular slots,
+        about the asset pack you&apos;d design, about what your work might do
+        inside Loop Breakers over time. None of that needs deciding now —
+        and I don&apos;t want this letter to pin you to anything beyond May 20.
+      </p>
+
+      <p>
+        But I also don&apos;t want you reading the letter and thinking
+        I&apos;m only thinking one session ahead. I&apos;m not. The bigger
+        conversation is open whenever you want to have it — on the prep call,
+        after May 20 lands, or in a separate chat with proper time. Your call.
+      </p>
 
       <h2>And — looking ahead — a smaller, premium version of you</h2>
 
@@ -176,7 +201,7 @@ export function NickiHambletonLetter() {
           £75 is a Phase 1 fee, not a market fee.
         </em>{' '}
         It reflects exactly where Loop Breakers is right now — small,
-        just-launched, tickets at £15. It&apos;s the fee I can pay you without
+        just-launched, tickets at £10. It&apos;s the fee I can pay you without
         it costing the business something it can&apos;t afford yet, and without
         me quietly subsidising it from a personal account that frankly
         doesn&apos;t have it to give.
@@ -198,7 +223,7 @@ export function NickiHambletonLetter() {
         <li>
           <b>Phase 1 (now)</b> — £75 per session. Tuesday Loop Breakers at £10
           (£5 access seat). Wednesday Guest Stages — like ours on 20 May — at
-          flat <b>£25</b> (£5 access seats by email request).
+          flat <b>£25</b> (no access tier on Wednesdays).
         </li>
         <li>
           <b>
