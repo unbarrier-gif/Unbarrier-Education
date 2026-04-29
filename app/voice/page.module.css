@@ -9,6 +9,8 @@
   scroll-margin-top: 90px;
 }
 
+/* ── 1. HERO — deployed structure: eyebrow w/ dot, Cherry Bomb H1, blockquote lede ── */
+
 .hero {
   max-width: 720px;
   margin: 0 auto;
@@ -62,93 +64,134 @@
   padding-left: 18px;
 }
 
-.body {
-  max-width: 720px;
+/* ── 2. WHAT I SEE ────────────────────────────────────────────── */
+
+.observations {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1100px;
   margin: 0 auto;
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 5vw, 3rem) 1rem;
-  position: relative;
-  z-index: 1;
 }
 
-.body p {
+.observationsHead {
+  margin-bottom: 3rem;
+  max-width: 720px;
+}
+
+.h2 {
+  font-family: var(--font-heading);
+  font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+  font-weight: 800;
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--text);
+  margin: 0 0 1rem;
+}
+
+.observationsLede {
   font-family: var(--font-body);
-  font-size: 1.02rem;
-  line-height: 1.85;
   color: var(--text-muted);
-  margin: 0 0 1.4rem;
-}
-
-.body p strong {
-  color: var(--text);
-  font-weight: 700;
-}
-
-.body p em {
-  color: var(--orchid-mist);
-  font-style: italic;
-  font-weight: 600;
-}
-
-.pullQuote {
-  margin: 2rem 0 2.4rem;
-  padding: 1.5rem 1.8rem;
-  border-left: 3px solid var(--orchid-mist);
-  background: color-mix(in srgb, var(--orchid-mist) 6%, transparent);
-  border-radius: 0 12px 12px 0;
-}
-
-.pullQuote p {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: clamp(1.1rem, 1.9vw, 1.3rem);
-  line-height: 1.45;
-  color: var(--text);
-  letter-spacing: -0.005em;
   margin: 0;
+  max-width: 580px;
+  line-height: 1.7;
 }
 
-.ctas {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: clamp(2rem, 4vw, 3rem) clamp(1.5rem, 5vw, 3rem) clamp(4rem, 8vw, 6rem);
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
+.observationsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 16px;
+}
+
+/* Observation cards mirror the LBHow ("Here's what happens") pattern:
+   small uppercase label inside, large ghosted number sitting behind. */
+.observation {
+  --c: var(--orchid-mist);
+  position: relative;
+  overflow: hidden;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-left: 3px solid var(--c);
+  border-radius: 14px;
+  padding: 22px 24px 26px;
+}
+
+.bigNum {
+  position: absolute;
+  top: -10px;
+  right: 8px;
+  font-size: 96px;
+  font-weight: 800;
+  line-height: 1;
+  color: var(--c);
+  opacity: 0.08;
+  font-family: var(--font-heading);
+  user-select: none;
+  pointer-events: none;
+}
+
+.observationLabel {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  color: var(--c);
+  margin: 0 0 10px;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  text-transform: uppercase;
   position: relative;
   z-index: 1;
 }
 
-.ctaPrimary,
-.ctaGhost {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 15px;
-  padding: 13px 28px;
-  border-radius: var(--radius-pill);
-  text-decoration: none;
-  transition: opacity 150ms ease, background 150ms ease;
+.observationText {
+  font-family: var(--font-body);
+  font-size: clamp(0.96rem, 1.7vw, 1.05rem);
+  line-height: 1.75;
+  color: var(--text-muted);
+  margin: 0;
+  position: relative;
+  z-index: 1;
 }
 
-.ctaPrimary {
-  background: var(--orchid-mist);
-  color: var(--amethyst);
-  border: 1.5px solid var(--orchid-mist);
+/* ── 3. WHERE I'M AT ─────────────────────────────────────────── */
+
+.where {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  position: relative;
+  overflow: hidden;
 }
 
-.ctaPrimary:hover {
-  opacity: 0.88;
+.whereInner {
+  max-width: 760px;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
-.ctaGhost {
-  background: transparent;
-  color: var(--text);
-  border: 1.5px solid var(--border-strong);
+.whereParagraph {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.8;
+  margin: 0 0 1.2rem;
 }
 
-.ctaGhost:hover {
-  border-color: var(--orchid-mist);
-  background: color-mix(in srgb, var(--orchid-mist) 8%, transparent);
+.whereParagraph:last-child {
+  margin-bottom: 0;
+}
+
+/* ── 4. CTA ──────────────────────────────────────────────────── */
+
+.cta {
+  padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.ctaLede {
+  font-family: var(--font-body);
+  color: var(--text-muted);
+  margin: 0 auto 2rem;
+  max-width: 520px;
+  line-height: 1.7;
 }

@@ -1,37 +1,58 @@
 import type { Metadata } from 'next';
+import { Button } from '@/components/Button';
+import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { SectionBar } from '@/components/SectionBar';
 import styles from './page.module.css';
 
+// Holding page for unbarrier.voice. Stays small, honest, and a clear signal
+// to EdTech firms that Nici is in this work and they can come and talk.
+// Replaced wholesale with the full named version once the partnership
+// conversation with the EdTech team is complete and case-study permission
+// is granted. See _inbound/voice/voice-holding-notes.md for what is
+// deliberately NOT on this page and why.
+
 export const metadata: Metadata = {
-  title: 'unbarrier.voice — students are the why',
+  title: 'unbarrier.voice — for EdTech companies',
   description:
-    "I help you build products people actually use, understand, trust, and benefit from. A holding page for unbarrier.voice — looking for EdTech partners to build it with.",
+    "I help EdTech teams build products people actually use, understand, and benefit from. The bit between a product launch and a child who's actually using it.",
   alternates: { canonical: '/voice' },
   openGraph: {
-    title: 'unbarrier.voice — students are the why',
+    title: 'unbarrier.voice — for EdTech companies',
     description:
-      "Pupil voice as the input to the product, not the output. Looking for EdTech partners to build it with.",
+      "I help EdTech teams build products people actually use, understand, and benefit from.",
     url: 'https://unbarrier.me/voice',
     type: 'website',
   },
 };
 
-// Holding page — the unbarrier.voice product isn't built yet. This route
-// exists to capture inbound EdTech interest, tell the case-study story
-// (Cosmo unnamed pending permission), and invite partnership not vendor
-// engagements. Voice rule for this strand per Phase 3 §01: warm, honest,
-// "this is what we hear when we listen". Audience is locked to EdTech
-// (CPO / Head of Product / Customer Success Lead).
-//
-// TODO: when Cosmo permission lands, swap "an EdTech team" → "Cosmo" in
-// the lede paragraph below, optionally pull one direct quote.
+const CTA_EMAIL =
+  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello';
 
-const SECONDARY_CTA_HREF =
-  'https://tidycal.com/nici/unbarriervoice-discovery-call';
-const PRIMARY_CTA_HREF =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20—%20partnership';
+const OBSERVATIONS = [
+  {
+    n: '01',
+    text: "Teachers want to be 99.8% confident in a tool before they use it. Most products are designed for the 5% who'll fiddle until it works. The other 95% open it, get stuck, and go back to whatever they were doing before.",
+  },
+  {
+    n: '02',
+    text: "The current generation arriving into reception are less ready for school than any I've taught. Less language, less regulation, less stamina. Products designed for the child you imagined three years ago aren't the children turning up next September.",
+  },
+  {
+    n: '03',
+    text: 'In early years, there is almost no accessible data for the students themselves. We collect data about them, in clipboards and tally charts. We rarely give them data they can see, hold, and use to talk about their own day.',
+  },
+  {
+    n: '04',
+    text: "By the time we notice a child has crashed out, it's too late. Most products tell you what happened after it happened. The useful data is the friction in the moment — the cognitive load, the dignity moment, the small disengagement no analytics dashboard captures.",
+  },
+  {
+    n: '05',
+    text: 'Children need the pattern before they need the variation. Most tools default to choice and randomisation because it looks engaging on a demo. In a real classroom, choice without pattern is overwhelm. The pattern is the bit that helps them learn.',
+  },
+];
 
 export default function VoicePage() {
   return (
@@ -41,6 +62,9 @@ export default function VoicePage() {
         <Glow color="var(--orchid-mist)" left="-120px" top="6%" size={620} opacity={0.1} />
         <Glow color="var(--spring-green)" right="-100px" top="40%" size={460} opacity={0.07} />
 
+        {/* 1. HERO — deployed structure: eyebrow with bullet dot, Cherry Bomb
+            sentence-case two-tone H1, blockquote-style tagline. Three elements,
+            nothing more. */}
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
             <span aria-hidden="true" className={styles.dot} />
@@ -55,73 +79,75 @@ export default function VoicePage() {
           </p>
         </header>
 
-        <article className={styles.body}>
-          <p>
-            I spent six months inside an EdTech team&apos;s MVP design — sat
-            in the room while a small product squad worked out what their
-            learners were going to live with for the next three years. We
-            mapped what the learners did with the product, not what they
-            said about it. The team kept the brain. The students never got
-            the room.
-          </p>
-
-          <p>
-            That&apos;s the work I want to keep doing. Pupil voice as the{' '}
-            <em>input</em> to the system, not the output. Not focus groups.
-            Not consultations. Not workshops or CPD or audits-for-schools.
-            Structured learner intelligence — qualitative and quantitative
-            — that EdTech can act on, fund, and reuse.
-          </p>
-
-          <p>
-            Reading the room of education is hard. The DfE keeps pushing
-            pupil voice. Schools want it. The Chartered College Evidence
-            Board expects it. Trial windows have got shorter. Renewal
-            decisions get made faster. And in most EdTech, customer success
-            has no feedback loop from the people the product is actually
-            for.
-          </p>
-
-          <p>
-            I&apos;m building <strong>unbarrier.voice</strong> for that
-            gap. Four blocks: data, translation, leverage, roadmap. One
-            engine. Not modules. The line that matters when it works:
-          </p>
-
-          <blockquote className={styles.pullQuote}>
-            <p>
-              &ldquo;This feature exists because pupils told us X — when we
-              changed it, usage increased.&rdquo;
+        {/* 2. WHAT I SEE */}
+        <SectionBar color="var(--orchid-mist)" />
+        <section id="voice-what-i-see" className={styles.observations}>
+          <div className={styles.observationsHead}>
+            <Eyebrow color="var(--orchid-mist)">What I see, again and again</Eyebrow>
+            <h2 className={styles.h2}>
+              The bit between a product launch
+              <br />
+              and a child who&apos;s{' '}
+              <span className={styles.accent}>actually using it</span>.
+            </h2>
+            <p className={styles.observationsLede}>
+              Five things I notice every time I&apos;m in a classroom watching what
+              children do with EdTech, or in a product room watching what adults
+              assume children do.
             </p>
-          </blockquote>
+          </div>
 
-          <p>
-            Right now this is a holding page. The product isn&apos;t built
-            yet. I&apos;m looking for EdTech partners to build it with —
-            companies who already get that pupil voice can&apos;t be a
-            workshop. Students are the why. Getting this right matters
-            more than getting it fast.
+          <ol className={styles.observationsList}>
+            {OBSERVATIONS.map(({ n, text }) => (
+              <li key={n} className={styles.observation}>
+                <span aria-hidden="true" className={styles.bigNum}>
+                  {n}
+                </span>
+                <p className={styles.observationLabel}>observation {n}</p>
+                <p className={styles.observationText}>{text}</p>
+              </li>
+            ))}
+          </ol>
+        </section>
+
+        {/* 3. WHERE I'M AT */}
+        <SectionBar color="var(--spring-green)" />
+        <section id="voice-where" className={styles.where}>
+          <Glow color="var(--spring-green)" left="62%" top="-10%" size={500} opacity={0.06} />
+          <div className={styles.whereInner}>
+            <Eyebrow color="var(--spring-green)">Where I&apos;m at</Eyebrow>
+            <h2 className={styles.h2}>I&apos;m shaping this slowly, on purpose.</h2>
+            <p className={styles.whereParagraph}>
+              unbarrier.voice is the work I&apos;m building next, drawing on what I&apos;ve
+              learned across years of classroom practice and inside EdTech product
+              rooms. I&apos;m not ready to put the full offer in front of the world yet —
+              the people I&apos;ve worked with deserve to hear about it from me first.
+            </p>
+            <p className={styles.whereParagraph}>
+              What I can say: it sits between learners and product teams, on
+              purpose. It&apos;s structured pupil intelligence — not feedback, not
+              focus groups, not workshops, not audits. Closer to the kind of
+              user research a serious product team would commission, designed
+              for the audience that actually uses your product.
+            </p>
+            <p className={styles.whereParagraph}>
+              If any of that is what your team has been quietly missing —
+              email me. Early conversations shape this work, and I&apos;d rather
+              build it with the people who need it than guess at what they need.
+            </p>
+          </div>
+        </section>
+
+        {/* 4. CTA */}
+        <SectionBar color="var(--orchid-mist)" />
+        <section className={styles.cta}>
+          <Eyebrow color="var(--orchid-mist)">If any of this lands</Eyebrow>
+          <h2 className={styles.h2}>Tell me what you&apos;re building.</h2>
+          <p className={styles.ctaLede}>
+            A short email is plenty. The product, where you&apos;re up to, what&apos;s on
+            your mind. I&apos;ll listen properly before I say anything useful.
           </p>
-
-          <p>
-            If that&apos;s you — Head of Product, CPO, Customer Success
-            Lead, someone whose roadmap genuinely turns on whether learners
-            stay — let&apos;s talk.
-          </p>
-        </article>
-
-        <section className={styles.ctas} aria-label="Get in touch">
-          <a href={PRIMARY_CTA_HREF} className={styles.ctaPrimary}>
-            Email Nici <span aria-hidden="true">→</span>
-          </a>
-          <a
-            href={SECONDARY_CTA_HREF}
-            className={styles.ctaGhost}
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Book a 25-min discovery call <span aria-hidden="true">→</span>
-          </a>
+          <Button href={CTA_EMAIL} color="var(--orchid-mist)">nici@unbarrier.me →</Button>
         </section>
 
         <Footer variant="full" />
