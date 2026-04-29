@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { CtaCard } from '@/components/CtaCard';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
@@ -87,6 +88,17 @@ export default function HelloPage() {
             blur={160}
           />
           <SayHiForm />
+        </section>
+
+        <section className={styles.dataNote} aria-label="how we handle your data">
+          <p>A note on what happens with your data:</p>
+          <p>
+            If you book a discovery call, sign up to the newsletter, or send
+            a hello, your details are handled per our{' '}
+            <Link href="/legal/privacy">Privacy Policy</Link>. You can
+            unsubscribe, ask what we hold, or ask us to delete it any time —
+            just email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
+          </p>
         </section>
 
         <Footer />
