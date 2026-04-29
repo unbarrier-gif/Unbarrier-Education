@@ -45,11 +45,37 @@
 .form {
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.consent {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.consent a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 150ms ease;
+}
+
+.consent a:hover,
+.consent a:focus-visible {
+  color: var(--spring-green);
+}
+
+.fields {
+  display: flex;
+  flex-direction: column;
   gap: 10px;
 }
 
 @media (min-width: 520px) {
-  .form {
+  .fields {
     flex-direction: row;
     align-items: stretch;
   }
