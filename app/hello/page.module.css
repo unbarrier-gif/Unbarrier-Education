@@ -34,3 +34,30 @@
   overflow: hidden;
   border-radius: 18px;
 }
+
+.dataNote {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--text-muted);
+  line-height: 1.6;
+  max-width: 600px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.dataNote p {
+  margin: 0;
+}
+
+.dataNote a {
+  color: var(--text-muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  transition: color 150ms ease;
+}
+
+.dataNote a:hover,
+.dataNote a:focus-visible {
+  color: var(--spring-green);
+}

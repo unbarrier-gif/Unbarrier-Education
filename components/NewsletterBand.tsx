@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import { subscribeAction, type FormState } from '@/app/hello/actions';
@@ -46,28 +47,38 @@ export function NewsletterBand() {
           <label htmlFor="newsletter-email" className={styles.srOnly}>
             Email address
           </label>
-          <input
-            id="newsletter-email"
-            type="email"
-            name="email"
-            required
-            placeholder="your email"
-            autoComplete="email"
-            className={styles.input}
-          />
 
-          {/* honeypot */}
-          <label className={styles.honeypot} aria-hidden="true">
-            Website
+          <p className={styles.consent}>
+            Yes, send me the Loop Breakers newsletter from Nici Foote
+            (Unbarrier Education Ltd) — practical writing on neurodiversity,
+            belonging, and inclusion. Unsubscribe any time. Privacy:{' '}
+            <Link href="/legal/privacy">unbarrier.me/legal/privacy</Link>
+          </p>
+
+          <div className={styles.fields}>
             <input
-              type="text"
-              name="website"
-              tabIndex={-1}
-              autoComplete="off"
+              id="newsletter-email"
+              type="email"
+              name="email"
+              required
+              placeholder="your email"
+              autoComplete="email"
+              className={styles.input}
             />
-          </label>
 
-          <SubmitButton />
+            {/* honeypot */}
+            <label className={styles.honeypot} aria-hidden="true">
+              Website
+              <input
+                type="text"
+                name="website"
+                tabIndex={-1}
+                autoComplete="off"
+              />
+            </label>
+
+            <SubmitButton />
+          </div>
         </form>
 
         <p
