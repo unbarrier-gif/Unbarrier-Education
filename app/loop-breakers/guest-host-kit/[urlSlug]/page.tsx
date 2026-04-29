@@ -5,12 +5,12 @@ import { Nav } from '@/components/Nav';
 import { GemmaLetter } from '@/components/loop-breakers/guest-host-kit/letters/GemmaLetter';
 import { NickiHambletonLetter } from '@/components/loop-breakers/guest-host-kit/letters/NickiHambletonLetter';
 import {
-  findLetterBySlug,
+  findLetterByUrlSlug,
   liveLetters,
 } from '@/content/loop-breakers/guest-letters';
 import styles from './page.module.css';
 
-type Params = { slug: string };
+type Params = { urlSlug: string };
 
 // componentKey in guest-letters.json maps to one of these. New guests:
 // add the TSX file, register the entry in guest-letters.json, then add
@@ -21,7 +21,7 @@ const COMPONENTS: Record<string, () => JSX.Element> = {
 };
 
 export function generateStaticParams(): Params[] {
-  return liveLetters().map((l) => ({ slug: l.slug }));
+  return liveLetters().map((l) => ({ urlSlug: l.urlSlug }));
 }
 
 export const dynamicParams = false;
@@ -29,17 +29,19 @@ export const dynamicParams = false;
 export async function generateMetadata(
   { params }: { params: Params },
 ): Promise<Metadata> {
-  const meta = findLetterBySlug(params.slug);
+  const meta = findLetterByUrlSlug(params.urlSlug);
   if (!meta) return { robots: { index: false, follow: false } };
   return {
     title: `${meta.title} · Loop Breakers Guest Host Kit`,
     robots: { index: false, follow: false },
-    alternates: { canonical: `/loop-breakers/guest-host-kit/${meta.slug}` },
+    alternates: {
+      canonical: `/loop-breakers/guest-host-kit/${meta.urlSlug}`,
+    },
   };
 }
 
 export default function LetterPage({ params }: { params: Params }) {
-  const meta = findLetterBySlug(params.slug);
+  const meta = findLetterByUrlSlug(params.urlSlug);
   if (!meta) notFound();
   const Letter = COMPONENTS[meta.componentKey];
   if (!Letter) notFound();
