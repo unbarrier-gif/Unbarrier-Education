@@ -2,7 +2,7 @@
 // Drop-in for Claude Code: this shape maps 1:1 to a Notion DB or MDX frontmatter.
 // Fields: slug, date (ISO), time, tz, host, hostRole, hostPortrait, theme, blurb,
 //         format, durationMin, seats, seatsLeft, price, status, tags, replay,
-//         isGuestStage (true = Wed Guest Stage £25 sliding | false/undefined = Tue regular £10).
+//         isGuestStage (true = Wed Guest Stage flat £25 | false/undefined = Tue regular £10).
 //
 // Canonical reference: see "Loop Breakers - Source of Truth.html" (project root)
 // — this file is DERIVED from §02 §03 §04 of that doc.
@@ -86,7 +86,7 @@ window.SESSIONS = [
     durationMin: 90,
     seats: 40, seatsLeft: 40,
     isGuestStage: true,
-    price: { amount: 25, currency: "£", note: "Sliding £15 / £25 / £40 — pick at checkout", sliding: true, slidingTiers: [15, 25, 40] },
+    price: { amount: 25, currency: "£", note: "Flat £25 — no access tier on Wednesdays", sliding: false },
     status: "soon",
     tags: ["Guest Stage", "Visual thinking", "Creativity"],
     accent: "#db7dcc",

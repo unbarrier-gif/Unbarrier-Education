@@ -49,7 +49,7 @@ export function LBPricing() {
               items={[
                 'Up to 40 people',
                 'Invited neurodivergent practitioners',
-                '£5 access seats on request, no questions',
+                'Flat £25 — no access tier on Wednesdays',
                 'Topic varies — see Upcoming',
               ]}
               cta="See next Guest Stage"

@@ -205,11 +205,11 @@ export default function GuestHostKitPage() {
                       regardless of attendance · no-shows don&apos;t land on
                       you.
                       <em>
-                        Tickets are flat £25 (£5 access seats on request, no
-                        questions). At a Guest Stage of 20+ paying attendees,
-                        the session covers your fee with margin. At a regular
-                        session of 10, Unbarrier tops up the gap —
-                        deliberate, sustainable, honest about Phase 1.
+                        Tickets are flat £25 — no access tier on Wednesdays.
+                        At a Guest Stage of 20+ paying attendees, the session
+                        covers your fee with margin. At a regular session of
+                        10, Unbarrier tops up the gap — deliberate,
+                        sustainable, honest about Phase 1.
                       </em>
                     </>
                   ),

@@ -42,8 +42,8 @@ export default function GuestStageIndex() {
           </h1>
           <p className={styles.lede}>
             Off-cadence Wednesdays. Invited neurodivergent practitioners.
-            Up to 40 people. Talk plus held Q&amp;A. Sliding-scale
-            booking.
+            Up to 40 people. Talk plus held Q&amp;A. Flat £25 — no access
+            tier on Wednesdays.
           </p>
         </header>
 
