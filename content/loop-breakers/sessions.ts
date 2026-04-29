@@ -21,17 +21,19 @@ export type LBSession = {
   hostRole: string;
   theme: string;
   blurb: string;
+  /** Long-form variant for detail/booking surfaces. Optional; only set where the room benefits from a longer explanation. */
+  blurbLong?: string;
   format: string;
   durationMin: number;
   seats: number;
   seatsLeft: number;
   isGuestStage: boolean;
+  /** Default true. Set false only for explicitly solo-guest sessions — none planned currently. */
+  coHosted: boolean;
   price: {
     amount: number;
     currency: string;
     note: string;
-    /** @deprecated Wednesday Guest Stages are flat £25; sliding scale was retired Apr 2026. Field kept on the type for one release in case downstream surfaces still read it. Always false. */
-    sliding: boolean;
   };
   status: SessionStatus;
   tags: string[];

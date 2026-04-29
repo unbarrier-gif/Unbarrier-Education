@@ -67,16 +67,6 @@ export function GuestStageBookingBlock({ guest, session }: Props) {
         <p className={styles.note}>
           Payment via Stripe at booking. Free reschedule up to 24h before.
         </p>
-        <p className={styles.accessNote}>
-          Need a £5 access seat? Email{' '}
-          <a
-            className={styles.mailto}
-            href="mailto:nici@unbarrier.me?subject=Access%20seat%20-%20Guest%20Stage"
-          >
-            nici@unbarrier.me
-          </a>{' '}
-          — quietly, no questions.
-        </p>
       </div>
     </section>
   );

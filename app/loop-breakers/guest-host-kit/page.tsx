@@ -3,11 +3,9 @@ import { Footer } from '@/components/Footer';
 import { Nav } from '@/components/Nav';
 import { KitDealBox } from '@/components/loop-breakers/guest-host-kit/KitDealBox';
 import { KitEasyNo } from '@/components/loop-breakers/guest-host-kit/KitEasyNo';
-import { KitNavForward } from '@/components/loop-breakers/guest-host-kit/KitNavForward';
 import { KitSection } from '@/components/loop-breakers/guest-host-kit/KitSection';
 import { KitSpecsGrid } from '@/components/loop-breakers/guest-host-kit/KitSpecsGrid';
 import { KitTimeline } from '@/components/loop-breakers/guest-host-kit/KitTimeline';
-import { liveLetters } from '@/content/loop-breakers/guest-letters';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -15,7 +13,6 @@ export const metadata: Metadata = {
   description:
     'Come host a room of the people you are for. The deal, the timeline, the boundaries — laid out plainly.',
   alternates: { canonical: '/loop-breakers/guest-host-kit' },
-  robots: { index: false, follow: false },
 };
 
 const SPECS = [
@@ -205,11 +202,11 @@ export default function GuestHostKitPage() {
                       regardless of attendance · no-shows don&apos;t land on
                       you.
                       <em>
-                        Tickets are flat £25 (£5 access seats on request, no
-                        questions). At a Guest Stage of 20+ paying attendees,
-                        the session covers your fee with margin. At a regular
-                        session of 10, Unbarrier tops up the gap —
-                        deliberate, sustainable, honest about Phase 1.
+                        Tickets are flat £25 — no access tier on Wednesdays.
+                        At a Guest Stage of 20+ paying attendees, the session
+                        covers your fee with margin. At a regular session of
+                        10, Unbarrier tops up the gap — deliberate,
+                        sustainable, honest about Phase 1.
                       </em>
                     </>
                   ),
@@ -427,8 +424,6 @@ export default function GuestHostKitPage() {
             </p>
             <p>If it&apos;s a yes-or-maybe, I&apos;ll send a prep-call link.</p>
             <p>— Nici</p>
-
-            <KitNavForward letters={liveLetters()} />
           </KitSection>
         </article>
 
