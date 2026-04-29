@@ -31,8 +31,8 @@ const CARDS = [
     label: 'unbarrier.voice',
     sub: 'Student voice · Evidence · Impact',
     desc: "You say your product is accessible. I'll go into schools, gather real student voice and usage data, and tell you whether it actually is.",
-    href: '/voice',
-    cta: 'Book a discovery call →',
+    href: 'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello',
+    cta: 'Email Nici →',
   },
 ];
 
