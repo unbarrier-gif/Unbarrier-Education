@@ -5,6 +5,11 @@
   border-top: 1px solid var(--border-default);
 }
 
+.section[data-continuation='true'] {
+  border-top: none;
+  padding-top: 0;
+}
+
 .eyebrow {
   font-family: var(--font-heading);
   font-size: 11px;
@@ -45,10 +50,7 @@
 
 .cell {
   margin: 0;
-  background: var(--antique-white);
   border-radius: var(--radius-md);
-  padding: clamp(0.6rem, 1.5vw, 1rem);
-  box-shadow: var(--shadow-sm);
   overflow: hidden;
 }
 

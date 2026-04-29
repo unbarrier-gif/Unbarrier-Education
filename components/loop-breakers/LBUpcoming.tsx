@@ -5,7 +5,13 @@ import {
   formatTimeRange,
   upcomingSessions,
 } from '@/content/loop-breakers/sessions';
+import { ctaForSession } from './sessions/ctaForSession';
 import styles from './LBUpcoming.module.css';
+
+// LBUpcoming is the "next 4 sessions" preview grid on /loop-breakers.
+// Denser, simpler layout than SessionCard (the full filterable row used
+// at /loop-breakers/sessions). Both call ctaForSession() so CTA copy
+// stays in sync.
 
 // Show the next four chronologically. The full filterable list lives at
 // /loop-breakers/sessions; the "See full menu" CTA below points there.
@@ -32,6 +38,7 @@ export function LBUpcoming() {
           <div className={styles.grid}>
             {list.map((s) => {
               const isGuest = s.isGuestStage;
+              const cta = ctaForSession(s);
               return (
                 <article
                   key={s.slug}
@@ -58,18 +65,23 @@ export function LBUpcoming() {
                     <span className={styles.price}>
                       {s.price.currency}
                       {s.price.amount}
-                      {s.price.sliding ? ' sliding' : ''}
                     </span>
                     <span className={styles.note}>{s.price.note}</span>
                   </div>
-                  <a
-                    href={s.bookingUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.cta}
-                  >
-                    {isGuest ? 'Book Guest Stage →' : 'Book Tuesday seat →'}
-                  </a>
+                  {cta.disabled ? (
+                    <span className={styles.cta} data-disabled="true">
+                      {cta.label}
+                    </span>
+                  ) : (
+                    <a
+                      href={cta.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.cta}
+                    >
+                      {cta.label}
+                    </a>
+                  )}
                 </article>
               );
             })}

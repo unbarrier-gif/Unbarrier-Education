@@ -1,6 +1,15 @@
 import type { LBSession } from '@/content/loop-breakers/sessions';
 import { StatusPill } from './StatusPill';
+import { ctaForSession } from './ctaForSession';
 import styles from './SessionCard.module.css';
+
+// SessionCard renders ONE filterable session row inside SessionsMenu
+// (/loop-breakers/sessions). It includes a date block, status pill,
+// accent rail, and full meta. Used in the dedicated sessions menu page.
+//
+// For the homepage (/loop-breakers) "next 4 sessions" preview grid, see
+// LBUpcoming — that's a denser preview layout with a different shape.
+// Both components call ctaForSession() so their CTA copy can't drift.
 
 type Props = {
   session: LBSession;
@@ -39,13 +48,7 @@ export function SessionCard({ session: s }: Props) {
             : null;
 
   const isPast = s.status === 'past';
-  const ctaLabel = isPast
-    ? 'Past session'
-    : s.status === 'full'
-      ? 'Join waitlist →'
-      : s.status === 'open'
-        ? 'Book · 1 click →'
-        : 'Notify me →';
+  const cta = ctaForSession(s);
 
   // Static-friendly: clicks the booking link on the whole card (except CTA)
   // would require client JS; instead the card body is plain text and the
@@ -98,22 +101,21 @@ export function SessionCard({ session: s }: Props) {
               <span className={styles.price}>
                 {s.price.currency}
                 {s.price.amount}
-                {s.price.sliding ? ' sliding' : ''}
               </span>
             ) : null}
-            {isPast ? (
+            {cta.disabled ? (
               <span className={styles.cta} data-disabled="true">
-                {ctaLabel}
+                {cta.label}
               </span>
             ) : (
               <a
-                href={s.bookingUrl}
+                href={cta.href}
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.cta}
                 data-status={s.status}
               >
-                {ctaLabel}
+                {cta.label}
               </a>
             )}
           </div>

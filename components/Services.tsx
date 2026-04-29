@@ -32,7 +32,6 @@ const CARDS = [
     sub: 'Student voice · Evidence · Impact',
     desc: "You say your product is accessible. I'll go into schools, gather real student voice and usage data, and tell you whether it actually is.",
     href: '/voice',
-    soon: true,
     cta: 'Book a discovery call →',
   },
 ];

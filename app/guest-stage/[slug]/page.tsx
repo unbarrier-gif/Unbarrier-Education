@@ -5,6 +5,7 @@ import { Nav } from '@/components/Nav';
 import { GuestBio } from '@/components/guest-stage/GuestBio';
 import { GuestStageBookingBlock } from '@/components/guest-stage/GuestStageBookingBlock';
 import { GuestStageHero } from '@/components/guest-stage/GuestStageHero';
+import { GuestStageHeroImage } from '@/components/guest-stage/GuestStageHeroImage';
 import { SketchNoteGallery } from '@/components/guest-stage/SketchNoteGallery';
 import { WhatYoullLeaveWith } from '@/components/guest-stage/WhatYoullLeaveWith';
 import {
@@ -42,24 +43,49 @@ export default function GuestStagePage({ params }: { params: Params }) {
   if (!guest) notFound();
   const session = findSessionForGuest(guest);
 
+  // Split the journal gallery into two halves so the strongest visual proof
+  // bookends the bio: first half pulls people in, bio explains who she is,
+  // second half re-engages before the price.
+  const sketchNotes = guest.guest.sketchNoteExamples ?? [];
+  const half = Math.ceil(sketchNotes.length / 2);
+  const sketchNotesFirst = sketchNotes.slice(0, half);
+  const sketchNotesSecond = sketchNotes.slice(half);
+
   return (
     <>
       <Nav active="loop-breakers" />
       <main className={styles.main}>
         <GuestStageHero guest={guest} session={session} />
 
+        {guest.guest.heroImage ? (
+          <GuestStageHeroImage
+            src={guest.guest.heroImage.src}
+            alt={guest.guest.heroImage.alt}
+          />
+        ) : null}
+
         <section className={styles.summary}>
           <p className={styles.summaryBody}>{guest.session.longBlurb}</p>
         </section>
 
-        <WhatYoullLeaveWith guest={guest} />
-        <GuestBio guest={guest} />
-        {guest.guest.sketchNoteExamples && guest.guest.sketchNoteExamples.length > 0 ? (
+        {sketchNotesFirst.length > 0 ? (
           <SketchNoteGallery
-            items={guest.guest.sketchNoteExamples}
+            items={sketchNotesFirst}
             accent={guest.session.accent}
           />
         ) : null}
+
+        <WhatYoullLeaveWith guest={guest} />
+        <GuestBio guest={guest} />
+
+        {sketchNotesSecond.length > 0 ? (
+          <SketchNoteGallery
+            items={sketchNotesSecond}
+            accent={guest.session.accent}
+            showHeading={false}
+          />
+        ) : null}
+
         <GuestStageBookingBlock guest={guest} session={session} />
 
         <Footer variant="full" />

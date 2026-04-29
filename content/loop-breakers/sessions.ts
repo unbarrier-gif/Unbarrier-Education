@@ -30,8 +30,8 @@ export type LBSession = {
     amount: number;
     currency: string;
     note: string;
+    /** @deprecated Wednesday Guest Stages are flat £25; sliding scale was retired Apr 2026. Field kept on the type for one release in case downstream surfaces still read it. Always false. */
     sliding: boolean;
-    slidingTiers?: number[];
   };
   status: SessionStatus;
   tags: string[];
