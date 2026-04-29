@@ -53,6 +53,13 @@ export default function HelloPage() {
               meta="for families fighting for the right provision · book a free 15-min fit call"
               href={TIDYCAL_LINKS.ehcpFitCall}
             />
+            <CtaCard
+              card="template"
+              title="The One Thing Template"
+              meta="free download · 2 pages · bring it to a session"
+              href="/one-thing-template.html"
+              external={true}
+            />
           </div>
         </section>
 

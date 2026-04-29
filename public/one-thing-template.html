@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>The One Thing Template — Loop Breakers</title>
+<meta name="description" content="A simple template to make your idea small enough to start. From Loop Breakers by unbarrier.me." />
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800&family=Comfortaa:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  /* ─── DESIGN TOKENS ─── */
+  :root {
+    --amethyst: #210a33;
+    --amethyst-deep: #150520;
+    --text: #f0ebe5;
+    --text-muted: rgba(240, 235, 229, 0.65);
+    --text-subtle: rgba(240, 235, 229, 0.45);
+    --spring-green: #38ff99;
+    --pearl-aqua: #69d9d1;
+    --princeton-orange: #ff8a1c;
+    --orchid-mist: #db7dcc;
+    --school-bus-yellow: #ffc203;
+    --pink-mist: #e3a1b0;
+    --font-heading: "Outfit", system-ui, -apple-system, sans-serif;
+    --font-body: "Comfortaa", system-ui, -apple-system, sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html, body {
+    background: #2a2a2a;
+    font-family: var(--font-body);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* ─── PAGE FRAME (US Letter: 8.5in × 11in) ─── */
+  .page {
+    width: 8.5in;
+    min-height: 11in;
+    margin: 24px auto;
+    padding: 0.6in 0.7in;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.5);
+    page-break-after: always;
+    position: relative;
+    overflow: hidden;
+  }
+  .page-1 { background: var(--amethyst); }
+  .page-2 { background: var(--amethyst-deep); }
+  .page:last-child { page-break-after: auto; }
+
+  /* ─── HEADER ─── */
+  .page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 18px;
+    margin-bottom: 32px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .brand-tag {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    color: var(--spring-green);
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .page-meta { font-size: 12px; color: var(--text-subtle); }
+
+  /* ─── HERO ─── */
+  .hero { margin-bottom: 32px; }
+  .hero h1 {
+    font-family: var(--font-heading);
+    font-size: 44px;
+    font-weight: 800;
+    line-height: 1.06;
+    letter-spacing: -0.025em;
+    margin-bottom: 12px;
+    color: var(--text);
+  }
+  .hero h1 .accent { color: var(--spring-green); }
+  .hero p {
+    font-size: 15px;
+    color: var(--text-muted);
+    line-height: 1.6;
+    max-width: 540px;
+  }
+
+  /* ─── INSTRUCTION CALLOUT ─── */
+  .callout {
+    background: rgba(56,255,153,0.06);
+    border-left: 2px solid var(--spring-green);
+    padding: 14px 18px;
+    margin-bottom: 32px;
+    border-radius: 0 6px 6px 0;
+  }
+  .callout p { font-size: 13px; color: var(--text); line-height: 1.5; }
+  .callout .label { color: var(--spring-green); font-weight: 700; }
+
+  /* ─── STEP HEADERS ─── */
+  .step { margin-bottom: 28px; }
+  .step:last-child { margin-bottom: 0; }
+  .step-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 4px;
+  }
+  .step-num {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    color: var(--amethyst);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: var(--font-heading);
+    flex-shrink: 0;
+  }
+  .step-num.c1 { background: var(--school-bus-yellow); }
+  .step-num.c2 { background: var(--orchid-mist); }
+  .step-num.c3 { background: var(--pearl-aqua); }
+  .step-num.c4 { background: var(--spring-green); }
+
+  .step-head h2 {
+    font-family: var(--font-heading);
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+  }
+  .step-head h2.c1 { color: var(--school-bus-yellow); }
+  .step-head h2.c2 { color: var(--orchid-mist); }
+  .step-head h2.c3 { color: var(--pearl-aqua); }
+  .step-head h2.c4 { color: var(--spring-green); }
+
+  .step-sub {
+    font-size: 12px;
+    color: var(--text-subtle);
+    margin: 0 0 16px 38px;
+    font-style: italic;
+  }
+
+  /* ─── BRAIN DUMP CANVAS ─── */
+  .dump-canvas {
+    background: rgba(255,255,255,0.025);
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 10px;
+    height: 3.4in;
+    padding: 24px;
+    background-image: repeating-linear-gradient(
+      transparent,
+      transparent 32px,
+      rgba(255,255,255,0.05) 32px,
+      rgba(255,255,255,0.05) 33px
+    );
+    background-position: 0 12px;
+  }
+
+  /* ─── SEED BOX ─── */
+  .seed-box {
+    padding: 20px 22px;
+    border: 1px dashed rgba(219,125,204,0.5);
+    border-radius: 10px;
+    background: rgba(219,125,204,0.04);
+  }
+  .seed-prompt {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 12px;
+  }
+  .seed-line {
+    height: 1px;
+    background: rgba(219,125,204,0.3);
+    margin-bottom: 16px;
+  }
+  .seed-line:last-child { margin-bottom: 0; }
+
+  /* ─── PROMPT CARDS ─── */
+  .prompts { display: flex; flex-direction: column; gap: 14px; }
+  .prompt {
+    padding: 16px 18px;
+    background: rgba(105,217,209,0.06);
+    border-left: 2px solid var(--pearl-aqua);
+    border-radius: 0 8px 8px 0;
+  }
+  .prompt p {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 10px;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .prompt-line {
+    height: 1px;
+    background: rgba(105,217,209,0.25);
+    margin-bottom: 10px;
+  }
+  .prompt-line:last-child { margin-bottom: 0; }
+
+  /* ─── ONE THING BOX ─── */
+  .one-thing {
+    padding: 26px 24px;
+    border: 2px solid var(--spring-green);
+    border-radius: 12px;
+    background: rgba(56,255,153,0.05);
+  }
+  .one-thing-label {
+    font-family: var(--font-heading);
+    font-size: 12px;
+    color: var(--spring-green);
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-bottom: 16px;
+  }
+  .one-thing-line {
+    height: 1px;
+    background: rgba(56,255,153,0.4);
+    margin-bottom: 18px;
+  }
+  .one-thing-line:last-child { margin-bottom: 0; }
+
+  /* ─── FOOTER CTA ─── */
+  .footer-cta {
+    text-align: center;
+    padding: 22px 18px;
+    background: rgba(255,194,3,0.05);
+    border: 1px solid rgba(255,194,3,0.2);
+    border-radius: 10px;
+    margin-top: 28px;
+  }
+  .footer-cta .lead {
+    font-size: 14px;
+    color: var(--text);
+    margin-bottom: 10px;
+    line-height: 1.5;
+  }
+  .footer-cta .meta {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    color: var(--school-bus-yellow);
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    margin-bottom: 8px;
+  }
+  .footer-cta .url {
+    font-size: 11px;
+    color: var(--text-subtle);
+  }
+
+  /* ─── PRINT ─── */
+  @page {
+    size: letter portrait;
+    margin: 0;
+  }
+  @media print {
+    html, body { background: var(--amethyst); }
+    .page {
+      margin: 0;
+      box-shadow: none;
+      width: 8.5in;
+      height: 11in;
+      page-break-after: always;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    .page:last-child { page-break-after: auto; }
+  }
+
+  /* ─── SCREEN-ONLY HINT ─── */
+  .screen-hint {
+    max-width: 8.5in;
+    margin: 24px auto 0;
+    padding: 16px 20px;
+    background: rgba(56,255,153,0.08);
+    border: 1px solid rgba(56,255,153,0.2);
+    border-radius: 8px;
+    color: var(--text);
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+  }
+  .screen-hint strong { color: var(--spring-green); }
+  @media print { .screen-hint { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="screen-hint">
+  <strong>To save as PDF:</strong> press <em>Ctrl/Cmd + P</em> → Destination: Save as PDF → Paper size: Letter → Margins: None.
+</div>
+
+<!-- ─── PAGE 1 — THE MESS ─── -->
+<section class="page page-1">
+
+  <header class="page-header">
+    <div>
+      <p class="brand-tag">Loop breakers</p>
+      <p class="page-meta">Page 1 of 2 — the mess</p>
+    </div>
+    <p class="page-meta">unbarrier.me</p>
+  </header>
+
+  <div class="hero">
+    <h1>Get it out of <span class="accent">your head.</span></h1>
+    <p>You don't have to pick the right idea. Empty your head onto the page first. We'll shrink it on page 2.</p>
+  </div>
+
+  <div class="callout">
+    <p><span class="label">How to use this:</span> Set a 5-minute timer. Write fast. No tidy. No editing.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num c1">1</div>
+      <h2 class="c1">Brain dump</h2>
+    </div>
+    <p class="step-sub">Every loop, idea, half-thought. No order. No filter.</p>
+    <div class="dump-canvas"></div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num c2">2</div>
+      <h2 class="c2">The seed</h2>
+    </div>
+    <p class="step-sub">Circle the one that won't leave you alone.</p>
+    <div class="seed-box">
+      <p class="seed-prompt">The one I keep coming back to is...</p>
+      <div class="seed-line"></div>
+      <div class="seed-line"></div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ─── PAGE 2 — THE FOCUS ─── -->
+<section class="page page-2">
+
+  <header class="page-header">
+    <div>
+      <p class="brand-tag">Loop breakers</p>
+      <p class="page-meta">Page 2 of 2 — the focus</p>
+    </div>
+    <p class="page-meta">unbarrier.me</p>
+  </header>
+
+  <div class="hero">
+    <h1>Now make it <span class="accent">small.</span></h1>
+    <p>One seed. Three prompts. One thing you'll actually do.</p>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num c3">3</div>
+      <h2 class="c3">Three prompts</h2>
+    </div>
+    <p class="step-sub">No right answers. Whatever comes up first.</p>
+    <div class="prompts">
+      <div class="prompt">
+        <p>What's the smallest version that's still real?</p>
+        <div class="prompt-line"></div>
+        <div class="prompt-line"></div>
+      </div>
+      <div class="prompt">
+        <p>Who is it for — one person, by name?</p>
+        <div class="prompt-line"></div>
+        <div class="prompt-line"></div>
+      </div>
+      <div class="prompt">
+        <p>What would 'done' look like by Friday?</p>
+        <div class="prompt-line"></div>
+        <div class="prompt-line"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="step">
+    <div class="step-head">
+      <div class="step-num c4">4</div>
+      <h2 class="c4">The one thing</h2>
+    </div>
+    <p class="step-sub">Not a plan. Not a list. One small thing you'll do.</p>
+    <div class="one-thing">
+      <p class="one-thing-label">By Friday I will</p>
+      <div class="one-thing-line"></div>
+      <div class="one-thing-line"></div>
+      <div class="one-thing-line"></div>
+    </div>
+  </div>
+
+  <div class="footer-cta">
+    <p class="lead">When you're ready, bring this page to a session.</p>
+    <p class="meta">£10 · 90 minutes · first &amp; last Monday</p>
+    <p class="url">unbarrier.me / loop breakers</p>
+  </div>
+
+</section>
+
+</body>
+</html>
