@@ -1,38 +1,21 @@
 'use client';
 
 import Link from 'next/link';
-import { useEffect, useRef } from 'react';
-import { useFormState, useFormStatus } from 'react-dom';
-import { subscribeAction, type FormState } from '@/app/hello/actions';
 import styles from './NewsletterBand.module.css';
 
-const initialState: FormState = { status: 'idle' };
+const MAILERLITE_FORM_URL =
+  'https://preview.mailerlite.io/forms/1438334/185568935471482009/share';
 
-function SubmitButton() {
-  const { pending } = useFormStatus();
-  return (
-    <button type="submit" className={styles.button} disabled={pending}>
-      {pending ? 'Signing you up…' : 'Sign me up'}
-    </button>
-  );
+function handleClick() {
+  if (
+    typeof window !== 'undefined' &&
+    typeof window.plausible === 'function'
+  ) {
+    window.plausible('newsletter_signup');
+  }
 }
 
 export function NewsletterBand() {
-  const [state, formAction] = useFormState(subscribeAction, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (state.status === 'ok') {
-      formRef.current?.reset();
-      if (
-        typeof window !== 'undefined' &&
-        typeof window.plausible === 'function'
-      ) {
-        window.plausible('newsletter_signup');
-      }
-    }
-  }, [state]);
-
   return (
     <section className={styles.band} aria-labelledby="newsletter-heading">
       <div className={styles.inner}>
@@ -43,58 +26,22 @@ export function NewsletterBand() {
           Maybe less. Never more. Unsubscribe anytime.
         </p>
 
-        <form ref={formRef} action={formAction} className={styles.form} noValidate>
-          <label htmlFor="newsletter-email" className={styles.srOnly}>
-            Email address
-          </label>
-
-          <p className={styles.consent}>
-            Yes, send me the Loop Breakers newsletter from Nici Foote
-            (Unbarrier Education Ltd) — practical writing on neurodiversity,
-            belonging, and inclusion. Unsubscribe any time. Privacy:{' '}
-            <Link href="/legal/privacy">unbarrier.me/legal/privacy</Link>
-          </p>
-
-          <div className={styles.fields}>
-            <input
-              id="newsletter-email"
-              type="email"
-              name="email"
-              required
-              placeholder="your email"
-              autoComplete="email"
-              className={styles.input}
-            />
-
-            {/* honeypot */}
-            <label className={styles.honeypot} aria-hidden="true">
-              Website
-              <input
-                type="text"
-                name="website"
-                tabIndex={-1}
-                autoComplete="off"
-              />
-            </label>
-
-            <SubmitButton />
-          </div>
-        </form>
-
-        <p
-          className={`${styles.status} ${
-            state.status === 'ok'
-              ? styles.statusOk
-              : state.status === 'error'
-                ? styles.statusError
-                : ''
-          }`}
-          role="status"
-          aria-live="polite"
-        >
-          {state.status === 'ok' && 'Welcome. Check your inbox.'}
-          {state.status === 'error' && state.message}
+        <p className={styles.consent}>
+          Yes, send me the Loop Breakers newsletter from Nici Foote
+          (Unbarrier Education Ltd) — practical writing on neurodiversity,
+          belonging, and inclusion. Unsubscribe any time. Privacy:{' '}
+          <Link href="/legal/privacy">unbarrier.me/legal/privacy</Link>
         </p>
+
+        <a
+          href={MAILERLITE_FORM_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+          onClick={handleClick}
+          className={styles.button}
+        >
+          Sign me up
+        </a>
       </div>
     </section>
   );
