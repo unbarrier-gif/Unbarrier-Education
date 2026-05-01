@@ -102,6 +102,32 @@ export const getPostBySlug = cache(
   },
 );
 
+/**
+ * Fetch a single post by slug ignoring its `Status` field.
+ * Used only by the draft-preview path on /blog/[slug] — gated behind
+ * BLOG_PREVIEW_SECRET. Filters at the API layer by Slug so we don't
+ * over-fetch drafts into general server memory.
+ */
+export const getPostBySlugAnyStatus = cache(
+  async (slug: string): Promise<Post | null> => {
+    const dsId = await getDataSourceId();
+    if (!notion || !dsId || !slug) return null;
+    try {
+      const res = await notion.dataSources.query({
+        data_source_id: dsId,
+        filter: { property: 'Slug', rich_text: { equals: slug } },
+        page_size: 1,
+      });
+      const first = res.results[0];
+      if (!first || !isFullPage(first)) return null;
+      return pageToPost(first);
+    } catch (err) {
+      console.error('[notion] preview fetch failed', err);
+      return null;
+    }
+  },
+);
+
 export const getPostBlocks = cache(
   async (pageId: string): Promise<BlockNode[]> => {
     if (!notion) return [];
