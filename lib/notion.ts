@@ -53,6 +53,8 @@ export type Post = {
   readingMin: number | null;
   featured: boolean;
   coverUrl: string | null;
+  /** Raw value of the Notion Status property — usually 'Draft' | 'Published'. */
+  status: string;
 };
 
 /** A block plus any nested children we recursively fetched. */
@@ -72,13 +74,19 @@ const getDataSourceId = cache(async (): Promise<string | null> => {
   }
 });
 
-export const getAllPublishedPosts = cache(async (): Promise<Post[]> => {
+// Fetch every page in the data source, mapped to Post (no status
+// filter at the API layer). Notion silently auto-uses its `status`
+// property type for any field literally named "Status", which means
+// our previous `select: { equals: 'Published' }` filter never matched
+// and quietly returned zero rows. Filtering in code lets either
+// `select` or `status` field types work without forcing the user to
+// rebuild their schema.
+const fetchAllPosts = cache(async (): Promise<Post[]> => {
   const dsId = await getDataSourceId();
   if (!notion || !dsId) return [];
   try {
     const res = await notion.dataSources.query({
       data_source_id: dsId,
-      filter: { property: 'Status', select: { equals: 'Published' } },
       sorts: [{ property: 'Date', direction: 'descending' }],
       page_size: 100,
     });
@@ -95,6 +103,11 @@ export const getAllPublishedPosts = cache(async (): Promise<Post[]> => {
   }
 });
 
+export const getAllPublishedPosts = cache(async (): Promise<Post[]> => {
+  const all = await fetchAllPosts();
+  return all.filter((p) => p.status === 'Published');
+});
+
 export const getPostBySlug = cache(
   async (slug: string): Promise<Post | null> => {
     const all = await getAllPublishedPosts();
@@ -103,28 +116,15 @@ export const getPostBySlug = cache(
 );
 
 /**
- * Fetch a single post by slug ignoring its `Status` field.
- * Used only by the draft-preview path on /blog/[slug] — gated behind
- * BLOG_PREVIEW_SECRET. Filters at the API layer by Slug so we don't
- * over-fetch drafts into general server memory.
+ * Fetch a single post by slug ignoring its `Status`. Used only by
+ * the draft-preview path on /blog/[slug] — gated behind
+ * BLOG_PREVIEW_SECRET.
  */
 export const getPostBySlugAnyStatus = cache(
   async (slug: string): Promise<Post | null> => {
-    const dsId = await getDataSourceId();
-    if (!notion || !dsId || !slug) return null;
-    try {
-      const res = await notion.dataSources.query({
-        data_source_id: dsId,
-        filter: { property: 'Slug', rich_text: { equals: slug } },
-        page_size: 1,
-      });
-      const first = res.results[0];
-      if (!first || !isFullPage(first)) return null;
-      return pageToPost(first);
-    } catch (err) {
-      console.error('[notion] preview fetch failed', err);
-      return null;
-    }
+    if (!slug) return null;
+    const all = await fetchAllPosts();
+    return all.find((p) => p.slug === slug) ?? null;
   },
 );
 
@@ -171,7 +171,7 @@ function pageToPost(p: PageObjectResponse): Post | null {
   const slugRaw = pickPlainText(getRichText(props.Slug));
   const slug = slugRaw.trim() || slugify(title);
   if (!slug) return null;
-  const shape = getSelectName(props.Shape);
+  const shape = getSelectOrStatusName(props.Shape);
   if (!isShape(shape)) return null;
   return {
     id: p.id,
@@ -183,6 +183,7 @@ function pageToPost(p: PageObjectResponse): Post | null {
     readingMin: getNumber(props['Reading min']),
     featured: getCheckbox(props.Featured),
     coverUrl: getCoverUrl(p),
+    status: getSelectOrStatusName(props.Status) ?? '',
   };
 }
 
@@ -210,6 +211,16 @@ function getRichText(p: AnyProp): RichTextItemResponse[] {
 }
 function getSelectName(p: AnyProp): string | null {
   return p && p.type === 'select' && p.select ? p.select.name : null;
+}
+// Notion auto-creates a Status-type property for any field literally
+// named "Status", and similarly some users may pick Status type for
+// Shape. Read the value regardless of which select-like type Notion
+// settled on.
+function getSelectOrStatusName(p: AnyProp): string | null {
+  if (!p) return null;
+  if (p.type === 'select' && p.select) return p.select.name;
+  if (p.type === 'status' && p.status) return p.status.name;
+  return null;
 }
 function getDateStart(p: AnyProp): string | null {
   return p && p.type === 'date' && p.date ? p.date.start : null;
