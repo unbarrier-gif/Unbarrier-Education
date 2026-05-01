@@ -95,22 +95,51 @@ export default async function BlogPostPage({
   params: Params;
   searchParams?: SearchParams;
 }) {
-  const isPreview = previewSecretMatches(pickPreviewParam(searchParams));
-  const post = isPreview
-    ? await getPostBySlugAnyStatus(params.slug)
-    : await getPostBySlug(params.slug);
-  if (!post) notFound();
-  const blocks = await getPostBlocks(post.id);
-  return (
-    <>
-      {isPreview && <PreviewBanner />}
-      <Nav active="blog" />
-      <main className={styles.main}>
-        <PostHero post={post} />
-        <NotionRenderer blocks={blocks} />
-        <PostFooter />
-        <Footer variant="full" />
-      </main>
-    </>
-  );
+  try {
+    const previewParam = pickPreviewParam(searchParams);
+    const isPreview = previewSecretMatches(previewParam);
+    const post = isPreview
+      ? await getPostBySlugAnyStatus(params.slug)
+      : await getPostBySlug(params.slug);
+    if (!post) notFound();
+    const blocks = await getPostBlocks(post.id);
+    return (
+      <>
+        {isPreview && <PreviewBanner />}
+        <Nav active="blog" />
+        <main className={styles.main}>
+          <PostHero post={post} />
+          <NotionRenderer blocks={blocks} />
+          <PostFooter />
+          <Footer variant="full" />
+        </main>
+      </>
+    );
+  } catch (err) {
+    // notFound() throws a sentinel that Next intercepts to render 404.
+    // Don't swallow or log it — re-throw cleanly.
+    if (
+      err &&
+      typeof err === 'object' &&
+      'digest' in err &&
+      typeof (err as { digest?: unknown }).digest === 'string' &&
+      ((err as { digest: string }).digest.startsWith('NEXT_NOT_FOUND') ||
+        (err as { digest: string }).digest.startsWith('NEXT_REDIRECT'))
+    ) {
+      throw err;
+    }
+    console.error('[blog/[slug]] render failed', {
+      slug: params.slug,
+      hasSearchParams: searchParams != null,
+      previewParamType: typeof searchParams?.preview,
+      hasNotionToken: !!process.env.NOTION_TOKEN,
+      hasDatabaseId: !!process.env.NOTION_BLOG_DATABASE_ID,
+      hasPreviewSecret: !!process.env.BLOG_PREVIEW_SECRET,
+      error:
+        err instanceof Error
+          ? { name: err.name, message: err.message, stack: err.stack }
+          : err,
+    });
+    throw err;
+  }
 }
