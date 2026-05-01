@@ -1,0 +1,36 @@
+.banner {
+  position: relative;
+  z-index: 101;
+  background: var(--princeton-orange);
+  color: var(--amethyst);
+  padding: 10px 16px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  text-align: center;
+}
+
+.dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--amethyst);
+  flex: 0 0 auto;
+}
+
+.label {
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  font-size: 11px;
+}
+
+.text {
+  font-family: var(--font-body);
+  font-weight: 600;
+  letter-spacing: 0;
+}

@@ -1,0 +1,26 @@
+.quote {
+  margin: 3rem 0;
+  padding: 2rem 0 2rem 2rem;
+  border-left: 4px solid var(--c);
+  position: relative;
+}
+
+.body {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.6vw, 1.875rem);
+  font-weight: 700;
+  line-height: 1.28;
+  letter-spacing: -0.015em;
+  color: var(--text);
+}
+
+.cite {
+  margin-top: 14px;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c);
+}

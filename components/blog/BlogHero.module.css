@@ -1,0 +1,91 @@
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(7rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem) 3rem;
+}
+
+.inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1160px;
+  margin: 0 auto;
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--spring-green);
+  margin: 0 0 18px;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-size: clamp(2.4rem, 6vw, 4.2rem);
+  font-weight: 800;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  color: var(--text);
+  margin: 0 0 24px;
+  max-width: 900px;
+}
+
+.headingMuted {
+  color: var(--text-muted);
+  font-weight: 700;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 1.5vw, 1.125rem);
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0 0 2.5rem;
+  max-width: 640px;
+}
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 2px;
+  margin-top: 3rem;
+  border-top: 1px solid var(--border-default);
+  border-left: 1px solid var(--border-default);
+}
+
+.legendCell {
+  padding: 18px 20px;
+  border-right: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.legendLabel {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--c);
+}
+
+.legendDot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--c);
+  flex: 0 0 auto;
+}
+
+.legendBlurb {
+  margin: 0;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  line-height: 1.55;
+  color: var(--text-muted);
+}

@@ -1,0 +1,77 @@
+.section {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 0 clamp(1.5rem, 5vw, 5rem) clamp(5rem, 10vw, 8rem);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 2rem;
+}
+
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  padding: 9px 16px;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  cursor: pointer;
+  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
+}
+
+.chip:hover {
+  border-color: var(--c);
+}
+
+.chipActive {
+  background: var(--c);
+  color: var(--amethyst);
+  border-color: var(--c);
+  font-weight: 700;
+}
+
+.chipDot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--c);
+  flex: 0 0 auto;
+}
+
+.chipActive .chipDot {
+  background: var(--amethyst);
+}
+
+.chipCount {
+  font-size: 11px;
+  font-weight: 600;
+  opacity: 0.55;
+}
+
+.chipActive .chipCount {
+  opacity: 0.7;
+}
+
+.grid {
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 24px;
+  align-items: start;
+}
+
+.empty {
+  margin: 4rem 0;
+  text-align: center;
+  font-family: var(--font-body);
+  color: var(--text-muted);
+}

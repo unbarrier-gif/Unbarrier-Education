@@ -1,0 +1,14 @@
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  color: var(--text-muted);
+  letter-spacing: 0.02em;
+}
+
+.span {
+  white-space: nowrap;
+}
