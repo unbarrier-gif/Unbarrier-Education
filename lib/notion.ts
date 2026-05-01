@@ -91,11 +91,35 @@ const fetchAllPosts = cache(async (): Promise<Post[]> => {
       page_size: 100,
     });
     const posts: Post[] = [];
+    let rejected = 0;
+    const debugRows: unknown[] = [];
     for (const r of res.results) {
-      if (!isFullPage(r)) continue;
+      if (!isFullPage(r)) {
+        rejected++;
+        continue;
+      }
+      // Diagnostic: dump the property-type signature of the first
+      // returned row so we can see what Notion is actually giving us.
+      if (debugRows.length === 0) {
+        const props = r.properties as Record<string, { type?: string }>;
+        debugRows.push(
+          Object.fromEntries(
+            Object.entries(props).map(([k, v]) => [k, v?.type ?? 'unknown']),
+          ),
+        );
+      }
       const post = pageToPost(r);
       if (post) posts.push(post);
+      else rejected++;
     }
+    console.info('[notion] fetchAllPosts', {
+      total: res.results.length,
+      kept: posts.length,
+      rejected,
+      sampleStatuses: posts.slice(0, 3).map((p) => p.status),
+      sampleSlugs: posts.slice(0, 3).map((p) => p.slug),
+      firstRowPropertyTypes: debugRows[0],
+    });
     return posts;
   } catch (err) {
     console.error('[notion] query data source failed', err);
