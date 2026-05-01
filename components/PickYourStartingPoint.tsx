@@ -20,8 +20,8 @@ const STARTERS = [
     label: 'Join Loop Breakers',
     blurb:
       'A free Tuesday session for the loop you can’t break alone. Neurodivergent people, founders, anyone.',
-    cta: 'loop.unbarrier.me →',
-    href: 'https://loop.unbarrier.me',
+    cta: '/loop-breakers →',
+    href: '/loop-breakers',
   },
   {
     accent: 'var(--spring-green)',
