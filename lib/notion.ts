@@ -198,9 +198,8 @@ function slugify(s: string): string {
 // are huge property-type unions. The official narrowing path is verbose
 // and not the source of truth (that's the Notion schema). These pickers
 // stay defensive: if the schema name or type ever drifts, they return a
-// sensible empty default rather than throwing in render.
-//
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+// sensible empty default rather than throwing in render. The `any` is
+// scoped to this alias and used only inside the pickers below.
 type AnyProp = any;
 
 function getTitle(p: AnyProp): RichTextItemResponse[] {
