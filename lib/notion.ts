@@ -112,7 +112,8 @@ const fetchAllPosts = cache(async (): Promise<Post[]> => {
       if (post) posts.push(post);
       else rejected++;
     }
-    console.info('[notion] fetchAllPosts', {
+    // Use console.warn so Vercel's runtime log filter surfaces it.
+    console.warn('[notion] fetchAllPosts', {
       total: res.results.length,
       kept: posts.length,
       rejected,
