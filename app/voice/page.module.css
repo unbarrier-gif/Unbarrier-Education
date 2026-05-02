@@ -14,7 +14,7 @@
 .hero {
   max-width: 720px;
   margin: 0 auto;
-  padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 5vw, 3rem) 2rem;
+  padding: clamp(7rem, 10vw, 9rem) clamp(1.5rem, 5vw, 3rem) 2rem;
   position: relative;
   z-index: 1;
 }
