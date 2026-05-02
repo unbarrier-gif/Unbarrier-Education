@@ -8,6 +8,7 @@
 
 import type { ReactElement, ReactNode } from 'react';
 import { Fragment } from 'react';
+import Image from 'next/image';
 import type { RichTextItemResponse } from '@notionhq/client';
 import { PullQuote } from './PullQuote';
 import type { BlockNode } from '@/lib/notion';
@@ -107,8 +108,15 @@ function renderBlock(b: BlockNode): ReactElement | null {
         b.image.caption.length > 0 ? renderRichText(b.image.caption) : null;
       return (
         <figure className={styles.figure}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={url} alt={alt} loading="lazy" />
+          <Image
+            src={url}
+            alt={alt}
+            width={0}
+            height={0}
+            sizes="(min-width: 760px) 760px, 100vw"
+            style={{ width: '100%', height: 'auto' }}
+            loading="lazy"
+          />
           {captionNode && (
             <figcaption className={styles.figcaption}>{captionNode}</figcaption>
           )}

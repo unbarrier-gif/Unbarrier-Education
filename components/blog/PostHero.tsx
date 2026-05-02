@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { PostMeta } from './PostMeta';
 import type { Post } from '@/lib/notion';
@@ -22,12 +23,15 @@ export function PostHero({ post }: Props) {
         <h1 className={styles.title}>{post.title}</h1>
         {post.excerpt && <p className={styles.dek}>{post.excerpt}</p>}
         {post.coverUrl && (
-          // eslint-disable-next-line @next/next/no-img-element
-          <img
+          <Image
             src={post.coverUrl}
-            alt=""
+            alt={post.coverAlt || post.title}
+            width={0}
+            height={0}
+            sizes="(min-width: 760px) 760px, 100vw"
             className={styles.cover}
-            loading="eager"
+            style={{ width: '100%', height: 'auto' }}
+            priority
           />
         )}
       </div>

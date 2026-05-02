@@ -129,8 +129,42 @@ export default async function BlogPostPage({
       : await getPostBySlug(params.slug);
     if (!post) notFound();
     const blocks = await getPostBlocks(post.id);
+    const schema = !isPreview
+      ? {
+          '@context': 'https://schema.org',
+          '@type': 'BlogPosting',
+          headline: post.title,
+          description: post.excerpt || undefined,
+          image: post.coverUrl ? [post.coverUrl] : undefined,
+          datePublished: post.date,
+          dateModified: post.date,
+          author: {
+            '@type': 'Person',
+            name: 'Nici Foote',
+            url: 'https://unbarrier.me',
+          },
+          publisher: {
+            '@type': 'Organization',
+            name: 'Unbarrier Education',
+            logo: {
+              '@type': 'ImageObject',
+              url: 'https://unbarrier.me/assets/logos/logo-icon-green.png',
+            },
+          },
+          mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': `https://unbarrier.me/blog/${post.slug}`,
+          },
+        }
+      : null;
     return (
       <>
+        {schema && (
+          <script
+            type="application/ld+json"
+            dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+          />
+        )}
         {isPreview && <PreviewBanner />}
         <Nav active="blog" />
         <main className={styles.main}>

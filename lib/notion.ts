@@ -22,6 +22,7 @@
 //   Status       (select)            "Draft" | "Published"
 //   Featured     (checkbox)
 //   Cover        (files & media, optional)
+//   Cover Alt    (rich_text, optional)   alt text for the Cover image
 
 import {
   Client,
@@ -53,6 +54,8 @@ export type Post = {
   readingMin: number | null;
   featured: boolean;
   coverUrl: string | null;
+  /** Alt text for the Cover image, sourced from the "Cover Alt" rich_text property. Empty string if unset. */
+  coverAlt: string;
   /** Raw value of the Notion Status property — usually 'Draft' | 'Published'. */
   status: string;
 };
@@ -183,6 +186,7 @@ function pageToPost(p: PageObjectResponse): Post | null {
     readingMin: getNumber(props['Reading min']),
     featured: getCheckbox(props.Featured),
     coverUrl: getCoverUrl(p),
+    coverAlt: pickPlainText(getRichText(props['Cover Alt'])),
     status: getSelectOrStatusName(props.Status) ?? '',
   };
 }
