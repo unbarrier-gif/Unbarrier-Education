@@ -25,6 +25,18 @@ export function BlogIndex({ posts }: Props) {
   const visible =
     active === 'all' ? posts : posts.filter((p) => p.shape === active);
 
+  // Featured hero only shows on the unfiltered "Everything" view. `posts`
+  // is already date-desc from notion.ts, so the first match is the most
+  // recent featured post.
+  const featured = useMemo(() => {
+    if (active !== 'all') return null;
+    return posts.find((p) => p.featured && p.date) ?? null;
+  }, [posts, active]);
+
+  const rest = featured
+    ? visible.filter((p) => p.id !== featured.id)
+    : visible;
+
   return (
     <section className={styles.section}>
       <div className={styles.chips} role="toolbar" aria-label="Filter by shape">
@@ -55,11 +67,20 @@ export function BlogIndex({ posts }: Props) {
             : 'Nothing in this shape yet. One’s on the way.'}
         </p>
       ) : (
-        <div className={styles.grid}>
-          {visible.map((p) => (
-            <BlogCard key={p.slug} post={p} />
-          ))}
-        </div>
+        <>
+          {featured && (
+            <div className={styles.heroSlot}>
+              <BlogCard post={featured} variant="hero" />
+            </div>
+          )}
+          {rest.length > 0 && (
+            <div className={styles.grid}>
+              {rest.map((p) => (
+                <BlogCard key={p.slug} post={p} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </section>
   );

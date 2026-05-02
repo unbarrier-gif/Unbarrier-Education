@@ -25,3 +25,13 @@
 .md .dot { width: 7px; height: 7px; }
 .lg { font-size: 13px; padding: 7px 14px; }
 .lg .dot { width: 9px; height: 9px; }
+
+.solid {
+  background: var(--c);
+  color: var(--amethyst);
+  border-color: var(--c);
+}
+.solid .dot { background: var(--amethyst); }
+.solid.sm { padding: 5px 11px; }
+.solid.md { padding: 6px 13px; }
+.solid.lg { padding: 8px 16px; }

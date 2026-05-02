@@ -34,6 +34,7 @@
 
   --surface-raised: rgba(255, 255, 255, 0.03);
   --surface-lift:   rgba(255, 255, 255, 0.06);
+  --color-card-bg:  rgba(255, 255, 255, 0.05);   /* 5% white over amethyst — blog cards */
 
   /* ── SEMANTIC ROLES ────────────────────────────────────────────────── */
   --bg:               var(--amethyst);
@@ -126,6 +127,7 @@ html.contrast-high {
 
   --surface-raised: rgba(255, 255, 255, 0.08);
   --surface-lift:   rgba(255, 255, 255, 0.12);
+  --color-card-bg:  rgba(255, 255, 255, 0.10);
 
   /* Disable ambient blur orbs — they reduce edge contrast on text. */
   --glow-opacity-multiplier: 0;
