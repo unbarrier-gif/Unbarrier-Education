@@ -91,36 +91,11 @@ const fetchAllPosts = cache(async (): Promise<Post[]> => {
       page_size: 100,
     });
     const posts: Post[] = [];
-    let rejected = 0;
-    const debugRows: unknown[] = [];
     for (const r of res.results) {
-      if (!isFullPage(r)) {
-        rejected++;
-        continue;
-      }
-      // Diagnostic: dump the property-type signature of the first
-      // returned row so we can see what Notion is actually giving us.
-      if (debugRows.length === 0) {
-        const props = r.properties as Record<string, { type?: string }>;
-        debugRows.push(
-          Object.fromEntries(
-            Object.entries(props).map(([k, v]) => [k, v?.type ?? 'unknown']),
-          ),
-        );
-      }
+      if (!isFullPage(r)) continue;
       const post = pageToPost(r);
       if (post) posts.push(post);
-      else rejected++;
     }
-    // Use console.warn so Vercel's runtime log filter surfaces it.
-    console.warn('[notion] fetchAllPosts', {
-      total: res.results.length,
-      kept: posts.length,
-      rejected,
-      sampleStatuses: posts.slice(0, 3).map((p) => p.status),
-      sampleSlugs: posts.slice(0, 3).map((p) => p.slug),
-      firstRowPropertyTypes: debugRows[0],
-    });
     return posts;
   } catch (err) {
     console.error('[notion] query data source failed', err);
@@ -256,7 +231,23 @@ function getNumber(p: AnyProp): number | null {
 function getCheckbox(p: AnyProp): boolean {
   return !!(p && p.type === 'checkbox' && p.checkbox);
 }
+function getFirstFileUrl(p: AnyProp): string | null {
+  if (!p || p.type !== 'files' || !Array.isArray(p.files) || p.files.length === 0) {
+    return null;
+  }
+  const f = p.files[0];
+  if (f?.type === 'external' && f.external?.url) return f.external.url;
+  if (f?.type === 'file' && f.file?.url) return f.file.url;
+  return null;
+}
+
 function getCoverUrl(p: PageObjectResponse): string | null {
+  // Prefer the `Cover` files-and-media property — that's what the
+  // schema spec asks for, and what users naturally fill in. Fall back
+  // to Notion's page-level cover banner if the property is empty, so
+  // either approach works.
+  const fromProp = getFirstFileUrl(p.properties.Cover);
+  if (fromProp) return fromProp;
   if (!p.cover) return null;
   return p.cover.type === 'external' ? p.cover.external.url : p.cover.file.url;
 }
