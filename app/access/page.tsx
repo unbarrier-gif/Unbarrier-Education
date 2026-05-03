@@ -74,7 +74,7 @@ export default function AccessPage() {
     <>
       <Nav active="access" />
       <main className={styles.main}>
-        <Glow color="var(--orchid-mist)" left="-120px" top="6%" size={620} opacity={0.1} />
+        <Glow color="var(--princeton-orange)" left="-120px" top="6%" size={620} opacity={0.1} />
         <Glow color="var(--spring-green)" right="-100px" top="40%" size={460} opacity={0.07} />
 
         {/* 1. HERO — eyebrow with bullet dot, two-line H1, body, CTA, subtext.
@@ -99,7 +99,7 @@ export default function AccessPage() {
             children who need them.
           </p>
           <div className={styles.heroCta}>
-            <Button href={HERO_CTA} color="var(--orchid-mist)">
+            <Button href={HERO_CTA} color="var(--princeton-orange)">
               Tell me what you&apos;re working with →
             </Button>
           </div>
@@ -111,10 +111,10 @@ export default function AccessPage() {
 
         {/* 2. WHAT I SEE — Cherry Bomb on "The implementation isn't." matches
             the brand mapping for the access strand's accent moment. */}
-        <SectionBar color="var(--orchid-mist)" />
+        <SectionBar color="var(--princeton-orange)" />
         <section id="access-what-i-see" className={styles.observations}>
           <div className={styles.observationsHead}>
-            <Eyebrow color="var(--orchid-mist)">
+            <Eyebrow color="var(--princeton-orange)">
               Five things I see in schools that have already invested
             </Eyebrow>
             <h2 className={styles.h2}>
@@ -175,9 +175,9 @@ export default function AccessPage() {
         </section>
 
         {/* 4. CTA */}
-        <SectionBar color="var(--orchid-mist)" />
+        <SectionBar color="var(--princeton-orange)" />
         <section className={styles.cta}>
-          <Eyebrow color="var(--orchid-mist)">
+          <Eyebrow color="var(--princeton-orange)">
             Tell me what you&apos;re working with
           </Eyebrow>
           <h2 className={styles.h2}>Email me.</h2>
@@ -188,7 +188,7 @@ export default function AccessPage() {
             talk about shape and cost. If it doesn&apos;t, I&apos;ll point you
             at someone better matched.
           </p>
-          <Button href={ENQUIRY_CTA} color="var(--orchid-mist)">
+          <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
             nici@unbarrier.me →
           </Button>
           <p className={styles.ctaSubtext}>

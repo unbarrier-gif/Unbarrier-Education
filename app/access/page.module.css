@@ -32,7 +32,7 @@
   font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: var(--orchid-mist);
+  color: var(--princeton-orange);
   margin: 0 0 18px;
 }
 
@@ -40,7 +40,7 @@
   width: 7px;
   height: 7px;
   border-radius: 50%;
-  background: var(--orchid-mist);
+  background: var(--princeton-orange);
 }
 
 .heading {
@@ -72,7 +72,7 @@
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
-  border-left: 3px solid var(--orchid-mist);
+  border-left: 3px solid var(--princeton-orange);
   padding-left: 14px;
 }
 
@@ -105,7 +105,7 @@
 .cherry {
   font-family: var(--font-decorative);
   font-weight: 400;
-  color: var(--orchid-mist);
+  color: var(--princeton-orange);
 }
 
 .observationsList {
@@ -117,7 +117,7 @@
 }
 
 .observation {
-  --c: var(--orchid-mist);
+  --c: var(--princeton-orange);
   position: relative;
   overflow: hidden;
   background: var(--surface-raised);
