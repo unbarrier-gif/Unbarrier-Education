@@ -99,12 +99,10 @@
   margin: 0 0 1rem;
 }
 
-/* Cherry Bomb moment for the access strand — used once on the section 2
-   heading's second sentence ("The implementation isn't."). Mirrors the
-   brand mapping established on /voice ("students are the why."). */
-.cherry {
-  font-family: var(--font-decorative);
-  font-weight: 400;
+/* In-heading accent — colour-only highlight on the second sentence of
+   the section 2 h2 ("The implementation isn't."). Inherits the heading
+   font from .h2 for typographic consistency. Matches /voice's .accent. */
+.accent {
   color: var(--princeton-orange);
 }
 

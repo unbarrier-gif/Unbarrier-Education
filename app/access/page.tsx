@@ -109,8 +109,8 @@ export default function AccessPage() {
           </p>
         </header>
 
-        {/* 2. WHAT I SEE — Cherry Bomb on "The implementation isn't." matches
-            the brand mapping for the access strand's accent moment. */}
+        {/* 2. WHAT I SEE — orange accent on "The implementation isn't." stays
+            in the same heading font (Outfit) for typographic consistency. */}
         <SectionBar color="var(--princeton-orange)" />
         <section id="access-what-i-see" className={styles.observations}>
           <div className={styles.observationsHead}>
@@ -119,7 +119,7 @@ export default function AccessPage() {
             </Eyebrow>
             <h2 className={styles.h2}>
               The investment is in.{' '}
-              <span className={styles.cherry}>The implementation isn&apos;t.</span>
+              <span className={styles.accent}>The implementation isn&apos;t.</span>
             </h2>
           </div>
 
