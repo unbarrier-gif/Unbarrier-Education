@@ -45,27 +45,27 @@ const OBSERVATIONS = [
   {
     n: '01',
     headline: "The tools are already there. The strategy isn't.",
-    text: "A whole-school iPad rollout, three years in, and accessibility features are still toggled on inconsistently. Some classrooms use Speak Selection. Others don't know it exists. The variation is the problem, not the tech.",
+    text: "Most primary schools have iPads. A couple in the corner that don't get used. Or a shared trolley. Or one to one. The kit is there. What's missing is the practice — teachers with iPads but no clear workflow for what to do with them, so the iPad becomes a demo tool, not a teaching one. Speak Selection, colour filters, live captions — they're all already on the device. They're just not being used.",
   },
   {
     n: '02',
     headline: 'TAs are doing work that learners could do themselves.',
-    text: 'The TA reads the question aloud. The TA spells the word. The TA is exhausted by Friday. None of that is necessary if the iPad is set up properly. The over-reliance on adult mediation is the most common pattern I see — and the most fixable.',
+    text: "Our TAs have been the missing part of our accessibility training for a long time. They're the ones reading the question aloud, spelling the word, holding the child up through the lesson — and they're exhausted by Friday. None of that work is necessary when the iPad is set up properly. Speak Selection reads the page. Live captions handle the teacher's voice. The TA gets to do the work only a human can do, instead of doing what the device should be doing.",
   },
   {
     n: '03',
     headline: 'SEND-funded devices sit at 30% utilisation.',
-    text: "EHCP-mandated iPads, expensive specialist apps, and the child uses them for ten minutes a week. Not because they don't help. Because no one trained the staff around the child to embed the tool into routine.",
+    text: "An EHCP names the iPad. The school buys it. The specialist apps get installed. And then the child uses it for ten minutes a week — not because the tool doesn't help, but because no one trained the adults around the child to make it part of the routine. The investment goes in. The accessibility benefit doesn't come out. The child carries on coping the way they were before, just now with an iPad sitting in their tray.",
   },
   {
     n: '04',
     headline: 'Staff confidence has a phase gap.',
-    text: 'Reception staff are often more comfortable with the basics than Year 5 staff. Year 6 prep eats accessibility time. By Year 4, the child who needed scaffolded reading in Reception has lost three years of practice with the tool that would have helped them.',
+    text: "The iPad gets seen as a primary device. Children move up through the school and the device gets put away — replaced by a clamshell, a Chromebook, something more grown-up. But the child who needed live captions in Reception still needs them in Year 5. The child whose dyslexia got picked up in Year 2 doesn't grow out of dyslexia. We move them off the tool that was working, in the year they need it most.",
   },
   {
     n: '05',
     headline: "Inspection isn't asking yet, but it will.",
-    text: "DfE Digital and Technology Standards. SEND review pressure. Trust governance. The accountability is moving toward whether the existing tools are being used — not whether you've bought enough of them. The schools that get ahead of this aren't doing more. They're doing what they already have, properly.",
+    text: "The white paper this year names accessibility, ordinary available provision, and belonging as core. Inspection follows white papers. Trust governance follows inspection. The accountability question schools used to face was: \"do you have the kit?\" The next one is: \"are you using it for every child the white paper named?\" And the answer can't be \"we bought it.\" Schools that get ahead of this don't buy more. They use what they already have, properly.",
   },
 ];
 
