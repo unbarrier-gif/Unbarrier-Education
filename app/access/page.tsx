@@ -177,10 +177,12 @@ export default function AccessPage() {
               a year group.
             </p>
             <p className={styles.whereParagraph}>
-              I don&apos;t sell software. I don&apos;t run a one-size-fits-all
-              CPD package. I look at what you&apos;ve already invested in, the
-              children it was meant to help, and the gap between the two.
-              Then I build the route to close it.
+              I come in with an accessibility lens, not the whole digital
+              lens. The whole digital lens is being delivered everywhere.
+              The accessibility lens is the bit that&apos;s missing — the
+              bit that turns the device from a demo tool into a teaching
+              tool, and the device from a teaching tool into a learning
+              tool the child can actually use.
             </p>
             <p className={styles.whereParagraph}>
               If you&apos;re a school or trust with iPads in classrooms and a
