@@ -8,17 +8,16 @@ import { MobileNavDrawer } from './MobileNavDrawer';
 import { Wordmark } from './Wordmark';
 import styles from './Nav.module.css';
 
-// Phase 3 link-swap: audit / access still anchor-scroll to #services
-// until those routes ship. voice now points at the live /voice holding
-// page (partnership invitation, not a full product page). Tracked in
-// _inbound/Task List.html.
+// Phase 3 link-swap: audit still anchor-scrolls to #services until that
+// route ships. access and voice both point at live holding pages.
+// Tracked in _inbound/Task List.html.
 //
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
 // --dot CSS var set inline below. Plain links (blog/about) omit `dot`.
 const LINKS = [
   { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
-  { key: 'access', label: 'access', href: '/#services', dot: 'var(--princeton-orange)' },
+  { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
   { key: 'loop-breakers', label: 'loop breakers', href: '/loop-breakers', dot: 'var(--school-bus-yellow)' },
   { key: 'blog', label: 'blog', href: '/blog' },

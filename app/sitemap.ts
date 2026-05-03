@@ -12,6 +12,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: `${SITE_URL}/loop-breakers`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: `${SITE_URL}/loop-breakers/guest-host-kit`, lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: `${SITE_URL}/blog`, lastModified: now, changeFrequency: 'weekly', priority: 0.9 },
+    // /access shipped 3 May 2026 — uses WWW (canonical host post-redirect
+    // investigation). Other entries still use bare; site-wide host
+    // canonicalisation is a separate task tracked elsewhere.
+    { url: 'https://www.unbarrier.me/access', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
