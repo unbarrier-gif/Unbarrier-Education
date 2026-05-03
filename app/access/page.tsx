@@ -54,18 +54,30 @@ const OBSERVATIONS = [
   },
   {
     n: '03',
-    headline: 'SEND-funded devices sit at 30% utilisation.',
+    headline: 'SEND-funded devices sit unused.',
     text: "An EHCP names the iPad. The school buys it. The specialist apps get installed. And then the child uses it for ten minutes a week — not because the tool doesn't help, but because no one trained the adults around the child to make it part of the routine. The investment goes in. The accessibility benefit doesn't come out. The child carries on coping the way they were before, just now with an iPad sitting in their tray.",
   },
   {
     n: '04',
-    headline: 'Staff confidence has a phase gap.',
+    headline: 'The iPad gets put away in the year the child needs it most.',
     text: "The iPad gets seen as a primary device. Children move up through the school and the device gets put away — replaced by a clamshell, a Chromebook, something more grown-up. But the child who needed live captions in Reception still needs them in Year 5. The child whose dyslexia got picked up in Year 2 doesn't grow out of dyslexia. We move them off the tool that was working, in the year they need it most.",
   },
   {
     n: '05',
     headline: "Inspection isn't asking yet, but it will.",
-    text: "The white paper this year names accessibility, ordinary available provision, and belonging as core. Inspection follows white papers. Trust governance follows inspection. The accountability question schools used to face was: \"do you have the kit?\" The next one is: \"are you using it for every child the white paper named?\" And the answer can't be \"we bought it.\" Schools that get ahead of this don't buy more. They use what they already have, properly.",
+    text: (
+      <>
+        The white paper this year names accessibility, ordinary available
+        provision, and belonging as core. Inspection follows white papers.
+        Trust governance follows inspection. The accountability question
+        schools used to face was <em>do you have the kit?</em> The next one
+        is{' '}
+        <em>are you using it for every child the white paper named?</em> —
+        and the answer can&apos;t be &ldquo;we bought it.&rdquo; Schools
+        that get ahead of this don&apos;t buy more. They use what they
+        already have, properly.
+      </>
+    ),
   },
 ];
 
@@ -84,7 +96,7 @@ export default function AccessPage() {
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
             <span aria-hidden="true" className={styles.dot} />
-            For schools and trusts
+            For schools and trusts.
           </p>
           <h1 className={styles.heading}>
             Most schools already own the tools.
@@ -100,7 +112,7 @@ export default function AccessPage() {
           </p>
           <div className={styles.heroCta}>
             <Button href={HERO_CTA} color="var(--princeton-orange)">
-              Tell me what you&apos;re working with →
+              Tell me what you&apos;re working with
             </Button>
           </div>
           <p className={styles.heroSubtext}>
@@ -115,7 +127,7 @@ export default function AccessPage() {
         <section id="access-what-i-see" className={styles.observations}>
           <div className={styles.observationsHead}>
             <Eyebrow color="var(--princeton-orange)">
-              Five things I see in schools that have already invested
+              Five things I see in schools that have already invested.
             </Eyebrow>
             <h2 className={styles.h2}>
               The investment is in.{' '}
@@ -142,7 +154,12 @@ export default function AccessPage() {
         <section id="access-what-i-do" className={styles.where}>
           <Glow color="var(--spring-green)" left="62%" top="-10%" size={500} opacity={0.06} />
           <div className={styles.whereInner}>
-            <Eyebrow color="var(--spring-green)">Where I&apos;m at</Eyebrow>
+            <Eyebrow color="var(--spring-green)">Where I&apos;m at.</Eyebrow>
+            <p className={styles.whereLede}>
+              Accessibility tools for everybody — not just SEN kids.
+              We&apos;ve all been customising for ourselves for years. Now we
+              make that visible to children.
+            </p>
             <h2 className={styles.h2}>
               I help schools turn what they own into what works.
             </h2>
@@ -178,7 +195,7 @@ export default function AccessPage() {
         <SectionBar color="var(--princeton-orange)" />
         <section className={styles.cta}>
           <Eyebrow color="var(--princeton-orange)">
-            Tell me what you&apos;re working with
+            Tell me what you&apos;re working with.
           </Eyebrow>
           <h2 className={styles.h2}>Email me.</h2>
           <p className={styles.ctaLede}>
@@ -189,7 +206,7 @@ export default function AccessPage() {
             at someone better matched.
           </p>
           <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
-            nici@unbarrier.me →
+            nici@unbarrier.me
           </Button>
           <p className={styles.ctaSubtext}>
             Real conversation, no forms, no automation. Replies usually within

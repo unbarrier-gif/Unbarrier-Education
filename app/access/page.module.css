@@ -188,6 +188,18 @@
   z-index: 1;
 }
 
+/* Pre-heading philosophy lede — sits between the eyebrow and h2 to
+   frame the "Where I'm at" section before the action statement. */
+.whereLede {
+  font-family: var(--font-body);
+  font-size: clamp(1.05rem, 2vw, 1.2rem);
+  font-style: italic;
+  color: var(--text);
+  line-height: 1.55;
+  margin: 0 0 1.4rem;
+  max-width: 580px;
+}
+
 .whereParagraph {
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.8vw, 1.08rem);
