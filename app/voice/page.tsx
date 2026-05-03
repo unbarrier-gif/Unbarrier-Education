@@ -31,6 +31,9 @@ export const metadata: Metadata = {
 const CTA_EMAIL =
   'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello';
 
+const HERO_CTA =
+  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20partnership%20conversation';
+
 const OBSERVATIONS = [
   {
     n: '01',
@@ -62,9 +65,10 @@ export default function VoicePage() {
         <Glow color="var(--orchid-mist)" left="-120px" top="6%" size={620} opacity={0.1} />
         <Glow color="var(--spring-green)" right="-100px" top="40%" size={460} opacity={0.07} />
 
-        {/* 1. HERO — deployed structure: eyebrow with bullet dot, Cherry Bomb
-            sentence-case two-tone H1, blockquote-style tagline. Three elements,
-            nothing more. */}
+        {/* 1. HERO — eyebrow with bullet dot, two-tone H1, lede, CTA, credibility
+            subtext. Mirrors /access hero structure. CTA is /voice-specific
+            (orchid, partnership-conversation mailto) and the credibility line
+            names the EdTech-relevant credentials only. */}
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
             <span aria-hidden="true" className={styles.dot} />
@@ -76,6 +80,15 @@ export default function VoicePage() {
           <p className={styles.lede}>
             I help you build products people actually use, understand, trust,
             and benefit from.
+          </p>
+          <div className={styles.heroCta}>
+            <Button href={HERO_CTA} color="var(--orchid-mist)">
+              Start a partnership conversation
+            </Button>
+          </div>
+          <p className={styles.heroSubtext}>
+            Apple Professional Learning Specialist. 26 years in classrooms.
+            GoodNotes partner. Dyslexic and ADHD educator.
           </p>
         </header>
 

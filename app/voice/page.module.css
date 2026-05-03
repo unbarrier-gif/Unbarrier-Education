@@ -68,6 +68,21 @@
   padding-left: 18px;
 }
 
+.heroCta {
+  margin: 1.8rem 0 1.4rem;
+}
+
+.heroSubtext {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+  border-left: 3px solid var(--orchid-mist);
+  padding-left: 14px;
+}
+
 /* ── 2. WHAT I SEE ────────────────────────────────────────────── */
 
 .observations {
