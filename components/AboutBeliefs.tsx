@@ -50,7 +50,7 @@ export function AboutBeliefs() {
               I&apos;m here to sit with you, figure out what&apos;s actually
               getting in the way, and help you do something real about it.
             </p>
-            <Button href="mailto:nici@unbarrier.me?subject=about" color="var(--orchid-mist)">
+            <Button href="/blog/the-system-wasnt-built-for-the-60-percent-in-the-middle" color="var(--orchid-mist)">
               More about Nici →
             </Button>
           </div>
