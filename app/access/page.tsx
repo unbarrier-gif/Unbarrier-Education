@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import { APLSBadge } from '@/components/APLSBadge';
 import { Button } from '@/components/Button';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
@@ -114,11 +115,17 @@ export default function AccessPage() {
             <Button href={HERO_CTA} color="var(--princeton-orange)">
               Tell me what you&apos;re working with
             </Button>
+            <a href="#access-what-i-see" className={styles.heroSecondary}>
+              See what schools tell me →
+            </a>
           </div>
-          <p className={styles.heroSubtext}>
-            Apple Professional Learning Specialist. 26 years in classrooms.
-            Dyslexic and ADHD educator.
-          </p>
+          <div className={styles.heroCredit}>
+            <APLSBadge width={96} className={styles.heroBadge} />
+            <p className={styles.heroSubtext}>
+              Apple Professional Learning Specialist. 26 years in classrooms.
+              Dyslexic and ADHD educator.
+            </p>
+          </div>
         </header>
 
         {/* 2. WHAT I SEE — orange accent on "The implementation isn't." stays
