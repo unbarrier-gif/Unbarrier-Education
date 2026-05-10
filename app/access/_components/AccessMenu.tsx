@@ -52,7 +52,13 @@ const M5 = {
   body:
     "A working session for SENCOs, TAs and inclusion leads to triage accessibility provision across a group of learners. Bring your cohort — the EHCPs, the Individual Support Plans, the children you're worried about — and leave with a needs map: which barriers cluster, which iPad tools answer them, and where provision is already in place but underused. Output is a documented plan that feeds directly into Individual Support Plans and ordinarily available provision.",
   audienceFor: 'SENCOs, TAs, inclusion leads',
-  linkOut: { href: '/audits', label: 'See full audit clinic details →' },
+  // D43 (10 May 2026): linkOut deliberately omitted. /audits 404s today
+  // and a visible CTA to a broken destination reads worse than none. The
+  // ModuleTile linkOut prop + .linkOutCta CSS are preserved unchanged so
+  // reinstatement is a single-line restore here:
+  //   linkOut: { href: '/audits', label: 'See full audit clinic details →' },
+  // Pairs with D41 (audit-clinic outbound pill hidden). Both reinstate
+  // together when /audits ships.
 } as const;
 
 export function AccessMenu() {
