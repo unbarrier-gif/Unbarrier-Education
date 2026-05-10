@@ -9,15 +9,14 @@ type Props = {
   variant?: Variant;
 };
 
-// Phase 3 link-swap: the unbarrier.audit / .access / .voice links below move
-// from mailto stubs to /audit, /access, /voice when those routes ship.
-// Tracked in _inbound/Task List.html.
+// .access and .voice point at live routes; .audit still anchors to
+// /#services until that route ships in Phase 3.
 const FOOTER_LINK_GROUPS = [
   {
     heading: 'Services',
     links: [
       { label: 'unbarrier.audit', href: '/#services' },
-      { label: 'unbarrier.access', href: '/#services' },
+      { label: 'unbarrier.access', href: '/access' },
       { label: 'unbarrier.voice', href: '/voice' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
