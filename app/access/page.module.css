@@ -621,8 +621,33 @@
 .timelineModule {
   font-family: var(--font-body);
   font-size: 0.98rem;
-  line-height: 1.55;
+  font-weight: 700;
+  line-height: 1.4;
   color: var(--text);
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+/* D30 — module rows now carry a one-paragraph context sentence below
+   the bold module title. Slightly muted vs the title but fully readable
+   (passes WCAG 2.2 AA on the panel surface via --text-muted). */
+.timelineContext {
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+/* Italic detail line on Arrival / Debrief rows — short, subtle, no
+   module title. */
+.timelineDetail {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-subtle);
+  margin: 0;
 }
 
 .timelineFacilitator {
@@ -638,6 +663,13 @@
   color: var(--text-subtle);
   line-height: 1.6;
   margin: 14px 0 0;
+}
+
+/* Worked-example day closing CTA — D30 / D34 source doc. Uses the
+   shared Button component (princeton-orange) so focus state comes for
+   free with the rest of the site. */
+.timelineCta {
+  margin: 1.6rem 0 0;
 }
 
 /* ── 6. NOT JUST ME — APLS bench ──────────────────────────────── */
@@ -756,15 +788,6 @@
   background: rgba(255, 138, 28, 0.12);
   padding: 3px 7px;
   border-radius: 100px;
-}
-
-.placeholderText {
-  /* Inline placeholder run — flags strings Nici still needs to confirm
-     (Ben's surname, credential line) without breaking the read flow. */
-  color: var(--text-subtle);
-  font-style: italic;
-  text-decoration: underline dashed;
-  text-underline-offset: 3px;
 }
 
 .moduleChips {

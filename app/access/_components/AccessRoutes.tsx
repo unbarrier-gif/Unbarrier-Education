@@ -21,9 +21,9 @@ export function AccessRoutes() {
           <span className={styles.accent}>Pick what fits.</span>
         </h2>
         <p className={styles.routesLede}>
-          Single workshop, full INSET day, or a bespoke shape. Delivered by
-          Nici and Ben — both Apple Professional Learning Specialists. The
-          work scales; the standard doesn&apos;t.
+          Single workshop, full INSET day, or a bespoke shape. Delivered by a
+          small team of Apple Professional Learning Specialists. The work
+          scales; the standard doesn&apos;t.
         </p>
       </div>
 
