@@ -3,8 +3,8 @@ import { SectionBar } from './SectionBar';
 import { ServiceCard } from './ServiceCard';
 import styles from './Services.module.css';
 
-// Phase 3 link-swap: replace mailto stubs below with /audit, /access, /voice
-// once those routes ship. Tracked as a single Task List.html entry.
+// .voice and .access link to live holding pages; .audit still mailto
+// until that route ships in Phase 3.
 const CARDS = [
   {
     accent: 'var(--pearl-aqua)',
@@ -22,7 +22,7 @@ const CARDS = [
     label: 'unbarrier.access',
     sub: 'Apple PLS · iPad strategy · Belonging',
     desc: 'Most schools already own powerful accessibility tools. Few use them consistently. I build the strategy and culture that makes access real.',
-    href: 'mailto:nici@unbarrier.me?subject=access',
+    href: '/access',
   },
   {
     accent: 'var(--orchid-mist)',
