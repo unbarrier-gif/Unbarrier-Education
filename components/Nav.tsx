@@ -107,7 +107,12 @@ export function Nav({ active }: Props) {
       data-scrolled={scrolled ? 'true' : 'false'}
     >
       <div className={styles.inner}>
-        <Wordmark href="/" size="md" ariaLabel="unbarrier.me — home" />
+        <Wordmark
+          href="/"
+          size="md"
+          suffix={active === 'access' ? '.access' : '.me'}
+          ariaLabel={active === 'access' ? 'unbarrier.access — home' : 'unbarrier.me — home'}
+        />
         <div className={styles.right}>
           <ul className={styles.links}>
             {LINKS.map((link) => {
