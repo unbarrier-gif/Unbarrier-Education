@@ -191,27 +191,14 @@
 }
 
 .heroSubtext {
-  margin: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-}
-
-.aplsLockup {
-  height: 28px;
-  width: auto;
-  /* SVG ships with white fill; soften slightly so it sits in the same
-     tonal weight as the credibility line below it. */
-  opacity: 0.92;
-}
-
-.heroSubtextLine {
   font-family: var(--font-body);
-  font-size: 0.9rem;
-  line-height: 1.5;
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
+  border-left: 3px solid var(--princeton-orange);
+  padding-left: 14px;
 }
 
 /* ── 2. WHAT I SEE ────────────────────────────────────────────── */

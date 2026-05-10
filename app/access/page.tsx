@@ -1,5 +1,4 @@
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Button } from '@/components/Button';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
@@ -132,19 +131,10 @@ export default function AccessPage() {
               Fill the enquiry form →
             </a>
           </div>
-          <div className={styles.heroSubtext}>
-            <Image
-              src="/assets/apls-badge.svg"
-              alt="Apple Professional Learning Specialist"
-              width={307}
-              height={68}
-              className={styles.aplsLockup}
-              priority
-            />
-            <p className={styles.heroSubtextLine}>
-              26 years in classrooms. Dyslexic and ADHD educator.
-            </p>
-          </div>
+          <p className={styles.heroSubtext}>
+            Apple Professional Learning Specialist. 26 years in classrooms.
+            GoodNotes partner. Dyslexic and ADHD educator.
+          </p>
         </header>
 
         {/* 2. WHAT I SEE — orange accent on "The implementation isn't." stays
