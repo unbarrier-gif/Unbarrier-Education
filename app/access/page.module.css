@@ -6,7 +6,93 @@
 
 .main section,
 .main header {
-  scroll-margin-top: 90px;
+  /* Nav (~64px fixed) + AccessSkipNav (~52px sticky) + breathing room.
+     Without this, anchor jumps from the skip-nav strip would land with the
+     section's heading hidden behind the strip. */
+  scroll-margin-top: 140px;
+}
+
+/* ── 1b. SKIP-NAV STRIP (sticky under hero) ───────────────────── */
+
+.skipNav {
+  position: sticky;
+  top: 64px;
+  z-index: 5;
+  background: rgba(33, 10, 51, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.skipNavInner {
+  list-style: none;
+  margin: 0 auto;
+  padding: 8px clamp(1rem, 4vw, 2rem);
+  max-width: 720px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+}
+
+.skipNavItem {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 600px) {
+  .skipNavInner {
+    /* 2×2 grid on mobile — labels stay readable, hit targets stay 44px. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding-block: 6px;
+  }
+  .skipNavItem {
+    flex: none;
+  }
+}
+
+.skipNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.skipNavBtn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.skipNavBtn:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--spring-green));
+  outline-offset: 2px;
+}
+
+.skipNavBtnActive {
+  color: var(--text);
+  border-bottom-color: currentColor;
+}
+
+.skipNavDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ── 1. HERO ─────────────────────────────────────────────────── */

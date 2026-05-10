@@ -8,6 +8,7 @@ import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
 import { AccessRoutes } from './_components/AccessRoutes';
 import { AccessInsetExample } from './_components/AccessInsetExample';
+import { AccessSkipNav } from './_components/AccessSkipNav';
 import { AccessTeamBench } from './_components/AccessTeamBench';
 import styles from './page.module.css';
 
@@ -146,6 +147,11 @@ export default function AccessPage() {
           </div>
         </header>
 
+        {/* 1b. SKIP-NAV STRIP — sticky under the hero. Heads scanning don't
+            want section names, they want decisions: What can I book / How
+            does a day look / Who's in the room / how do I Ask. */}
+        <AccessSkipNav />
+
         {/* 2. WHAT I SEE — orange accent on "The implementation isn't." stays
             in the same heading font (Outfit) for typographic consistency. */}
         <SectionBar color="var(--princeton-orange)" />
@@ -232,7 +238,7 @@ export default function AccessPage() {
 
         {/* 7. CTA */}
         <SectionBar color="var(--princeton-orange)" />
-        <section className={styles.cta}>
+        <section id="access-ask" className={styles.cta}>
           <Eyebrow color="var(--princeton-orange)">
             Tell me what you&apos;re working with.
           </Eyebrow>
