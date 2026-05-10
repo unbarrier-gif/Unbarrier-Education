@@ -212,7 +212,339 @@
   margin-bottom: 0;
 }
 
-/* ── 4. CTA ──────────────────────────────────────────────────── */
+/* ── 4. THREE ROUTES — pick & mix ─────────────────────────────── */
+
+.routes {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.routesHead {
+  max-width: 720px;
+  margin: 0 0 3rem;
+}
+
+.routesLede {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 1rem 0 0;
+  max-width: 60ch;
+}
+
+.routesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 760px) {
+  .routesGrid {
+    grid-template-columns: 1fr 1.35fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.routeCard {
+  --c: var(--princeton-orange);
+  position: relative;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-top: 3px solid var(--c);
+  border-radius: 14px;
+  padding: 26px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.routeCardFeatured {
+  /* The middle column is wider via the parent grid template; lift
+     it visually with a stronger border and a touch more padding. */
+  border-color: var(--c);
+  padding-top: 30px;
+}
+
+.pillMost {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amethyst);
+  background: var(--school-bus-yellow);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+
+.routeTag {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin: 0 0 12px;
+}
+
+.routeTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.routeSub {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 0 0 14px;
+}
+
+.routeBody {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.routeCta {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--c) 40%, transparent);
+  padding-bottom: 2px;
+  align-self: flex-start;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.routeCta:hover,
+.routeCta:focus-visible {
+  border-color: var(--c);
+}
+
+.routesFootnote {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 1.6rem 0 0;
+}
+
+/* ── 5. WORKED-EXAMPLE INSET DAY ──────────────────────────────── */
+
+.timelineSection {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.timelineHead {
+  max-width: 720px;
+  margin: 0 0 2rem;
+}
+
+.timelineSubLine {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 0.6rem 0 1.4rem;
+}
+
+.timelinePillRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.pillYellow {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--school-bus-yellow);
+  background: rgba(255, 194, 3, 0.1);
+  border: 1px solid rgba(255, 194, 3, 0.35);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+
+.timelineMeta {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--text-subtle);
+}
+
+.timelinePanel {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border-default);
+}
+
+.timelineRow:first-child {
+  border-top: 0;
+}
+
+.timelineRowParallel {
+  /* Parallel-track sessions sit visually grouped via a soft tint. */
+  background: rgba(105, 217, 209, 0.04);
+}
+
+@media (min-width: 720px) {
+  .timelineRow {
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+}
+
+.timelineTime {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.84rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.02em;
+}
+
+.timelineBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.timelineAudience {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.timelineParallelTag {
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
+.timelineModule {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--text);
+}
+
+/* ── 6. NOT JUST ME — APLS bench ──────────────────────────────── */
+
+.team {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  position: relative;
+}
+
+.teamInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.teamPara {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0 0 1.1rem;
+}
+
+.benchRow {
+  list-style: none;
+  margin: 1.6rem 0 1.4rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.benchChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid var(--border-default);
+  background: var(--surface-raised);
+  border-radius: 100px;
+  padding: 6px 14px 6px 8px;
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  color: var(--text);
+}
+
+.benchChipPlaceholder {
+  border-style: dashed;
+  color: var(--text-subtle);
+}
+
+.benchChipGrowing {
+  border-style: dashed;
+  color: var(--text-subtle);
+  padding-left: 14px;
+  font-style: italic;
+}
+
+.aplsBadge {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--princeton-orange);
+  background: rgba(255, 138, 28, 0.12);
+  padding: 3px 7px;
+  border-radius: 100px;
+}
+
+.benchName {
+  font-weight: 600;
+}
+
+.benchRole {
+  color: var(--text-subtle);
+  font-size: 0.84rem;
+}
+
+.teamFootnote {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 0.6rem 0 0;
+  border-left: 3px solid var(--spring-green);
+  padding-left: 14px;
+}
+
+/* ── 7. CTA ──────────────────────────────────────────────────── */
 
 .cta {
   padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 5rem);

@@ -5,6 +5,9 @@ import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { AccessRoutes } from './_components/AccessRoutes';
+import { AccessInsetExample } from './_components/AccessInsetExample';
+import { AccessTeamBench } from './_components/AccessTeamBench';
 import styles from './page.module.css';
 
 // Holding page for unbarrier.access. Modelled on /voice's holding-page
@@ -193,7 +196,19 @@ export default function AccessPage() {
           </div>
         </section>
 
-        {/* 4. CTA */}
+        {/* 4. THREE ROUTES — pick & mix (NEW · /access v2) */}
+        <SectionBar color="var(--princeton-orange)" />
+        <AccessRoutes />
+
+        {/* 5. WORKED-EXAMPLE INSET DAY (NEW · /access v2) */}
+        <SectionBar color="var(--school-bus-yellow)" />
+        <AccessInsetExample />
+
+        {/* 6. NOT JUST ME — APLS bench (NEW · /access v2) */}
+        <SectionBar color="var(--spring-green)" />
+        <AccessTeamBench />
+
+        {/* 7. CTA */}
         <SectionBar color="var(--princeton-orange)" />
         <section className={styles.cta}>
           <Eyebrow color="var(--princeton-orange)">
