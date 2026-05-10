@@ -70,7 +70,10 @@ const ROWS: RowSpec[] = [
   },
 ];
 
-const ENQUIRY_CTA =
+const ENQUIRY_FORM =
+  'https://unbarrier.notion.site/210e620dc235464cbb60608b52ebe2ae?pvs=105';
+
+const ENQUIRY_EMAIL =
   'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20INSET%20day';
 
 export function AccessInsetExample() {
@@ -126,10 +129,19 @@ export function AccessInsetExample() {
         </p>
       </div>
 
+      {/* D44 dual-CTA — primary form button (highest-intent surface,
+          opens in new tab via Button's auto target="_blank" on https
+          hrefs), secondary mailto text-link for exploring buyers.
+          Mirrors the Band 1 hero pattern but inverted: form is the
+          primary door here because Band 5 readers have already
+          self-qualified through the worked-example day. */}
       <div className={styles.timelineCta}>
-        <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
+        <Button href={ENQUIRY_FORM} color="var(--princeton-orange)">
           Tell us what you need →
         </Button>
+        <a href={ENQUIRY_EMAIL} className={styles.heroFormLink}>
+          Email Nici directly
+        </a>
       </div>
     </section>
   );
