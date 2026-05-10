@@ -15,7 +15,7 @@ type Facilitator = {
 const NICI: Facilitator = {
   name: 'Nici Foote',
   role: 'Lead facilitator',
-  credentialPrefix: '26 yrs in classrooms · dyslexic + ADHD educator',
+  credentialPrefix: '26 yrs in classrooms · dyslexic + ADHD + dyscalculia + auditory processing disorder',
   portrait: {
     src: '/assets/portraits/nici-facing-profile-hero.png',
     alt: 'Nici Foote — lead facilitator',
