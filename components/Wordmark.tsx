@@ -10,8 +10,8 @@ const SIZES: Record<Size, number> = { sm: 16, md: 22, lg: 34, xl: 56 };
 const DOT_COLOR: Record<Suffix, string> = {
   '.me': 'var(--spring-green)',
   '.audit': 'var(--pearl-aqua)',
-  '.access': 'var(--orchid-mist)',
-  '.voice': 'var(--princeton-orange)',
+  '.access': 'var(--princeton-orange)',
+  '.voice': 'var(--orchid-mist)',
   '.hub': 'var(--school-bus-yellow)',
 };
 
