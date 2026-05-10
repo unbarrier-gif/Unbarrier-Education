@@ -3,7 +3,7 @@ import { Eyebrow } from '@/components/Eyebrow';
 import styles from '../page.module.css';
 
 const BESPOKE_CTA =
-  'mailto:nici@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20bespoke';
+  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20bespoke';
 
 export function AccessRoutes() {
   return (
@@ -21,9 +21,9 @@ export function AccessRoutes() {
           <span className={styles.accent}>Pick what fits.</span>
         </h2>
         <p className={styles.routesLede}>
-          Single workshop, full INSET day, or a bespoke shape. Every session
-          is delivered by an Apple Professional Learning Specialist — not a
-          white-labelled trainer.
+          Single workshop, full INSET day, or a bespoke shape. Delivered by
+          Nici and Ben — both Apple Professional Learning Specialists. The
+          work scales; the standard doesn&apos;t.
         </p>
       </div>
 

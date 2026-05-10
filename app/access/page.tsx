@@ -40,9 +40,10 @@ export const metadata: Metadata = {
 };
 
 const HERO_CTA =
-  'mailto:nici@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
+  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
 const ENQUIRY_CTA =
-  'mailto:nici@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
+  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
+const ENQUIRY_FORM = '/workshops#enquire';
 
 const OBSERVATIONS = [
   {
@@ -113,11 +114,22 @@ export default function AccessPage() {
             rollout. Just the tools they already own, finally working for the
             children who need them.
           </p>
-          <div className={styles.heroCta}>
+          <div className={styles.heroCtaRow}>
             <Button href={HERO_CTA} color="var(--princeton-orange)">
-              Tell me what you&apos;re working with
+              Email Nici →
+            </Button>
+            <Button
+              href={ENQUIRY_FORM}
+              variant="ghost"
+              color="var(--princeton-orange)"
+            >
+              Fill the enquiry form →
             </Button>
           </div>
+          <p className={styles.heroCtaHint}>
+            Email if you want a conversation. Form if you&apos;ve got dates and
+            headcount.
+          </p>
           <p className={styles.heroSubtext}>
             Apple Professional Learning Specialist. 26 years in classrooms.
             Dyslexic and ADHD educator.
@@ -222,12 +234,25 @@ export default function AccessPage() {
             talk about shape and cost. If it doesn&apos;t, I&apos;ll point you
             at someone better matched.
           </p>
-          <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
-            nici@unbarrier.me
-          </Button>
+          <div className={styles.ctaRow}>
+            <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
+              hello@unbarrier.me
+            </Button>
+            <Button
+              href={ENQUIRY_FORM}
+              variant="ghost"
+              color="var(--princeton-orange)"
+            >
+              Fill the enquiry form →
+            </Button>
+          </div>
+          <p className={styles.ctaHint}>
+            Email if you want a conversation. Form if you&apos;ve got dates and
+            headcount.
+          </p>
           <p className={styles.ctaSubtext}>
-            Real conversation, no forms, no automation. Replies usually within
-            two working days.
+            Real conversation. I reply personally — usually within two working
+            days.
           </p>
         </section>
 

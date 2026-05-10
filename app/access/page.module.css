@@ -61,7 +61,19 @@
   margin: 0 0 1.8rem;
 }
 
-.heroCta {
+.heroCtaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 0 0 0.6rem;
+}
+
+.heroCtaHint {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.55;
   margin: 0 0 1.4rem;
 }
 
@@ -458,6 +470,21 @@
   color: var(--text);
 }
 
+.timelineFacilitator {
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.78;
+}
+
+.timelineCaveat {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 14px 0 0;
+}
+
 /* ── 6. NOT JUST ME — APLS bench ──────────────────────────────── */
 
 .team {
@@ -478,38 +505,90 @@
   margin: 0 0 1.1rem;
 }
 
-.benchRow {
-  list-style: none;
-  margin: 1.6rem 0 1.4rem;
-  padding: 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
+.facilitatorRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 2rem 0 1.6rem;
 }
 
-.benchChip {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid var(--border-default);
+@media (min-width: 720px) {
+  .facilitatorRow {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+.facilitatorCard {
   background: var(--surface-raised);
-  border-radius: 100px;
-  padding: 6px 14px 6px 8px;
-  font-family: var(--font-body);
-  font-size: 0.9rem;
+  border: 1.5px solid var(--border-default);
+  border-radius: 14px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.portraitCircle,
+.portraitPlaceholder {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+  margin: 0 0 18px;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portraitCircle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portraitPlaceholder {
+  border: 2px dashed var(--border-default);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-subtle);
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.facilitatorName {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
   color: var(--text);
+  margin: 0 0 4px;
+  line-height: 1.2;
 }
 
-.benchChipPlaceholder {
-  border-style: dashed;
-  color: var(--text-subtle);
-}
-
-.benchChipGrowing {
-  border-style: dashed;
-  color: var(--text-subtle);
-  padding-left: 14px;
+.facilitatorRole {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
   font-style: italic;
+  color: var(--text-subtle);
+  margin: 0 0 12px;
+}
+
+.credentialLine {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 14px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
 }
 
 .aplsBadge {
@@ -524,13 +603,39 @@
   border-radius: 100px;
 }
 
-.benchName {
-  font-weight: 600;
+.placeholderText {
+  /* Inline placeholder run — flags strings Nici still needs to confirm
+     (Ben's surname, credential line) without breaking the read flow. */
+  color: var(--text-subtle);
+  font-style: italic;
+  text-decoration: underline dashed;
+  text-underline-offset: 3px;
 }
 
-.benchRole {
+.moduleChips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.moduleChip {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.moduleChipShared {
+  border-style: dashed;
   color: var(--text-subtle);
-  font-size: 0.84rem;
+  font-style: italic;
 }
 
 .teamFootnote {
@@ -559,6 +664,24 @@
   margin: 0 auto 2rem;
   max-width: 520px;
   line-height: 1.7;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin: 0 0 0.8rem;
+}
+
+.ctaHint {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.55;
+  margin: 0 auto;
+  max-width: 460px;
 }
 
 .ctaSubtext {
