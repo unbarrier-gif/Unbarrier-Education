@@ -102,8 +102,7 @@ export default function VoicePage() {
               priority
             />
             <p className={styles.heroSubtextLine}>
-              Apple Professional Learning Specialist. 26 years in classrooms.
-              GoodNotes partner. Dyslexic and ADHD educator.
+              Apple Professional Learning Specialist · 26 years in classrooms
             </p>
           </div>
         </header>

@@ -3,8 +3,6 @@ import { SectionBar } from './SectionBar';
 import { ServiceCard } from './ServiceCard';
 import styles from './Services.module.css';
 
-// Phase 3 link-swap: replace mailto stubs below with /audit, /access, /voice
-// once those routes ship. Tracked as a single Task List.html entry.
 const CARDS = [
   {
     accent: 'var(--pearl-aqua)',
@@ -14,6 +12,7 @@ const CARDS = [
     sub: 'EHCP · Section 7 · Needs-led reports',
     desc: "I write the reports that change what happens next for a child — practical, evidence-based, built around the student's actual life.",
     href: 'mailto:nici@unbarrier.me?subject=audit',
+    cta: 'Email Nici →',
   },
   {
     accent: 'var(--princeton-orange)',
@@ -22,7 +21,7 @@ const CARDS = [
     label: 'unbarrier.access',
     sub: 'Apple PLS · iPad strategy · Belonging',
     desc: 'Most schools already own powerful accessibility tools. Few use them consistently. I build the strategy and culture that makes access real.',
-    href: 'mailto:nici@unbarrier.me?subject=access',
+    href: '/access',
   },
   {
     accent: 'var(--orchid-mist)',
@@ -31,8 +30,7 @@ const CARDS = [
     label: 'unbarrier.voice',
     sub: 'Student voice · Evidence · Impact',
     desc: "You say your product is accessible. I'll go into schools, gather real student voice and usage data, and tell you whether it actually is.",
-    href: 'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello',
-    cta: 'Email Nici →',
+    href: '/voice',
   },
 ];
 
