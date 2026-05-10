@@ -667,30 +667,30 @@
   margin: 2rem 0 1.6rem;
 }
 
-@media (min-width: 720px) {
-  .facilitatorRow {
-    grid-template-columns: 1fr 1fr;
-    gap: 24px;
-  }
-}
-
 .facilitatorCard {
   background: var(--surface-raised);
   border: 1.5px solid var(--border-default);
   border-radius: 14px;
   padding: 26px 24px;
   display: flex;
-  flex-direction: column;
-  align-items: center;
-  text-align: center;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  text-align: left;
+  gap: 24px;
+}
+
+.facilitatorBody {
+  flex: 1 1 280px;
+  min-width: 0;
 }
 
 .portraitCircle,
 .portraitPlaceholder {
-  width: 110px;
-  height: 110px;
+  width: 140px;
+  height: 140px;
   border-radius: 50%;
-  margin: 0 0 18px;
+  margin: 0;
   overflow: hidden;
   flex-shrink: 0;
   display: flex;
@@ -742,7 +742,7 @@
   display: inline-flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 4px;
 }
 
@@ -773,7 +773,7 @@
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
+  justify-content: flex-start;
   gap: 6px;
 }
 

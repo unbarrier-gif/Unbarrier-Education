@@ -49,7 +49,8 @@ const HERO_CTA =
   'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
 const ENQUIRY_CTA =
   'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
-const ENQUIRY_FORM = '/workshops#enquire';
+const ENQUIRY_FORM =
+  'https://unbarrier.notion.site/210e620dc235464cbb60608b52ebe2ae?pvs=105';
 
 // Five observations — final copy locked per D22 (10 May 2026), with
 // vocabulary aligned to the canonical wiki per D23 ("ordinarily available
