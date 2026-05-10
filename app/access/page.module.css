@@ -18,6 +18,9 @@
   position: sticky;
   top: 64px;
   z-index: 5;
+  /* Matches .heroBody's 1.8rem bottom margin so the gap below the strip
+     mirrors the gap between body paragraph and the CTA row. */
+  margin-bottom: 1.8rem;
   background: rgba(33, 10, 51, 0.85);
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
