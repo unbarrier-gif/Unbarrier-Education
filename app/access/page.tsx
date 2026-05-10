@@ -102,13 +102,21 @@ export default function AccessPage() {
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
             <span aria-hidden="true" className={styles.dot} />
-            For schools and trusts.
+            unbarrier.access · accessibility, in real classrooms
           </p>
           <h1 className={styles.heading}>
             Most schools already own the tools.
             <br />
-            Few use them consistently.
+            <span className={styles.headingAccent}>
+              Few use them consistently.
+            </span>
           </h1>
+
+          {/* Skip-nav sits directly under the H1 so heads scanning see
+              decisions before the body copy. Goes sticky once it scrolls
+              past the top of the viewport. */}
+          <AccessSkipNav />
+
           <p className={styles.heroBody}>
             I help schools and trusts turn the accessibility tools they&apos;ve
             already paid for — iPads, GoodNotes, Apple&apos;s built-in suite —
@@ -120,18 +128,10 @@ export default function AccessPage() {
             <Button href={HERO_CTA} color="var(--princeton-orange)">
               Email Nici →
             </Button>
-            <Button
-              href={ENQUIRY_FORM}
-              variant="ghost"
-              color="var(--princeton-orange)"
-            >
+            <a href={ENQUIRY_FORM} className={styles.heroFormLink}>
               Fill the enquiry form →
-            </Button>
+            </a>
           </div>
-          <p className={styles.heroCtaHint}>
-            Email if you want a conversation. Form if you&apos;ve got dates and
-            headcount.
-          </p>
           <div className={styles.heroSubtext}>
             <Image
               src="/assets/apls-badge.svg"
@@ -146,11 +146,6 @@ export default function AccessPage() {
             </p>
           </div>
         </header>
-
-        {/* 1b. SKIP-NAV STRIP — sticky under the hero. Heads scanning don't
-            want section names, they want decisions: What can I book / How
-            does a day look / Who's in the room / how do I Ask. */}
-        <AccessSkipNav />
 
         {/* 2. WHAT I SEE — orange accent on "The implementation isn't." stays
             in the same heading font (Outfit) for typographic consistency. */}
@@ -254,18 +249,10 @@ export default function AccessPage() {
             <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
               hello@unbarrier.me
             </Button>
-            <Button
-              href={ENQUIRY_FORM}
-              variant="ghost"
-              color="var(--princeton-orange)"
-            >
+            <a href={ENQUIRY_FORM} className={styles.heroFormLink}>
               Fill the enquiry form →
-            </Button>
+            </a>
           </div>
-          <p className={styles.ctaHint}>
-            Email if you want a conversation. Form if you&apos;ve got dates and
-            headcount.
-          </p>
           <p className={styles.ctaSubtext}>
             Real conversation. I reply personally — usually within two working
             days.

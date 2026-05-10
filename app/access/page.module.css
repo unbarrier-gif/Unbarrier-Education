@@ -139,6 +139,10 @@
   color: var(--text);
 }
 
+.headingAccent {
+  color: #ff8a1c;
+}
+
 .heroBody {
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.8vw, 1.1rem);
@@ -150,42 +154,62 @@
 .heroCtaRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
-  margin: 0 0 0.6rem;
+  align-items: center;
+  gap: 18px 24px;
+  margin: 0 0 1.6rem;
 }
 
-.heroCtaHint {
-  font-family: var(--font-body);
-  font-size: 0.86rem;
-  font-style: italic;
-  color: var(--text-subtle);
-  line-height: 1.55;
-  margin: 0 0 1.4rem;
+/* Make the primary Email button noticeably longer than its label so it
+   reads as a substantial commitment alongside the inline text-link. */
+.heroCtaRow > a:first-child,
+.ctaRow > a:first-child {
+  padding-left: 40px;
+  padding-right: 40px;
+  min-width: 240px;
+}
+
+/* Inline text-link variant of the secondary CTA — orange text + arrow,
+   matching the routes-card "See the menu →" treatment. Sits beside the
+   primary button rather than competing with it as another pill. */
+.heroFormLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--princeton-orange);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--princeton-orange) 40%, transparent);
+  padding-bottom: 2px;
+  transition: border-color 120ms ease;
+}
+
+.heroFormLink:hover,
+.heroFormLink:focus-visible {
+  border-bottom-color: var(--princeton-orange);
 }
 
 .heroSubtext {
   margin: 0;
-  border-left: 3px solid var(--princeton-orange);
-  padding-left: 14px;
   display: flex;
   flex-direction: column;
-  gap: 6px;
   align-items: flex-start;
+  gap: 8px;
 }
 
 .aplsLockup {
-  height: 26px;
+  height: 28px;
   width: auto;
-  /* SVG ships with white fill; nudge to text-muted so it sits in the same
+  /* SVG ships with white fill; soften slightly so it sits in the same
      tonal weight as the credibility line below it. */
-  opacity: 0.78;
+  opacity: 0.92;
 }
 
 .heroSubtextLine {
   font-family: var(--font-body);
-  font-size: 0.92rem;
-  font-style: italic;
-  line-height: 1.55;
+  font-size: 0.9rem;
+  line-height: 1.5;
   color: var(--text-muted);
   margin: 0;
 }
@@ -771,19 +795,10 @@
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   justify-content: center;
-  gap: 12px;
+  gap: 18px 24px;
   margin: 0 0 0.8rem;
-}
-
-.ctaHint {
-  font-family: var(--font-body);
-  font-size: 0.86rem;
-  font-style: italic;
-  color: var(--text-subtle);
-  line-height: 1.55;
-  margin: 0 auto;
-  max-width: 460px;
 }
 
 .ctaSubtext {
