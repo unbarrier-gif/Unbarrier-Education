@@ -1,0 +1,116 @@
+.band {
+  background: rgba(56, 255, 153, 0.02);
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  align-items: stretch;
+}
+
+@media (min-width: 880px) {
+  .cards {
+    grid-template-columns: 1fr 1.35fr 1fr;
+    gap: 20px;
+  }
+}
+
+.card {
+  position: relative;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-top: 3px solid var(--accent);
+  border-radius: 16px;
+  padding: 24px 26px 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card[data-wide='true'] {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 194, 3, 0.06),
+    rgba(255, 194, 3, 0.02)
+  );
+  border-color: rgba(255, 194, 3, 0.3);
+  box-shadow: 0 0 0 1px rgba(255, 194, 3, 0.08);
+}
+
+.badge {
+  position: absolute;
+  top: -10px;
+  left: 22px;
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amethyst);
+  background: var(--school-bus-yellow);
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+
+.routeLabel {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 8px;
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.pitch {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  font-style: italic;
+  margin: 0 0 14px;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 18px;
+  flex: 1;
+}
+
+.cta {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--accent);
+  text-decoration: none;
+  align-self: flex-start;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.cta:hover,
+.cta:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.footnote {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 1.6rem 0 0;
+  text-align: center;
+}

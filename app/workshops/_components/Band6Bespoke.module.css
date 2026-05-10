@@ -1,0 +1,55 @@
+.band {
+  background: rgba(219, 125, 204, 0.02);
+}
+
+.accent {
+  color: var(--princeton-orange);
+}
+
+.card {
+  max-width: 920px;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-left: 3px solid var(--orchid-mist);
+  border-radius: 16px;
+  padding: 26px 28px;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.05rem);
+  line-height: 1.7;
+  color: var(--text-muted);
+  margin: 0 0 1.4rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.6rem;
+  display: grid;
+  gap: 8px;
+}
+
+.list li {
+  font-family: var(--font-body);
+  font-size: 0.96rem;
+  line-height: 1.55;
+  color: var(--text);
+  padding-left: 22px;
+  position: relative;
+}
+
+.list li::before {
+  content: '→';
+  position: absolute;
+  left: 0;
+  color: var(--orchid-mist);
+  font-weight: 700;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+}

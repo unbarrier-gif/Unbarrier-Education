@@ -16,6 +16,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // investigation). Other entries still use bare; site-wide host
     // canonicalisation is a separate task tracked elsewhere.
     { url: 'https://www.unbarrier.me/access', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    { url: 'https://www.unbarrier.me/workshops', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
