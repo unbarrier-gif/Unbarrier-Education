@@ -317,6 +317,29 @@
   z-index: 1;
 }
 
+/* D27 — light single-CTA block closing the observations list. Sits below
+   the <ol>, separated by a hairline rule. Stacks button under copy on
+   narrow viewports; aligns left so the copy reads as a continuation of
+   the section, not a sales banner. */
+.observationsCta {
+  margin: 3rem 0 0;
+  padding: 1.8rem 0 0;
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.observationsCtaCopy {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+  flex: 1 1 320px;
+}
+
 /* ── 3. WHAT I DO ─────────────────────────────────────────────── */
 
 .where {

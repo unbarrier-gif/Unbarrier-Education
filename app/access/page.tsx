@@ -18,16 +18,20 @@ import styles from './page.module.css';
 // £650 day rate) once pricing is pressure-tested with a real client and
 // BETT/Apple credibility is earned with permission. Source draft: Notion
 // page 355bbd60-0b3f-8188-aff6-fa38b4ab63a3 (locked 3 May 2026).
+// Section 2 observations (D22) and SEO additions (D24, D25) shipped per
+// project page 35bbbd60-0b3f-804a-a1d3-c580bc563fbb (10 May 2026).
 
 export const metadata: Metadata = {
-  title: 'unbarrier.access — for schools and trusts',
+  title:
+    'Most schools already own the tools. Few use them consistently. | unbarrier.me',
   description:
-    "I help schools and trusts turn the accessibility tools they've already paid for — iPads, GoodNotes, Apple's built-in suite — into everyday classroom practice.",
+    'Five things we see in primary schools that have already invested in iPad. Accessibility, ordinarily available provision, and what landing the investment actually looks like.',
   alternates: { canonical: 'https://www.unbarrier.me/access' },
   openGraph: {
-    title: 'unbarrier.access — for schools and trusts',
+    title:
+      'Most schools already own the tools. Few use them consistently. | unbarrier.me',
     description:
-      "Turn the accessibility tools your school already owns into everyday classroom practice. Not extra software — the tools you already own, finally working for the children who need them.",
+      'Five things we see in primary schools that have already invested in iPad. Accessibility, ordinarily available provision, and what landing the investment actually looks like.',
     url: 'https://www.unbarrier.me/access',
     type: 'website',
     images: [
@@ -47,49 +51,115 @@ const ENQUIRY_CTA =
   'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
 const ENQUIRY_FORM = '/workshops#enquire';
 
-const OBSERVATIONS = [
+// Five observations — final copy locked per D22 (10 May 2026), with
+// vocabulary aligned to the canonical wiki per D23 ("ordinarily available
+// provision", "belonging"). For obs 05, `body` carries the JSX with <em>
+// emphasis; `text` is the plain string used for FAQPage schema (D25).
+const OBSERVATIONS: Array<{
+  n: string;
+  headline: string;
+  text: string;
+  body?: React.ReactNode;
+}> = [
   {
     n: '01',
-    headline: "The tools are already there. The strategy isn't.",
-    text: "Most primary schools have iPads. A couple in the corner that don't get used. Or a shared trolley. Or one to one. The kit is there. What's missing is the practice — teachers with iPads but no clear workflow for what to do with them, so the iPad becomes a demo tool, not a teaching one. Speak Selection, colour filters, live captions — they're all already on the device. They're just not being used.",
+    headline: "The tools are there. The strategy isn't.",
+    text:
+      "Most primary schools already have iPads — the kit is in the building, in varying configurations and at varying levels of deployment. What's missing is the practice. Teachers have devices but no defined workflow, so the iPad becomes a presentation surface rather than a teaching tool. Reader View. Speak Selection. Colour filters. Live captions. The Accessibility Assistant. Already on the device. Not yet in the lesson.",
   },
   {
     n: '02',
-    headline: 'TAs are doing work that learners could do themselves.',
-    text: "Our TAs have been the missing part of our accessibility training for a long time. They're the ones reading the question aloud, spelling the word, holding the child up through the lesson — and they're exhausted by Friday. None of that work is necessary when the iPad is set up properly. Speak Selection reads the page. Live captions handle the teacher's voice. The TA gets to do the work only a human can do, instead of doing what the device should be doing.",
+    headline: 'TAs are doing work the device is built to do.',
+    text:
+      "Reading the question aloud. Spelling the word out. Sitting beside the child to hold the lesson together. None of this is necessary when the iPad is configured properly — and TAs receive almost no training on the tools that would change that. Speak Selection reads the page. Live Listen carries the teacher's voice straight to the child. Sound Recognition flags the bell, the alarm, the name being called. The TA is freed to do the work only a human can do.",
   },
   {
     n: '03',
-    headline: 'SEND-funded devices sit unused.',
-    text: "An EHCP names the iPad. The school buys it. The specialist apps get installed. And then the child uses it for ten minutes a week — not because the tool doesn't help, but because no one trained the adults around the child to make it part of the routine. The investment goes in. The accessibility benefit doesn't come out. The child carries on coping the way they were before, just now with an iPad sitting in their tray.",
+    headline: 'Access tools only work when everyone uses them.',
+    text:
+      "A device is funded through SEND provision and issued to a single child. The features are powerful. The configuration is right. But in practice, the iPad gets used for Times Tables Rock Stars, the same as everyone else's — not for the access features it was funded for. Even where the access tools are switched on, the same problem appears in another form. When one child is the only one in the room using Speak Selection, dictation, or live captions, the tool stops being access and starts being a marker of difference. Accessibility features work when they are part of how the whole class operates — not when they single out the child they were meant to support. The investment goes in. The benefit doesn't come out, because the routine around it was never built. This is the difference between targeted provision and ordinarily available provision. Targeted support is named in the plan. Ordinarily available provision is what happens in the room every day, for every child, by default.",
   },
   {
     n: '04',
-    headline: 'The iPad gets put away in the year the child needs it most.',
-    text: "The iPad gets seen as a primary device. Children move up through the school and the device gets put away — replaced by a clamshell, a Chromebook, something more grown-up. But the child who needed live captions in Reception still needs them in Year 5. The child whose dyslexia got picked up in Year 2 doesn't grow out of dyslexia. We move them off the tool that was working, in the year they need it most.",
+    headline: 'The iPad is withdrawn in the year the child needs it most.',
+    text:
+      "iPad is often framed as a primary-phase device. As children move through the school, it gets put away — seen as something to be replaced by something more 'grown-up'. But the child who needed live captions in Reception still needs them in Year 5. Dyslexia identified in Year 2 doesn't resolve itself by Year 6. Removing a working tool at the point of greatest demand is a withdrawal of provision, not a developmental step. The same risk sits at secondary transition, where the device that worked in Year 6 is replaced by something the child has never used, in the term they need stability most.",
   },
   {
     n: '05',
-    headline: "Inspection isn't asking yet, but it will.",
-    text: (
+    headline: "Inspection isn't asking yet. It will.",
+    text:
+      "This year's white paper, Every Child Achieving and Thriving, names accessibility, ordinarily available provision, and belonging as core to the inclusion agenda. Inspection follows white papers. Trust governance follows inspection. The accountability question is shifting from do you have the kit? to are you using it for every child the white paper named? — and \"we bought it\" is not an answer. Schools that get ahead of this don't buy more. They use what they already have, properly.",
+    body: (
       <>
-        The white paper this year names accessibility, ordinary available
-        provision, and belonging as core. Inspection follows white papers.
-        Trust governance follows inspection. The accountability question
-        schools used to face was <em>do you have the kit?</em> The next one
-        is{' '}
-        <em>are you using it for every child the white paper named?</em> —
-        and the answer can&apos;t be &ldquo;we bought it.&rdquo; Schools
-        that get ahead of this don&apos;t buy more. They use what they
-        already have, properly.
+        This year&apos;s white paper,{' '}
+        <em>Every Child Achieving and Thriving</em>, names accessibility,
+        ordinarily available provision, and belonging as core to the
+        inclusion agenda. Inspection follows white papers. Trust governance
+        follows inspection. The accountability question is shifting from{' '}
+        <em>do you have the kit?</em> to{' '}
+        <em>are you using it for every child the white paper named?</em>{' '}
+        — and &ldquo;we bought it&rdquo; is not an answer. Schools that get
+        ahead of this don&apos;t buy more. They use what they already have,
+        properly.
       </>
     ),
   },
 ];
 
+// Article schema (D25a). Headline mirrors the H1; description mirrors the
+// page metadata description.
+const ARTICLE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Article',
+  headline: 'Most schools already own the tools. Few use them consistently.',
+  description:
+    'Five things we see in primary schools that have already invested in iPad. From unbarrier.me, accessibility and digital inclusion consultancy.',
+  author: {
+    '@type': 'Person',
+    name: 'Nici Foote',
+    url: 'https://www.unbarrier.me/about',
+  },
+  publisher: {
+    '@type': 'Organization',
+    name: 'unbarrier.me',
+    url: 'https://www.unbarrier.me',
+  },
+  about: [
+    { '@type': 'Thing', name: 'Special Educational Needs' },
+    { '@type': 'Thing', name: 'Accessibility in education' },
+    { '@type': 'Thing', name: 'iPad in primary schools' },
+    { '@type': 'Thing', name: 'Ordinarily available provision' },
+  ],
+};
+
+// FAQPage schema (D25b). Generated dynamically from OBSERVATIONS so the
+// schema stays in sync if the copy changes — each observation H3 becomes
+// a Question and its plain-text body becomes the Answer.
+const FAQ_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  mainEntity: OBSERVATIONS.map((obs) => ({
+    '@type': 'Question',
+    name: obs.headline,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: obs.text,
+    },
+  })),
+};
+
 export default function AccessPage() {
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(ARTICLE_SCHEMA) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(FAQ_SCHEMA) }}
+      />
       <Nav active="access" />
       <main className={styles.main}>
         <Glow color="var(--princeton-orange)" left="-120px" top="6%" size={620} opacity={0.1} />
@@ -162,17 +232,32 @@ export default function AccessPage() {
           </div>
 
           <ol className={styles.observationsList}>
-            {OBSERVATIONS.map(({ n, headline, text }) => (
+            {OBSERVATIONS.map(({ n, headline, text, body }) => (
               <li key={n} className={styles.observation}>
                 <span aria-hidden="true" className={styles.bigNum}>
                   {n}
                 </span>
                 <p className={styles.observationLabel}>observation {n}</p>
                 <h3 className={styles.observationHeadline}>{headline}</h3>
-                <p className={styles.observationText}>{text}</p>
+                <p className={styles.observationText}>{body ?? text}</p>
               </li>
             ))}
           </ol>
+
+          {/* D27 closing CTA — light single-button block routing to the
+              workshop enquiry form. Frames as natural next step for a
+              school that recognises itself in the five observations.
+              Anchor target /workshops#enquire is added by the /workshops
+              build (decision log D26 ships both in the same PR). */}
+          <div className={styles.observationsCta}>
+            <p className={styles.observationsCtaCopy}>
+              Recognise your school in any of these? Tell us where it&apos;s
+              stuck.
+            </p>
+            <Button href={ENQUIRY_FORM} color="var(--princeton-orange)">
+              Workshop enquiries
+            </Button>
+          </div>
         </section>
 
         {/* 3. WHAT I DO */}
