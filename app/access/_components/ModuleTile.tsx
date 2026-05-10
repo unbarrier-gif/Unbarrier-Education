@@ -45,9 +45,9 @@ export function ModuleTile({
               0{number}
             </span>
             <h3 className={styles.title}>{title}</h3>
-            <span className={styles.linkOutPill}>
-              {linkOut.label ?? '↗ links out'}
-            </span>
+            {linkOut.label ? (
+              <span className={styles.linkOutPill}>{linkOut.label}</span>
+            ) : null}
           </span>
           {meta}
           <p className={styles.body}>{body}</p>
