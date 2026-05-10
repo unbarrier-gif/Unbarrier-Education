@@ -9,16 +9,18 @@ type Props = {
   variant?: Variant;
 };
 
-// Phase 3 link-swap: the unbarrier.audit / .access / .voice links below move
-// from mailto stubs to /audit, /access, /voice when those routes ship.
-// Tracked in _inbound/Task List.html.
+// D45 (10 May 2026): footer strand links updated to the dedicated routes.
+// `unbarrier.audit` removed entirely until /audits ships — broken footer
+// link compounds per page view because footer is global. When /audits
+// lands, restore as { label: 'unbarrier.audit', href: '/audits' } in
+// the Services group below.
 const FOOTER_LINK_GROUPS = [
   {
     heading: 'Services',
     links: [
-      { label: 'unbarrier.audit', href: '/#services' },
-      { label: 'unbarrier.access', href: '/#services' },
+      { label: 'unbarrier.access', href: '/access' },
       { label: 'unbarrier.voice', href: '/voice' },
+      { label: 'unbarrier.loop-breakers', href: '/loop-breakers' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
   },
@@ -27,7 +29,6 @@ const FOOTER_LINK_GROUPS = [
     links: [
       { label: 'Hello →', href: '/hello' },
       { label: 'nici@unbarrier.me', href: 'mailto:nici@unbarrier.me' },
-      { label: 'Loop Breakers →', href: '/loop-breakers' },
     ],
   },
   {

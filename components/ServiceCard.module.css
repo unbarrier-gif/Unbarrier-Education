@@ -41,6 +41,23 @@
   color: var(--accent);
   opacity: 0.9;
   letter-spacing: 0.04em;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+/* D47 — credential badge (e.g. APLS) sits at the head of the sub strip
+   in place of an abbreviated credential string. Height matches the cap
+   height of the surrounding 0.8rem text so the badge reads as inline
+   with the tags rather than oversized. Width auto preserves the SVG's
+   native aspect ratio (307×68 for the APLS lockup). */
+.badge {
+  height: 16px;
+  width: auto;
+  display: inline-block;
+  vertical-align: middle;
+  flex-shrink: 0;
 }
 
 .desc {

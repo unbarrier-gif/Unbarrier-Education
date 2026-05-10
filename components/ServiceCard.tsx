@@ -1,5 +1,8 @@
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import styles from './ServiceCard.module.css';
+
+type Badge = { src: string; alt: string; width: number; height: number };
 
 type Props = {
   audience: string;
@@ -15,6 +18,10 @@ type Props = {
   soon?: boolean;
   /** Override the default "Find out more →" CTA label. */
   cta?: string;
+  /** Optional credential badge rendered at the start of the sub strip.
+   *  Per D47 — replaces text-based credential abbreviations (e.g.
+   *  "Apple PLS") which Apple's marketing rules don't permit. */
+  badge?: Badge;
 };
 
 export function ServiceCard({
@@ -27,6 +34,7 @@ export function ServiceCard({
   accentRgb,
   soon,
   cta = 'Find out more →',
+  badge,
 }: Props) {
   const style = {
     '--accent': accent,
@@ -49,7 +57,18 @@ export function ServiceCard({
       {soon ? <span className={styles.soonPill}>In build</span> : null}
       <span className={styles.audience}>{audience}</span>
       <span className={styles.label}>{label}</span>
-      <span className={styles.sub}>{sub}</span>
+      <span className={styles.sub}>
+        {badge ? (
+          <Image
+            src={badge.src}
+            alt={badge.alt}
+            width={badge.width}
+            height={badge.height}
+            className={styles.badge}
+          />
+        ) : null}
+        {sub}
+      </span>
       <span className={styles.desc}>{desc}</span>
       <span className={styles.cta}>{cta}</span>
     </a>

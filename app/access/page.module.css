@@ -712,11 +712,16 @@
   margin: 14px 0 0;
 }
 
-/* Worked-example day closing CTA — D30 / D34 source doc. Uses the
-   shared Button component (princeton-orange) so focus state comes for
-   free with the rest of the site. */
+/* Worked-example day closing CTA — D30 / D34 / D44. Dual CTA mirroring
+   the Band 1 hero (.heroCtaRow): primary Button (form) on the left,
+   secondary mailto text-link on the right. Stacks on narrow viewports
+   via flex-wrap; focus state on each comes from the shared components. */
 .timelineCta {
   margin: 1.6rem 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 24px;
 }
 
 /* ── BAND 4 — THE MENU (D37) ──────────────────────────────────── */
