@@ -191,14 +191,30 @@
 }
 
 .heroSubtext {
+  margin: 0;
+  border-left: 3px solid var(--princeton-orange);
+  padding-left: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.aplsLockup {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+.heroSubtextLine {
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-style: italic;
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
-  border-left: 3px solid var(--princeton-orange);
-  padding-left: 14px;
+  flex: 1 1 280px;
 }
 
 /* ── 2. WHAT I SEE ────────────────────────────────────────────── */
