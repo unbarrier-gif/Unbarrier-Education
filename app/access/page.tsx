@@ -46,9 +46,9 @@ export const metadata: Metadata = {
 };
 
 const HERO_CTA =
-  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
+  'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
 const ENQUIRY_CTA =
-  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
+  'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
 const ENQUIRY_FORM = '/workshops#enquire';
 
 // Five observations — final copy locked per D22 (10 May 2026), with
@@ -332,7 +332,7 @@ export default function AccessPage() {
           </p>
           <div className={styles.ctaRow}>
             <Button href={ENQUIRY_CTA} color="var(--princeton-orange)">
-              hello@unbarrier.me
+              access@unbarrier.me
             </Button>
             <a href={ENQUIRY_FORM} className={styles.heroFormLink}>
               Fill the enquiry form →

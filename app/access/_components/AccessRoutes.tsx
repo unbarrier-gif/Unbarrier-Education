@@ -3,7 +3,7 @@ import { Eyebrow } from '@/components/Eyebrow';
 import styles from '../page.module.css';
 
 const BESPOKE_CTA =
-  'mailto:hello@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20bespoke';
+  'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20bespoke';
 
 export function AccessRoutes() {
   return (
