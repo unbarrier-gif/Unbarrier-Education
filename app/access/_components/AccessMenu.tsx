@@ -52,7 +52,7 @@ const M5 = {
   body:
     "A working session for SENCOs, TAs and inclusion leads to triage accessibility provision across a group of learners. Bring your cohort — the EHCPs, the Individual Support Plans, the children you're worried about — and leave with a needs map: which barriers cluster, which iPad tools answer them, and where provision is already in place but underused. Output is a documented plan that feeds directly into Individual Support Plans and ordinarily available provision.",
   audienceFor: 'SENCOs, TAs, inclusion leads',
-  linkOut: { href: '/audits' },
+  linkOut: { href: '/audits', label: 'See full audit clinic details →' },
 } as const;
 
 export function AccessMenu() {

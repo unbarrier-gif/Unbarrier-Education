@@ -178,3 +178,26 @@
   color: var(--text-muted);
   font-weight: 700;
 }
+
+/* In-body outbound CTA (D42). Sits below the body copy and the
+   "For:" line in expanded tiles where linkOut.label is set. Visual
+   matches the .menuBridgeLink + .routeCta underline-only treatment
+   on /access — saturated route accent, no muddy color-mix. */
+.linkOutCta {
+  align-self: flex-start;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--princeton-orange);
+  text-decoration: none;
+  border-bottom: 1px solid var(--princeton-orange);
+  padding-bottom: 2px;
+  margin-top: 4px;
+  transition: opacity 120ms ease;
+}
+
+.linkOutCta:hover,
+.linkOutCta:focus-visible {
+  opacity: 0.85;
+}
