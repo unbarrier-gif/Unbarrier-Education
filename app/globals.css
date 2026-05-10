@@ -51,6 +51,10 @@
   /* Focus ring */
   --focus-ring:       var(--spring-green);
 
+  /* Sticky nav height — used as scroll-margin-top for anchor jumps so the
+     section heading isn't hidden under the nav after a hash navigation. */
+  --nav-height:       90px;
+
   /* ── TYPE FAMILIES ─────────────────────────────────────────────────── */
   --font-heading:     var(--font-outfit), system-ui, -apple-system, sans-serif;
   --font-body:        var(--font-comfortaa), system-ui, -apple-system, sans-serif;

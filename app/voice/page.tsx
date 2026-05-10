@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import { Button } from '@/components/Button';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
@@ -72,24 +73,38 @@ export default function VoicePage() {
         <header className={styles.hero}>
           <p className={styles.eyebrow}>
             <span aria-hidden="true" className={styles.dot} />
-            unbarrier.voice — partnership invitation
+            unbarrier.voice · partnership invitation
           </p>
           <h1 className={styles.heading}>
-            Students are <span className={styles.accent}>the why.</span>
+            Students are
+            <br />
+            <span className={styles.accent}>our why.</span>
           </h1>
-          <p className={styles.lede}>
+          <p className={styles.heroBody}>
             I help you build products people actually use, understand, trust,
             and benefit from.
           </p>
-          <div className={styles.heroCta}>
+          <div className={styles.heroCtaRow}>
             <Button href={HERO_CTA} color="var(--orchid-mist)">
               Start a partnership conversation
             </Button>
+            <a href="/#about" className={styles.heroFormLink}>
+              About Nici →
+            </a>
           </div>
-          <p className={styles.heroSubtext}>
-            Apple Professional Learning Specialist. 26 years in classrooms.
-            GoodNotes partner. Dyslexic and ADHD educator.
-          </p>
+          <div className={styles.heroSubtext}>
+            <Image
+              src="/assets/apls-badge.svg"
+              alt="Apple Professional Learning Specialist"
+              width={307}
+              height={68}
+              className={styles.aplsLockup}
+              priority
+            />
+            <p className={styles.heroSubtextLine}>
+              Apple Professional Learning Specialist · 26 years in classrooms
+            </p>
+          </div>
         </header>
 
         {/* 2. WHAT I SEE */}

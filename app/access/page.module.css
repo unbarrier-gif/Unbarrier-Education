@@ -6,7 +6,96 @@
 
 .main section,
 .main header {
-  scroll-margin-top: 90px;
+  /* Nav (~64px fixed) + AccessSkipNav (~52px sticky) + breathing room.
+     Without this, anchor jumps from the skip-nav strip would land with the
+     section's heading hidden behind the strip. */
+  scroll-margin-top: 140px;
+}
+
+/* ── 1b. SKIP-NAV STRIP (sticky under hero) ───────────────────── */
+
+.skipNav {
+  position: sticky;
+  top: 64px;
+  z-index: 5;
+  /* Matches .heroBody's 1.8rem bottom margin so the gap below the strip
+     mirrors the gap between body paragraph and the CTA row. */
+  margin-bottom: 1.8rem;
+  background: rgba(33, 10, 51, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.skipNavInner {
+  list-style: none;
+  margin: 0 auto;
+  padding: 8px clamp(1rem, 4vw, 2rem);
+  max-width: 720px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  justify-content: center;
+  gap: 4px;
+}
+
+.skipNavItem {
+  display: flex;
+  flex: 1 1 auto;
+}
+
+@media (max-width: 600px) {
+  .skipNavInner {
+    /* 2×2 grid on mobile — labels stay readable, hit targets stay 44px. */
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    padding-block: 6px;
+  }
+  .skipNavItem {
+    flex: none;
+  }
+}
+
+.skipNavBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  min-height: 44px;
+  padding: 8px 14px;
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+  text-decoration: none;
+  border-radius: 8px;
+  border-bottom: 2px solid transparent;
+  transition: color 120ms ease, border-color 120ms ease, background 120ms ease;
+}
+
+.skipNavBtn:hover {
+  color: var(--text);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.skipNavBtn:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--spring-green));
+  outline-offset: 2px;
+}
+
+.skipNavBtnActive {
+  color: var(--text);
+  border-bottom-color: currentColor;
+}
+
+.skipNavDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
 }
 
 /* ── 1. HERO ─────────────────────────────────────────────────── */
@@ -53,6 +142,10 @@
   color: var(--text);
 }
 
+.headingAccent {
+  color: #ff8a1c;
+}
+
 .heroBody {
   font-family: var(--font-body);
   font-size: clamp(1rem, 1.8vw, 1.1rem);
@@ -61,19 +154,70 @@
   margin: 0 0 1.8rem;
 }
 
-.heroCta {
-  margin: 0 0 1.4rem;
+.heroCtaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 18px 24px;
+  margin: 0 0 1.6rem;
+}
+
+/* Make the primary Email button noticeably longer than its label so it
+   reads as a substantial commitment alongside the inline text-link. */
+.heroCtaRow > a:first-child,
+.ctaRow > a:first-child {
+  padding-left: 40px;
+  padding-right: 40px;
+  min-width: 240px;
+}
+
+/* Inline text-link variant of the secondary CTA — orange text + arrow,
+   matching the routes-card "See the menu →" treatment. Sits beside the
+   primary button rather than competing with it as another pill. */
+.heroFormLink {
+  display: inline-flex;
+  align-items: center;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--princeton-orange);
+  text-decoration: none;
+  border-bottom: 1px solid color-mix(in oklab, var(--princeton-orange) 40%, transparent);
+  padding-bottom: 2px;
+  transition: border-color 120ms ease;
+}
+
+.heroFormLink:hover,
+.heroFormLink:focus-visible {
+  border-bottom-color: var(--princeton-orange);
 }
 
 .heroSubtext {
+  margin: 0;
+  border-left: 3px solid var(--princeton-orange);
+  padding-left: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.aplsLockup {
+  height: 32px;
+  width: auto;
+  flex-shrink: 0;
+  opacity: 0.92;
+}
+
+.heroSubtextLine {
   font-family: var(--font-body);
   font-size: 0.92rem;
   font-style: italic;
   line-height: 1.55;
   color: var(--text-muted);
   margin: 0;
-  border-left: 3px solid var(--princeton-orange);
-  padding-left: 14px;
+  flex: 1 1 280px;
 }
 
 /* ── 2. WHAT I SEE ────────────────────────────────────────────── */
@@ -173,6 +317,29 @@
   z-index: 1;
 }
 
+/* D27 — light single-CTA block closing the observations list. Sits below
+   the <ol>, separated by a hairline rule. Stacks button under copy on
+   narrow viewports; aligns left so the copy reads as a continuation of
+   the section, not a sales banner. */
+.observationsCta {
+  margin: 3rem 0 0;
+  padding: 1.8rem 0 0;
+  border-top: 1px solid var(--border-default);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px 24px;
+}
+
+.observationsCtaCopy {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.1rem);
+  line-height: 1.6;
+  color: var(--text-muted);
+  margin: 0;
+  flex: 1 1 320px;
+}
+
 /* ── 3. WHAT I DO ─────────────────────────────────────────────── */
 
 .where {
@@ -212,7 +379,567 @@
   margin-bottom: 0;
 }
 
-/* ── 4. CTA ──────────────────────────────────────────────────── */
+/* ── 4. THREE ROUTES — pick & mix ─────────────────────────────── */
+
+.routes {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.routesHead {
+  max-width: 720px;
+  margin: 0 0 3rem;
+}
+
+.routesLede {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.1rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 1rem 0 0;
+  max-width: 60ch;
+}
+
+.routesGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+}
+
+@media (min-width: 760px) {
+  .routesGrid {
+    grid-template-columns: 1fr 1.35fr 1fr;
+    align-items: stretch;
+  }
+}
+
+.routeCard {
+  --c: var(--princeton-orange);
+  position: relative;
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-top: 3px solid var(--c);
+  border-radius: 14px;
+  padding: 26px 24px 24px;
+  display: flex;
+  flex-direction: column;
+}
+
+.routeCardFeatured {
+  /* The middle column is wider via the parent grid template; lift
+     it visually with a stronger border and a touch more padding. */
+  border-color: var(--c);
+  padding-top: 30px;
+}
+
+.pillMost {
+  position: absolute;
+  top: -12px;
+  right: 16px;
+  font-family: var(--font-heading);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--amethyst);
+  background: var(--school-bus-yellow);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+
+.routeTag {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--c);
+  margin: 0 0 12px;
+}
+
+.routeTitle {
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 2vw, 1.4rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  color: var(--text);
+  margin: 0 0 6px;
+}
+
+.routeSub {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 0 0 14px;
+}
+
+.routeBody {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 0 0 20px;
+  flex: 1;
+}
+
+.routeCta {
+  font-family: var(--font-heading);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--c);
+  text-decoration: none;
+  /* D38 fix — was color-mix(in oklab, var(--c) 40%, transparent), which
+     renders muddy/brown when var(--c) is school-bus-yellow on the dark
+     surface (Route 2). Saturated underline matches the text colour
+     across all three routes — true "underline-only" treatment per D38. */
+  border-bottom: 1px solid var(--c);
+  padding-bottom: 2px;
+  align-self: flex-start;
+  transition: border-color 120ms ease, color 120ms ease;
+}
+
+.routeCta:hover,
+.routeCta:focus-visible {
+  border-color: var(--c);
+}
+
+.routesFootnote {
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 1.6rem 0 0;
+}
+
+/* ── 5. WORKED-EXAMPLE INSET DAY ──────────────────────────────── */
+
+.timelineSection {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+  outline: none;
+}
+
+.timelineSection:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+
+.timelineHead {
+  max-width: 760px;
+  margin: 0 0 2rem;
+}
+
+/* Band 5 intro paragraphs — sit between the H2 and the worked-example
+   subsection. Standard body text, not eyebrow / italic. */
+.timelineIntro {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0.6rem 0 0;
+}
+
+/* Worked-example wrapper — keeps the timeline subsection visually
+   grouped under its H3 heading. */
+.workedExample {
+  margin: 2rem 0 0;
+}
+
+.workedExampleHeading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.6vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0;
+}
+
+.timelineSubLine {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 0.6rem 0 1.4rem;
+}
+
+.timelinePillRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px;
+}
+
+.pillYellow {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--school-bus-yellow);
+  background: rgba(255, 194, 3, 0.1);
+  border: 1px solid rgba(255, 194, 3, 0.35);
+  padding: 6px 12px;
+  border-radius: 100px;
+}
+
+.timelineMeta {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  color: var(--text-subtle);
+}
+
+.timelinePanel {
+  list-style: none;
+  margin: 0;
+  padding: 8px 0;
+  border: 1px solid var(--border-default);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.timelineRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4px;
+  padding: 16px 22px;
+  border-top: 1px solid var(--border-default);
+}
+
+.timelineRow:first-child {
+  border-top: 0;
+}
+
+.timelineRowParallel {
+  /* Parallel-track sessions sit visually grouped via a soft tint. */
+  background: rgba(105, 217, 209, 0.04);
+}
+
+@media (min-width: 720px) {
+  .timelineRow {
+    grid-template-columns: 130px 1fr;
+    gap: 24px;
+    align-items: baseline;
+  }
+}
+
+.timelineTime {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 0.84rem;
+  color: var(--text-subtle);
+  letter-spacing: 0.02em;
+}
+
+.timelineBody {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+/* Role label + ParallelRooms pill (D35) sit on the same line. Wraps
+   to a new line on narrow viewports so the pill doesn't push the
+   role label off the row. */
+.timelineRoleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
+.timelineAudience {
+  font-family: var(--font-heading);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.timelineParallelTag {
+  font-weight: 600;
+  color: var(--text-subtle);
+}
+
+.timelineModule {
+  font-family: var(--font-body);
+  font-size: 0.98rem;
+  font-weight: 700;
+  line-height: 1.4;
+  color: var(--text);
+  margin: 0;
+  letter-spacing: -0.005em;
+}
+
+/* D30 — module rows now carry a one-paragraph context sentence below
+   the bold module title. Slightly muted vs the title but fully readable
+   (passes WCAG 2.2 AA on the panel surface via --text-muted). */
+.timelineContext {
+  font-family: var(--font-body);
+  font-size: 0.94rem;
+  line-height: 1.65;
+  color: var(--text-muted);
+  margin: 4px 0 0;
+}
+
+/* Italic detail line on Arrival / Debrief rows — short, subtle, no
+   module title. */
+.timelineDetail {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  line-height: 1.55;
+  color: var(--text-subtle);
+  margin: 0;
+}
+
+.timelineFacilitator {
+  font-weight: 600;
+  color: var(--text);
+  opacity: 0.78;
+}
+
+.timelineCaveat {
+  font-family: var(--font-body);
+  font-size: 0.86rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 14px 0 0;
+}
+
+/* Worked-example day closing CTA — D30 / D34 source doc. Uses the
+   shared Button component (princeton-orange) so focus state comes for
+   free with the rest of the site. */
+.timelineCta {
+  margin: 1.6rem 0 0;
+}
+
+/* ── BAND 4 — THE MENU (D37) ──────────────────────────────────── */
+
+.menu {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+  /* tabindex=-1 sections need an outline reset so the focus ring
+     applied by the global :focus-visible rule reads cleanly without
+     fighting the section padding. */
+  outline: none;
+}
+
+.menu:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+
+.menuHead {
+  max-width: 720px;
+  margin: 0 0 2rem;
+}
+
+.menuLede {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0.6rem 0 0;
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.menuCta {
+  margin: 2rem 0 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* "Build your full INSET day →" bridge link — visually the same
+   underline-only treatment as the route-card CTAs (post D38) so the
+   on-page bridge from Band 4 to Band 5 reads as a continuation, not
+   a hard sell. */
+.menuBridgeLink {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--princeton-orange);
+  text-decoration: none;
+  border-bottom: 1px solid var(--princeton-orange);
+  padding-bottom: 2px;
+  transition: opacity 120ms ease;
+}
+
+.menuBridgeLink:hover {
+  opacity: 0.85;
+}
+
+/* ── 6. NOT JUST ME — APLS bench ──────────────────────────────── */
+
+.team {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  position: relative;
+}
+
+.teamInner {
+  max-width: 760px;
+  margin: 0 auto;
+}
+
+.teamPara {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.8vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.75;
+  margin: 0 0 1.1rem;
+}
+
+.facilitatorRow {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 18px;
+  margin: 2rem 0 1.6rem;
+}
+
+.facilitatorCard {
+  background: var(--surface-raised);
+  border: 1.5px solid var(--border-default);
+  border-radius: 14px;
+  padding: 26px 24px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  text-align: left;
+  gap: 24px;
+}
+
+.facilitatorBody {
+  flex: 1 1 280px;
+  min-width: 0;
+}
+
+.portraitCircle,
+.portraitPlaceholder {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  margin: 0;
+  overflow: hidden;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.portraitCircle img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.portraitPlaceholder {
+  border: 2px dashed var(--border-default);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--text-subtle);
+  font-family: var(--font-heading);
+  font-size: 2.2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+.facilitatorName {
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  color: var(--text);
+  margin: 0 0 4px;
+  line-height: 1.2;
+}
+
+.facilitatorRole {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  margin: 0 0 12px;
+}
+
+.credentialLine {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  margin: 0 0 14px;
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 4px;
+}
+
+.aplsBadge {
+  font-family: var(--font-heading);
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--princeton-orange);
+  background: rgba(255, 138, 28, 0.12);
+  padding: 3px 7px;
+  border-radius: 100px;
+}
+
+.moduleChips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  gap: 6px;
+}
+
+.moduleChip {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  background: rgba(255, 255, 255, 0.02);
+  padding: 4px 10px;
+  border-radius: 100px;
+}
+
+.moduleChipShared {
+  border-style: dashed;
+  color: var(--text-subtle);
+  font-style: italic;
+}
+
+.teamFootnote {
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--text-subtle);
+  line-height: 1.6;
+  margin: 0.6rem 0 0;
+  border-left: 3px solid var(--spring-green);
+  padding-left: 14px;
+}
+
+/* ── 7. CTA ──────────────────────────────────────────────────── */
 
 .cta {
   padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 5rem);
@@ -227,6 +954,15 @@
   margin: 0 auto 2rem;
   max-width: 520px;
   line-height: 1.7;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 18px 24px;
+  margin: 0 0 0.8rem;
 }
 
 .ctaSubtext {
