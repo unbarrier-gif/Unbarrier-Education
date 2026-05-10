@@ -491,7 +491,11 @@
   font-weight: 700;
   color: var(--c);
   text-decoration: none;
-  border-bottom: 1px solid color-mix(in oklab, var(--c) 40%, transparent);
+  /* D38 fix — was color-mix(in oklab, var(--c) 40%, transparent), which
+     renders muddy/brown when var(--c) is school-bus-yellow on the dark
+     surface (Route 2). Saturated underline matches the text colour
+     across all three routes — true "underline-only" treatment per D38. */
+  border-bottom: 1px solid var(--c);
   padding-bottom: 2px;
   align-self: flex-start;
   transition: border-color 120ms ease, color 120ms ease;
@@ -516,11 +520,44 @@
   padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
   max-width: 1100px;
   margin: 0 auto;
+  outline: none;
+}
+
+.timelineSection:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+  border-radius: 4px;
 }
 
 .timelineHead {
-  max-width: 720px;
+  max-width: 760px;
   margin: 0 0 2rem;
+}
+
+/* Band 5 intro paragraphs — sit between the H2 and the worked-example
+   subsection. Standard body text, not eyebrow / italic. */
+.timelineIntro {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0.6rem 0 0;
+}
+
+/* Worked-example wrapper — keeps the timeline subsection visually
+   grouped under its H3 heading. */
+.workedExample {
+  margin: 2rem 0 0;
+}
+
+.workedExampleHeading {
+  font-family: var(--font-heading);
+  font-size: clamp(1.4rem, 2.6vw, 1.7rem);
+  font-weight: 800;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  color: var(--text);
+  margin: 0;
 }
 
 .timelineSubLine {
@@ -605,6 +642,16 @@
   gap: 4px;
 }
 
+/* Role label + ParallelRooms pill (D35) sit on the same line. Wraps
+   to a new line on narrow viewports so the pill doesn't push the
+   role label off the row. */
+.timelineRoleLine {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 12px;
+}
+
 .timelineAudience {
   font-family: var(--font-heading);
   font-size: 11px;
@@ -670,6 +717,71 @@
    free with the rest of the site. */
 .timelineCta {
   margin: 1.6rem 0 0;
+}
+
+/* ── BAND 4 — THE MENU (D37) ──────────────────────────────────── */
+
+.menu {
+  padding: clamp(4rem, 8vw, 7rem) clamp(1.5rem, 5vw, 5rem);
+  max-width: 1100px;
+  margin: 0 auto;
+  /* tabindex=-1 sections need an outline reset so the focus ring
+     applied by the global :focus-visible rule reads cleanly without
+     fighting the section padding. */
+  outline: none;
+}
+
+.menu:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+
+.menuHead {
+  max-width: 720px;
+  margin: 0 0 2rem;
+}
+
+.menuLede {
+  font-family: var(--font-body);
+  font-size: clamp(1rem, 1.7vw, 1.08rem);
+  color: var(--text-muted);
+  line-height: 1.7;
+  margin: 0.6rem 0 0;
+}
+
+.menuList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 14px;
+}
+
+.menuCta {
+  margin: 2rem 0 0;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* "Build your full INSET day →" bridge link — visually the same
+   underline-only treatment as the route-card CTAs (post D38) so the
+   on-page bridge from Band 4 to Band 5 reads as a continuation, not
+   a hard sell. */
+.menuBridgeLink {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  color: var(--princeton-orange);
+  text-decoration: none;
+  border-bottom: 1px solid var(--princeton-orange);
+  padding-bottom: 2px;
+  transition: opacity 120ms ease;
+}
+
+.menuBridgeLink:hover {
+  opacity: 0.85;
 }
 
 /* ── 6. NOT JUST ME — APLS bench ──────────────────────────────── */

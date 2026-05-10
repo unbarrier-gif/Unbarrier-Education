@@ -39,7 +39,7 @@ export function AccessRoutes() {
             60 or 90 minutes. Whole staff, TAs, leadership, or stakeholders
             — pick one off the menu and we&apos;ll deliver it.
           </p>
-          <a className={styles.routeCta} href="/workshops#menu">
+          <a className={styles.routeCta} href="#menu">
             See the menu →
           </a>
         </article>
@@ -56,7 +56,7 @@ export function AccessRoutes() {
             A whole training day, shaped from the modules. Different sessions
             for different audiences in the same school. We bring everything.
           </p>
-          <a className={styles.routeCta} href="/workshops#inset">
+          <a className={styles.routeCta} href="#inset">
             Build your day →
           </a>
         </article>

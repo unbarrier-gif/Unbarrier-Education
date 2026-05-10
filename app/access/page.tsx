@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { AccessMenu } from './_components/AccessMenu';
 import { AccessRoutes } from './_components/AccessRoutes';
 import { AccessInsetExample } from './_components/AccessInsetExample';
 import { AccessSkipNav } from './_components/AccessSkipNav';
@@ -248,8 +249,7 @@ export default function AccessPage() {
           {/* D27 closing CTA — light single-button block routing to the
               workshop enquiry form. Frames as natural next step for a
               school that recognises itself in the five observations.
-              Anchor target /workshops#enquire is added by the /workshops
-              build (decision log D26 ships both in the same PR). */}
+              ENQUIRY_FORM resolves to the live Notion form per D29.1. */}
           <div className={styles.observationsCta}>
             <p className={styles.observationsCtaCopy}>
               Recognise your school in any of these? Tell us where it&apos;s
@@ -309,7 +309,11 @@ export default function AccessPage() {
         <SectionBar color="var(--princeton-orange)" />
         <AccessRoutes />
 
-        {/* 5. WORKED-EXAMPLE INSET DAY (NEW · /access v2) */}
+        {/* 5. THE MENU — bookable modules (Band 4 per D37) */}
+        <SectionBar color="var(--princeton-orange)" />
+        <AccessMenu />
+
+        {/* 6. BUILD YOUR INSET DAY (Band 5 per D37) */}
         <SectionBar color="var(--school-bus-yellow)" />
         <AccessInsetExample />
 
