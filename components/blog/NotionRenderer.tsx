@@ -18,6 +18,69 @@ type Props = {
   blocks: BlockNode[];
 };
 
+// Render-time accent map: sub-brand names get coloured + bolded inline so
+// the prose has rest points instead of reading as one high-contrast wall.
+// Keyed on the literal brand string (matched case-insensitively, but the
+// original casing is preserved in output). Longest-first so a longer token
+// wins if two ever shared a prefix. Each token reuses an existing semantic
+// colour token — no new design tokens. Bold is applied alongside colour so
+// colour isn't the only signal (WCAG 1.4.1); all four pass AA on amethyst.
+const BRANDS: { match: string; className: string }[] = [
+  { match: 'unbarrier.access', className: styles.brandPremium },
+  { match: 'unbarrier.audit', className: styles.brandQuiet },
+  { match: 'unbarrier.voice', className: styles.brandHuman },
+  { match: 'loop breakers', className: styles.brandPayoff },
+].sort((a, b) => b.match.length - a.match.length);
+
+function highlightBrands(text: string): ReactNode {
+  if (!text) return text;
+  const lower = text.toLowerCase();
+  const out: ReactNode[] = [];
+  let i = 0;
+  let last = 0;
+  let key = 0;
+  while (i < text.length) {
+    const hit = BRANDS.find((b) => lower.startsWith(b.match, i));
+    if (hit) {
+      if (i > last) out.push(text.slice(last, i));
+      out.push(
+        <strong key={`b${key++}`} className={hit.className}>
+          {text.slice(i, i + hit.match.length)}
+        </strong>,
+      );
+      i += hit.match.length;
+      last = i;
+    } else {
+      i++;
+    }
+  }
+  if (last < text.length) out.push(text.slice(last));
+  if (out.length === 0) return text;
+  if (out.length === 1 && typeof out[0] === 'string') return out[0];
+  return out;
+}
+
+// The one genuinely long paragraph — the "60% in the middle" block — reads
+// as a dense slab of five sentences. Split it into three shorter paragraphs
+// at sentence boundaries. Keyed on a stable opening signature so it touches
+// only this paragraph; if the Notion copy ever changes it degrades to the
+// original single paragraph rather than mis-splitting. The block is fully
+// plain text (no links/inline formatting), so splitting on plain_text is safe.
+const SPLIT_SIGNATURE = 'These are the children who';
+
+function splitLongParagraph(rt: RichTextItemResponse[]): string[] | null {
+  const text = rt.map((r) => r.plain_text).join('');
+  if (!text.startsWith(SPLIT_SIGNATURE)) return null;
+  if (rt.some((r) => r.href)) return null;
+  const sentences = text.split(/(?<=\.)\s+/);
+  if (sentences.length < 5) return null;
+  return [
+    sentences.slice(0, 2).join(' '),
+    sentences.slice(2, 3).join(' '),
+    sentences.slice(3).join(' '),
+  ];
+}
+
 export function NotionRenderer({ blocks }: Props) {
   return <article className={styles.article}>{renderBlocks(blocks)}</article>;
 }
@@ -71,15 +134,25 @@ function renderBlocks(blocks: BlockNode[]): ReactElement[] {
 
 function renderBlock(b: BlockNode): ReactElement | null {
   switch (b.type) {
-    case 'paragraph':
-      if (b.paragraph.rich_text.length === 0) {
+    case 'paragraph': {
+      const rich = b.paragraph.rich_text;
+      if (rich.length === 0) {
         return <div className={styles.spacer} aria-hidden="true" />;
       }
-      return (
-        <p className={styles.paragraph}>
-          {renderRichText(b.paragraph.rich_text)}
-        </p>
-      );
+      const chunks = splitLongParagraph(rich);
+      if (chunks) {
+        return (
+          <>
+            {chunks.map((chunk, idx) => (
+              <p key={idx} className={styles.paragraph}>
+                {highlightBrands(chunk)}
+              </p>
+            ))}
+          </>
+        );
+      }
+      return <p className={styles.paragraph}>{renderRichText(rich)}</p>;
+    }
     case 'heading_1':
       return (
         <h2 className={styles.h1}>{renderRichText(b.heading_1.rich_text)}</h2>
@@ -140,7 +213,7 @@ function renderBlock(b: BlockNode): ReactElement | null {
 function renderRichText(items: RichTextItemResponse[]): ReactElement[] {
   return items.map((item, idx) => {
     const ann = item.annotations;
-    let node: ReactNode = item.plain_text;
+    let node: ReactNode = highlightBrands(item.plain_text);
     if (ann.code) node = <code className={styles.inlineCode}>{node}</code>;
     if (ann.bold) node = <strong>{node}</strong>;
     if (ann.italic) node = <em>{node}</em>;

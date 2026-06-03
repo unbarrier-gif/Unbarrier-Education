@@ -1,9 +1,33 @@
 .article {
-  max-width: 760px;
+  /* Cap the readable measure at ~62ch so the prose stops reading as a
+     uniform wall. content-box keeps 62ch as the text column itself — the
+     side gutters live outside the measure rather than eating into it.
+     Text colour and line-height are intentionally left untouched. */
+  max-width: 62ch;
+  box-sizing: content-box;
   margin: 0 auto;
   padding: 0 clamp(1.5rem, 5vw, 5rem);
   font-family: var(--font-body);
   color: var(--text);
+}
+
+/* Sub-brand accents — reuse existing semantic colour tokens. Rendered on a
+   <strong> so the name stays bold as well as coloured (colour isn't the
+   only signal). All four pass AA on amethyst. */
+.brandQuiet {
+  color: var(--quiet);
+}
+
+.brandPremium {
+  color: var(--premium);
+}
+
+.brandHuman {
+  color: var(--human);
+}
+
+.brandPayoff {
+  color: var(--payoff);
 }
 
 .paragraph {
