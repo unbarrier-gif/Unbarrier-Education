@@ -22,7 +22,7 @@ rules:
 - include this open question: "what's one thing that would make it easier to try something new here?"
 
 then give me:
-- the survey, ready to paste straight into a google form
+- the survey, ready to paste straight into Google Forms or Microsoft Forms
 - a simple way to read the results: what a low score in each of the five areas is telling me
 - the single question i should ask my team out loud first, based on the lowest-scoring area
 

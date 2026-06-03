@@ -8,7 +8,7 @@ import styles from './page.module.css';
 export const metadata: Metadata = {
   title: 'The belonging check · Unbarrier',
   description:
-    'Paste this into ChatGPT or Claude. It builds you a 5-minute, anonymous form to find out whether your people feel safe enough to try.',
+    'Paste this into Claude. It builds you a 5-minute, anonymous survey, ready for Google Forms or Microsoft Forms, to find out whether your people feel safe enough to try.',
   alternates: { canonical: '/belonging-check' },
 };
 
@@ -29,9 +29,9 @@ export default function BelongingCheckPage() {
           <p className={styles.eyebrow}>For school leaders</p>
           <h1 className={styles.title}>The belonging check</h1>
           <p className={styles.lede}>
-            Paste this into ChatGPT or Claude. It builds you a 5-minute,
-            anonymous form to find out whether your people feel safe enough
-            to try.
+            Paste this into Claude. It builds you a 5-minute, anonymous
+            survey — ready for Google Forms or Microsoft Forms — to find
+            out whether your people feel safe enough to try.
           </p>
         </section>
 
