@@ -4,11 +4,9 @@ import { CtaCard } from '@/components/CtaCard';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { HelloHero } from '@/components/HelloHero';
-import { HelloNickiFeature } from '@/components/HelloNickiFeature';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { SayHiForm } from '@/components/SayHiForm';
-import { TIDYCAL_LINKS } from '@/lib/tidycal';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -25,47 +23,48 @@ export default function HelloPage() {
       <main className={styles.main}>
         <HelloHero />
 
-        <section className={styles.cards} aria-labelledby="next-sessions">
-          <h2 id="next-sessions" className={styles.eyebrow}>
-            Next sessions
+        <section className={styles.cards} aria-labelledby="start-here">
+          <h2 id="start-here" className={styles.eyebrow}>
+            Start here
           </h2>
           <div className={styles.list}>
             <CtaCard
-              card="tuesday"
-              title="Tuesday Loop Breakers"
-              meta="90 min · £10 · weekly · vision & launch"
-              href={TIDYCAL_LINKS.tuesday}
+              card="seven_questions"
+              title="The seven questions"
+              meta="The talk, on one page. Pick one. Ask it Monday."
+              href="/the-takeaway.html"
+              external={true}
             />
             <CtaCard
-              card="guest"
-              title="Wed Guest Stage · Sketch-noting"
-              meta="20 May · with Nicki Hambleton · £15 · 90 min"
-              href="/guest-stage/nicki-hambleton-sketch-noting"
+              card="belonging_check"
+              title="The belonging check"
+              meta="A prompt to build a 5-minute form for your people. Does your setting have a belonging problem?"
+              href="/belonging-check"
               external={false}
             />
             <CtaCard
-              card="coaching"
-              title="Coaching for women holding it all"
-              meta="£100/month · with Nici · book a free chat first"
-              href={TIDYCAL_LINKS.coaching}
+              card="receipts"
+              title="The receipts"
+              meta="Six numbers under the talk. The belonging fact sheet."
+              href="/the-receipts.html"
+              external={true}
             />
             <CtaCard
-              card="ehcp_fit_call"
-              title="EHCP & Section 7 reports"
-              meta="for families fighting for the right provision · book a free 15-min fit call"
-              href={TIDYCAL_LINKS.ehcpFitCall}
+              card="one_read"
+              title="One read"
+              meta="The system wasn't built for the 60% in the middle. I'm building it differently."
+              href="https://www.unbarrier.me/blog/the-system-wasnt-built-for-the-60-percent-in-the-middle"
+              external={true}
             />
             <CtaCard
-              card="template"
-              title="The One Thing Template"
-              meta="free download · 2 pages · bring it to a session"
-              href="/one-thing-template.html"
+              card="conversation"
+              title="Start a conversation"
+              meta="Tell me what's happening. No forms, no funnels."
+              href="https://tidycal.com/nici/chat-with-nici"
               external={true}
             />
           </div>
         </section>
-
-        <HelloNickiFeature />
 
         <section className={styles.bandWrap}>
           <Glow

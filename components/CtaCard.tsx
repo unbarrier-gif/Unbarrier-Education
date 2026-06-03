@@ -3,7 +3,12 @@
 import type { CSSProperties } from 'react';
 import styles from './CtaCard.module.css';
 
-type CardKey = 'tuesday' | 'guest' | 'coaching' | 'ehcp_fit_call' | 'template';
+type CardKey =
+  | 'seven_questions'
+  | 'belonging_check'
+  | 'receipts'
+  | 'one_read'
+  | 'conversation';
 
 type Props = {
   card: CardKey;
@@ -13,20 +18,21 @@ type Props = {
   external?: boolean;
 };
 
+// Colour order is locked: green, pink, aqua, orange, yellow.
 const ACCENT: Record<CardKey, string> = {
-  tuesday: 'var(--spring-green)',
-  guest: 'var(--orchid-mist)',
-  coaching: 'var(--pearl-aqua)',
-  ehcp_fit_call: 'var(--princeton-orange)',
-  template: 'var(--school-bus-yellow)',
+  seven_questions: 'var(--spring-green)',
+  belonging_check: 'var(--orchid-mist)',
+  receipts: 'var(--pearl-aqua)',
+  one_read: 'var(--princeton-orange)',
+  conversation: 'var(--school-bus-yellow)',
 };
 
 const ACCENT_RGB: Record<CardKey, string> = {
-  tuesday: '56, 255, 153',
-  guest: '219, 125, 204',
-  coaching: '105, 217, 209',
-  ehcp_fit_call: '255, 138, 28',
-  template: '255, 194, 3',
+  seven_questions: '56, 255, 153',
+  belonging_check: '219, 125, 204',
+  receipts: '105, 217, 209',
+  one_read: '255, 138, 28',
+  conversation: '255, 194, 3',
 };
 
 export function CtaCard({ card, title, meta, href, external = true }: Props) {
