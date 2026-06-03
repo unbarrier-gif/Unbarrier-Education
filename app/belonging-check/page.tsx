@@ -36,9 +36,9 @@ export default function BelongingCheckPage() {
         </section>
 
         <CopyPrompt />
-
-        <Footer />
       </main>
+
+      <Footer variant="full" />
     </>
   );
 }

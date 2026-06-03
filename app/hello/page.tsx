@@ -101,8 +101,9 @@ export default function HelloPage() {
           </p>
         </section>
 
-        <Footer />
       </main>
+
+      <Footer variant="full" />
     </>
   );
 }
