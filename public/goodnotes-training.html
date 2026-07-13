@@ -5,6 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Goodnotes in Schools — Free Strategy Conversation</title>
 <meta name="description" content="A free 45-minute strategy conversation for schools using GoodNotes, funded by Goodnotes. For digital leads, deputy heads, and heads of teaching and learning.">
+<link rel="canonical" href="https://www.unbarrier.me/goodnotes-training">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Goodnotes in Schools — Free Strategy Conversation">
+<meta property="og:description" content="A free 45-minute strategy conversation for schools using GoodNotes, funded by Goodnotes. For digital leads, deputy heads, and heads of teaching and learning.">
+<meta property="og:url" content="https://www.unbarrier.me/goodnotes-training">
+<meta property="og:image" content="https://www.unbarrier.me/assets/og-hello.png">
+<meta name="twitter:card" content="summary_large_image">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Comfortaa:wght@400;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
   :root {
@@ -31,20 +38,27 @@
   .page { max-width: 860px; margin: 0 auto; }
 
   .download-wrap { text-align: center; margin-bottom: 2rem; }
-  .download-btn {
-    background: var(--green);
-    color: var(--purple);
+  .action-row {
+    display: flex; justify-content: center; align-items: center;
+    gap: 0.7rem; flex-wrap: wrap;
+  }
+  .action-btn {
+    display: inline-flex; align-items: center; gap: 0.5rem;
     border: none;
     font-family: 'Comfortaa', sans-serif;
     font-weight: 700;
     font-size: 0.9rem;
-    padding: 0.9rem 1.8rem;
+    padding: 0.9rem 1.6rem;
     border-radius: 999px;
     cursor: pointer;
     transition: transform 0.15s ease;
   }
-  .download-btn:hover { transform: scale(1.03); }
-  .download-btn:active { transform: scale(0.98); }
+  .action-btn:hover { transform: scale(1.03); }
+  .action-btn:active { transform: scale(0.98); }
+  .action-btn svg { flex-shrink: 0; }
+  .download-btn { background: var(--green); color: var(--purple); }
+  .copy-btn { background: transparent; color: var(--cream); border: 1px solid rgba(240,235,229,0.35); }
+  .copy-btn.copied { background: var(--aqua); color: var(--purple); border-color: var(--aqua); }
   .download-note {
     margin-top: 0.6rem;
     font-size: 0.72rem;
@@ -114,7 +128,8 @@
     margin-top: 2rem; flex-wrap: wrap; page-break-inside: avoid; break-inside: avoid;
   }
   .book-box h3 { font-family: 'Comfortaa', sans-serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.4rem; }
-  .book-box .link { color: var(--green); font-weight: 700; font-size: 0.95rem; }
+  .book-box .link { color: var(--green); font-weight: 700; font-size: 0.95rem; text-decoration: none; display: inline-block; }
+  .book-box .link:hover { text-decoration: underline; }
   .book-box .limit { font-size: 0.72rem; color: #888; margin-top: 0.5rem; max-width: 320px; }
   .qr-code {
     width: 90px; height: 90px; background: #fff;
@@ -127,12 +142,20 @@
     page-break-inside: avoid; break-inside: avoid;
   }
 
-  @page { margin: 14mm; }
+  @page { size: A4; margin: 8mm; }
 
   @media print {
     .download-wrap { display: none !important; }
-    body { padding: 0; }
+    /* Chromium's print engine (desktop and mobile "Save as PDF") only
+       reliably honours the top/bottom @page margin, not left/right — text
+       can bleed to the physical page edge and get clipped. Padding the
+       body directly guarantees a safe gutter on every device regardless
+       of how well the browser implements @page margin. */
+    html, body { width: auto; height: auto; padding: 10mm 9mm !important; }
+    .page { max-width: 100%; }
+    .covers-grid { grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 0.7rem; }
     .cover-card, .quote, .book-box, .footer { page-break-inside: avoid; break-inside: avoid; }
+    .header, .section-title { margin-top: 1.4rem; }
   }
 </style>
 </head>
@@ -140,7 +163,16 @@
 <div class="page">
 
   <div class="download-wrap">
-    <button class="download-btn" onclick="handleDownload()">⬇ Download as PDF</button>
+    <div class="action-row">
+      <button class="action-btn download-btn" onclick="handleDownload()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+        Download PDF
+      </button>
+      <button class="action-btn copy-btn" id="copyLinkBtn" onclick="handleCopyLink()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+        <span id="copyLinkLabel">Copy link to email</span>
+      </button>
+    </div>
     <div class="download-note">Or use your browser's Print → Save as PDF option.</div>
   </div>
 
@@ -207,10 +239,10 @@
     <div>
       <h3>Book your free strategy call</h3>
       <div style="font-size:0.85rem;color:#ccc;margin-bottom:0.4rem;">45 minutes, no obligation:</div>
-      <div class="link">calendar.app.google/5FVNn3NQaCpyyDmZA</div>
+      <a class="link" href="https://calendar.app.google/5FVNn3NQaCpyyDmZA" target="_blank" rel="noopener">calendar.app.google/5FVNn3NQaCpyyDmZA</a>
       <div class="limit">I can only take a limited number of these conversations each term. Early booking helps secure a September date.</div>
     </div>
-    <img class="qr-code" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHyUlEQVR4nO3dQY4stRJA0d9fb8YuWAP7XwFrYBeMkykSkgX4mnBWnzNFleWuqnflQSj4ep7nfwCd/08fAPg0sgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYj92Hnxzz/9Up3jEr/9/uviv577e3fed/3atZ2/aOqzWnvjJ3mnnU/DbQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiG1N2a7tTOmdc+c05NT0585M6p1nvtOdZz73b8FtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIHZyyXZvaC3vuyd9tL+zaGydlp878xn8La24rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2jc5NQ56b0N1536m50p2Z4zvnd78btxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIGbK9h+Y2jj7xu28O+977rX8N9xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY2JStWcm/79zm1+/mzl/dnafa4bYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsQOTtl+3nznuWnXO3fKTp35zs95Zxb28/4trLmtADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrACxr+d5ps/wGjuzklP7St843/l5u12/G7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSC2tct2atfpGze/rn3eptudJ6+9cVvtnX/v2s6Z3VaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjWlO3aubnDHXfO/t75aZyz82m8cdPt1AzuFLcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPoUffuet0x7n5zs/bz3rndt4dd575zv27bitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzgLtsdUxO6a3ee6vPmaO/cN/zGv3dq9tdtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTm1RPffaO90537nz/b5xL+zUdO8bua0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGtKdup/azmHf/s3JnPfb87pqa3d0ztsl079/26rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsYO7bNemJgvPnXnnfd84+/vGU03t/T3n3L7hHW4rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8r2nHPTkGvrJ09NUk79Rev3nZrgnNrteudU8Z3cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7c5U4p3batfOzZVObWA9585TTTk3v3vnJ+m2AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLExnbZ3jk5ujPvODUrObWB9dym26ldxZ9n6jfptgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxL6e5xl543PbW3ecm/29c8PuuSnMqUnZqSff+ZvcefIOtxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIHZwyvbOachzT75zzvLOza9vnGbecefm5nPcVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2I+dF+9MNE7t4Py8M09NcN45J73jznnWN+4bdlsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yndp3e6fM2sO64c4fu2rnv6M6JZFO2wGvIChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTrlznnVqb+janbOh50x9C1MbZ88xZQtcRFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzHuUe/cZ713BTmG7fznnPnNzj17U9NQp/jtgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxLZ22d450bg29b477jzz1EbhO/f+fh67bIGLyAoQkxUgJitATFaAmKwAMVkBYrICxGQFiG3tsn3jbted9z037XpuvnNqo/C5J5vu/bM7f3VuK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAbGvK9vN2f945gzu1FXj95DdOBp8z9e3vOPdktxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVILY1Zbs2ta12bWqCc+d937hDd+3O38aON266Pfe7clsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWIHp2zXzs133rn7c2pS9vPmWdc+b8PuzqTs1JndVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NiU7RtNTXBOzeC+8VQ7pvbR7rzv1Ge15rYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRM2f5Hpjbsntt1ujM5em66987X7th58tQmY7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPv37xuQ2d59x55jtPtXZu+vPOHbo77pyUPfdpuK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2yn/m/153y3Wcmp/axTM7jnnNuDe26j8A63FSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgtrXLFuCv3FaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFifwDF3OmRG9HDRwAAAABJRU5ErkJggg==" alt="QR code — scan to book a free strategy call">
+    <img class="qr-code" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHyUlEQVR4nO3dQY4stRJA0d9fb8YuWAP7XwFrYBeMkykSkgX4mnBWnzNFleWuqnflQSj4ep7nfwCd/08fAPg0sgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYj92Hnxzz/9Up3jEr/9/uviv577e3fed/3atZ2/aOqzWnvjJ3mnnU/DbQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiG1N2a7tTOmdc+c05NT0585M6p1nvtOdZz73b8FtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIHZyyXZvaC3vuyd9tL+zaGydlp878xn8La24rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2jc5NQ56b0N1536m50p2Z4zvnd78btxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIGbK9h+Y2jj7xu28O+977rX8N9xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY2JStWcm/79zm1+/mzl/dnafa4bYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsQOTtl+3nznuWnXO3fKTp35zs95Zxb28/4trLmtADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrACxr+d5ps/wGjuzklP7St843/l5u12/G7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSC2tct2atfpGze/rn3eptudJ6+9cVvtnX/v2s6Z3VaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjWlO3aubnDHXfO/t75aZyz82m8cdPt1AzuFLcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPoUffuet0x7n5zs/bz3rndt4dd575zv27bitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzgLtsdUxO6a3ee6vPmaO/cN/zGv3dq9tdtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTm1RPffaO90537nz/b5xL+zUdO8bua0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGtKdup/azmHf/s3JnPfb87pqa3d0ztsl079/26rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsYO7bNemJgvPnXnnfd84+/vGU03t/T3n3L7hHW4rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8r2nHPTkGvrJ09NUk79Rev3nZrgnNrteudU8Z3cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7c5U4p3batfOzZVObWA9585TTTk3v3vnJ+m2AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLExnbZ3jk5ujPvODUrObWB9dym26ldxZ9n6jfptgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxL6e5xl543PbW3ecm/29c8PuuSnMqUnZqSff+ZvcefIOtxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIHZwyvbOachzT75zzvLOza9vnGbecefm5nPcVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2I+dF+9MNE7t4Py8M09NcN45J73jznnWN+4bdlsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yndp3e6fM2sO64c4fu2rnv6M6JZFO2wGvIChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTrlznnVqb+janbOh50x9C1MbZ88xZQtcRFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzHuUe/cZ713BTmG7fznnPnNzj17U9NQp/jtgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxLZ22d450bg29b477jzz1EbhO/f+fh67bIGLyAoQkxUgJitATFaAmKwAMVkBYrICxGQFiG3tsn3jbted9z037XpuvnNqo/C5J5vu/bM7f3VuK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAbGvK9vN2f945gzu1FXj95DdOBp8z9e3vOPdktxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVILY1Zbs2ta12bWqCc+d937hDd+3O38aON266Pfe7clsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWIHp2zXzs133rn7c2pS9vPmWdc+b8PuzqTs1JndVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NiU7RtNTXBOzeC+8VQ7pvbR7rzv1Ge15rYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRM2f5Hpjbsntt1ujM5em66987X7th58tQmY7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPv37xuQ2d59x55jtPtXZu+vPOHbo77pyUPfdpuK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2yn/m/153y3Wcmp/axTM7jnnNuDe26j8A63FSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgtrXLFuCv3FaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFifwDF3OmRG9HDRwAAAABJRU5ErkJggg==" alt="QR code — scan to book a free strategy call" width="90" height="90">
   </div>
 
   <div class="footer">
@@ -221,11 +253,53 @@
 </div>
 
 <script>
+var SHARE_URL = 'https://www.unbarrier.me/goodnotes-training';
+
 function handleDownload() {
   if (window.plausible) {
     window.plausible('PDF Download');
   }
   window.print();
+}
+
+function handleCopyLink() {
+  if (window.plausible) {
+    window.plausible('Copy Link');
+  }
+  var btn = document.getElementById('copyLinkBtn');
+  var label = document.getElementById('copyLinkLabel');
+
+  function showCopied() {
+    label.textContent = 'Link copied!';
+    btn.classList.add('copied');
+    setTimeout(function () {
+      label.textContent = 'Copy link to email';
+      btn.classList.remove('copied');
+    }, 2000);
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(SHARE_URL).then(showCopied, fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+
+  function fallbackCopy() {
+    var input = document.createElement('textarea');
+    input.value = SHARE_URL;
+    input.setAttribute('readonly', '');
+    input.style.position = 'absolute';
+    input.style.left = '-9999px';
+    document.body.appendChild(input);
+    input.select();
+    try {
+      document.execCommand('copy');
+      showCopied();
+    } catch (e) {
+      label.textContent = SHARE_URL;
+    }
+    document.body.removeChild(input);
+  }
 }
 </script>
 
