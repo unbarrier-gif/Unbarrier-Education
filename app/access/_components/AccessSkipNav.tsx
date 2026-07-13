@@ -22,7 +22,7 @@ const ITEMS: Item[] = [
 const RESOURCES = [
   {
     label: 'GoodNotes training one-pager',
-    href: '/goodnotes-training.html',
+    href: '/goodnotes-training',
   },
 ];
 

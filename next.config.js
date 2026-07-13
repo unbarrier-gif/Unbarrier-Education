@@ -18,6 +18,18 @@ const nextConfig = {
       },
     ];
   },
+  // Clean, emailable URL for the GoodNotes one-pager — the file lives as
+  // static HTML in /public (it's a standalone print/PDF handout, not a
+  // Next.js page), so this rewrite drops the .html extension without
+  // moving the file.
+  async rewrites() {
+    return [
+      {
+        source: '/goodnotes-training',
+        destination: '/goodnotes-training.html',
+      },
+    ];
+  },
   // Cap the homepage edge-cache lifetime to 60s with a 5-minute SWR window.
   // Vercel's project-level rewrite-caching layer doesn't always honour the
   // implicit `revalidate = 60` set in app/page.tsx — once we hit a redirect
