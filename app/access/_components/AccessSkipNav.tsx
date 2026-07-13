@@ -16,9 +16,22 @@ const ITEMS: Item[] = [
   { label: 'Ask',  targetId: 'access-ask',            dotColor: 'var(--princeton-orange)' },
 ];
 
+// Quick-link destinations that live outside this page's own sections —
+// currently just the GoodNotes one-pager handout. Kept as a list so more
+// resources can be added without changing the dropdown markup.
+const RESOURCES = [
+  {
+    label: 'GoodNotes training one-pager',
+    href: '/goodnotes-training.html',
+  },
+];
+
 export function AccessSkipNav() {
   const [activeId, setActiveId] = useState<string | null>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
   const ratiosRef = useRef<Map<string, number>>(new Map());
+  const menuRef = useRef<HTMLLIElement>(null);
+  const menuBtnRef = useRef<HTMLButtonElement>(null);
 
   useEffect(() => {
     const targets = ITEMS
@@ -55,6 +68,27 @@ export function AccessSkipNav() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onPointerDown = (e: MouseEvent) => {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false);
+      }
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMenuOpen(false);
+        menuBtnRef.current?.focus();
+      }
+    };
+    document.addEventListener('mousedown', onPointerDown);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      document.removeEventListener('mousedown', onPointerDown);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, [menuOpen]);
+
   const handleClick = (e: React.MouseEvent<HTMLAnchorElement>, targetId: string) => {
     const el = document.getElementById(targetId);
     if (!el) return;
@@ -89,6 +123,39 @@ export function AccessSkipNav() {
             </li>
           );
         })}
+        <li className={styles.skipNavItem} ref={menuRef} style={{ position: 'relative' }}>
+          <button
+            ref={menuBtnRef}
+            type="button"
+            className={styles.skipNavBtn}
+            aria-haspopup="menu"
+            aria-expanded={menuOpen}
+            onClick={() => setMenuOpen((open) => !open)}
+          >
+            Resources
+            <span aria-hidden="true" className={styles.skipNavCaret} data-open={menuOpen}>
+              ▾
+            </span>
+          </button>
+          {menuOpen && (
+            <ul role="menu" className={styles.skipNavMenu}>
+              {RESOURCES.map(({ label, href }) => (
+                <li key={href} role="none">
+                  <a
+                    role="menuitem"
+                    href={href}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={styles.skipNavMenuLink}
+                    onClick={() => setMenuOpen(false)}
+                  >
+                    {label} ↗
+                  </a>
+                </li>
+              ))}
+            </ul>
+          )}
+        </li>
       </ul>
     </nav>
   );
