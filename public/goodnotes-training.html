@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goodnotes in Schools — Free Strategy Conversation</title>
+<meta name="description" content="A free 45-minute strategy conversation for schools using GoodNotes, funded by Goodnotes. For digital leads, deputy heads, and heads of teaching and learning.">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Comfortaa:wght@400;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #38ff99;
+    --purple: #210a33;
+    --yellow: #ffc203;
+    --orange: #ff8a1c;
+    --aqua: #69d9d1;
+    --orchid: #db7dcc;
+    --cream: #f0ebe5;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html, body { height: auto; overflow: visible; }
+
+  body {
+    background: var(--purple);
+    font-family: 'Lexend', sans-serif;
+    color: var(--cream);
+    padding: 2rem 1rem 4rem;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+  .page { max-width: 860px; margin: 0 auto; }
+
+  .download-wrap { text-align: center; margin-bottom: 2rem; }
+  .download-btn {
+    background: var(--green);
+    color: var(--purple);
+    border: none;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    padding: 0.9rem 1.8rem;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: transform 0.15s ease;
+  }
+  .download-btn:hover { transform: scale(1.03); }
+  .download-btn:active { transform: scale(0.98); }
+  .download-note {
+    margin-top: 0.6rem;
+    font-size: 0.72rem;
+    color: #888;
+  }
+
+  .header { border-left: 6px solid var(--aqua); padding-left: 1.5rem; margin-bottom: 2rem; }
+  .brand-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem; }
+  .brand-row .wordmark { font-family: 'Comfortaa', sans-serif; font-weight: 700; color: var(--cream); font-size: 1rem; }
+  .brand-row .partner-tag { font-size: 0.75rem; color: #888; }
+  .header .label {
+    font-family: 'Outfit', sans-serif; font-size: 0.7rem; font-weight: 700;
+    letter-spacing: 0.18em; text-transform: uppercase; color: var(--aqua); margin-bottom: 0.4rem;
+  }
+  .header h1 { font-family: 'Comfortaa', sans-serif; font-size: clamp(1.8rem, 4vw, 2.6rem); font-weight: 700; color: var(--cream); line-height: 1.1; }
+  .header .sub { margin-top: 0.6rem; font-size: 0.95rem; color: var(--aqua); font-weight: 600; }
+  .header .desc { margin-top: 0.8rem; font-size: 0.88rem; line-height: 1.7; color: #ccc; max-width: 620px; }
+  .header .audience { margin-top: 0.8rem; font-size: 0.78rem; color: #888; font-style: italic; }
+
+  .section-title {
+    font-family: 'Outfit', sans-serif; font-size: 0.62rem; font-weight: 700; letter-spacing: 0.2em;
+    text-transform: uppercase; color: var(--orchid); margin-bottom: 0.8rem; margin-top: 2.2rem;
+  }
+  .why-now { font-size: 0.85rem; line-height: 1.7; color: #ccc; }
+  .why-now .note { margin-top: 0.6rem; font-size: 0.75rem; color: #888; }
+  .why-list { list-style: none; padding: 0; margin: 0 0 1rem; }
+  .why-list li {
+    font-size: 0.85rem; line-height: 1.6; color: #ccc;
+    padding: 0.3rem 0 0.3rem 1.2rem; position: relative;
+  }
+  .why-list li::before {
+    content: '·'; position: absolute; left: 0; color: var(--yellow);
+    font-size: 1.3rem; line-height: 1; top: 0.1rem;
+  }
+  .why-list li strong { color: var(--cream); }
+  .why-punch {
+    font-size: 0.95rem; font-weight: 600; color: var(--green);
+    line-height: 1.6; margin-top: 0.6rem;
+  }
+
+  .covers-lede { font-size: 0.78rem; color: var(--aqua); margin-bottom: 1rem; line-height: 1.6; }
+  .covers-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.9rem; }
+  .cover-card {
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 1.1rem 1.2rem; page-break-inside: avoid; break-inside: avoid;
+  }
+  .cover-card .tag { font-family: 'Outfit', sans-serif; font-size: 0.58rem; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: var(--green); margin-bottom: 0.5rem; }
+  .cover-card h3 { font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 0.92rem; color: var(--cream); margin-bottom: 0.4rem; }
+  .cover-card p { font-size: 0.8rem; line-height: 1.6; color: #bbb; }
+  .apls-signal { margin-top: 1rem; font-size: 0.75rem; color: #888; line-height: 1.6; }
+  .apls-signal strong { color: var(--aqua); }
+
+  .quote {
+    background: rgba(219,125,204,0.06); border-left: 3px solid var(--orchid);
+    border-radius: 10px; padding: 1rem 1.2rem; margin-bottom: 0.8rem;
+    font-size: 0.85rem; font-style: italic; color: #ddd; line-height: 1.6;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+  .quote cite { display: block; margin-top: 0.5rem; font-style: normal; font-size: 0.75rem; color: var(--orchid); }
+
+  .delivers p { font-size: 0.85rem; line-height: 1.7; color: #ccc; margin-bottom: 0.6rem; }
+  .badges { font-size: 0.78rem; color: var(--aqua); }
+
+  .book-box {
+    border: 1px solid var(--green); border-radius: 14px; padding: 1.6rem;
+    display: flex; justify-content: space-between; align-items: center; gap: 1rem;
+    margin-top: 2rem; flex-wrap: wrap; page-break-inside: avoid; break-inside: avoid;
+  }
+  .book-box h3 { font-family: 'Comfortaa', sans-serif; font-size: 1.1rem; color: var(--cream); margin-bottom: 0.4rem; }
+  .book-box .link { color: var(--green); font-weight: 700; font-size: 0.95rem; }
+  .book-box .limit { font-size: 0.72rem; color: #888; margin-top: 0.5rem; max-width: 320px; }
+  .qr-code {
+    width: 90px; height: 90px; background: #fff;
+    border-radius: 6px; flex-shrink: 0; display: block;
+  }
+
+  .footer {
+    margin-top: 3rem; border-top: 1px solid rgba(255,255,255,0.07); padding-top: 1.2rem;
+    font-size: 0.72rem; color: #555; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem;
+    page-break-inside: avoid; break-inside: avoid;
+  }
+
+  @page { margin: 14mm; }
+
+  @media print {
+    .download-wrap { display: none !important; }
+    body { padding: 0; }
+    .cover-card, .quote, .book-box, .footer { page-break-inside: avoid; break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="download-wrap">
+    <button class="download-btn" onclick="handleDownload()">⬇ Download as PDF</button>
+    <div class="download-note">Or use your browser's Print → Save as PDF option.</div>
+  </div>
+
+  <div class="header">
+    <div class="brand-row">
+      <div class="wordmark">unbarrier.me</div>
+      <div class="partner-tag">× goodnotes</div>
+    </div>
+    <div class="label">Free strategy conversation</div>
+    <h1>Goodnotes in schools</h1>
+    <div class="sub">A free strategy conversation, funded by Goodnotes.</div>
+    <div class="desc">Goodnotes works when it's embedded in how a school actually teaches, not just installed on every iPad. This is a free 45-minute conversation to scope what that looks like for your school. Funded by Goodnotes: no cost or invoice to you.</div>
+    <div class="audience">For digital leads, deputy heads, and heads of teaching and learning.</div>
+  </div>
+
+  <div class="section-title">Why now</div>
+  <div class="why-now">
+    <ul class="why-list">
+      <li><strong>The DfE Inclusion Strategy deadline is coming up fast.</strong> 31 December 2026.</li>
+      <li><strong>KCSIE 2026 AI updates go live.</strong> 1 September.</li>
+      <li><strong>Goodnotes' own research</strong> (<em>The AI Shift in Schools</em>, 2025) finds the real barrier to safe, effective digital and AI adoption isn't policy.</li>
+    </ul>
+    <div class="why-punch">It's staff confidence. This conversation is about closing that gap before it costs your teams a school year.</div>
+  </div>
+
+  <div class="section-title">What the conversation covers</div>
+  <div class="covers-lede">Same coaching-first approach I use as an Apple Professional Learning Specialist. I ask before I advise.</div>
+  <div class="covers-grid">
+    <div class="cover-card">
+      <div class="tag">the focus question</div>
+      <h3>What's the real challenge here for you?</h3>
+      <p>Not what the tool does. What's actually getting in the way right now, for your staff and your students.</p>
+    </div>
+    <div class="cover-card">
+      <div class="tag">the foundation question</div>
+      <h3>What do you want to achieve?</h3>
+      <p>A quick, honest read on installed vs. embedded, and what "good" would actually look like for your school.</p>
+    </div>
+    <div class="cover-card">
+      <div class="tag">the goal question</div>
+      <h3>How can I help?</h3>
+      <p>You leave with one concrete next step, not twenty. Whether that's a training day, another school to chat to, or something else.</p>
+    </div>
+  </div>
+  <div class="apls-signal"><strong>Grounded in Apple Professional Learning Specialist practice:</strong> pedagogy first, tool second. I don't open with features. I open with questions.</div>
+
+  <div class="section-title">What people say</div>
+  <div class="quote">
+    "Goodnotes' handwriting and visual format is one of the accessibility features I lean on most when supporting neurodivergent learners."
+    <cite>— Nici Foote, Apple Professional Learning Specialist &amp; Goodnotes trainer</cite>
+  </div>
+  <div class="quote">
+    "Eltham College is now ranked in Goodnotes' top 20 schools worldwide for daily engagement, following training delivered by Nici."
+    <cite>— Daniel Emmerson, Academic Affairs Lead, Goodnotes</cite>
+  </div>
+
+  <div class="section-title">Who delivers it</div>
+  <div class="delivers">
+    <p>Nici Foote. Apple Professional Learning Specialist and Goodnotes trainer, 17 years in international education, specialising in inclusion and digital pedagogy.</p>
+    <div class="badges">Google Innovator · Apple Professional Learning Specialist · Microsoft Expert Educator · Edufuturists Uprising Awards 2026 shortlist</div>
+  </div>
+
+  <div class="book-box">
+    <div>
+      <h3>Book your free strategy call</h3>
+      <div style="font-size:0.85rem;color:#ccc;margin-bottom:0.4rem;">45 minutes, no obligation:</div>
+      <div class="link">calendar.app.google/5FVNn3NQaCpyyDmZA</div>
+      <div class="limit">I can only take a limited number of these conversations each term. Early booking helps secure a September date.</div>
+    </div>
+    <img class="qr-code" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHyUlEQVR4nO3dQY4stRJA0d9fb8YuWAP7XwFrYBeMkykSkgX4mnBWnzNFleWuqnflQSj4ep7nfwCd/08fAPg0sgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYj92Hnxzz/9Up3jEr/9/uviv577e3fed/3atZ2/aOqzWnvjJ3mnnU/DbQWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiG1N2a7tTOmdc+c05NT0585M6p1nvtOdZz73b8FtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIHZyyXZvaC3vuyd9tL+zaGydlp878xn8La24rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2jc5NQ56b0N1536m50p2Z4zvnd78btxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIGbK9h+Y2jj7xu28O+977rX8N9xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY2JStWcm/79zm1+/mzl/dnafa4bYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsQOTtl+3nznuWnXO3fKTp35zs95Zxb28/4trLmtADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrACxr+d5ps/wGjuzklP7St843/l5u12/G7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSC2tct2atfpGze/rn3eptudJ6+9cVvtnX/v2s6Z3VaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjWlO3aubnDHXfO/t75aZyz82m8cdPt1AzuFLcVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPoUffuet0x7n5zs/bz3rndt4dd575zv27bitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzgLtsdUxO6a3ee6vPmaO/cN/zGv3dq9tdtBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTm1RPffaO90537nz/b5xL+zUdO8bua0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGtKdup/azmHf/s3JnPfb87pqa3d0ztsl079/26rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsYO7bNemJgvPnXnnfd84+/vGU03t/T3n3L7hHW4rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8r2nHPTkGvrJ09NUk79Rev3nZrgnNrteudU8Z3cVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7c5U4p3batfOzZVObWA9585TTTk3v3vnJ+m2AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLExnbZ3jk5ujPvODUrObWB9dym26ldxZ9n6jfptgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxL6e5xl543PbW3ecm/29c8PuuSnMqUnZqSff+ZvcefIOtxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIHZwyvbOachzT75zzvLOza9vnGbecefm5nPcVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2I+dF+9MNE7t4Py8M09NcN45J73jznnWN+4bdlsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yndp3e6fM2sO64c4fu2rnv6M6JZFO2wGvIChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3ZTrlznnVqb+janbOh50x9C1MbZ88xZQtcRFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOzHuUe/cZ713BTmG7fznnPnNzj17U9NQp/jtgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxLZ22d450bg29b477jzz1EbhO/f+fh67bIGLyAoQkxUgJitATFaAmKwAMVkBYrICxGQFiG3tsn3jbted9z037XpuvnNqo/C5J5vu/bM7f3VuK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAbGvK9vN2f945gzu1FXj95DdOBp8z9e3vOPdktxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVILY1Zbs2ta12bWqCc+d937hDd+3O38aON266Pfe7clsBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWIHp2zXzs133rn7c2pS9vPmWdc+b8PuzqTs1JndVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NiU7RtNTXBOzeC+8VQ7pvbR7rzv1Ge15rYCxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRM2f5Hpjbsntt1ujM5em66987X7th58tQmY7cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSD29TzPv37xuQ2d59x55jtPtXZu+vPOHbo77pyUPfdpuK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2yn/m/153y3Wcmp/axTM7jnnNuDe26j8A63FSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgtrXLFuCv3FaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFifwDF3OmRG9HDRwAAAABJRU5ErkJggg==" alt="QR code — scan to book a free strategy call">
+  </div>
+
+  <div class="footer">
+    <span>unbarrier education ltd · delivered in partnership with Goodnotes</span>
+    <span>Edufuturists Uprising Awards 2026 — shortlisted</span>
+  </div>
+
+</div>
+
+<script>
+function handleDownload() {
+  if (window.plausible) {
+    window.plausible('PDF Download');
+  }
+  window.print();
+}
+</script>
+
+</body>
+</html>

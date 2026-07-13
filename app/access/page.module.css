@@ -58,6 +58,15 @@
 }
 
 .skipNavBtn {
+  /* Reset so this also works applied to a native <button> (the Resources
+     dropdown trigger), not just the <a> section-jump links. */
+  appearance: none;
+  background: none;
+  border: 0;
+  margin: 0;
+  font: inherit;
+  cursor: pointer;
+
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -96,6 +105,64 @@
   height: 7px;
   border-radius: 50%;
   flex-shrink: 0;
+}
+
+/* Resources dropdown — a quick-links menu appended to the skip-nav strip.
+   Unlike the section jump-buttons, this button toggles a small popover
+   rather than navigating directly. */
+.skipNavCaret {
+  display: inline-block;
+  font-size: 10px;
+  transition: transform 120ms ease;
+}
+
+.skipNavCaret[data-open='true'] {
+  transform: rotate(180deg);
+}
+
+.skipNavMenu {
+  list-style: none;
+  margin: 6px 0 0;
+  padding: 6px;
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 240px;
+  background: var(--amethyst, #210a33);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+}
+
+.skipNavMenuLink {
+  display: block;
+  padding: 10px 12px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-heading);
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 120ms ease, background 120ms ease;
+}
+
+.skipNavMenuLink:hover,
+.skipNavMenuLink:focus-visible {
+  color: var(--text);
+  background: var(--surface-lift);
+}
+
+.skipNavMenuLink:focus-visible {
+  outline: 2px solid var(--focus-ring, var(--spring-green));
+  outline-offset: -2px;
+}
+
+@media (max-width: 600px) {
+  .skipNavMenu {
+    right: auto;
+    left: 0;
+  }
 }
 
 /* ── 1. HERO ─────────────────────────────────────────────────── */
