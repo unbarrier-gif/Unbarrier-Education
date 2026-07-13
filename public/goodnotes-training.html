@@ -37,16 +37,40 @@
   .screen-hint {
     max-width: 816px;
     margin: 24px auto 0;
-    padding: 16px 20px;
+    padding: 16px 20px 18px;
     background: rgba(56, 255, 153, 0.08);
     border: 1px solid rgba(56, 255, 153, 0.2);
     border-radius: 8px;
     color: var(--text);
     font-size: 13px;
     line-height: 1.5;
-    text-align: center;
   }
   .screen-hint strong { color: var(--spring-green); }
+  .hint-title {
+    margin: 0 0 10px;
+    text-align: center;
+    font-size: 13px;
+  }
+  .hint-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 8px 20px;
+  }
+  .hint-list li {
+    margin: 0;
+  }
+  .hint-platform {
+    display: block;
+    color: var(--spring-green);
+    font-weight: 700;
+    font-size: 12px;
+  }
+  @media (max-width: 500px) {
+    .hint-list { grid-template-columns: 1fr; }
+  }
 
   .page {
     width: 816px;
@@ -362,7 +386,13 @@
 <body>
 
 <div class="screen-hint">
-  <strong>To save as PDF:</strong> press <em>Ctrl/Cmd + P</em> → Destination: Save as PDF → Paper size: Letter → Margins: None.
+  <p class="hint-title"><strong>To save this as a PDF</strong></p>
+  <ul class="hint-list">
+    <li><span class="hint-platform">Windows / Chrome / Edge / Firefox</span>Ctrl + P → Destination: Save as PDF</li>
+    <li><span class="hint-platform">Mac / Safari</span>Cmd + P → the PDF menu (bottom-left) → Save as PDF</li>
+    <li><span class="hint-platform">iPhone / iPad</span>Share → Print → pinch open the preview → Share → Save to Files</li>
+    <li><span class="hint-platform">Android / Chrome</span>Tap ⋮ → Share → Print → Save as PDF</li>
+  </ul>
 </div>
 
 <div class="page">
