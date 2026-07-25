@@ -18,6 +18,13 @@ export type QuestionSet = {
   estimatedMinutes: number;
   domains: Domain[];
   catalogueOptions: string[];
+  /** Autocomplete suggestions for the region field — the field itself stays
+   *  free text, this is a helper, not a closed list. Self-described region
+   *  in the respondent's own words is useful data in its own right. */
+  regionSuggestions: string[];
+  /** Autocomplete suggestions for the school field — the field itself stays
+   *  free text, this is a helper, not a closed list. */
+  schoolSuggestions: string[];
 };
 
 /** 0 = doesn't exist at all ... 5 = fully in place and working well. */

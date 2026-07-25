@@ -12,18 +12,22 @@ const answersSchema = z.object({
   catalogue: z.array(z.string()).max(3),
 });
 
-const schema = z.object({
-  school: z.string().trim().min(1).max(300),
-  region: z.string().max(300).nullable(),
-  respondentName: z.string().max(300).nullable(),
-  respondentRole: z.string().max(300).nullable(),
-  answers: answersSchema,
-  honeypot: z.string().optional(),
-});
-
 const knownQuestionIds = new Set(allQuestions(ispAuditQuestionSet).map((q) => q.id));
 const knownDomainIds = new Set(ispAuditQuestionSet.domains.map((d) => d.id));
 const knownCatalogueOptions = new Set(ispAuditQuestionSet.catalogueOptions);
+
+// All four identity fields are required and all free text — region/school
+// have autocomplete suggestions but are never restricted to a closed list
+// (self-described region/school in the respondent's own words is useful
+// data in itself, decisions log 25 July 2026).
+const schema = z.object({
+  school: z.string().trim().min(1).max(300),
+  region: z.string().trim().min(1).max(300),
+  respondentName: z.string().trim().min(1).max(300),
+  respondentRole: z.string().trim().min(1).max(300),
+  answers: answersSchema,
+  honeypot: z.string().optional(),
+});
 
 export async function POST(req: Request) {
   let body: unknown;
@@ -56,9 +60,9 @@ export async function POST(req: Request) {
 
   const { id } = await insertResponse({
     school: parsed.data.school,
-    region: parsed.data.region?.trim() || null,
-    respondentName: parsed.data.respondentName?.trim() || null,
-    respondentRole: parsed.data.respondentRole?.trim() || null,
+    region: parsed.data.region,
+    respondentName: parsed.data.respondentName,
+    respondentRole: parsed.data.respondentRole,
     answers: { scores, notes, catalogue },
   });
 

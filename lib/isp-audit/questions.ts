@@ -5,19 +5,19 @@ import type { QuestionSet } from './types';
 // CATALOGUE_OPTIONS). Question ids follow the source's own `${domainId}-${i}`
 // scheme (0-indexed) so exports stay comparable with the original prototype.
 //
-// Note for whoever edits this next: one question (device-0) names specific
-// MDM vendors (Intune/Jamf/Google Admin) as a clarifying parenthetical. That's
-// a deliberate call from the v3 handoff, not an oversight — flagged to Nici
-// as a tension with the "no vendor names in prompts" rule from the original
-// brief; left in pending her call.
+// device-0 was reworded from the source's vendor-naming parenthetical
+// (Intune/Jamf/Google Admin) to capability language only — device-agnostic is
+// a design rule for this tool, not just a framing choice (decisions log,
+// 25 July 2026).
 export const ispAuditQuestionSet: QuestionSet = {
   id: 'isp-compass-v3',
   title: 'ISP Learning & Device Compass',
   intro:
-    'A six-domain self-assessment for your school or region, part of ISP’s phase-two device planning. ' +
-    'Device-agnostic — answer for whatever platform(s) you actually use. Domains are tagged with who’s ' +
-    'best placed to answer — split across roles if that’s easier than one person doing it all. Your ' +
-    'individual answers are visible only to you and to ISP’s planning team.',
+    'A six-domain self-assessment for your school or region, part of ISP’s phase-two device planning — ' +
+    'mapped against ISP’s five learning pillars: academic achievement, multilingualism, life competencies, ' +
+    'international opportunities, and future pathways. Domains are tagged with who’s best placed to ' +
+    'answer — split across roles if that’s easier than one person doing it all. Your individual answers ' +
+    'are visible only to you and to ISP’s planning team.',
   estimatedMinutes: 30,
   domains: [
     {
@@ -66,7 +66,7 @@ export const ispAuditQuestionSet: QuestionSet = {
       questions: [
         {
           id: 'device-0',
-          prompt: 'Our device estate has clear, ready-to-use MDM/security in place (Intune, Jamf, Google Admin or other).',
+          prompt: 'Our devices are managed through a mobile device management (MDM) system that’s clear and ready to use.',
         },
         { id: 'device-1', prompt: 'Devices arrive in a ready-to-use state — students/teachers aren’t doing the setup.' },
         { id: 'device-2', prompt: 'We have a plan for what happens to devices at end of life (resale, refurbishment, reuse).' },
@@ -136,4 +136,21 @@ export const ispAuditQuestionSet: QuestionSet = {
     'Resale value at end of life',
     'Familiarity — what staff already know',
   ],
+  // RMD-tier names as suggestions only, not a forced list — self-described
+  // region in the respondent's own words is useful data in itself (decisions
+  // log, 25 July 2026).
+  regionSuggestions: [
+    'UK',
+    'Europe',
+    'Iberia',
+    'Middle East & North Africa',
+    'Latin America',
+    'USA & Canada',
+    'Asia/SE Asia & India',
+  ],
+  // Real ISP schools Nici named directly (2026-07-25) — suggestions only,
+  // the field stays free text. No "cluster" entries: checked against source
+  // material and confirmed not to be ISP's own term (decisions log, 25 July
+  // 2026). Flagged to Nici as incomplete pending the full school list.
+  schoolSuggestions: ['Reach British School', 'Newton College', 'Ecole Mosaic', 'Tenby Setia EcoHill'],
 };

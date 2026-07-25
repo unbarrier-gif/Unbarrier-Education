@@ -30,6 +30,13 @@ const EMPTY_DRAFT: Draft = {
   catalogue: [],
 };
 
+const IDENTITY_FIELD_LABEL: Record<string, string> = {
+  school: 'School',
+  region: 'Region',
+  respondentName: 'Respondent name',
+  respondentRole: 'Role',
+};
+
 export default function AuditForm({ questionSet }: { questionSet: QuestionSet }) {
   const router = useRouter();
   const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
@@ -82,7 +89,16 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
   function validate(): Record<string, string> {
     const next: Record<string, string> = {};
     if (!draft.school.trim()) {
-      next.school = 'Enter your school name.';
+      next.school = 'Enter your school.';
+    }
+    if (!draft.region.trim()) {
+      next.region = 'Enter your region.';
+    }
+    if (!draft.respondentName.trim()) {
+      next.respondentName = 'Enter your name.';
+    }
+    if (!draft.respondentRole.trim()) {
+      next.respondentRole = 'Enter your role.';
     }
     return next;
   }
@@ -115,9 +131,9 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           school: draft.school.trim(),
-          region: draft.region.trim() || null,
-          respondentName: draft.respondentName.trim() || null,
-          respondentRole: draft.respondentRole.trim() || null,
+          region: draft.region.trim(),
+          respondentName: draft.respondentName.trim(),
+          respondentRole: draft.respondentRole.trim(),
           answers,
           honeypot,
         }),
@@ -182,7 +198,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
                       target?.focus();
                     }}
                   >
-                    {msg} — {id === 'school' ? 'Your school' : id}
+                    {msg} — {IDENTITY_FIELD_LABEL[id] ?? id}
                   </a>
                 </li>
               ))}
@@ -193,11 +209,12 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         <div className={styles.identity}>
           <div>
             <label htmlFor="ia-school" className={styles.label}>
-              School / cluster <span className={styles.requiredNote}>(required)</span>
+              School <span className={styles.requiredNote}>(required)</span>
             </label>
             <input
               id="ia-school"
               className={styles.textInput}
+              list="ia-school-suggestions"
               value={draft.school}
               onChange={(e) => setField('school', e.target.value)}
               aria-invalid={errors.school ? 'true' : undefined}
@@ -205,6 +222,11 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
               aria-required="true"
               autoComplete="organization"
             />
+            <datalist id="ia-school-suggestions">
+              {questionSet.schoolSuggestions.map((s) => (
+                <option key={s} value={s} />
+              ))}
+            </datalist>
             {errors.school && (
               <p id="ia-school-error" className={styles.fieldError}>
                 {errors.school}
@@ -213,37 +235,67 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           </div>
           <div>
             <label htmlFor="ia-region" className={styles.label}>
-              Region
+              Region <span className={styles.requiredNote}>(required)</span>
             </label>
             <input
               id="ia-region"
               className={styles.textInput}
+              list="ia-region-suggestions"
               value={draft.region}
               onChange={(e) => setField('region', e.target.value)}
+              aria-invalid={errors.region ? 'true' : undefined}
+              aria-describedby={errors.region ? 'ia-region-error' : undefined}
+              aria-required="true"
             />
+            <datalist id="ia-region-suggestions">
+              {questionSet.regionSuggestions.map((r) => (
+                <option key={r} value={r} />
+              ))}
+            </datalist>
+            {errors.region && (
+              <p id="ia-region-error" className={styles.fieldError}>
+                {errors.region}
+              </p>
+            )}
           </div>
           <div>
-            <label htmlFor="ia-name" className={styles.label}>
-              Respondent name
+            <label htmlFor="ia-respondentName" className={styles.label}>
+              Respondent name <span className={styles.requiredNote}>(required)</span>
             </label>
             <input
-              id="ia-name"
+              id="ia-respondentName"
               className={styles.textInput}
               value={draft.respondentName}
               onChange={(e) => setField('respondentName', e.target.value)}
+              aria-invalid={errors.respondentName ? 'true' : undefined}
+              aria-describedby={errors.respondentName ? 'ia-respondentName-error' : undefined}
+              aria-required="true"
               autoComplete="name"
             />
+            {errors.respondentName && (
+              <p id="ia-respondentName-error" className={styles.fieldError}>
+                {errors.respondentName}
+              </p>
+            )}
           </div>
           <div>
-            <label htmlFor="ia-role" className={styles.label}>
-              Role
+            <label htmlFor="ia-respondentRole" className={styles.label}>
+              Role <span className={styles.requiredNote}>(required)</span>
             </label>
             <input
-              id="ia-role"
+              id="ia-respondentRole"
               className={styles.textInput}
               value={draft.respondentRole}
               onChange={(e) => setField('respondentRole', e.target.value)}
+              aria-invalid={errors.respondentRole ? 'true' : undefined}
+              aria-describedby={errors.respondentRole ? 'ia-respondentRole-error' : undefined}
+              aria-required="true"
             />
+            {errors.respondentRole && (
+              <p id="ia-respondentRole-error" className={styles.fieldError}>
+                {errors.respondentRole}
+              </p>
+            )}
           </div>
         </div>
 
