@@ -1,0 +1,134 @@
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
+}
+
+.title {
+  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  margin-bottom: var(--ia-space-3);
+}
+
+.lede {
+  color: var(--ia-fg-muted);
+  max-width: 60ch;
+  margin-bottom: var(--ia-space-6);
+}
+
+.anchor {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--ia-radius);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-8);
+}
+
+.anchor h2 {
+  font-size: 1rem;
+  color: var(--ia-fg-muted);
+  margin-bottom: var(--ia-space-2);
+}
+
+.anchor p {
+  margin: 0;
+  font-size: 1.1rem;
+}
+
+.section {
+  margin-bottom: var(--ia-space-8);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--ia-space-3);
+  border-bottom: 2px solid var(--ia-border);
+  padding-bottom: var(--ia-space-2);
+  margin-bottom: var(--ia-space-4);
+}
+
+.sectionTitle {
+  font-size: 1.3rem;
+}
+
+.tally {
+  display: flex;
+  gap: var(--ia-space-3);
+  font-size: 0.9rem;
+}
+
+.tallyItem {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dotLow {
+  background: var(--ia-low);
+}
+
+.dotMedium {
+  background: var(--ia-medium);
+}
+
+.dotHigh {
+  background: var(--ia-high);
+}
+
+.allGood {
+  color: var(--ia-high);
+}
+
+.weakItem {
+  border-left: 4px solid var(--ia-border-strong);
+  padding: var(--ia-space-2) 0 var(--ia-space-2) var(--ia-space-4);
+  margin-bottom: var(--ia-space-4);
+}
+
+.weakItem[data-level='low'] {
+  border-left-color: var(--ia-low);
+}
+
+.weakItem[data-level='medium'] {
+  border-left-color: var(--ia-medium);
+}
+
+.weakItemLevel {
+  font-size: 0.78rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-weight: 700;
+}
+
+.weakItem[data-level='low'] .weakItemLevel {
+  color: var(--ia-low);
+}
+
+.weakItem[data-level='medium'] .weakItemLevel {
+  color: var(--ia-medium);
+}
+
+.weakItemQuestion {
+  font-weight: 600;
+  margin: var(--ia-space-1) 0;
+}
+
+.weakItemNextStep {
+  color: var(--ia-fg-muted);
+  margin: 0;
+}
+
+.closing {
+  color: var(--ia-fg-muted);
+  border-top: 1px solid var(--ia-border);
+  padding-top: var(--ia-space-5);
+}

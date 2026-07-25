@@ -1,0 +1,81 @@
+.root {
+  /* Deliberately neutral — not the unbarrier brand theme. This is a working
+     client tool, not a marketing surface. Values chosen to clear WCAG 2.1 AA
+     contrast (4.5:1 text, 3:1 non-text/focus) against a white background. */
+  --ia-bg: #ffffff;
+  --ia-bg-alt: #f5f6f8;
+  --ia-fg: #14181f;
+  --ia-fg-muted: #4b5563;
+  --ia-border: #d0d5dd;
+  --ia-border-strong: #6b7280;
+  --ia-focus: #1d4ed8;
+  --ia-accent: #14181f;
+  --ia-low: #b91c1c;
+  --ia-low-bg: #fdecec;
+  --ia-medium: #92400e;
+  --ia-medium-bg: #fdf1e3;
+  --ia-high: #166534;
+  --ia-high-bg: #eaf6ee;
+  --ia-radius: 8px;
+  --ia-space-1: 4px;
+  --ia-space-2: 8px;
+  --ia-space-3: 12px;
+  --ia-space-4: 16px;
+  --ia-space-5: 24px;
+  --ia-space-6: 32px;
+  --ia-space-8: 48px;
+
+  min-height: 100vh;
+  background: var(--ia-bg);
+  color: var(--ia-fg);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
+    Arial, sans-serif;
+  line-height: 1.55;
+}
+
+.root :global(h1),
+.root :global(h2),
+.root :global(h3),
+.root :global(h4) {
+  font-family: inherit;
+  color: var(--ia-fg);
+  line-height: 1.25;
+  margin: 0;
+}
+
+/* globals.css sets font-family directly on the `p` element, which beats this
+   wrapper's inherited font-family — override explicitly so brand type
+   (Comfortaa) doesn't leak into this deliberately neutral route. Colour is
+   left alone: component CSS modules already set it per-paragraph at higher
+   specificity than the global rule, so re-setting it here would clobber
+   that (e.g. muted-text paragraphs would lose their colour). */
+.root :global(p) {
+  font-family: inherit;
+  line-height: inherit;
+  margin: 0;
+}
+
+.root :global(a) {
+  color: var(--ia-focus);
+}
+
+.root :global(:focus-visible) {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.root :global(.skipLink) {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ia-fg);
+  color: #fff;
+  padding: var(--ia-space-2) var(--ia-space-4);
+  z-index: 100;
+  border-radius: 0 0 var(--ia-radius) 0;
+}
+
+.root :global(.skipLink:focus) {
+  left: 0;
+}
