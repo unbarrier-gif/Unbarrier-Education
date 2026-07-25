@@ -31,9 +31,10 @@
 }
 
 .jumpNav {
-  position: sticky;
-  /* Sits just below the site's fixed Nav bar, not under it. */
-  top: var(--nav-height);
+  /* Not sticky — the site's own fixed Nav already pins one bar to the top;
+     stacking a second permanent bar under it (and one that doesn't even
+     track which section you're in) just eats screen space awkwardly on a
+     long scroll. Scrolls away like normal content instead. */
   background: var(--bg);
   border-bottom: 1px solid var(--ia-border);
   padding: var(--ia-space-3) 0;
@@ -41,7 +42,6 @@
   display: flex;
   flex-wrap: wrap;
   gap: var(--ia-space-2) var(--ia-space-4);
-  z-index: 10;
 }
 
 .jumpNav a {
