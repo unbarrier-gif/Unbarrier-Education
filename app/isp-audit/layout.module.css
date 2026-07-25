@@ -1,68 +1,59 @@
 .root {
-  /* Deliberately neutral — not the unbarrier brand theme. This is a working
-     client tool, not a marketing surface. Values chosen to clear WCAG 2.1 AA
-     contrast (4.5:1 text, 3:1 non-text/focus) against a white background. */
-  --ia-bg: #ffffff;
-  --ia-bg-alt: #f5f6f8;
-  --ia-fg: #14181f;
-  --ia-fg-muted: #4b5563;
-  --ia-border: #d0d5dd;
-  --ia-border-strong: #6b7280;
-  --ia-focus: #1d4ed8;
-  --ia-accent: #14181f;
-  --ia-low: #b91c1c;
-  --ia-low-bg: #fdecec;
-  --ia-medium: #92400e;
-  --ia-medium-bg: #fdf1e3;
-  --ia-high: #166534;
-  --ia-high-bg: #eaf6ee;
-  --ia-radius: 8px;
-  --ia-space-1: 4px;
-  --ia-space-2: 8px;
-  --ia-space-3: 12px;
-  --ia-space-4: 16px;
-  --ia-space-5: 24px;
-  --ia-space-6: 32px;
-  --ia-space-8: 48px;
+  /* Unbarrier brand theme — this is the unbarrier.audit strand, so it uses
+     pearl-aqua as its accent (per the site's service-strand convention:
+     audit=pearl-aqua, access=princeton-orange, voice=orchid-mist) rather
+     than the site-wide spring-green action colour. Everything else aliases
+     the real global tokens from globals.css so this stays visually part of
+     the family instead of a bolt-on. */
+  --ia-bg-alt: var(--surface-raised);
+  --ia-fg: var(--text);
+  --ia-fg-muted: var(--text-muted);
+  --ia-border: var(--border-default);
+  --ia-border-strong: var(--border-strong);
+  --ia-focus: var(--focus-ring);
+  --ia-accent: var(--pearl-aqua);
+  --ia-accent-text: var(--amethyst);
+  --ia-accent-bg: rgba(105, 217, 209, 0.14);
+
+  /* Score colours — brightened versions of the site's semantic reds/ambers
+     for text/border legibility against the dark amethyst background (the
+     site's own dark-red/amber/green tones read at ~2.5:1 on amethyst, well
+     under the 4.5:1 AA minimum for text). Heatmap cell fills stay closer to
+     the deeper tones since those pair with solid white glyph text instead. */
+  --ia-low: #ff6b6b;
+  --ia-low-fill: #b91c1c;
+  --ia-low-bg: rgba(255, 107, 107, 0.16);
+  --ia-medium: #ffb84d;
+  --ia-medium-fill: #92400e;
+  --ia-medium-bg: rgba(255, 184, 77, 0.16);
+  --ia-high: var(--spring-green);
+  --ia-high-fill: #166534;
+  --ia-high-bg: rgba(56, 255, 153, 0.14);
+
+  --ia-radius: var(--radius-md);
+  --ia-space-1: var(--space-1);
+  --ia-space-2: var(--space-2);
+  --ia-space-3: var(--space-3);
+  --ia-space-4: var(--space-4);
+  --ia-space-5: var(--space-5);
+  --ia-space-6: var(--space-6);
+  --ia-space-8: var(--space-8);
 
   min-height: 100vh;
-  background: var(--ia-bg);
+  background: var(--bg);
   color: var(--ia-fg);
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica,
-    Arial, sans-serif;
-  line-height: 1.55;
-}
-
-.root :global(h1),
-.root :global(h2),
-.root :global(h3),
-.root :global(h4) {
-  font-family: inherit;
-  color: var(--ia-fg);
-  line-height: 1.25;
-  margin: 0;
-}
-
-/* globals.css sets font-family directly on the `p` element, which beats this
-   wrapper's inherited font-family — override explicitly so brand type
-   (Comfortaa) doesn't leak into this deliberately neutral route. Colour is
-   left alone: component CSS modules already set it per-paragraph at higher
-   specificity than the global rule, so re-setting it here would clobber
-   that (e.g. muted-text paragraphs would lose their colour). */
-.root :global(p) {
-  font-family: inherit;
-  line-height: inherit;
-  margin: 0;
+  /* Explicit floor per accessibility guidance — stay comfortably above the
+     1.4 minimum. The brand's own --lh-body (1.75) already clears this. */
+  line-height: var(--lh-body);
 }
 
 .root :global(a) {
-  color: var(--ia-focus);
+  color: var(--ia-accent);
 }
 
-.root :global(:focus-visible) {
-  outline: 3px solid var(--ia-focus);
-  outline-offset: 2px;
-  border-radius: 4px;
+/* Nav is position:fixed — push content clear of it. */
+.navSpacer {
+  padding-top: var(--nav-height);
 }
 
 .root :global(.skipLink) {
@@ -70,7 +61,7 @@
   left: -9999px;
   top: 0;
   background: var(--ia-fg);
-  color: #fff;
+  color: var(--amethyst);
   padding: var(--ia-space-2) var(--ia-space-4);
   z-index: 100;
   border-radius: 0 0 var(--ia-radius) 0;

@@ -24,10 +24,17 @@
   margin-top: var(--ia-space-3);
 }
 
+.scoringKey {
+  color: var(--ia-fg-muted);
+  font-size: 0.9rem;
+  margin-top: var(--ia-space-2);
+}
+
 .jumpNav {
   position: sticky;
-  top: 0;
-  background: var(--ia-bg);
+  /* Sits just below the site's fixed Nav bar, not under it. */
+  top: var(--nav-height);
+  background: var(--bg);
   border-bottom: 1px solid var(--ia-border);
   padding: var(--ia-space-3) 0;
   margin-bottom: var(--ia-space-6);
@@ -56,6 +63,7 @@
 
 .identity {
   display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: var(--ia-space-4);
   margin-bottom: var(--ia-space-8);
   padding: var(--ia-space-5);
@@ -66,13 +74,12 @@
 
 .textInput {
   width: 100%;
-  max-width: 420px;
   padding: var(--ia-space-3);
   border: 1.5px solid var(--ia-border-strong);
   border-radius: var(--ia-radius);
   font: inherit;
   color: var(--ia-fg);
-  background: var(--ia-bg);
+  background: var(--bg);
 }
 
 .textInput[aria-invalid='true'] {
@@ -99,7 +106,7 @@
 
 .section {
   margin-bottom: var(--ia-space-8);
-  scroll-margin-top: 64px;
+  scroll-margin-top: calc(var(--nav-height) + 16px);
 }
 
 .sectionTitle {
@@ -112,6 +119,38 @@
 .sectionDescription {
   color: var(--ia-fg-muted);
   margin-bottom: var(--ia-space-5);
+  font-size: 0.9rem;
+}
+
+.field {
+  margin-bottom: var(--ia-space-5);
+}
+
+.notesLabel {
+  display: block;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--ia-fg-muted);
+  margin-top: var(--ia-space-5);
+  margin-bottom: var(--ia-space-1);
+}
+
+.notesHint {
+  font-size: 0.82rem;
+  color: var(--ia-fg-muted);
+  margin: 0 0 var(--ia-space-2);
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 70px;
+  padding: var(--ia-space-3);
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--ia-radius);
+  font: inherit;
+  color: var(--ia-fg);
+  background: var(--bg);
+  resize: vertical;
 }
 
 .errorSummary {
@@ -146,13 +185,19 @@
 
 .submitButton {
   background: var(--ia-accent);
-  color: #fff;
+  color: var(--ia-accent-text);
   border: none;
-  padding: var(--ia-space-3) var(--ia-space-6);
-  border-radius: var(--ia-radius);
+  padding: 13px 28px;
+  border-radius: var(--radius-pill);
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  min-height: 44px;
+  transition: opacity 150ms ease;
+}
+
+.submitButton:hover:not(:disabled) {
+  opacity: 0.88;
 }
 
 .submitButton:disabled {

@@ -25,11 +25,17 @@
 .exportLink {
   display: inline-block;
   background: var(--ia-accent);
-  color: #fff;
+  color: var(--ia-accent-text);
   text-decoration: none;
-  padding: var(--ia-space-2) var(--ia-space-5);
-  border-radius: var(--ia-radius);
-  font-weight: 600;
+  padding: 13px 28px;
+  border-radius: var(--radius-pill);
+  font-weight: 700;
+  min-height: 44px;
+  transition: opacity 150ms ease;
+}
+
+.exportLink:hover {
+  opacity: 0.88;
 }
 
 .empty {
@@ -47,6 +53,7 @@
 }
 
 .noteCard {
+  background: var(--ia-bg-alt);
   border: 1px solid var(--ia-border);
   border-radius: var(--ia-radius);
   padding: var(--ia-space-4) var(--ia-space-5);

@@ -1,14 +1,22 @@
 'use client';
 
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useMemo, useRef, useState, useEffect } from 'react';
 import { rollups } from 'd3-array';
-import type { AuditResponse, QuestionSet, ScoreQuestion, ScoreValue } from '@/lib/isp-audit/types';
+import type { AuditResponse, QuestionSet } from '@/lib/isp-audit/types';
+import { domainScores, routeRecommendation, ROUTE_LABEL, type Route } from '@/lib/isp-audit/summary';
 import styles from './Heatmap.module.css';
 
-const LEVEL_LABEL: Record<ScoreValue, string> = { low: 'Low', medium: 'Medium', high: 'High' };
-const LEVEL_GLYPH: Record<ScoreValue, string> = { low: 'L', medium: 'M', high: 'H' };
+type Band = 'low' | 'medium' | 'high';
 
-type Column = { section: { id: string; title: string }; question: ScoreQuestion; index: number };
+function bandFor(score: number): Band {
+  if (score < 40) return 'low';
+  if (score < 70) return 'medium';
+  return 'high';
+}
+
+type Selected =
+  | { kind: 'domain'; response: AuditResponse; domainId: string; score: number; note: string | undefined }
+  | { kind: 'route'; response: AuditResponse; route: ReturnType<typeof routeRecommendation> };
 
 export default function Heatmap({
   questionSet,
@@ -17,117 +25,120 @@ export default function Heatmap({
   questionSet: QuestionSet;
   responses: AuditResponse[];
 }) {
-  const [selected, setSelected] = useState<{ response: AuditResponse; column: Column } | null>(null);
+  const [selected, setSelected] = useState<Selected | null>(null);
   const detailRef = useRef<HTMLDivElement>(null);
 
-  // The grid can hold hundreds of cell buttons at full scale (schools x
-  // questions) — sighted keyboard users who click/activate a cell should see
-  // the detail panel that appears well below the grid, not have to hunt for it.
   useEffect(() => {
-    if (selected) {
-      detailRef.current?.scrollIntoView({ block: 'nearest' });
-    }
+    if (selected) detailRef.current?.scrollIntoView({ block: 'nearest' });
   }, [selected]);
 
-  const columns = useMemo<Column[]>(() => {
-    let i = 0;
-    const cols: Column[] = [];
-    for (const section of questionSet.sections) {
-      if (!section.scored) continue;
-      for (const q of section.questions) {
-        if (q.type !== 'score') continue;
-        i += 1;
-        cols.push({ section: { id: section.id, title: section.title }, question: q, index: i });
-      }
-    }
-    return cols;
-  }, [questionSet]);
+  const rows = useMemo(
+    () =>
+      responses.map((r) => {
+        const scores = domainScores(questionSet, r.answers);
+        return { response: r, scores, route: routeRecommendation(scores) };
+      }),
+    [questionSet, responses],
+  );
 
-  // d3.rollups: count 'low' answers per column across every response, to
-  // surface the weakest areas across the whole estate rather than just per
-  // school.
-  const weakestColumns = useMemo(() => {
-    const flat = responses.flatMap((r) =>
-      columns
-        .filter((c) => r.answers[c.question.id]?.type === 'score' && r.answers[c.question.id].value === 'low')
-        .map((c) => c.question.id),
-    );
+  // d3.rollups: how many schools land on each route recommendation, to
+  // surface an estate-wide "what does ISP need to do next" summary rather
+  // than just a grid of numbers.
+  const routeCounts = useMemo(() => {
     const counts = rollups(
-      flat,
+      rows,
       (v) => v.length,
-      (id) => id,
-    ) as [string, number][];
-    return counts
-      .filter(([, count]) => count > 0)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 3)
-      .map(([id, count]) => ({ column: columns.find((c) => c.question.id === id)!, count }));
-  }, [columns, responses]);
+      (r) => r.route.route,
+    ) as [Route, number][];
+    return counts.sort((a, b) => b[1] - a[1]);
+  }, [rows]);
 
-  const gridTemplateColumns = `220px repeat(${columns.length}, minmax(44px, 1fr))`;
+  const weakestDomains = useMemo(() => {
+    const flat = rows.flatMap((r) => r.scores.map((s) => ({ id: s.id, name: s.name, score: s.score })));
+    const grouped = rollups(
+      flat,
+      (v) => Math.round(v.reduce((sum, x) => sum + x.score, 0) / v.length),
+      (x) => x.id,
+    ) as [string, number][];
+    return grouped
+      .map(([id, avg]) => ({ id, avg, name: questionSet.domains.find((d) => d.id === id)!.name }))
+      .sort((a, b) => a.avg - b.avg)
+      .slice(0, 3);
+  }, [rows, questionSet]);
+
+  const gridTemplateColumns = `220px repeat(${questionSet.domains.length}, minmax(70px, 1fr)) 160px`;
 
   return (
     <div className={styles.wrap}>
       <div className={styles.legend}>
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} data-swatch="low" style={{ background: 'var(--ia-low)' }}>
+          <span className={styles.legendSwatch} style={{ background: 'var(--ia-low-fill)' }}>
             L
           </span>
-          Low
+          &lt;40
         </span>
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: 'var(--ia-medium)' }}>
+          <span className={styles.legendSwatch} style={{ background: 'var(--ia-medium-fill)' }}>
             M
           </span>
-          Medium
+          40–69
         </span>
         <span className={styles.legendItem}>
-          <span className={styles.legendSwatch} style={{ background: 'var(--ia-high)' }}>
+          <span className={styles.legendSwatch} style={{ background: 'var(--ia-high-fill)' }}>
             H
           </span>
-          High
+          70+
         </span>
         <span className={styles.legendNote}>
           Colour is always paired with a letter and a stripe pattern (low = diagonal, medium = cross-diagonal,
-          high = solid) — never colour alone.
+          high = solid) — never colour alone. Scores are domain averages, 0–100.
         </span>
       </div>
 
-      {weakestColumns.length > 0 && (
-        <div className={styles.weakest}>
-          <h3>Weakest areas across the estate</h3>
-          <ol>
-            {weakestColumns.map(({ column, count }) => (
-              <li key={column.question.id}>
-                {column.question.prompt} — {count} of {responses.length} schools rated this low
-              </li>
-            ))}
-          </ol>
-        </div>
-      )}
+      <div className={styles.weakest}>
+        <h3>Estate-wide summary</h3>
+        <ul>
+          {routeCounts.map(([route, count]) => (
+            <li key={route}>
+              {count} of {rows.length} schools flagged for: {ROUTE_LABEL[route]}
+            </li>
+          ))}
+        </ul>
+        <p className={styles.weakestSub}>Weakest domains on average: {weakestDomains.map((d) => `${d.name} (${d.avg})`).join(', ')}</p>
+      </div>
 
-      {/* The visual grid below can be hundreds of Tab stops at full scale
-          (schools x questions) — let keyboard users skip past it to the
-          equivalent screen-reader table or the notes underneath. */}
       <a href="#heatmap-grid-end" className="skipLink">
-        Skip the results grid ({responses.length * columns.length} cells)
+        Skip the results grid ({rows.length * (questionSet.domains.length + 1)} cells)
       </a>
 
       <div className={styles.scrollWrap}>
         <div className={styles.grid} style={{ gridTemplateColumns }} role="presentation">
           <div className={styles.rowHeaderCell} aria-hidden="true" />
-          {columns.map((c) => (
-            <div key={c.question.id} className={styles.headerCell} title={c.question.prompt} aria-hidden="true">
-              {c.section.id.replace('s', '')}.{c.index}
+          {questionSet.domains.map((d) => (
+            <div key={d.id} className={styles.headerCell} title={d.name} aria-hidden="true">
+              {d.name.split(' ').slice(0, 2).join(' ')}
             </div>
           ))}
+          <div className={`${styles.headerCell} ${styles.headerCellHorizontal}`} aria-hidden="true">
+            Route
+          </div>
 
-          {responses.map((r) => (
+          {rows.map(({ response, scores, route }) => (
             <RowCells
-              key={r.id}
-              response={r}
-              columns={columns}
-              onSelect={(column) => setSelected({ response: r, column })}
+              key={response.id}
+              response={response}
+              scores={scores}
+              route={route}
+              onSelectDomain={(domainId, score) =>
+                setSelected({
+                  kind: 'domain',
+                  response,
+                  domainId,
+                  score,
+                  note: response.answers.notes[domainId]?.trim() || undefined,
+                })
+              }
+              onSelectRoute={() => setSelected({ kind: 'route', response, route })}
               selected={selected}
             />
           ))}
@@ -135,31 +146,31 @@ export default function Heatmap({
       </div>
       <span id="heatmap-grid-end" />
 
-      {/* Screen-reader-only data table mirroring the same values — a more
-          robust way to read a school x question grid than an SVG/button grid. */}
+      {/* Screen-reader-only data table mirroring the same values. */}
       <table className={styles.srOnly}>
-        <caption>{questionSet.title} — full results by school and question</caption>
+        <caption>{questionSet.title} — full results by school and domain</caption>
         <thead>
           <tr>
             <th scope="col">School</th>
-            {columns.map((c) => (
-              <th scope="col" key={c.question.id}>
-                {c.section.title}: {c.question.prompt}
+            {questionSet.domains.map((d) => (
+              <th scope="col" key={d.id}>
+                {d.name}
               </th>
             ))}
+            <th scope="col">Recommended next step</th>
           </tr>
         </thead>
         <tbody>
-          {responses.map((r) => (
-            <tr key={r.id}>
+          {rows.map(({ response, scores, route }) => (
+            <tr key={response.id}>
               <th scope="row">
-                {r.school}
-                {r.region ? `, ${r.region}` : ''}
+                {response.school}
+                {response.region ? `, ${response.region}` : ''}
               </th>
-              {columns.map((c) => {
-                const a = r.answers[c.question.id];
-                return <td key={c.question.id}>{a && a.type === 'score' ? LEVEL_LABEL[a.value] : 'No answer'}</td>;
-              })}
+              {scores.map((s) => (
+                <td key={s.id}>{s.score}/100</td>
+              ))}
+              <td>{ROUTE_LABEL[route.route]}</td>
             </tr>
           ))}
         </tbody>
@@ -167,23 +178,26 @@ export default function Heatmap({
 
       {selected && (
         <div className={styles.detail} role="region" aria-live="polite" ref={detailRef}>
-          <span className={styles.detailLevel}>
-            {selected.response.answers[selected.column.question.id]?.type === 'score'
-              ? LEVEL_LABEL[(selected.response.answers[selected.column.question.id] as { value: ScoreValue }).value]
-              : ''}
-          </span>
-          <h3>{selected.column.question.prompt}</h3>
-          <p className={styles.detailMeta}>
-            {selected.response.school}
-            {selected.response.region ? `, ${selected.response.region}` : ''} · {selected.column.section.title}
-          </p>
-          {(() => {
-            const answer = selected.response.answers[selected.column.question.id];
-            if (!answer || answer.type !== 'score') return null;
-            if (answer.value === 'high') return <p>Rated high — no action flagged.</p>;
-            const nextStep = selected.column.question.nextStep[answer.value];
-            return <p>{nextStep ?? 'No suggestion authored for this level yet.'}</p>;
-          })()}
+          {selected.kind === 'domain' ? (
+            <>
+              <span className={styles.detailLevel}>{bandFor(selected.score).toUpperCase()}</span>
+              <h3>{questionSet.domains.find((d) => d.id === selected.domainId)?.name}</h3>
+              <p className={styles.detailMeta}>
+                {selected.response.school}
+                {selected.response.region ? `, ${selected.response.region}` : ''} · {selected.score}/100
+              </p>
+              <p>{selected.note ?? 'No notes left for this domain.'}</p>
+            </>
+          ) : (
+            <>
+              <h3>{selected.route.title}</h3>
+              <p className={styles.detailMeta}>
+                {selected.response.school}
+                {selected.response.region ? `, ${selected.response.region}` : ''}
+              </p>
+              <p>{selected.route.body}</p>
+            </>
+          )}
         </div>
       )}
     </div>
@@ -192,45 +206,54 @@ export default function Heatmap({
 
 function RowCells({
   response,
-  columns,
-  onSelect,
+  scores,
+  route,
+  onSelectDomain,
+  onSelectRoute,
   selected,
 }: {
   response: AuditResponse;
-  columns: Column[];
-  onSelect: (column: Column) => void;
-  selected: { response: AuditResponse; column: Column } | null;
+  scores: ReturnType<typeof domainScores>;
+  route: ReturnType<typeof routeRecommendation>;
+  onSelectDomain: (domainId: string, score: number) => void;
+  onSelectRoute: () => void;
+  selected: Selected | null;
 }) {
+  const routeSelected = selected?.kind === 'route' && selected.response.id === response.id;
+
   return (
     <>
       <div className={styles.rowHeaderCell}>
         {response.school}
         {response.region ? `, ${response.region}` : ''}
       </div>
-      {columns.map((c) => {
-        const answer = response.answers[c.question.id];
-        const isSelected = selected?.response.id === response.id && selected?.column.question.id === c.question.id;
-        if (!answer || answer.type !== 'score') {
-          return (
-            <div key={c.question.id} className={`${styles.cell} ${styles.cellEmpty}`}>
-              —
-            </div>
-          );
-        }
+      {scores.map((s) => {
+        const band = bandFor(s.score);
+        const isSelected = selected?.kind === 'domain' && selected.response.id === response.id && selected.domainId === s.id;
         return (
           <button
-            key={c.question.id}
+            key={s.id}
             type="button"
             className={styles.cellButton}
-            data-level={answer.value}
+            data-level={band}
             data-selected={isSelected ? 'true' : undefined}
-            aria-label={`${response.school}, ${c.section.title}: ${c.question.prompt}. Rated ${LEVEL_LABEL[answer.value]}.`}
-            onClick={() => onSelect(c)}
+            aria-label={`${response.school}, ${s.name}: ${s.score} out of 100.`}
+            onClick={() => onSelectDomain(s.id, s.score)}
           >
-            {LEVEL_GLYPH[answer.value]}
+            {s.score}
           </button>
         );
       })}
+      <button
+        type="button"
+        className={styles.routeButton}
+        data-route={route.route}
+        data-selected={routeSelected ? 'true' : undefined}
+        aria-label={`${response.school}: ${ROUTE_LABEL[route.route]}`}
+        onClick={onSelectRoute}
+      >
+        {ROUTE_LABEL[route.route]}
+      </button>
     </>
   );
 }

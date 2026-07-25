@@ -3,54 +3,53 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import type { Answers, QuestionSet, ScoreValue } from '@/lib/isp-audit/types';
-import { scoreQuestions } from '@/lib/isp-audit/types';
-import QuestionField from './QuestionField';
+import { allQuestions } from '@/lib/isp-audit/types';
+import ScaleSelector from './ScaleSelector';
+import CatalogueChips from './CatalogueChips';
 import styles from './AuditForm.module.css';
 
-const DRAFT_KEY = 'isp-audit-draft-v1';
+const DRAFT_KEY = 'isp-audit-draft-v2';
 
 type Draft = {
   school: string;
   region: string;
-  values: Record<string, string>;
+  respondentName: string;
+  respondentRole: string;
+  scores: Record<string, ScoreValue>;
+  notes: Record<string, string>;
+  catalogue: string[];
+};
+
+const EMPTY_DRAFT: Draft = {
+  school: '',
+  region: '',
+  respondentName: '',
+  respondentRole: '',
+  scores: {},
+  notes: {},
+  catalogue: [],
 };
 
 export default function AuditForm({ questionSet }: { questionSet: QuestionSet }) {
   const router = useRouter();
-  const [school, setSchool] = useState('');
-  const [region, setRegion] = useState('');
-  const [values, setValues] = useState<Record<string, string>>({});
+  const [draft, setDraft] = useState<Draft>(EMPTY_DRAFT);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [restored, setRestored] = useState(false);
 
-  const fieldRefs = useRef<Record<string, HTMLElement | null>>({});
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
-  const required = useMemo(() => scoreQuestions(questionSet), [questionSet]);
-  const answeredRequired = required.filter((q) => values[q.id]).length;
-
-  const questionLabel = useMemo(() => {
-    const map: Record<string, string> = {};
-    for (const section of questionSet.sections) {
-      for (const q of section.questions) {
-        map[q.id] = q.prompt;
-      }
-    }
-    return map;
-  }, [questionSet]);
+  const questions = useMemo(() => allQuestions(questionSet), [questionSet]);
+  const answeredCount = questions.filter((q) => draft.scores[q.id] !== undefined).length;
 
   // Restore an in-progress draft on mount so a refresh or accidental tab
-  // close doesn't lose ~40 questions of typed answers.
+  // close doesn't lose 28 questions of answers.
   useEffect(() => {
     try {
       const raw = window.localStorage.getItem(DRAFT_KEY);
       if (raw) {
-        const draft = JSON.parse(raw) as Draft;
-        setSchool(draft.school ?? '');
-        setRegion(draft.region ?? '');
-        setValues(draft.values ?? {});
+        setDraft({ ...EMPTY_DRAFT, ...(JSON.parse(raw) as Partial<Draft>) });
       }
     } catch {
       // Corrupt/unavailable storage — start fresh.
@@ -61,31 +60,29 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
 
   useEffect(() => {
     if (!restored) return;
-    const draft: Draft = { school, region, values };
     try {
       window.localStorage.setItem(DRAFT_KEY, JSON.stringify(draft));
     } catch {
       // Storage full/unavailable — draft just won't persist.
     }
-  }, [school, region, values, restored]);
+  }, [draft, restored]);
 
-  function setText(id: string, v: string) {
-    setValues((prev) => ({ ...prev, [id]: v }));
+  function setField<K extends keyof Draft>(key: K, value: Draft[K]) {
+    setDraft((prev) => ({ ...prev, [key]: value }));
   }
 
   function setScore(id: string, v: ScoreValue) {
-    setValues((prev) => ({ ...prev, [id]: v }));
+    setDraft((prev) => ({ ...prev, scores: { ...prev.scores, [id]: v } }));
+  }
+
+  function setNote(domainId: string, text: string) {
+    setDraft((prev) => ({ ...prev, notes: { ...prev.notes, [domainId]: text } }));
   }
 
   function validate(): Record<string, string> {
     const next: Record<string, string> = {};
-    if (!school.trim()) {
+    if (!draft.school.trim()) {
       next.school = 'Enter your school name.';
-    }
-    for (const q of required) {
-      if (!values[q.id]) {
-        next[q.id] = 'Choose an answer.';
-      }
     }
     return next;
   }
@@ -105,15 +102,11 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
       return;
     }
 
-    const answers: Answers = {};
-    for (const section of questionSet.sections) {
-      for (const q of section.questions) {
-        const v = values[q.id];
-        if (!v) continue;
-        answers[q.id] =
-          q.type === 'score' ? { type: 'score', value: v as ScoreValue } : { type: 'text', value: v };
-      }
-    }
+    const answers: Answers = {
+      scores: draft.scores,
+      notes: draft.notes,
+      catalogue: draft.catalogue,
+    };
 
     setSubmitting(true);
     try {
@@ -121,8 +114,10 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          school: school.trim(),
-          region: region.trim() || null,
+          school: draft.school.trim(),
+          region: draft.region.trim() || null,
+          respondentName: draft.respondentName.trim() || null,
+          respondentRole: draft.respondentRole.trim() || null,
           answers,
           honeypot,
         }),
@@ -152,18 +147,23 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
       <div className={styles.intro}>
         <h1 className={styles.title}>{questionSet.title}</h1>
         <p className={styles.introText}>{questionSet.intro}</p>
-        <p className={styles.meta}>Takes about {questionSet.estimatedMinutes} minutes. You can leave and come back — your answers are saved on this device until you submit.</p>
+        <p className={styles.meta}>
+          Takes about {questionSet.estimatedMinutes} minutes. You can leave and come back — your answers are saved on
+          this device until you submit.
+        </p>
+        <p className={styles.scoringKey}>
+          <strong>Scoring: 0</strong> = doesn’t exist at all &nbsp;·&nbsp; <strong>1</strong> = exists but weak
+          &nbsp;·&nbsp; <strong>5</strong> = fully in place and working well.
+        </p>
       </div>
 
-      <nav className={styles.jumpNav} aria-label="Jump to section">
-        {questionSet.sections.map((s) => (
-          <a key={s.id} href={`#${s.id}`}>
-            {s.title}
+      <nav className={styles.jumpNav} aria-label="Jump to domain">
+        {questionSet.domains.map((d) => (
+          <a key={d.id} href={`#${d.id}`}>
+            {d.name}
           </a>
         ))}
-        <span className={styles.progress}>
-          {answeredRequired} of {required.length} required questions answered
-        </span>
+        <span className={styles.progress}>{answeredCount} of {questions.length} questions answered</span>
       </nav>
 
       <form id="audit-form" onSubmit={handleSubmit} noValidate>
@@ -174,18 +174,15 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
               {errorList.map(([id, msg]) => (
                 <li key={id}>
                   <a
-                    href={`#${id}`}
+                    href={`#ia-${id}`}
                     onClick={(e) => {
                       e.preventDefault();
-                      const target =
-                        id === 'school'
-                          ? document.getElementById('ia-school')
-                          : (fieldRefs.current[id]?.querySelector('input,textarea') as HTMLElement | null);
+                      const target = document.getElementById(`ia-${id}`);
                       target?.scrollIntoView({ block: 'center' });
                       target?.focus();
                     }}
                   >
-                    {id === 'school' ? `${msg} — Your school` : `${msg} — ${questionLabel[id] ?? id}`}
+                    {msg} — {id === 'school' ? 'Your school' : id}
                   </a>
                 </li>
               ))}
@@ -196,13 +193,13 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         <div className={styles.identity}>
           <div>
             <label htmlFor="ia-school" className={styles.label}>
-              Your school <span className={styles.requiredNote}>(required)</span>
+              School / cluster <span className={styles.requiredNote}>(required)</span>
             </label>
             <input
               id="ia-school"
               className={styles.textInput}
-              value={school}
-              onChange={(e) => setSchool(e.target.value)}
+              value={draft.school}
+              onChange={(e) => setField('school', e.target.value)}
               aria-invalid={errors.school ? 'true' : undefined}
               aria-describedby={errors.school ? 'ia-school-error' : undefined}
               aria-required="true"
@@ -218,7 +215,35 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
             <label htmlFor="ia-region" className={styles.label}>
               Region
             </label>
-            <input id="ia-region" className={styles.textInput} value={region} onChange={(e) => setRegion(e.target.value)} />
+            <input
+              id="ia-region"
+              className={styles.textInput}
+              value={draft.region}
+              onChange={(e) => setField('region', e.target.value)}
+            />
+          </div>
+          <div>
+            <label htmlFor="ia-name" className={styles.label}>
+              Respondent name
+            </label>
+            <input
+              id="ia-name"
+              className={styles.textInput}
+              value={draft.respondentName}
+              onChange={(e) => setField('respondentName', e.target.value)}
+              autoComplete="name"
+            />
+          </div>
+          <div>
+            <label htmlFor="ia-role" className={styles.label}>
+              Role
+            </label>
+            <input
+              id="ia-role"
+              className={styles.textInput}
+              value={draft.respondentRole}
+              onChange={(e) => setField('respondentRole', e.target.value)}
+            />
           </div>
         </div>
 
@@ -228,36 +253,48 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           <input type="text" name="website" tabIndex={-1} autoComplete="off" />
         </label>
 
-        {questionSet.sections.map((section) => (
-          <section key={section.id} id={section.id} className={styles.section} aria-labelledby={`${section.id}-heading`}>
-            <h2 id={`${section.id}-heading`} className={styles.sectionTitle}>
-              {section.title}
+        {questionSet.domains.map((domain) => (
+          <section key={domain.id} id={domain.id} className={styles.section} aria-labelledby={`${domain.id}-heading`}>
+            <h2 id={`${domain.id}-heading`} className={styles.sectionTitle}>
+              {domain.name}
             </h2>
-            {section.description && <p className={styles.sectionDescription}>{section.description}</p>}
-            {section.questions.map((q) => (
-              <div key={q.id} id={q.id}>
-                <QuestionField
-                  question={q}
-                  value={values[q.id]}
-                  onChangeText={setText}
-                  onChangeScore={setScore}
-                  error={errors[q.id]}
-                  fieldRef={(el) => {
-                    fieldRefs.current[q.id] = el;
-                  }}
+            <p className={styles.sectionDescription}>best answered by: {domain.bestFor}</p>
+            {domain.questions.map((q) => (
+              <div key={q.id} className={styles.field}>
+                <ScaleSelector
+                  name={q.id}
+                  legend={q.prompt}
+                  value={draft.scores[q.id]}
+                  onChange={(v) => setScore(q.id, v)}
                 />
               </div>
             ))}
+            <label className={styles.notesLabel} htmlFor={`notes-${domain.id}`}>
+              Notes / evidence (optional)
+            </label>
+            <p className={styles.notesHint}>
+              Doesn’t affect the score above — use it to add context, examples, or the “why” behind your answers.
+            </p>
+            <textarea
+              id={`notes-${domain.id}`}
+              className={styles.notesTextarea}
+              value={draft.notes[domain.id] ?? ''}
+              onChange={(e) => setNote(domain.id, e.target.value)}
+            />
           </section>
         ))}
+
+        <CatalogueChips
+          options={questionSet.catalogueOptions}
+          selected={draft.catalogue}
+          onChange={(next) => setField('catalogue', next)}
+        />
 
         <div className={styles.submitRow}>
           <button type="submit" className={styles.submitButton} disabled={submitting}>
             {submitting ? 'Sending…' : 'Submit audit'}
           </button>
-          <span className={styles.progress}>
-            {answeredRequired} of {required.length} required questions answered
-          </span>
+          <span className={styles.progress}>{answeredCount} of {questions.length} questions answered</span>
         </div>
         {submitError && (
           <p className={styles.submitError} role="alert">

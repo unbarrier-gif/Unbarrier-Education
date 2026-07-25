@@ -2,11 +2,12 @@ import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
 import { getResponseById } from '@/lib/isp-audit/db';
 import { ispAuditQuestionSet } from '@/lib/isp-audit/questions';
-import { summarizeResponse } from '@/lib/isp-audit/summary';
+import { domainScores, routeRecommendation } from '@/lib/isp-audit/summary';
+import RadarChart from '@/components/isp-audit/RadarChart';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
-  title: 'Your audit results',
+  title: 'Your Compass results',
 };
 
 export const dynamic = 'force-dynamic';
@@ -15,8 +16,11 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
   const response = await getResponseById(params.id);
   if (!response) notFound();
 
-  const sections = summarizeResponse(ispAuditQuestionSet, response);
-  const anchor = response.answers['s1q8'];
+  const scores = domainScores(ispAuditQuestionSet, response.answers);
+  const route = routeRecommendation(scores);
+  const notes = ispAuditQuestionSet.domains
+    .map((d) => ({ domain: d, text: response.answers.notes[d.id]?.trim() }))
+    .filter((n): n is { domain: (typeof ispAuditQuestionSet.domains)[number]; text: string } => Boolean(n.text));
 
   return (
     <main className={styles.wrap}>
@@ -27,52 +31,44 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
         individual answers.
       </p>
 
-      {anchor && anchor.type === 'text' && anchor.value && (
-        <div className={styles.anchor}>
-          <h2>The biggest challenge you flagged</h2>
-          <p>{anchor.value}</p>
+      <RadarChart scores={scores} title={`${response.school} — domain scores`} />
+
+      <div className={styles.scoreList}>
+        {scores.map((s) => (
+          <div key={s.id} className={styles.scoreRow}>
+            <span>{s.name}</span>
+            <strong>{s.score}/100</strong>
+          </div>
+        ))}
+      </div>
+
+      <div className={styles.route} data-route={route.route}>
+        <p className={styles.routeTitle}>{route.title}</p>
+        <p>{route.body}</p>
+      </div>
+
+      {response.answers.catalogue.length > 0 && (
+        <div className={styles.catalogue}>
+          <h2>Catalogue priorities you flagged</h2>
+          <p>{response.answers.catalogue.join(', ')}</p>
         </div>
       )}
 
-      {sections.map((section) => (
-        <section key={section.id} className={styles.section} aria-labelledby={`${section.id}-heading`}>
-          <div className={styles.sectionHeader}>
-            <h2 id={`${section.id}-heading`} className={styles.sectionTitle}>
-              {section.title}
-            </h2>
-            <div className={styles.tally}>
-              <span className={styles.tallyItem}>
-                <span className={`${styles.dot} ${styles.dotHigh}`} aria-hidden="true" />
-                {section.tally.high} high
-              </span>
-              <span className={styles.tallyItem}>
-                <span className={`${styles.dot} ${styles.dotMedium}`} aria-hidden="true" />
-                {section.tally.medium} medium
-              </span>
-              <span className={styles.tallyItem}>
-                <span className={`${styles.dot} ${styles.dotLow}`} aria-hidden="true" />
-                {section.tally.low} low
-              </span>
+      {notes.length > 0 && (
+        <div className={styles.notes}>
+          <h2>Your notes</h2>
+          {notes.map(({ domain, text }) => (
+            <div key={domain.id} className={styles.noteItem}>
+              <p className={styles.noteDomain}>{domain.name}</p>
+              <p className={styles.noteText}>{text}</p>
             </div>
-          </div>
-
-          {section.weakItems.length === 0 ? (
-            <p className={styles.allGood}>No flagged areas here — nice and steady.</p>
-          ) : (
-            section.weakItems.map((item) => (
-              <div key={item.question.id} className={styles.weakItem} data-level={item.level}>
-                <span className={styles.weakItemLevel}>{item.level}</span>
-                <p className={styles.weakItemQuestion}>{item.question.prompt}</p>
-                <p className={styles.weakItemNextStep}>{item.nextStep}</p>
-              </div>
-            ))
-          )}
-        </section>
-      ))}
+          ))}
+        </div>
+      )}
 
       <p className={styles.closing}>
-        These next steps are a starting point, not a verdict — ISP’s planning team will use patterns
-        across the whole estate, alongside your context answers, to prioritise phase-two support.
+        This is a starting point, not a verdict — ISP’s planning team will use patterns across the whole
+        estate, alongside your notes, to prioritise phase-two support.
       </p>
     </main>
   );

@@ -26,6 +26,8 @@ function ensureSchema(): Promise<void> {
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         school TEXT NOT NULL,
         region TEXT,
+        respondent_name TEXT,
+        respondent_role TEXT,
         submitted_at TIMESTAMPTZ NOT NULL DEFAULT now(),
         answers JSONB NOT NULL
       )
@@ -39,6 +41,8 @@ function rowToResponse(row: Record<string, unknown>): AuditResponse {
     id: row.id as string,
     school: row.school as string,
     region: (row.region as string | null) ?? null,
+    respondentName: (row.respondent_name as string | null) ?? null,
+    respondentRole: (row.respondent_role as string | null) ?? null,
     submittedAt: new Date(row.submitted_at as string).toISOString(),
     answers: row.answers as Answers,
   };
@@ -47,13 +51,21 @@ function rowToResponse(row: Record<string, unknown>): AuditResponse {
 export async function insertResponse(params: {
   school: string;
   region: string | null;
+  respondentName: string | null;
+  respondentRole: string | null;
   answers: Answers;
 }): Promise<{ id: string }> {
   await ensureSchema();
   const sql = neon(getConnectionString());
   const rows = await sql`
-    INSERT INTO isp_audit_responses (school, region, answers)
-    VALUES (${params.school}, ${params.region}, ${JSON.stringify(params.answers)}::jsonb)
+    INSERT INTO isp_audit_responses (school, region, respondent_name, respondent_role, answers)
+    VALUES (
+      ${params.school},
+      ${params.region},
+      ${params.respondentName},
+      ${params.respondentRole},
+      ${JSON.stringify(params.answers)}::jsonb
+    )
     RETURNING id
   `;
   return { id: rows[0].id as string };
@@ -65,7 +77,7 @@ export async function getResponseById(id: string): Promise<AuditResponse | null>
   let rows;
   try {
     rows = await sql`
-      SELECT id, school, region, submitted_at, answers
+      SELECT id, school, region, respondent_name, respondent_role, submitted_at, answers
       FROM isp_audit_responses
       WHERE id = ${id}
     `;
@@ -80,7 +92,7 @@ export async function getAllResponses(): Promise<AuditResponse[]> {
   await ensureSchema();
   const sql = neon(getConnectionString());
   const rows = await sql`
-    SELECT id, school, region, submitted_at, answers
+    SELECT id, school, region, respondent_name, respondent_role, submitted_at, answers
     FROM isp_audit_responses
     ORDER BY submitted_at ASC
   `;

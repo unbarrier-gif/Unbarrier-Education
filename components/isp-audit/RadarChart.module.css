@@ -1,0 +1,40 @@
+.wrap {
+  display: flex;
+  justify-content: center;
+  margin-bottom: var(--ia-space-5);
+}
+
+.svg {
+  max-width: 100%;
+  height: auto;
+}
+
+.grid {
+  fill: none;
+  stroke: var(--ia-border);
+}
+
+.axisLabel {
+  fill: var(--ia-fg-muted);
+  font-size: 11px;
+  text-anchor: middle;
+}
+
+.polygon {
+  fill: var(--ia-accent);
+  fill-opacity: 0.32;
+  stroke: var(--ia-accent);
+  stroke-width: 2;
+}
+
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}

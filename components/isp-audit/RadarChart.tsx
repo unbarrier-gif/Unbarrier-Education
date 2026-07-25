@@ -1,0 +1,82 @@
+import type { DomainScore } from '@/lib/isp-audit/summary';
+import styles from './RadarChart.module.css';
+
+const SIZE = 360;
+const CENTER = SIZE / 2;
+const RADIUS = 140;
+
+function point(angle: number, r: number): [number, number] {
+  return [CENTER + r * Math.cos(angle), CENTER + r * Math.sin(angle)];
+}
+
+function angleFor(index: number, count: number): number {
+  return -Math.PI / 2 + (index * 2 * Math.PI) / count;
+}
+
+// SVG (not canvas) so the shape itself is in the accessibility tree, plus a
+// paired sr-only table below — same dual-representation pattern as the
+// admin heatmap, since a purely visual chart is otherwise opaque to screen
+// reader users.
+export default function RadarChart({ scores, title }: { scores: DomainScore[]; title: string }) {
+  const n = scores.length;
+  const rings = [1, 2, 3, 4];
+
+  const dataPoints = scores
+    .map((s, i) => point(angleFor(i, n), RADIUS * (s.score / 100)))
+    .map(([x, y]) => `${x},${y}`)
+    .join(' ');
+
+  return (
+    <div>
+      <div className={styles.wrap}>
+        <svg
+          className={styles.svg}
+          width={SIZE}
+          height={SIZE}
+          viewBox={`0 0 ${SIZE} ${SIZE}`}
+          role="img"
+          aria-labelledby="radar-title"
+        >
+          <title id="radar-title">{title}</title>
+          {rings.map((ring) => (
+            <polygon
+              key={ring}
+              className={styles.grid}
+              points={scores
+                .map((_, i) => point(angleFor(i, n), (RADIUS * ring) / 4))
+                .map(([x, y]) => `${x},${y}`)
+                .join(' ')}
+            />
+          ))}
+          {scores.map((s, i) => {
+            const [x, y] = point(angleFor(i, n), RADIUS + 16);
+            return (
+              <text key={s.id} className={styles.axisLabel} x={x} y={y}>
+                {s.name.split(' ').slice(0, 2).join(' ')}
+              </text>
+            );
+          })}
+          <polygon className={styles.polygon} points={dataPoints} />
+        </svg>
+      </div>
+
+      <table className={styles.srOnly}>
+        <caption>{title} — domain scores out of 100</caption>
+        <thead>
+          <tr>
+            <th scope="col">Domain</th>
+            <th scope="col">Score</th>
+          </tr>
+        </thead>
+        <tbody>
+          {scores.map((s) => (
+            <tr key={s.id}>
+              <th scope="row">{s.name}</th>
+              <td>{s.score}/100</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}

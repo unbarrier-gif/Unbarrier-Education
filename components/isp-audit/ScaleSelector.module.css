@@ -1,0 +1,58 @@
+.fieldset {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+.legend {
+  font-weight: 600;
+  color: var(--ia-fg);
+  margin-bottom: var(--ia-space-3);
+  padding: 0;
+}
+
+.options {
+  display: flex;
+  gap: var(--ia-space-2);
+  max-width: 360px;
+}
+
+.option {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--ia-radius);
+  padding: var(--ia-space-2) 0;
+  cursor: pointer;
+  background: var(--bg);
+  font-weight: 600;
+}
+
+.option:has(:checked) {
+  border-color: var(--ia-accent);
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+}
+
+/* Hidden radio still needs a visible focus indicator on its wrapper —
+   :focus-visible on the input itself would be invisible at 1x1px. */
+.option:has(:focus-visible) {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+}
+
+.option input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}
+
+.error {
+  color: var(--ia-low);
+  font-size: 0.9rem;
+  margin-top: var(--ia-space-2);
+}

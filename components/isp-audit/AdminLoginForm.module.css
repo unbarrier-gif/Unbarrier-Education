@@ -21,18 +21,26 @@
   border: 1.5px solid var(--ia-border-strong);
   border-radius: var(--ia-radius);
   font: inherit;
+  color: var(--ia-fg);
+  background: var(--bg);
   margin-bottom: var(--ia-space-4);
 }
 
 .button {
   background: var(--ia-accent);
-  color: #fff;
+  color: var(--ia-accent-text);
   border: none;
-  padding: var(--ia-space-3) var(--ia-space-6);
-  border-radius: var(--ia-radius);
+  padding: 13px 28px;
+  border-radius: var(--radius-pill);
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
+  min-height: 44px;
+  transition: opacity 150ms ease;
+}
+
+.button:hover:not(:disabled) {
+  opacity: 0.88;
 }
 
 .button:disabled {
