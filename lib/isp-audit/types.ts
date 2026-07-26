@@ -33,6 +33,11 @@ export type ScoreValue = 0 | 1 | 2 | 3 | 4 | 5;
 export type Answers = {
   /** questionId -> 0-5 */
   scores: Record<string, ScoreValue>;
+  /** questionIds the respondent explicitly marked "can't answer this" —
+   *  distinct from just not having gotten to it yet. Excluded from scoring
+   *  either way, but this is what lets routing/results say "not enough
+   *  answered yet" instead of reading a genuine skip as a false 0. */
+  cantAnswer: string[];
   /** domainId -> free text, optional, excluded from scoring */
   notes: Record<string, string>;
   /** up to 3 catalogue option labels */

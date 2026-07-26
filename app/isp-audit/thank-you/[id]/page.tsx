@@ -37,7 +37,7 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
         {scores.map((s) => (
           <div key={s.id} className={styles.scoreRow}>
             <span>{s.name}</span>
-            <strong>{s.score}/100</strong>
+            <strong>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</strong>
           </div>
         ))}
       </div>

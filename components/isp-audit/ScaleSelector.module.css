@@ -51,6 +51,21 @@
   clip: rect(0, 0, 0, 0);
 }
 
+.optionDisabled {
+  cursor: not-allowed;
+  opacity: 0.4;
+}
+
+.cantAnswer {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ia-space-2);
+  margin-top: var(--ia-space-3);
+  font-size: 0.9rem;
+  color: var(--ia-fg-muted);
+  cursor: pointer;
+}
+
 .error {
   color: var(--ia-low);
   font-size: 0.9rem;

@@ -162,17 +162,26 @@ export const ispAuditQuestionSet: QuestionSet = {
     'Resale value at end of life',
     'Familiarity — what staff already know',
   ],
-  // RMD-tier names as suggestions only, not a forced list — self-described
-  // region in the respondent's own words is useful data in itself (decisions
-  // log, 25 July 2026).
+  // Verified RMD-tier names, pulled directly from ISP's leadership page, plus
+  // UK as a practical (not official) addition — suggestions only, not a
+  // forced list, same reasoning as school below: self-described region is
+  // useful data in itself. The previous 7-entry list here was an invented
+  // geographic split from a narrative doc, not ISP's real structure —
+  // corrected per "Compass v3: corrected cluster/role/region fields against
+  // verified ISP source material," decisions log, 25 July 2026.
   regionSuggestions: [
     'UK',
-    'Europe',
     'Iberia',
-    'Middle East & North Africa',
-    'Latin America',
-    'USA & Canada',
-    'Asia/SE Asia & India',
+    'Europe',
+    'Middle East',
+    'Malaysia',
+    'India',
+    'Vietnam & Thailand',
+    'Brazil',
+    'South America',
+    'Mexico/Caribbean & Central America',
+    'US & Canada East',
+    'US & Canada West',
   ],
   // Real ISP schools Nici named directly (2026-07-25) — suggestions only,
   // the field stays free text. No "cluster" entries: checked against source

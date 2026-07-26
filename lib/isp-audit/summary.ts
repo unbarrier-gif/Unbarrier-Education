@@ -1,12 +1,20 @@
 import type { Answers, QuestionSet } from './types';
 
-export type DomainScore = { id: string; name: string; score: number };
+export type DomainScore = { id: string; name: string; score: number; answered: number; total: number };
 
 /**
- * Average of answered 0-5 scores per domain, scaled to 0-100. Ported 1:1
- * from the source prototype's domainScores() — a question left unanswered
- * is excluded from the average, but an answer of 0 is a real answer and
- * must be counted (`v !== undefined`, never a truthy check on v itself).
+ * Average of answered 0-5 scores per domain, scaled to 0-100. Ported from the
+ * source prototype's domainScores() — a question left unanswered (or marked
+ * "can't answer this") is excluded from the average, but an answer of 0 is a
+ * real answer and must be counted (`v !== undefined`, never a truthy check on
+ * v itself).
+ *
+ * `answered`/`total` are exposed alongside `score` so callers can tell a
+ * domain with a genuine low score apart from one nobody has touched yet —
+ * `score` alone can't distinguish "rated 0" from "no data," and both read as
+ * 0 (decisions log, 25 July 2026 — the multi-respondent workflow means a
+ * single submission routinely leaves whole domains untouched, which isn't
+ * the same thing as a bad score).
  */
 export function domainScores(questionSet: QuestionSet, answers: Answers): DomainScore[] {
   return questionSet.domains.map((d) => {
@@ -20,17 +28,32 @@ export function domainScores(questionSet: QuestionSet, answers: Answers): Domain
       }
     }
     const score = n ? Math.round((sum / n) * 20) : 0;
-    return { id: d.id, name: d.name, score };
+    return { id: d.id, name: d.name, score, answered: n, total: d.questions.length };
   });
 }
 
-export type Route = 'pedagogy' | 'procurement' | 'both';
+export type Route = 'pedagogy' | 'procurement' | 'both' | 'insufficient';
 
 export type RouteRecommendation = {
   route: Route;
   title: string;
   body: string;
 };
+
+const PEDAGOGY_DOMAIN_IDS = ['pedagogy', 'leadership', 'community', 'eal-neurodiversity'];
+const HARDWARE_DOMAIN_IDS = ['device', 'environment'];
+
+/** Average of only the domains in `ids` that have at least one answered
+ *  question — a domain nobody has touched is excluded from the average
+ *  rather than dragging it down to a false 0. Returns null if none of the
+ *  domains in the group have any data at all. */
+function signalFor(scores: DomainScore[], ids: string[]): number | null {
+  const withData = ids
+    .map((id) => scores.find((s) => s.id === id))
+    .filter((s): s is DomainScore => s !== undefined && s.answered > 0);
+  if (withData.length === 0) return null;
+  return withData.reduce((sum, s) => sum + s.score, 0) / withData.length;
+}
 
 /**
  * Ported from the source prototype's routeRecommendation() — compares a
@@ -43,11 +66,28 @@ export type RouteRecommendation = {
  * are configured and used for specific learners, not about hardware or
  * infrastructure, so it belongs alongside the other pedagogy-adjacent
  * domains rather than the hardware signal.
+ *
+ * Either signal can come back with no data at all (nobody's answered
+ * anything in that domain group yet — routine given the multi-respondent
+ * workflow). Rather than reading that as a 0 and confidently routing
+ * "pedagogy-led discovery" on an empty submission, this returns an
+ * 'insufficient' route instead — comparing a real signal against an unknown
+ * one isn't a real comparison.
  */
 export function routeRecommendation(scores: DomainScore[]): RouteRecommendation {
-  const get = (id: string) => scores.find((s) => s.id === id)?.score ?? 0;
-  const pedagogySignal = (get('pedagogy') + get('leadership') + get('community') + get('eal-neurodiversity')) / 4;
-  const hardwareSignal = (get('device') + get('environment')) / 2;
+  const pedagogySignal = signalFor(scores, PEDAGOGY_DOMAIN_IDS);
+  const hardwareSignal = signalFor(scores, HARDWARE_DOMAIN_IDS);
+
+  if (pedagogySignal === null || hardwareSignal === null) {
+    return {
+      route: 'insufficient',
+      title: 'Not enough answered yet.',
+      body:
+        'Comparing pedagogy/governance against device/infrastructure needs at least one answered question on ' +
+        'both sides. Come back and add more, or check whether another respondent at this school has covered ' +
+        'the rest.',
+    };
+  }
 
   if (pedagogySignal < 60 && pedagogySignal <= hardwareSignal) {
     return {
@@ -83,4 +123,5 @@ export const ROUTE_LABEL: Record<Route, string> = {
   pedagogy: 'Pedagogy-led discovery',
   procurement: 'Infrastructure & procurement',
   both: 'Full discovery workshop',
+  insufficient: 'Not enough answered yet',
 };

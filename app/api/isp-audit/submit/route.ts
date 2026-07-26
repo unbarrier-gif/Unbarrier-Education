@@ -8,6 +8,7 @@ export const runtime = 'nodejs';
 
 const answersSchema = z.object({
   scores: z.record(z.string(), z.union([z.literal(0), z.literal(1), z.literal(2), z.literal(3), z.literal(4), z.literal(5)])),
+  cantAnswer: z.array(z.string()),
   notes: z.record(z.string(), z.string().max(5000)),
   catalogue: z.array(z.string()).max(3),
 });
@@ -53,17 +54,25 @@ export async function POST(req: Request) {
   const scores = Object.fromEntries(
     Object.entries(parsed.data.answers.scores).filter(([id]) => knownQuestionIds.has(id)),
   );
+  const cantAnswer = parsed.data.answers.cantAnswer.filter((id) => knownQuestionIds.has(id));
   const notes = Object.fromEntries(
     Object.entries(parsed.data.answers.notes).filter(([id]) => knownDomainIds.has(id)),
   );
   const catalogue = parsed.data.answers.catalogue.filter((opt) => knownCatalogueOptions.has(opt)).slice(0, 3);
+
+  // Same floor as the client: block an accidental empty submission, but
+  // never require full completion — multiple people often split a
+  // submission by domain.
+  if (Object.keys(scores).length === 0) {
+    return NextResponse.json({ ok: false, error: 'no-answers' }, { status: 400 });
+  }
 
   const { id } = await insertResponse({
     school: parsed.data.school,
     region: parsed.data.region,
     respondentName: parsed.data.respondentName,
     respondentRole: parsed.data.respondentRole,
-    answers: { scores, notes, catalogue },
+    answers: { scores, cantAnswer, notes, catalogue },
   });
 
   return NextResponse.json({ ok: true, id });

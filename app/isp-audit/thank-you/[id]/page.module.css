@@ -48,6 +48,11 @@
   border-color: var(--ia-medium);
 }
 
+.route[data-route='insufficient'] {
+  background: var(--ia-bg-alt);
+  border-color: var(--ia-border);
+}
+
 .routeTitle {
   font-weight: 700;
   font-size: 1.1rem;
@@ -85,4 +90,22 @@
   color: var(--ia-fg-muted);
   border-top: 1px solid var(--ia-border);
   padding-top: var(--ia-space-5);
+}
+
+/* Print is a one-pager for an SLT meeting: headline, chart, domain
+   breakdown, recommendation — nothing else. The privacy note, catalogue
+   picks, freeform notes and closing caveat are all useful on screen but
+   just clutter on paper. */
+@media print {
+  .lede,
+  .catalogue,
+  .notes,
+  .closing {
+    display: none;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
 }

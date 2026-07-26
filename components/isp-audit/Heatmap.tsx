@@ -15,7 +15,14 @@ function bandFor(score: number): Band {
 }
 
 type Selected =
-  | { kind: 'domain'; response: AuditResponse; domainId: string; score: number; note: string | undefined }
+  | {
+      kind: 'domain';
+      response: AuditResponse;
+      domainId: string;
+      score: number;
+      answered: number;
+      note: string | undefined;
+    }
   | { kind: 'route'; response: AuditResponse; route: ReturnType<typeof routeRecommendation> };
 
 export default function Heatmap({
@@ -54,7 +61,10 @@ export default function Heatmap({
   }, [rows]);
 
   const weakestDomains = useMemo(() => {
-    const flat = rows.flatMap((r) => r.scores.map((s) => ({ id: s.id, name: s.name, score: s.score })));
+    // Only average domains a response actually has data for — otherwise a
+    // domain nobody's touched yet (routine, given the multi-respondent
+    // workflow) drags the estate-wide average down as a false 0.
+    const flat = rows.flatMap((r) => r.scores.filter((s) => s.answered > 0).map((s) => ({ id: s.id, name: s.name, score: s.score })));
     const grouped = rollups(
       flat,
       (v) => Math.round(v.reduce((sum, x) => sum + x.score, 0) / v.length),
@@ -129,12 +139,13 @@ export default function Heatmap({
               response={response}
               scores={scores}
               route={route}
-              onSelectDomain={(domainId, score) =>
+              onSelectDomain={(domainId, score, answered) =>
                 setSelected({
                   kind: 'domain',
                   response,
                   domainId,
                   score,
+                  answered,
                   note: response.answers.notes[domainId]?.trim() || undefined,
                 })
               }
@@ -168,7 +179,7 @@ export default function Heatmap({
                 {response.region ? `, ${response.region}` : ''}
               </th>
               {scores.map((s) => (
-                <td key={s.id}>{s.score}/100</td>
+                <td key={s.id}>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</td>
               ))}
               <td>{ROUTE_LABEL[route.route]}</td>
             </tr>
@@ -180,11 +191,14 @@ export default function Heatmap({
         <div className={styles.detail} role="region" aria-live="polite" ref={detailRef}>
           {selected.kind === 'domain' ? (
             <>
-              <span className={styles.detailLevel}>{bandFor(selected.score).toUpperCase()}</span>
+              <span className={styles.detailLevel}>
+                {selected.answered > 0 ? bandFor(selected.score).toUpperCase() : 'NO DATA'}
+              </span>
               <h3>{questionSet.domains.find((d) => d.id === selected.domainId)?.name}</h3>
               <p className={styles.detailMeta}>
                 {selected.response.school}
-                {selected.response.region ? `, ${selected.response.region}` : ''} · {selected.score}/100
+                {selected.response.region ? `, ${selected.response.region}` : ''} ·{' '}
+                {selected.answered > 0 ? `${selected.score}/100` : 'not yet answered'}
               </p>
               <p>{selected.note ?? 'No notes left for this domain.'}</p>
             </>
@@ -215,7 +229,7 @@ function RowCells({
   response: AuditResponse;
   scores: ReturnType<typeof domainScores>;
   route: ReturnType<typeof routeRecommendation>;
-  onSelectDomain: (domainId: string, score: number) => void;
+  onSelectDomain: (domainId: string, score: number, answered: number) => void;
   onSelectRoute: () => void;
   selected: Selected | null;
 }) {
@@ -228,8 +242,25 @@ function RowCells({
         {response.region ? `, ${response.region}` : ''}
       </div>
       {scores.map((s) => {
-        const band = bandFor(s.score);
         const isSelected = selected?.kind === 'domain' && selected.response.id === response.id && selected.domainId === s.id;
+        // No answered questions in this domain — a plain 0 would read as a
+        // genuinely bad score, so it gets its own neutral state rather than
+        // a colour band.
+        if (s.answered === 0) {
+          return (
+            <button
+              key={s.id}
+              type="button"
+              className={styles.cellButtonEmpty}
+              data-selected={isSelected ? 'true' : undefined}
+              aria-label={`${response.school}, ${s.name}: not yet answered.`}
+              onClick={() => onSelectDomain(s.id, s.score, s.answered)}
+            >
+              —
+            </button>
+          );
+        }
+        const band = bandFor(s.score);
         return (
           <button
             key={s.id}
@@ -238,7 +269,7 @@ function RowCells({
             data-level={band}
             data-selected={isSelected ? 'true' : undefined}
             aria-label={`${response.school}, ${s.name}: ${s.score} out of 100.`}
-            onClick={() => onSelectDomain(s.id, s.score)}
+            onClick={() => onSelectDomain(s.id, s.score, s.answered)}
           >
             {s.score}
           </button>

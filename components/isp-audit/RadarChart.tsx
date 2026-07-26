@@ -28,6 +28,7 @@ function angleFor(index: number, count: number): number {
 export default function RadarChart({ scores, title }: { scores: DomainScore[]; title: string }) {
   const n = scores.length;
   const rings = [1, 2, 3, 4];
+  const unanswered = scores.filter((s) => s.answered === 0);
 
   const dataPoints = scores
     .map((s, i) => point(angleFor(i, n), RADIUS * (s.score / 100)))
@@ -65,8 +66,23 @@ export default function RadarChart({ scores, title }: { scores: DomainScore[]; t
             );
           })}
           <polygon className={styles.polygon} points={dataPoints} />
+          {/* A domain with no answered questions plots at the centre like a
+              genuine 0 would — mark it with a hollow ring so it doesn't read
+              as "scored badly" on sight, on top of the text callout below. */}
+          {scores.map((s, i) => {
+            if (s.answered > 0) return null;
+            const [x, y] = point(angleFor(i, n), RADIUS * (s.score / 100));
+            return <circle key={s.id} className={styles.unansweredDot} cx={x} cy={y} r={6} />;
+          })}
         </svg>
       </div>
+
+      {unanswered.length > 0 && (
+        <p className={styles.unansweredNote}>
+          Not yet answered: {unanswered.map((s) => s.name).join(', ')} — shown at the centre of the chart, not as a
+          low score.
+        </p>
+      )}
 
       <table className={styles.srOnly}>
         <caption>{title} — domain scores out of 100</caption>
@@ -80,7 +96,7 @@ export default function RadarChart({ scores, title }: { scores: DomainScore[]; t
           {scores.map((s) => (
             <tr key={s.id}>
               <th scope="row">{s.name}</th>
-              <td>{s.score}/100</td>
+              <td>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</td>
             </tr>
           ))}
         </tbody>

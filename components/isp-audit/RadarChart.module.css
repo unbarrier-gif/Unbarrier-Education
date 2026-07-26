@@ -17,9 +17,7 @@
 .axisLabel {
   fill: var(--ia-fg-muted);
   font-size: 11px;
-  /* text-anchor set per-label in RadarChart.tsx (start/middle/end depending
-     on which side of the chart it sits) — not fixed here, or it would
-     override the JSX attribute. */
+  text-anchor: middle;
 }
 
 .polygon {
@@ -27,6 +25,19 @@
   fill-opacity: 0.32;
   stroke: var(--ia-accent);
   stroke-width: 2;
+}
+
+.unansweredDot {
+  fill: var(--bg);
+  stroke: var(--ia-fg-muted);
+  stroke-width: 2;
+}
+
+.unansweredNote {
+  text-align: center;
+  font-size: 0.85rem;
+  color: var(--ia-fg-muted);
+  margin: 0 0 var(--ia-space-5);
 }
 
 .srOnly {

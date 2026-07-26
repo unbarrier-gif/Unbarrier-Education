@@ -40,9 +40,12 @@ export function buildResponsesCsv(questionSet: QuestionSet, responses: AuditResp
       r.respondentRole ?? '',
       ...questions.map((q) => {
         const v = r.answers.scores[q.id];
-        return v === undefined ? '' : String(v);
+        if (v !== undefined) return String(v);
+        return r.answers.cantAnswer.includes(q.id) ? 'N/A' : '';
       }),
-      ...scores.map((s) => String(s.score)),
+      // Blank (not "0") when nobody's answered anything in the domain yet —
+      // a real 0 is a real answer, no answers isn't the same thing.
+      ...scores.map((s) => (s.answered > 0 ? String(s.score) : '')),
       ROUTE_LABEL[route.route],
       r.answers.catalogue.join('; '),
       ...domainIds.map((id) => r.answers.notes[id] ?? ''),

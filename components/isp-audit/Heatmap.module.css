@@ -161,6 +161,22 @@
   outline-offset: -3px;
 }
 
+.cellButtonEmpty {
+  width: 100%;
+  height: 32px;
+  border: none;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 0.75rem;
+  background: var(--ia-bg-alt);
+  color: var(--ia-fg-muted);
+}
+
+.cellButtonEmpty[data-selected='true'] {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: -3px;
+}
+
 .routeButton {
   width: 100%;
   height: 32px;
@@ -190,6 +206,12 @@
 .routeButton[data-route='both'] {
   background: var(--ia-medium-bg);
   border-color: var(--ia-medium);
+}
+
+.routeButton[data-route='insufficient'] {
+  background: var(--ia-bg-alt);
+  border-color: var(--ia-border);
+  color: var(--ia-fg-muted);
 }
 
 .routeButton[data-selected='true'] {

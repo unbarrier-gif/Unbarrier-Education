@@ -16,6 +16,7 @@ type Draft = {
   respondentName: string;
   respondentRole: string;
   scores: Record<string, ScoreValue>;
+  cantAnswer: string[];
   notes: Record<string, string>;
   catalogue: string[];
 };
@@ -26,6 +27,7 @@ const EMPTY_DRAFT: Draft = {
   respondentName: '',
   respondentRole: '',
   scores: {},
+  cantAnswer: [],
   notes: {},
   catalogue: [],
 };
@@ -48,7 +50,9 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
   const errorSummaryRef = useRef<HTMLDivElement>(null);
 
   const questions = useMemo(() => allQuestions(questionSet), [questionSet]);
-  const answeredCount = questions.filter((q) => draft.scores[q.id] !== undefined).length;
+  const answeredCount = questions.filter(
+    (q) => draft.scores[q.id] !== undefined || draft.cantAnswer.includes(q.id),
+  ).length;
 
   // Restore an in-progress draft on mount so a refresh or accidental tab
   // close doesn't lose 28 questions of answers.
@@ -82,6 +86,18 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
     setDraft((prev) => ({ ...prev, scores: { ...prev.scores, [id]: v } }));
   }
 
+  function setCantAnswer(id: string, cantAnswer: boolean) {
+    setDraft((prev) => {
+      if (cantAnswer) {
+        // Marking "can't answer" excludes the question from scoring — clear
+        // any score it already had so the two states can't both be true.
+        const { [id]: _removed, ...restScores } = prev.scores;
+        return { ...prev, scores: restScores, cantAnswer: [...prev.cantAnswer, id] };
+      }
+      return { ...prev, cantAnswer: prev.cantAnswer.filter((qid) => qid !== id) };
+    });
+  }
+
   function setNote(domainId: string, text: string) {
     setDraft((prev) => ({ ...prev, notes: { ...prev.notes, [domainId]: text } }));
   }
@@ -93,6 +109,13 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
     }
     if (!draft.respondentRole.trim()) {
       next.respondentRole = 'Enter your role.';
+    }
+    // Block only an accidental empty click — at least one real score,
+    // anywhere, is enough. Multiple people often split a submission by
+    // domain (IT lead does device/environment, SENCO does EAL, etc.), so
+    // this can't require full completion.
+    if (Object.keys(draft.scores).length === 0) {
+      next.minimum = 'Answer at least one question before submitting.';
     }
     return next;
   }
@@ -114,6 +137,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
 
     const answers: Answers = {
       scores: draft.scores,
+      cantAnswer: draft.cantAnswer,
       notes: draft.notes,
       catalogue: draft.catalogue,
     };
@@ -181,21 +205,25 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           <div className={styles.errorSummary} ref={errorSummaryRef} tabIndex={-1} role="alert">
             <h2>Please fix {errorList.length === 1 ? 'this' : 'these'} before submitting</h2>
             <ul>
-              {errorList.map(([id, msg]) => (
-                <li key={id}>
-                  <a
-                    href={`#ia-${id}`}
-                    onClick={(e) => {
-                      e.preventDefault();
-                      const target = document.getElementById(`ia-${id}`);
-                      target?.scrollIntoView({ block: 'center' });
-                      target?.focus();
-                    }}
-                  >
-                    {msg} — {IDENTITY_FIELD_LABEL[id] ?? id}
-                  </a>
-                </li>
-              ))}
+              {errorList.map(([id, msg]) =>
+                id === 'minimum' ? (
+                  <li key={id}>{msg}</li>
+                ) : (
+                  <li key={id}>
+                    <a
+                      href={`#ia-${id}`}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        const target = document.getElementById(`ia-${id}`);
+                        target?.scrollIntoView({ block: 'center' });
+                        target?.focus();
+                      }}
+                    >
+                      {msg} — {IDENTITY_FIELD_LABEL[id] ?? id}
+                    </a>
+                  </li>
+                ),
+              )}
             </ul>
           </div>
         )}
@@ -296,6 +324,8 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
                   legend={q.prompt}
                   value={draft.scores[q.id]}
                   onChange={(v) => setScore(q.id, v)}
+                  cantAnswer={draft.cantAnswer.includes(q.id)}
+                  onCantAnswerChange={(v) => setCantAnswer(q.id, v)}
                 />
               </div>
             ))}
