@@ -23,9 +23,16 @@
   --pink-mist:         #e3a1b0;   /* supporting soft accent              */
 
   /* ── FUNCTIONAL TEXT/BORDER TOKENS ─────────────────────────────────── */
+  /* CONTRAST FLOOR — do not lower these.
+     On --amethyst (#210a33), alpha 0.50 is exactly where white-ish text
+     crosses the WCAG AA 4.5:1 threshold. Anything below that cannot pass
+     at any body size, which made the old 0.45 and 0.32 values traps: any
+     component reaching for them failed automatically. Measured ratios:
+     muted 6.90:1 · subtle 5.54:1 · faint 4.51:1. Hierarchy preserved,
+     all three legible. */
   --text-muted:     rgba(240, 235, 229, 0.65);
-  --text-subtle:    rgba(240, 235, 229, 0.45);
-  --text-faint:     rgba(240, 235, 229, 0.32);
+  --text-subtle:    rgba(240, 235, 229, 0.57);
+  --text-faint:     rgba(240, 235, 229, 0.50);
   --text-inverse:   #210a33;     /* for text on green/yellow bg        */
 
   --border-default: rgba(255, 255, 255, 0.08);
@@ -57,8 +64,8 @@
 
   /* ── TYPE FAMILIES ─────────────────────────────────────────────────── */
   --font-heading:     var(--font-outfit), system-ui, -apple-system, sans-serif;
-  --font-body:        var(--font-comfortaa), system-ui, -apple-system, sans-serif;
-  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;    /* logo wordmark */
+  --font-body:        var(--font-lexend), system-ui, -apple-system, sans-serif;
+  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;    /* logo wordmark + display only */
   --font-decorative:  var(--font-cherry-bomb), var(--font-outfit), cursive;  /* "bring the joy" only */
 
   /* ── TYPE SCALE ────────────────────────────────────────────────────── */
@@ -67,7 +74,7 @@
   --fs-h2:      clamp(1.8rem, 3.5vw, 2.8rem);
   --fs-h3:      clamp(1.3rem, 2.4vw, 1.75rem);
   --fs-h4:      clamp(1.05rem, 1.8vw, 1.25rem);
-  --fs-body:    1rem;
+  --fs-body:    1.05rem;
   --fs-body-lg: 1.1rem;
   --fs-small:   0.88rem;
   --fs-eyebrow: 0.72rem;
@@ -137,6 +144,20 @@ html.contrast-high {
   --glow-opacity-multiplier: 0;
 }
 
+/* ── READING PREFERENCES ─────────────────────────────────────
+   Set on <html> by lib/useReadingPrefs.ts and by the pre-paint bootstrap
+   in app/layout.tsx — same pattern as .contrast-high. Scaling the root
+   font-size means every rem-based token scales with it, so the whole
+   layout grows rather than just the paragraphs. */
+html[data-text-size='sm'] { font-size: 87.5%; }
+html[data-text-size='lg'] { font-size: 125%; }
+
+html[data-spacing='true'] body {
+  line-height: 1.95;
+  letter-spacing: 0.045em;
+  word-spacing: 0.12em;
+}
+
 *,
 *::before,
 *::after {
@@ -173,7 +194,7 @@ h2 { font-size: var(--fs-h2); }
 h3 { font-size: var(--fs-h3); font-weight: 700; }
 h4 { font-size: var(--fs-h4); font-weight: 700; letter-spacing: var(--ls-normal); }
 
-p  { font-family: var(--font-body); line-height: var(--lh-body); color: var(--fg-muted); margin: 0; }
+p  { font-family: var(--font-body); line-height: var(--lh-body); color: var(--fg); letter-spacing: 0.01em; margin: 0; }
 
 /* Eyebrow — tiny uppercase label above a heading */
 .eyebrow {

@@ -82,7 +82,13 @@ function splitLongParagraph(rt: RichTextItemResponse[]): string[] | null {
 }
 
 export function NotionRenderer({ blocks }: Props) {
-  return <article className={styles.article}>{renderBlocks(blocks)}</article>;
+  // id is the narration scope target for <ListenButton />. Stable id
+  // rather than the hashed CSS-module class. Do not rename.
+  return (
+    <article id="post-body" className={styles.article}>
+      {renderBlocks(blocks)}
+    </article>
+  );
 }
 
 function renderBlocks(blocks: BlockNode[]): ReactElement[] {

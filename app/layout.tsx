@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Comfortaa, Cherry_Bomb_One } from 'next/font/google';
+import { Outfit, Comfortaa, Cherry_Bomb_One, Lexend } from 'next/font/google';
 import Script from 'next/script';
 import './globals.css';
 
@@ -14,6 +14,16 @@ const comfortaa = Comfortaa({
   subsets: ['latin'],
   display: 'swap',
   variable: '--font-comfortaa',
+  weight: ['300', '400', '500', '600', '700'],
+});
+
+// Lexend is the documented body face in the brand spec and is purpose-built
+// for reading proficiency. Comfortaa stays on the wordmark and display only —
+// it is a rounded display face and was never meant to carry body copy.
+const lexend = Lexend({
+  subsets: ['latin'],
+  display: 'swap',
+  variable: '--font-lexend',
   weight: ['300', '400', '500', '600', '700'],
 });
 
@@ -74,6 +84,9 @@ const CONTRAST_BOOTSTRAP = `(function(){
     var s = localStorage.getItem('unbarrier:contrast');
     var hi = s === 'high' || (s !== 'default' && window.matchMedia && window.matchMedia('(prefers-contrast: more)').matches);
     if (hi) document.documentElement.classList.add('contrast-high');
+    var size = localStorage.getItem('unbarrier:text-size');
+    if (size === 'sm' || size === 'lg') document.documentElement.setAttribute('data-text-size', size);
+    if (localStorage.getItem('unbarrier:spacing') === 'true') document.documentElement.setAttribute('data-spacing', 'true');
   } catch (e) {}
 })();`;
 
@@ -85,7 +98,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${outfit.variable} ${comfortaa.variable} ${cherryBomb.variable}`}
+      className={`${outfit.variable} ${comfortaa.variable} ${lexend.variable} ${cherryBomb.variable}`}
     >
       <head>
         {/* eslint-disable-next-line react/no-danger */}

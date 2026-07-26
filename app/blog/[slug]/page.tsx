@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { timingSafeEqual } from 'node:crypto';
 import { Footer } from '@/components/Footer';
 import { Nav } from '@/components/Nav';
+import { ReadingControls } from '@/components/ReadingControls';
 import { NotionRenderer } from '@/components/blog/NotionRenderer';
 import { PostFooter } from '@/components/blog/PostFooter';
 import { PostHero } from '@/components/blog/PostHero';
@@ -169,6 +170,7 @@ export default async function BlogPostPage({
         <Nav active="blog" />
         <main className={styles.main}>
           <PostHero post={post} />
+          <ReadingControls />
           <NotionRenderer blocks={blocks} />
           <PostFooter />
           <Footer variant="full" />
