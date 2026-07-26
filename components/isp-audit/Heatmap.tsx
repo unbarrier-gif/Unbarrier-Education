@@ -14,6 +14,14 @@ function bandFor(score: number): Band {
   return 'high';
 }
 
+function formatDate(iso: string): string {
+  return new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+}
+
+// Fixed order for the filter toggle — not sorted by count, so the buttons
+// don't reshuffle as responses come in.
+const ROUTE_ORDER: Route[] = ['pedagogy', 'procurement', 'both', 'insufficient'];
+
 type Selected =
   | {
       kind: 'domain';
@@ -33,6 +41,7 @@ export default function Heatmap({
   responses: AuditResponse[];
 }) {
   const [selected, setSelected] = useState<Selected | null>(null);
+  const [filterRoute, setFilterRoute] = useState<Route | 'all'>('all');
   const detailRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -48,17 +57,23 @@ export default function Heatmap({
     [questionSet, responses],
   );
 
-  // d3.rollups: how many schools land on each route recommendation, to
-  // surface an estate-wide "what does ISP need to do next" summary rather
-  // than just a grid of numbers.
+  // Estate-wide counts stay based on every response regardless of which
+  // filter is active, so the toggle buttons keep showing the full picture.
   const routeCounts = useMemo(() => {
-    const counts = rollups(
-      rows,
-      (v) => v.length,
-      (r) => r.route.route,
-    ) as [Route, number][];
-    return counts.sort((a, b) => b[1] - a[1]);
+    const counts = new Map(rollups(rows, (v) => v.length, (r) => r.route.route) as [Route, number][]);
+    return ROUTE_ORDER.map((route) => ({ route, count: counts.get(route) ?? 0 }));
   }, [rows]);
+
+  // A specific filter turns this into an actual outreach queue — who to
+  // approach first — so it sorts most-recent-first. "All" keeps the
+  // existing submission order rather than silently changing the default view.
+  const filteredRows = useMemo(() => {
+    if (filterRoute === 'all') return rows;
+    return rows
+      .filter((r) => r.route.route === filterRoute)
+      .slice()
+      .sort((a, b) => new Date(b.response.submittedAt).getTime() - new Date(a.response.submittedAt).getTime());
+  }, [rows, filterRoute]);
 
   const weakestDomains = useMemo(() => {
     // Only average domains a response actually has data for — otherwise a
@@ -107,85 +122,115 @@ export default function Heatmap({
 
       <div className={styles.weakest}>
         <h3>Estate-wide summary</h3>
-        <ul>
-          {routeCounts.map(([route, count]) => (
-            <li key={route}>
-              {count} of {rows.length} schools flagged for: {ROUTE_LABEL[route]}
-            </li>
-          ))}
-        </ul>
         <p className={styles.weakestSub}>Weakest domains on average: {weakestDomains.map((d) => `${d.name} (${d.avg})`).join(', ')}</p>
       </div>
 
-      <a href="#heatmap-grid-end" className="skipLink">
-        Skip the results grid ({rows.length * (questionSet.domains.length + 1)} cells)
-      </a>
-
-      <div className={styles.scrollWrap}>
-        <div className={styles.grid} style={{ gridTemplateColumns }} role="presentation">
-          <div className={styles.rowHeaderCell} aria-hidden="true" />
-          {questionSet.domains.map((d) => (
-            <div key={d.id} className={styles.headerCell} title={d.name} aria-hidden="true">
-              {d.name.split(' ').slice(0, 2).join(' ')}
-            </div>
-          ))}
-          <div className={`${styles.headerCell} ${styles.headerCellHorizontal}`} aria-hidden="true">
-            Route
-          </div>
-
-          {rows.map(({ response, scores, route }) => (
-            <RowCells
-              key={response.id}
-              response={response}
-              scores={scores}
-              route={route}
-              onSelectDomain={(domainId, score, answered) =>
-                setSelected({
-                  kind: 'domain',
-                  response,
-                  domainId,
-                  score,
-                  answered,
-                  note: response.answers.notes[domainId]?.trim() || undefined,
-                })
-              }
-              onSelectRoute={() => setSelected({ kind: 'route', response, route })}
-              selected={selected}
-            />
-          ))}
-        </div>
+      <div className={styles.filterBar} role="group" aria-label="Filter schools by recommended next step">
+        <button
+          type="button"
+          className={styles.filterButton}
+          aria-pressed={filterRoute === 'all'}
+          onClick={() => setFilterRoute('all')}
+        >
+          All ({rows.length})
+        </button>
+        {routeCounts.map(({ route, count }) => (
+          <button
+            key={route}
+            type="button"
+            className={styles.filterButton}
+            data-route={route}
+            aria-pressed={filterRoute === route}
+            onClick={() => setFilterRoute(route)}
+          >
+            {ROUTE_LABEL[route]} ({count})
+          </button>
+        ))}
       </div>
-      <span id="heatmap-grid-end" />
+      {filterRoute !== 'all' && (
+        <p className={styles.queueNote} aria-live="polite">
+          Showing {filteredRows.length} {filteredRows.length === 1 ? 'school' : 'schools'} flagged for{' '}
+          {ROUTE_LABEL[filterRoute]}, most recent submission first.
+        </p>
+      )}
 
-      {/* Screen-reader-only data table mirroring the same values. */}
-      <table className={styles.srOnly}>
-        <caption>{questionSet.title} — full results by school and domain</caption>
-        <thead>
-          <tr>
-            <th scope="col">School</th>
-            {questionSet.domains.map((d) => (
-              <th scope="col" key={d.id}>
-                {d.name}
-              </th>
-            ))}
-            <th scope="col">Recommended next step</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(({ response, scores, route }) => (
-            <tr key={response.id}>
-              <th scope="row">
-                {response.school}
-                {response.region ? `, ${response.region}` : ''}
-              </th>
-              {scores.map((s) => (
-                <td key={s.id}>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</td>
+      {filteredRows.length === 0 ? (
+        <p className={styles.empty}>No schools currently in this group.</p>
+      ) : (
+        <>
+          <a href="#heatmap-grid-end" className="skipLink">
+            Skip the results grid ({filteredRows.length * (questionSet.domains.length + 1)} cells)
+          </a>
+
+          <div className={styles.scrollWrap}>
+            <div className={styles.grid} style={{ gridTemplateColumns }} role="presentation">
+              <div className={styles.rowHeaderCell} aria-hidden="true" />
+              {questionSet.domains.map((d) => (
+                <div key={d.id} className={styles.headerCell} title={d.name} aria-hidden="true">
+                  {d.name.split(' ').slice(0, 2).join(' ')}
+                </div>
               ))}
-              <td>{ROUTE_LABEL[route.route]}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+              <div className={`${styles.headerCell} ${styles.headerCellHorizontal}`} aria-hidden="true">
+                Route
+              </div>
+
+              {filteredRows.map(({ response, scores, route }) => (
+                <RowCells
+                  key={response.id}
+                  response={response}
+                  scores={scores}
+                  route={route}
+                  onSelectDomain={(domainId, score, answered) =>
+                    setSelected({
+                      kind: 'domain',
+                      response,
+                      domainId,
+                      score,
+                      answered,
+                      note: response.answers.notes[domainId]?.trim() || undefined,
+                    })
+                  }
+                  onSelectRoute={() => setSelected({ kind: 'route', response, route })}
+                  selected={selected}
+                />
+              ))}
+            </div>
+          </div>
+          <span id="heatmap-grid-end" />
+
+          {/* Screen-reader-only data table mirroring the same values. */}
+          <table className={styles.srOnly}>
+            <caption>{questionSet.title} — full results by school and domain</caption>
+            <thead>
+              <tr>
+                <th scope="col">School</th>
+                <th scope="col">Submitted</th>
+                {questionSet.domains.map((d) => (
+                  <th scope="col" key={d.id}>
+                    {d.name}
+                  </th>
+                ))}
+                <th scope="col">Recommended next step</th>
+              </tr>
+            </thead>
+            <tbody>
+              {filteredRows.map(({ response, scores, route }) => (
+                <tr key={response.id}>
+                  <th scope="row">
+                    {response.school}
+                    {response.region ? `, ${response.region}` : ''}
+                  </th>
+                  <td>{formatDate(response.submittedAt)}</td>
+                  {scores.map((s) => (
+                    <td key={s.id}>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</td>
+                  ))}
+                  <td>{ROUTE_LABEL[route.route]}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </>
+      )}
 
       {selected && (
         <div className={styles.detail} role="region" aria-live="polite" ref={detailRef}>
@@ -238,8 +283,11 @@ function RowCells({
   return (
     <>
       <div className={styles.rowHeaderCell}>
-        {response.school}
-        {response.region ? `, ${response.region}` : ''}
+        <div>
+          {response.school}
+          {response.region ? `, ${response.region}` : ''}
+        </div>
+        <div className={styles.rowDate}>{formatDate(response.submittedAt)}</div>
       </div>
       {scores.map((s) => {
         const isSelected = selected?.kind === 'domain' && selected.response.id === response.id && selected.domainId === s.id;

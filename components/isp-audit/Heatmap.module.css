@@ -48,15 +48,63 @@
   margin-bottom: var(--ia-space-2);
 }
 
-.weakest ul {
-  margin: 0;
-  padding-left: 1.2em;
-}
-
 .weakestSub {
-  margin: var(--ia-space-3) 0 0;
+  margin: 0;
   font-size: 0.9rem;
   color: var(--ia-fg-muted);
+}
+
+.filterBar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-2);
+  margin-bottom: var(--ia-space-3);
+}
+
+.filterButton {
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--radius-pill);
+  padding: var(--ia-space-2) var(--ia-space-4);
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background: var(--bg);
+  color: var(--ia-fg);
+}
+
+.filterButton[data-route='pedagogy'] {
+  border-color: var(--ia-accent);
+}
+
+.filterButton[data-route='procurement'] {
+  border-color: var(--ia-high);
+}
+
+.filterButton[data-route='both'] {
+  border-color: var(--ia-medium);
+}
+
+.filterButton[aria-pressed='true'] {
+  background: var(--ia-fg);
+  color: var(--bg);
+  border-color: var(--ia-fg);
+}
+
+.filterButton:focus-visible {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+}
+
+.queueNote {
+  font-size: 0.9rem;
+  color: var(--ia-fg-muted);
+  margin: 0 0 var(--ia-space-4);
+}
+
+.empty {
+  color: var(--ia-fg-muted);
+  padding: var(--ia-space-5) 0;
 }
 
 .scrollWrap {
@@ -118,6 +166,13 @@
   z-index: 1;
   white-space: nowrap;
   padding: var(--ia-space-2) var(--ia-space-3);
+}
+
+.rowDate {
+  font-weight: 400;
+  font-size: 0.75rem;
+  color: var(--ia-fg-muted);
+  margin-top: 2px;
 }
 
 .cellButton {
