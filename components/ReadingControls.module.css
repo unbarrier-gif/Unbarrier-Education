@@ -1,0 +1,97 @@
+/* Tokens only. Controls read as real pressable objects, not outlines —
+   filled rest state, distinct hover, unmissable "on" state that uses
+   background + border together so colour is never the only signal. */
+
+.wrap {
+  margin: 0 0 var(--space-6);
+}
+
+.panel {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-wrap: wrap;
+}
+
+.btn,
+.sizeBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  letter-spacing: 0.03em;
+  color: var(--text);
+  background: var(--surface-lift);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+
+.btn:hover:not(:disabled),
+.sizeBtn:hover:not(:disabled) {
+  background: var(--surface-raised);
+  border-color: var(--border-strong);
+}
+
+.btn:focus-visible,
+.sizeBtn:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* On state — filled, inverted, and bordered. Three signals, not one. */
+.btn[data-on='true'] {
+  color: var(--action-fg);
+  background: var(--action);
+  border-color: var(--action);
+  font-weight: 700;
+}
+
+.sizeGroup {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 3px 6px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  background: var(--surface-lift);
+}
+
+.sizeGroup .sizeBtn {
+  border: 0;
+  background: transparent;
+  padding: 4px 9px;
+  min-width: 34px;
+  justify-content: center;
+}
+
+.sizeBtn:disabled {
+  color: var(--text-faint);
+  cursor: not-allowed;
+}
+
+.sizeValue {
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  min-width: 42px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+.note {
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: var(--space-3) 0 0;
+}
+
+@media (max-width: 720px) {
+  .stopLabel {
+    display: none;
+  }
+}

@@ -114,6 +114,12 @@ export function pickVoice(
     if (v.localService) s += 8; // on-device: no network stall
     if (name.includes('compact')) s -= 40; // the robotic legacy voices
     if (name.includes('novelty') || name.includes('eloquence')) s -= 60;
+    // The engine's own default flag usually reflects what the person has
+    // deliberately configured (iOS Settings > Accessibility > Spoken
+    // Content, or the OS default elsewhere). Worth a nudge so a chosen
+    // voice wins a close call — but not enough to override a clearly
+    // better neural voice over a legacy default.
+    if (v.default) s += 12;
     return s;
   };
 
@@ -141,13 +147,22 @@ export function useSpeech(getRoot: () => HTMLElement | null): {
     if (typeof window === 'undefined' || !('speechSynthesis' in window)) return;
     setSupported(true);
 
+    // getVoices() returns an empty array on the first call in most browsers
+    // until the async voiceschanged event fires. Listen for it rather than
+    // reading an empty list once and concluding there are no voices, and
+    // keep listening — Chrome repopulates the list after network voices load.
     const loadVoices = () => {
-      voiceRef.current = pickVoice(window.speechSynthesis.getVoices());
+      const found = window.speechSynthesis.getVoices();
+      if (found.length > 0) voiceRef.current = pickVoice(found);
     };
-    loadVoices(); // often empty on first call
+    loadVoices();
     window.speechSynthesis.addEventListener?.('voiceschanged', loadVoices);
-    return () =>
+    // Belt and braces for engines that never fire the event.
+    const retry = window.setTimeout(loadVoices, 300);
+    return () => {
+      window.clearTimeout(retry);
       window.speechSynthesis.removeEventListener?.('voiceschanged', loadVoices);
+    };
   }, []);
 
   const hardStop = useCallback(() => {
