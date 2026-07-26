@@ -16,13 +16,13 @@ const knownQuestionIds = new Set(allQuestions(ispAuditQuestionSet).map((q) => q.
 const knownDomainIds = new Set(ispAuditQuestionSet.domains.map((d) => d.id));
 const knownCatalogueOptions = new Set(ispAuditQuestionSet.catalogueOptions);
 
-// All four identity fields are required and all free text — region/school
-// have autocomplete suggestions but are never restricted to a closed list
-// (self-described region/school in the respondent's own words is useful
-// data in itself, decisions log 25 July 2026).
+// Name/role are required; school/region are optional free text (with
+// autocomplete suggestions, never restricted to a closed list — self-
+// described region/school in the respondent's own words is useful data in
+// itself, decisions log 25 July 2026).
 const schema = z.object({
-  school: z.string().trim().min(1).max(300),
-  region: z.string().trim().min(1).max(300),
+  school: z.string().trim().max(300),
+  region: z.string().trim().max(300).nullable(),
   respondentName: z.string().trim().min(1).max(300),
   respondentRole: z.string().trim().min(1).max(300),
   answers: answersSchema,

@@ -88,12 +88,6 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
 
   function validate(): Record<string, string> {
     const next: Record<string, string> = {};
-    if (!draft.school.trim()) {
-      next.school = 'Enter your school.';
-    }
-    if (!draft.region.trim()) {
-      next.region = 'Enter your region.';
-    }
     if (!draft.respondentName.trim()) {
       next.respondentName = 'Enter your name.';
     }
@@ -131,7 +125,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           school: draft.school.trim(),
-          region: draft.region.trim(),
+          region: draft.region.trim() || null,
           respondentName: draft.respondentName.trim(),
           respondentRole: draft.respondentRole.trim(),
           answers,
@@ -208,57 +202,6 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
 
         <div className={styles.identity}>
           <div>
-            <label htmlFor="ia-school" className={styles.label}>
-              School <span className={styles.requiredNote}>(required)</span>
-            </label>
-            <input
-              id="ia-school"
-              className={styles.textInput}
-              list="ia-school-suggestions"
-              value={draft.school}
-              onChange={(e) => setField('school', e.target.value)}
-              aria-invalid={errors.school ? 'true' : undefined}
-              aria-describedby={errors.school ? 'ia-school-error' : undefined}
-              aria-required="true"
-              autoComplete="organization"
-            />
-            <datalist id="ia-school-suggestions">
-              {questionSet.schoolSuggestions.map((s) => (
-                <option key={s} value={s} />
-              ))}
-            </datalist>
-            {errors.school && (
-              <p id="ia-school-error" className={styles.fieldError}>
-                {errors.school}
-              </p>
-            )}
-          </div>
-          <div>
-            <label htmlFor="ia-region" className={styles.label}>
-              Region <span className={styles.requiredNote}>(required)</span>
-            </label>
-            <input
-              id="ia-region"
-              className={styles.textInput}
-              list="ia-region-suggestions"
-              value={draft.region}
-              onChange={(e) => setField('region', e.target.value)}
-              aria-invalid={errors.region ? 'true' : undefined}
-              aria-describedby={errors.region ? 'ia-region-error' : undefined}
-              aria-required="true"
-            />
-            <datalist id="ia-region-suggestions">
-              {questionSet.regionSuggestions.map((r) => (
-                <option key={r} value={r} />
-              ))}
-            </datalist>
-            {errors.region && (
-              <p id="ia-region-error" className={styles.fieldError}>
-                {errors.region}
-              </p>
-            )}
-          </div>
-          <div>
             <label htmlFor="ia-respondentName" className={styles.label}>
               Respondent name <span className={styles.requiredNote}>(required)</span>
             </label>
@@ -296,6 +239,41 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
                 {errors.respondentRole}
               </p>
             )}
+          </div>
+          <div>
+            <label htmlFor="ia-school" className={styles.label}>
+              School
+            </label>
+            <input
+              id="ia-school"
+              className={styles.textInput}
+              list="ia-school-suggestions"
+              value={draft.school}
+              onChange={(e) => setField('school', e.target.value)}
+              autoComplete="organization"
+            />
+            <datalist id="ia-school-suggestions">
+              {questionSet.schoolSuggestions.map((s) => (
+                <option key={s} value={s} />
+              ))}
+            </datalist>
+          </div>
+          <div>
+            <label htmlFor="ia-region" className={styles.label}>
+              Region
+            </label>
+            <input
+              id="ia-region"
+              className={styles.textInput}
+              list="ia-region-suggestions"
+              value={draft.region}
+              onChange={(e) => setField('region', e.target.value)}
+            />
+            <datalist id="ia-region-suggestions">
+              {questionSet.regionSuggestions.map((r) => (
+                <option key={r} value={r} />
+              ))}
+            </datalist>
           </div>
         </div>
 

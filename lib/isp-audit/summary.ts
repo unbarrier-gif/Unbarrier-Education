@@ -33,14 +33,20 @@ export type RouteRecommendation = {
 };
 
 /**
- * Ported 1:1 from the source prototype's routeRecommendation() — compares a
- * pedagogy signal (pedagogy + leadership + community) against a hardware
- * signal (device + environment) and recommends what conversation the school
- * needs next, before any procurement decision.
+ * Ported from the source prototype's routeRecommendation() — compares a
+ * pedagogy signal against a hardware signal and recommends what conversation
+ * the school needs next, before any procurement decision.
+ *
+ * Pedagogy signal = pedagogy + leadership + community + EAL/neurodiversity.
+ * The EAL/neurodiversity domain was added after the original port (decisions
+ * log, 25 July 2026) — it's about practice and culture around how devices
+ * are configured and used for specific learners, not about hardware or
+ * infrastructure, so it belongs alongside the other pedagogy-adjacent
+ * domains rather than the hardware signal.
  */
 export function routeRecommendation(scores: DomainScore[]): RouteRecommendation {
   const get = (id: string) => scores.find((s) => s.id === id)?.score ?? 0;
-  const pedagogySignal = (get('pedagogy') + get('leadership') + get('community')) / 3;
+  const pedagogySignal = (get('pedagogy') + get('leadership') + get('community') + get('eal-neurodiversity')) / 4;
   const hardwareSignal = (get('device') + get('environment')) / 2;
 
   if (pedagogySignal < 60 && pedagogySignal <= hardwareSignal) {
@@ -50,7 +56,7 @@ export function routeRecommendation(scores: DomainScore[]): RouteRecommendation 
       body:
         "Governance, teacher confidence and community readiness are the weaker areas here — not the hardware. " +
         'More devices won’t fix this. This school needs a discovery conversation about how technology is meant to ' +
-        'support teaching before any further procurement, plus a look at SEND/accessibility access to devices.',
+        'support teaching before any further procurement, plus a look at EAL and neurodiversity-inclusive access to devices.',
     };
   }
 

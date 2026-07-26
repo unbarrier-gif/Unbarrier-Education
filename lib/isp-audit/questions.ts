@@ -13,7 +13,7 @@ export const ispAuditQuestionSet: QuestionSet = {
   id: 'isp-compass-v3',
   title: 'ISP Learning & Device Compass',
   intro:
-    'A six-domain self-assessment for your school or region, part of ISP’s phase-two device planning — ' +
+    'A seven-domain self-assessment for your school or region, part of ISP’s phase-two device planning — ' +
     'mapped against ISP’s five learning pillars: academic achievement, multilingualism, life competencies, ' +
     'international opportunities, and future pathways. Domains are tagged with who’s best placed to ' +
     'answer — split across roles if that’s easier than one person doing it all. Your individual answers ' +
@@ -118,12 +118,38 @@ export const ispAuditQuestionSet: QuestionSet = {
       bestFor: 'safeguarding / inclusion lead',
       questions: [
         { id: 'community-0', prompt: 'Staff and families feel comfortable with how technology change is being introduced here.' },
-        {
-          id: 'community-1',
-          prompt:
-            'Devices and software here are genuinely accessible — for SEND students, for language learners, and for any student facing extra hardship (e.g. foster care, housing instability).',
-        },
         { id: 'community-2', prompt: 'We have a way for teachers to feed practice and concerns back up, and be heard.' },
+      ],
+    },
+    {
+      id: 'eal-neurodiversity',
+      name: 'EAL & Neurodiversity-Inclusive Practice',
+      bestFor: 'inclusion / multilingualism lead',
+      questions: [
+        {
+          id: 'eal-neurodiversity-0',
+          prompt:
+            'Students learning in a language that isn’t their first have real support built into the devices and software they use day to day — translation tools, text-to-speech, language scaffolding — not just extra worksheets alongside the same tech everyone else uses.',
+        },
+        {
+          id: 'eal-neurodiversity-1',
+          prompt: 'Teachers feel confident using the tech available to support EAL students, not just aware that support tools exist somewhere on the device.',
+        },
+        {
+          id: 'eal-neurodiversity-2',
+          prompt:
+            'Assistive and inclusive features (text-to-speech, focus/reduced-distraction modes, predictable and consistent interfaces) are actually turned on and used, not just present in the settings menu.',
+        },
+        {
+          id: 'eal-neurodiversity-3',
+          prompt:
+            'Individual students’ known learning needs are reflected in how their actual device is set up — not a generic setup that’s the same for every student regardless of need.',
+        },
+        {
+          id: 'eal-neurodiversity-4',
+          prompt:
+            'We’ve asked neurodivergent and EAL students themselves what’s working and what isn’t with the tech they use — this isn’t just staff assumption.',
+        },
       ],
     },
   ],

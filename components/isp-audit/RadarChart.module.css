@@ -17,7 +17,9 @@
 .axisLabel {
   fill: var(--ia-fg-muted);
   font-size: 11px;
-  text-anchor: middle;
+  /* text-anchor set per-label in RadarChart.tsx (start/middle/end depending
+     on which side of the chart it sits) — not fixed here, or it would
+     override the JSX attribute. */
 }
 
 .polygon {

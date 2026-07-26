@@ -1,9 +1,17 @@
 import type { DomainScore } from '@/lib/isp-audit/summary';
 import styles from './RadarChart.module.css';
 
-const SIZE = 360;
+// Sized with real headroom for label text, not just the plot circle — at 7
+// axes (vs the original 6) the angular gap between labels is tighter, and
+// the longest labels ("Leadership, governance", "Community, culture") need
+// enough margin on both sides of their anchor point to avoid either
+// clipping the canvas edge or colliding with the next label around. A
+// directional (start/end) text-anchor was tried first but just moved the
+// collision to a different pair of labels — plain centred anchor with a
+// wider canvas is simpler and holds for all 7 at once.
+const SIZE = 500;
 const CENTER = SIZE / 2;
-const RADIUS = 140;
+const RADIUS = 150;
 
 function point(angle: number, r: number): [number, number] {
   return [CENTER + r * Math.cos(angle), CENTER + r * Math.sin(angle)];
