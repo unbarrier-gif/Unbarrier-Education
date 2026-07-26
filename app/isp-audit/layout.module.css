@@ -1,0 +1,120 @@
+.root {
+  /* Unbarrier brand theme — this is the unbarrier.audit strand, so it uses
+     pearl-aqua as its accent (per the site's service-strand convention:
+     audit=pearl-aqua, access=princeton-orange, voice=orchid-mist) rather
+     than the site-wide spring-green action colour. Everything else aliases
+     the real global tokens from globals.css so this stays visually part of
+     the family instead of a bolt-on. */
+  --ia-bg-alt: var(--surface-raised);
+  --ia-fg: var(--text);
+  --ia-fg-muted: var(--text-muted);
+  --ia-border: var(--border-default);
+  --ia-border-strong: var(--border-strong);
+  --ia-focus: var(--focus-ring);
+  --ia-accent: var(--pearl-aqua);
+  --ia-accent-text: var(--amethyst);
+  --ia-accent-bg: rgba(105, 217, 209, 0.14);
+
+  /* Score colours — brightened versions of the site's semantic reds/ambers
+     for text/border legibility against the dark amethyst background (the
+     site's own dark-red/amber/green tones read at ~2.5:1 on amethyst, well
+     under the 4.5:1 AA minimum for text). Heatmap cell fills stay closer to
+     the deeper tones since those pair with solid white glyph text instead. */
+  --ia-low: #ff6b6b;
+  --ia-low-fill: #b91c1c;
+  --ia-low-bg: rgba(255, 107, 107, 0.16);
+  --ia-medium: #ffb84d;
+  --ia-medium-fill: #92400e;
+  --ia-medium-bg: rgba(255, 184, 77, 0.16);
+  --ia-high: var(--spring-green);
+  --ia-high-fill: #166534;
+  --ia-high-bg: rgba(56, 255, 153, 0.14);
+
+  --ia-radius: var(--radius-md);
+  --ia-space-1: var(--space-1);
+  --ia-space-2: var(--space-2);
+  --ia-space-3: var(--space-3);
+  --ia-space-4: var(--space-4);
+  --ia-space-5: var(--space-5);
+  --ia-space-6: var(--space-6);
+  --ia-space-8: var(--space-8);
+
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ia-fg);
+  /* Explicit floor per accessibility guidance — stay comfortably above the
+     1.4 minimum. The brand's own --lh-body (1.75) already clears this. */
+  line-height: var(--lh-body);
+}
+
+.root :global(a) {
+  color: var(--ia-accent);
+}
+
+/* Nav is position:fixed — push content clear of it. */
+.navSpacer {
+  padding-top: var(--nav-height);
+}
+
+.root :global(.skipLink) {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  background: var(--ia-fg);
+  color: var(--amethyst);
+  padding: var(--ia-space-2) var(--ia-space-4);
+  z-index: 100;
+  border-radius: 0 0 var(--ia-radius) 0;
+}
+
+.root :global(.skipLink:focus) {
+  left: 0;
+}
+
+@media print {
+  /* Every isp-audit component reads colour through these --ia-* tokens, so
+     redefining them here once is enough to flip the whole subtree from the
+     on-screen dark theme to something printable — without it, the page
+     prints as light text on a white page (most browsers don't print
+     background-color by default, so the dark backdrop these tokens assume
+     just doesn't show up, and the light text becomes invisible on paper). */
+  .root {
+    /* Headings and any un-classed <p> read the site's global --fg/--fg-muted
+       directly (globals.css), not the --ia-* aliases below — overriding
+       those too, or the page's own h1 headline prints unreadably pale. */
+    --fg: #14181f;
+    --fg-muted: #4b5563;
+    --ia-bg-alt: #f3f4f6;
+    --ia-fg: #14181f;
+    --ia-fg-muted: #4b5563;
+    --ia-border: #d0d5dd;
+    --ia-border-strong: #6b7280;
+    --ia-accent: #0f766e;
+    --ia-accent-text: #fff;
+    --ia-accent-bg: #e6f5f3;
+    --ia-low: #b91c1c;
+    --ia-low-fill: #b91c1c;
+    --ia-low-bg: #fdecec;
+    --ia-medium: #92400e;
+    --ia-medium-fill: #92400e;
+    --ia-medium-bg: #fdf1e3;
+    --ia-high: #166534;
+    --ia-high-fill: #166534;
+    --ia-high-bg: #eaf6ee;
+    background: #fff;
+    color: var(--ia-fg);
+  }
+
+  /* Site chrome has no place on a printed page — direct children only, so
+     this doesn't reach into a page's own nested <nav> (e.g. the form's
+     jump-to-domain bar). Bare element selectors aren't hashed by CSS
+     modules, so no :global() needed here. */
+  .root > nav,
+  .root > footer {
+    display: none;
+  }
+
+  .navSpacer {
+    padding-top: 0;
+  }
+}

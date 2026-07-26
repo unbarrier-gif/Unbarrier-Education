@@ -1,0 +1,94 @@
+.wrap {
+  --ia-text-scale: 1;
+  --ia-spacing-scale: 1;
+}
+
+.wrap[data-ia-text-size='sm'] {
+  --ia-text-scale: 0.875;
+}
+
+.wrap[data-ia-text-size='lg'] {
+  --ia-text-scale: 1.25;
+}
+
+.wrap[data-ia-spacing='true'] {
+  --ia-spacing-scale: 1.45;
+}
+
+.panel {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ia-space-3);
+  padding: var(--ia-space-3) var(--ia-space-4);
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--ia-radius);
+  background: var(--ia-bg-alt);
+  margin-bottom: var(--ia-space-2);
+}
+
+.sizeGroup {
+  display: flex;
+  align-items: center;
+  gap: var(--ia-space-2);
+}
+
+.sizeButton {
+  min-width: 40px;
+  min-height: 40px;
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--ia-fg);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.sizeButton:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.sizeButton:focus-visible,
+.toggleButton:focus-visible {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+}
+
+.sizeValue {
+  font-size: 0.85rem;
+  color: var(--ia-fg-muted);
+  min-width: 3.2em;
+  text-align: center;
+}
+
+.toggleButton {
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--radius-pill);
+  padding: var(--ia-space-2) var(--ia-space-4);
+  min-height: 40px;
+  background: var(--bg);
+  color: var(--ia-fg);
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.toggleButton[aria-pressed='true'] {
+  background: var(--ia-fg);
+  color: var(--bg);
+  border-color: var(--ia-fg);
+}
+
+.note {
+  font-size: 0.78rem;
+  color: var(--ia-fg-muted);
+  margin: 0 0 var(--ia-space-5);
+}
+
+.content {
+  /* The scale variables above cascade down through here to every
+     isp-audit component's own CSS, which reads them via calc(). */
+}

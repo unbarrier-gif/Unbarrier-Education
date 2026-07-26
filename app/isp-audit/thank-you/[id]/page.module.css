@@ -1,0 +1,140 @@
+.wrap {
+  max-width: 700px;
+  margin: 0 auto;
+  padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
+}
+
+.title {
+  font-size: calc(clamp(1.6rem, 4vw, 2.2rem) * var(--ia-text-scale, 1));
+  margin-bottom: var(--ia-space-3);
+}
+
+.lede {
+  color: var(--ia-fg-muted);
+  max-width: 60ch;
+  margin-bottom: var(--ia-space-6);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+.scoreList {
+  margin-bottom: var(--ia-space-6);
+}
+
+.scoreRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1)) 0;
+  border-bottom: 1px solid var(--ia-border);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+}
+
+.scoreLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ia-space-2);
+}
+
+.scoreIcon {
+  display: inline-flex;
+  flex: none;
+}
+
+.scoreIcon svg {
+  width: 18px;
+  height: 18px;
+}
+
+.route {
+  border-radius: var(--ia-radius);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-6);
+  border: 1px solid var(--ia-border);
+}
+
+.route[data-route='pedagogy'] {
+  background: var(--ia-accent-bg);
+  border-color: var(--ia-accent);
+}
+
+.route[data-route='procurement'] {
+  background: var(--ia-high-bg);
+  border-color: var(--ia-high);
+}
+
+.route[data-route='both'] {
+  background: var(--ia-medium-bg);
+  border-color: var(--ia-medium);
+}
+
+.route[data-route='insufficient'] {
+  background: var(--ia-bg-alt);
+  border-color: var(--ia-border);
+}
+
+.route {
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+.routeTitle {
+  font-weight: 700;
+  font-size: calc(1.1rem * var(--ia-text-scale, 1));
+  margin-bottom: var(--ia-space-2);
+}
+
+.catalogue,
+.notes {
+  margin-bottom: var(--ia-space-6);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+}
+
+.catalogue h2,
+.notes h2 {
+  font-size: calc(1.05rem * var(--ia-text-scale, 1));
+  margin-bottom: var(--ia-space-2);
+}
+
+.noteItem {
+  border-left: 4px solid var(--ia-border-strong);
+  padding: var(--ia-space-2) 0 var(--ia-space-2) var(--ia-space-4);
+  margin-bottom: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1));
+}
+
+.noteDomain {
+  font-weight: 600;
+  margin: 0 0 4px;
+}
+
+.noteText {
+  color: var(--ia-fg-muted);
+  margin: 0;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+.closing {
+  color: var(--ia-fg-muted);
+  border-top: 1px solid var(--ia-border);
+  padding-top: var(--ia-space-5);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+/* Print is a one-pager for an SLT meeting: headline, chart, domain
+   breakdown, recommendation — nothing else. The privacy note, catalogue
+   picks, freeform notes and closing caveat are all useful on screen but
+   just clutter on paper. */
+@media print {
+  .lede,
+  .catalogue,
+  .notes,
+  .closing {
+    display: none;
+  }
+
+  .wrap {
+    max-width: none;
+    padding: 0;
+  }
+}

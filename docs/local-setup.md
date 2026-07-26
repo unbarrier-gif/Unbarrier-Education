@@ -110,6 +110,15 @@ Commit `CLAUDE.md`, and you're set.
 
 Public vars (`NEXT_PUBLIC_TIDYCAL_*`, `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`) have hard-coded fallbacks in the code, so they work without `.env.local`.
 
+## ISP audit tool (`/isp-audit`) — one-time setup
+
+Two manual steps in the Vercel dashboard before this route works anywhere (local or deployed):
+
+1. **Provision Postgres** — project → Storage tab → Create Database → Postgres (Neon-backed). This auto-populates `DATABASE_URL` in Production + Preview. For local dev, run `vercel env pull .env.local` (or copy the value manually from Settings → Environment Variables).
+2. **Set `ISP_AUDIT_ADMIN_KEY`** — any long random string, in Production + Preview. This is the passcode for `/isp-audit/dashboard` (Nici-only aggregate view + CSV export) — no separate login system, just this one shared value.
+
+Nothing else to run — the table (`isp_audit_responses`) is created automatically on first request.
+
 ## Useful slash commands at a glance
 
 | Command | Purpose |
