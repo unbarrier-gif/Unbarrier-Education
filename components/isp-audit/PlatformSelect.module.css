@@ -1,0 +1,55 @@
+.wrap {
+  padding: var(--ia-space-4);
+  background: var(--ia-bg-alt);
+  border-radius: var(--ia-radius);
+  border: 1px solid var(--ia-border);
+  margin: var(--ia-space-3) 0 0;
+}
+
+.legend {
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0;
+  margin-bottom: 4px;
+}
+
+.hint {
+  color: var(--ia-fg-muted);
+  font-size: 0.82rem;
+  margin: 0 0 var(--ia-space-3);
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-2);
+}
+
+.chip {
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--radius-pill);
+  padding: var(--ia-space-2) var(--ia-space-4);
+  cursor: pointer;
+  background: var(--bg);
+  font-size: 0.9rem;
+}
+
+.chip:has(:checked) {
+  background: var(--ia-accent);
+  border-color: var(--ia-accent);
+  color: var(--ia-accent-text);
+  font-weight: 600;
+}
+
+.chip:has(:focus-visible) {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+}
+
+.chip input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+}

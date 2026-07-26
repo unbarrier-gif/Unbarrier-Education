@@ -4,6 +4,8 @@ import { getResponseById } from '@/lib/isp-audit/db';
 import { ispAuditQuestionSet } from '@/lib/isp-audit/questions';
 import { domainScores, routeRecommendation } from '@/lib/isp-audit/summary';
 import RadarChart from '@/components/isp-audit/RadarChart';
+import ReadingControls from '@/components/isp-audit/ReadingControls';
+import { DOMAIN_COLORS, DOMAIN_ICONS } from '@/components/isp-audit/domainVisuals';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -24,6 +26,7 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
 
   return (
     <main className={styles.wrap}>
+    <ReadingControls>
       <h1 className={styles.title}>Thanks, {response.school}.</h1>
       <p className={styles.lede}>
         Here’s a summary of your own answers. This page is private to you — bookmark it if you’d like to
@@ -36,7 +39,12 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
       <div className={styles.scoreList}>
         {scores.map((s) => (
           <div key={s.id} className={styles.scoreRow}>
-            <span>{s.name}</span>
+            <span className={styles.scoreLabel}>
+              <span className={styles.scoreIcon} style={{ color: DOMAIN_COLORS[s.id] }}>
+                {DOMAIN_ICONS[s.id]}
+              </span>
+              {s.name}
+            </span>
             <strong>{s.answered > 0 ? `${s.score}/100` : 'Not yet answered'}</strong>
           </div>
         ))}
@@ -46,6 +54,13 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
         <p className={styles.routeTitle}>{route.title}</p>
         <p>{route.body}</p>
       </div>
+
+      {response.answers.platform && (
+        <div className={styles.catalogue}>
+          <h2>Platform</h2>
+          <p>{response.answers.platform}</p>
+        </div>
+      )}
 
       {response.answers.catalogue.length > 0 && (
         <div className={styles.catalogue}>
@@ -70,6 +85,7 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
         This is a starting point, not a verdict — ISP’s planning team will use patterns across the whole
         estate, alongside your notes, to prioritise phase-two support.
       </p>
+    </ReadingControls>
     </main>
   );
 }

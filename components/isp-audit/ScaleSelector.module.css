@@ -9,11 +9,13 @@
   color: var(--ia-fg);
   margin-bottom: var(--ia-space-3);
   padding: 0;
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .options {
   display: flex;
-  gap: var(--ia-space-2);
+  gap: calc(var(--ia-space-2) * var(--ia-spacing-scale, 1));
   max-width: 360px;
 }
 
@@ -61,13 +63,13 @@
   align-items: center;
   gap: var(--ia-space-2);
   margin-top: var(--ia-space-3);
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
   color: var(--ia-fg-muted);
   cursor: pointer;
 }
 
 .error {
   color: var(--ia-low);
-  font-size: 0.9rem;
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
   margin-top: var(--ia-space-2);
 }

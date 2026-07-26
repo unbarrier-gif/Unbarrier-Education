@@ -5,7 +5,7 @@
 }
 
 .title {
-  font-size: clamp(1.6rem, 4vw, 2.2rem);
+  font-size: calc(clamp(1.6rem, 4vw, 2.2rem) * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-3);
 }
 
@@ -13,6 +13,8 @@
   color: var(--ia-fg-muted);
   max-width: 60ch;
   margin-bottom: var(--ia-space-6);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .scoreList {
@@ -22,8 +24,26 @@
 .scoreRow {
   display: flex;
   justify-content: space-between;
-  padding: var(--ia-space-2) 0;
+  align-items: center;
+  padding: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1)) 0;
   border-bottom: 1px solid var(--ia-border);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+}
+
+.scoreLabel {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ia-space-2);
+}
+
+.scoreIcon {
+  display: inline-flex;
+  flex: none;
+}
+
+.scoreIcon svg {
+  width: 18px;
+  height: 18px;
 }
 
 .route {
@@ -53,27 +73,33 @@
   border-color: var(--ia-border);
 }
 
+.route {
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
 .routeTitle {
   font-weight: 700;
-  font-size: 1.1rem;
+  font-size: calc(1.1rem * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-2);
 }
 
 .catalogue,
 .notes {
   margin-bottom: var(--ia-space-6);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
 }
 
 .catalogue h2,
 .notes h2 {
-  font-size: 1.05rem;
+  font-size: calc(1.05rem * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-2);
 }
 
 .noteItem {
   border-left: 4px solid var(--ia-border-strong);
   padding: var(--ia-space-2) 0 var(--ia-space-2) var(--ia-space-4);
-  margin-bottom: var(--ia-space-3);
+  margin-bottom: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1));
 }
 
 .noteDomain {
@@ -84,12 +110,15 @@
 .noteText {
   color: var(--ia-fg-muted);
   margin: 0;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .closing {
   color: var(--ia-fg-muted);
   border-top: 1px solid var(--ia-border);
   padding-top: var(--ia-space-5);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 /* Print is a one-pager for an SLT meeting: headline, chart, domain

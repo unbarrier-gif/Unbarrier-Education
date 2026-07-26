@@ -153,6 +153,10 @@ export const ispAuditQuestionSet: QuestionSet = {
       ],
     },
   ],
+  // Captured so the right PD resource pack (Apple/Microsoft/Google) can be
+  // matched later — this only captures the data, no matching logic yet
+  // (decisions log, 26 July 2026).
+  platformOptions: ['Apple / iPad', 'Windows', 'Chromebook', 'Mixed / more than one platform'],
   catalogueOptions: [
     'Upfront cost',
     'Durability / build quality',

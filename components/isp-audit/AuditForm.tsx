@@ -6,6 +6,8 @@ import type { Answers, QuestionSet, ScoreValue } from '@/lib/isp-audit/types';
 import { allQuestions } from '@/lib/isp-audit/types';
 import ScaleSelector from './ScaleSelector';
 import CatalogueChips from './CatalogueChips';
+import PlatformSelect from './PlatformSelect';
+import { DOMAIN_COLORS, DOMAIN_ICONS } from './domainVisuals';
 import styles from './AuditForm.module.css';
 
 const DRAFT_KEY = 'isp-audit-draft-v2';
@@ -19,6 +21,7 @@ type Draft = {
   cantAnswer: string[];
   notes: Record<string, string>;
   catalogue: string[];
+  platform: string | null;
 };
 
 const EMPTY_DRAFT: Draft = {
@@ -30,6 +33,7 @@ const EMPTY_DRAFT: Draft = {
   cantAnswer: [],
   notes: {},
   catalogue: [],
+  platform: null,
 };
 
 const IDENTITY_FIELD_LABEL: Record<string, string> = {
@@ -140,6 +144,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
       cantAnswer: draft.cantAnswer,
       notes: draft.notes,
       catalogue: draft.catalogue,
+      platform: draft.platform,
     };
 
     setSubmitting(true);
@@ -193,7 +198,8 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
 
       <nav className={styles.jumpNav} aria-label="Jump to domain">
         {questionSet.domains.map((d) => (
-          <a key={d.id} href={`#${d.id}`}>
+          <a key={d.id} href={`#${d.id}`} className={styles.jumpLink} style={{ '--ia-domain-color': DOMAIN_COLORS[d.id] } as React.CSSProperties}>
+            <span className={styles.jumpIcon}>{DOMAIN_ICONS[d.id]}</span>
             {d.name}
           </a>
         ))}
@@ -312,8 +318,15 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         </label>
 
         {questionSet.domains.map((domain) => (
-          <section key={domain.id} id={domain.id} className={styles.section} aria-labelledby={`${domain.id}-heading`}>
+          <section
+            key={domain.id}
+            id={domain.id}
+            className={styles.section}
+            aria-labelledby={`${domain.id}-heading`}
+            style={{ '--ia-domain-color': DOMAIN_COLORS[domain.id] } as React.CSSProperties}
+          >
             <h2 id={`${domain.id}-heading`} className={styles.sectionTitle}>
+              <span className={styles.sectionIcon}>{DOMAIN_ICONS[domain.id]}</span>
               {domain.name}
             </h2>
             <p className={styles.sectionDescription}>best answered by: {domain.bestFor}</p>
@@ -327,6 +340,13 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
                   cantAnswer={draft.cantAnswer.includes(q.id)}
                   onCantAnswerChange={(v) => setCantAnswer(q.id, v)}
                 />
+                {q.id === 'device-0' && (
+                  <PlatformSelect
+                    options={questionSet.platformOptions}
+                    value={draft.platform}
+                    onChange={(v) => setField('platform', v)}
+                  />
+                )}
               </div>
             ))}
             <label className={styles.notesLabel} htmlFor={`notes-${domain.id}`}>

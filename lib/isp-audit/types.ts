@@ -18,6 +18,8 @@ export type QuestionSet = {
   estimatedMinutes: number;
   domains: Domain[];
   catalogueOptions: string[];
+  /** Options for the device-domain platform question — single choice. */
+  platformOptions: string[];
   /** Autocomplete suggestions for the region field — the field itself stays
    *  free text, this is a helper, not a closed list. Self-described region
    *  in the respondent's own words is useful data in its own right. */
@@ -42,6 +44,11 @@ export type Answers = {
   notes: Record<string, string>;
   /** up to 3 catalogue option labels */
   catalogue: string[];
+  /** which device platform(s) the school actually uses — one of
+   *  QuestionSet.platformOptions, or null if not answered. Metadata only,
+   *  excluded from scoring: "which platform" has no good/bad direction the
+   *  way the rated questions do. */
+  platform: string | null;
 };
 
 export type AuditResponse = {

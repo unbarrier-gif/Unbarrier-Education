@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import AuditForm from '@/components/isp-audit/AuditForm';
+import ReadingControls from '@/components/isp-audit/ReadingControls';
 import { ispAuditQuestionSet } from '@/lib/isp-audit/questions';
 
 export const metadata: Metadata = {
@@ -9,7 +10,9 @@ export const metadata: Metadata = {
 export default function IspAuditPage() {
   return (
     <main>
-      <AuditForm questionSet={ispAuditQuestionSet} />
+      <ReadingControls>
+        <AuditForm questionSet={ispAuditQuestionSet} />
+      </ReadingControls>
     </main>
   );
 }

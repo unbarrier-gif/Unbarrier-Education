@@ -22,6 +22,7 @@ export function buildResponsesCsv(questionSet: QuestionSet, responses: AuditResp
     ...questions.map((q) => q.id),
     ...domainIds.map((id) => `domain_${id}_score`),
     'route',
+    'platform',
     'catalogue_priorities',
     ...domainIds.map((id) => `notes_${id}`),
   ];
@@ -47,6 +48,7 @@ export function buildResponsesCsv(questionSet: QuestionSet, responses: AuditResp
       // a real 0 is a real answer, no answers isn't the same thing.
       ...scores.map((s) => (s.answered > 0 ? String(s.score) : '')),
       ROUTE_LABEL[route.route],
+      r.answers.platform ?? '',
       r.answers.catalogue.join('; '),
       ...domainIds.map((id) => r.answers.notes[id] ?? ''),
     ];

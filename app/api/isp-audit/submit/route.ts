@@ -11,11 +11,13 @@ const answersSchema = z.object({
   cantAnswer: z.array(z.string()),
   notes: z.record(z.string(), z.string().max(5000)),
   catalogue: z.array(z.string()).max(3),
+  platform: z.string().max(300).nullable(),
 });
 
 const knownQuestionIds = new Set(allQuestions(ispAuditQuestionSet).map((q) => q.id));
 const knownDomainIds = new Set(ispAuditQuestionSet.domains.map((d) => d.id));
 const knownCatalogueOptions = new Set(ispAuditQuestionSet.catalogueOptions);
+const knownPlatformOptions = new Set(ispAuditQuestionSet.platformOptions);
 
 // Name/role are required; school/region are optional free text (with
 // autocomplete suggestions, never restricted to a closed list — self-
@@ -59,6 +61,10 @@ export async function POST(req: Request) {
     Object.entries(parsed.data.answers.notes).filter(([id]) => knownDomainIds.has(id)),
   );
   const catalogue = parsed.data.answers.catalogue.filter((opt) => knownCatalogueOptions.has(opt)).slice(0, 3);
+  const platform =
+    parsed.data.answers.platform && knownPlatformOptions.has(parsed.data.answers.platform)
+      ? parsed.data.answers.platform
+      : null;
 
   // Same floor as the client: block an accidental empty submission, but
   // never require full completion — multiple people often split a
@@ -72,7 +78,7 @@ export async function POST(req: Request) {
     region: parsed.data.region,
     respondentName: parsed.data.respondentName,
     respondentRole: parsed.data.respondentRole,
-    answers: { scores, cantAnswer, notes, catalogue },
+    answers: { scores, cantAnswer, notes, catalogue, platform },
   });
 
   return NextResponse.json({ ok: true, id });
