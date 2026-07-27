@@ -28,9 +28,15 @@ const schema = z.object({
   region: z.string().trim().max(300).nullable(),
   respondentName: z.string().trim().min(1).max(300),
   respondentRole: z.string().trim().min(1).max(300),
-  // Email is now collected so we can send results and follow up (legitimate
-  // interest — see /isp-audit/privacy). Required, and must look like an email.
-  respondentEmail: z.string().trim().min(1).max(300).email(),
+  // Email is collected so we can send results and follow up (legitimate
+  // interest — see /isp-audit/privacy). Optional: a missing email must never
+  // block a submission (busy leaders — a blocked response is a lost one). An
+  // empty/whitespace value is coerced to null; anything non-empty must still
+  // look like an email.
+  respondentEmail: z.preprocess(
+    (v) => (typeof v === 'string' && v.trim() === '' ? null : v),
+    z.string().trim().max(300).email().nullable().optional(),
+  ),
   answers: answersSchema,
   honeypot: z.string().optional(),
 });
@@ -81,7 +87,7 @@ export async function POST(req: Request) {
     region: parsed.data.region,
     respondentName: parsed.data.respondentName,
     respondentRole: parsed.data.respondentRole,
-    respondentEmail: parsed.data.respondentEmail,
+    respondentEmail: parsed.data.respondentEmail ?? null,
     answers: { scores, cantAnswer, notes, catalogue, platform },
   });
 

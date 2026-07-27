@@ -122,10 +122,10 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
     if (!draft.respondentRole.trim()) {
       next.respondentRole = 'Enter your role.';
     }
-    if (!draft.respondentEmail.trim()) {
-      next.respondentEmail = 'Enter your email so we can send your results.';
-    } else if (!EMAIL_RE.test(draft.respondentEmail.trim())) {
-      next.respondentEmail = 'Enter a valid email address.';
+    // Email is optional — never block a submission on a missing one. Only
+    // check the format when something's actually been typed.
+    if (draft.respondentEmail.trim() && !EMAIL_RE.test(draft.respondentEmail.trim())) {
+      next.respondentEmail = 'Enter a valid email address, or leave it blank.';
     }
     // Block only an accidental empty click — at least one real score,
     // anywhere, is enough. Multiple people often split a submission by
@@ -170,7 +170,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           region: draft.region.trim() || null,
           respondentName: draft.respondentName.trim(),
           respondentRole: draft.respondentRole.trim(),
-          respondentEmail: draft.respondentEmail.trim(),
+          respondentEmail: draft.respondentEmail.trim() || null,
           answers,
           honeypot,
         }),
@@ -279,7 +279,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           </div>
           <div>
             <label htmlFor="ia-respondentEmail" className={styles.label}>
-              Email <span className={styles.requiredNote}>(required)</span>
+              Email <span className={styles.requiredNote}>(optional)</span>
             </label>
             <input
               id="ia-respondentEmail"
@@ -293,7 +293,6 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
                   ? 'ia-respondentEmail-error'
                   : 'ia-respondentEmail-hint'
               }
-              aria-required="true"
               autoComplete="email"
             />
             {errors.respondentEmail ? (
@@ -302,7 +301,8 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
               </p>
             ) : (
               <p id="ia-respondentEmail-hint" className={styles.notesHint}>
-                We use it to send your results and follow up — nothing else.
+                Add it if you’d like us to send your results and follow up —
+                otherwise leave it blank, your answers still count.
               </p>
             )}
           </div>
