@@ -230,7 +230,9 @@ export default function IspAuditShell({ children }: { children: React.ReactNode 
           </div>
         </div>
         <div className={styles.footBottom}>
-          © 2026 Unbarrier Education Ltd · Co. No. 16603630 · built with inclusion first
+          © 2026 Unbarrier Education Ltd · Co.&nbsp;No.&nbsp;16603630. The ISP Learning &amp; Device
+          Compass — its questions, scoring and design — is the intellectual property of Unbarrier
+          Education Ltd. All rights reserved.
         </div>
       </footer>
     </div>

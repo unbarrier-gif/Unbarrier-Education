@@ -150,6 +150,18 @@ export default function TermsPage() {
       </section>
 
       <section className={styles.section}>
+        <h2 className={styles.h3}>
+          intellectual property &mdash; ISP Learning &amp; Device Compass
+        </h2>
+        <p>
+          This assessment tool and its contents are owned by Unbarrier Education
+          Ltd and provided for International Schools Partnership&rsquo;s use
+          under our engagement. It may not be copied, redistributed, resold or
+          adapted without written permission.
+        </p>
+      </section>
+
+      <section className={styles.section}>
         <h2 className={styles.h3}>confidentiality &amp; safeguarding</h2>
         <ul>
           <li>
