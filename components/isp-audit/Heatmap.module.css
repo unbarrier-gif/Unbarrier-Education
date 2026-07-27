@@ -164,7 +164,13 @@
   position: sticky;
   left: 0;
   z-index: 1;
-  white-space: nowrap;
+  /* The first column is a fixed 220px track — let long school names wrap
+     inside it (with the date on its own line beneath) instead of running
+     nowrap into the score columns. */
+  white-space: normal;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  line-height: 1.25;
   padding: var(--ia-space-2) var(--ia-space-3);
 }
 
