@@ -1,0 +1,26 @@
+.button {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+  border: none;
+  padding: 11px 22px;
+  border-radius: var(--radius-pill);
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+  min-height: 44px;
+  box-shadow: var(--ia-card-shadow);
+  transition: opacity 150ms ease;
+}
+
+.button:hover {
+  opacity: 0.88;
+}
+
+@media print {
+  .button {
+    display: none;
+  }
+}

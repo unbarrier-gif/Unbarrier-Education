@@ -1,4 +1,4 @@
-import type { Answers, QuestionSet } from './types';
+import type { Answers, AuditResponse, QuestionSet } from './types';
 
 export type DomainScore = { id: string; name: string; score: number; answered: number; total: number };
 
@@ -30,6 +30,30 @@ export function domainScores(questionSet: QuestionSet, answers: Answers): Domain
     const score = n ? Math.round((sum / n) * 20) : 0;
     return { id: d.id, name: d.name, score, answered: n, total: d.questions.length };
   });
+}
+
+/**
+ * Estate-agnostic overall readiness for one response: the mean of the
+ * domains that have at least one answered question, 0-100. Domains nobody has
+ * touched are excluded (same reasoning as signalFor) so a part-completed
+ * submission isn't dragged toward 0 by its blank domains. `answered` is the
+ * count of domains that fed the average, so a caller can say "0" honestly
+ * when nothing's been answered rather than printing a confident 0/100.
+ */
+export function overallReadiness(scores: DomainScore[]): { score: number; answered: number } {
+  const withData = scores.filter((s) => s.answered > 0);
+  if (withData.length === 0) return { score: 0, answered: 0 };
+  const mean = withData.reduce((sum, s) => sum + s.score, 0) / withData.length;
+  return { score: Math.round(mean), answered: withData.length };
+}
+
+/** Score band for the on-screen/print bars and score colours (AA on white). */
+export type ScoreBand = 'low' | 'medium' | 'high';
+
+export function scoreBand(score: number): ScoreBand {
+  if (score >= 65) return 'high';
+  if (score >= 50) return 'medium';
+  return 'low';
 }
 
 export type Route = 'pedagogy' | 'procurement' | 'both' | 'insufficient';
@@ -125,3 +149,57 @@ export const ROUTE_LABEL: Record<Route, string> = {
   both: 'Full discovery workshop',
   insufficient: 'Not enough answered yet',
 };
+
+// ---- estate-wide aggregates (admin dashboard) ----
+
+/** Estate readiness per domain: the mean domain score across every response
+ *  that answered anything in that domain. `answered` counts contributing
+ *  responses so an untouched domain reads as no-data rather than a false 0. */
+export function estateReadinessByDomain(
+  questionSet: QuestionSet,
+  responses: AuditResponse[],
+): DomainScore[] {
+  const perResponse = responses.map((r) => domainScores(questionSet, r.answers));
+  return questionSet.domains.map((d, di) => {
+    let sum = 0;
+    let n = 0;
+    for (const ds of perResponse) {
+      const s = ds[di];
+      if (s.answered > 0) {
+        sum += s.score;
+        n += 1;
+      }
+    }
+    return { id: d.id, name: d.name, score: n ? Math.round(sum / n) : 0, answered: n, total: d.questions.length };
+  });
+}
+
+/** How many responses land on each recommended route. */
+export function routeCounts(questionSet: QuestionSet, responses: AuditResponse[]): Record<Route, number> {
+  const counts: Record<Route, number> = { pedagogy: 0, procurement: 0, both: 0, insufficient: 0 };
+  for (const r of responses) {
+    counts[routeRecommendation(domainScores(questionSet, r.answers)).route] += 1;
+  }
+  return counts;
+}
+
+/** Estate overall readiness: mean of each response's own overall (responses
+ *  with no answered domain at all are excluded). */
+export function estateOverall(questionSet: QuestionSet, responses: AuditResponse[]): number {
+  const overalls = responses
+    .map((r) => overallReadiness(domainScores(questionSet, r.answers)))
+    .filter((o) => o.answered > 0)
+    .map((o) => o.score);
+  return overalls.length ? Math.round(overalls.reduce((a, b) => a + b, 0) / overalls.length) : 0;
+}
+
+/** Catalogue-priority tallies across all responses, most-picked first. */
+export function catalogueCounts(responses: AuditResponse[]): { label: string; count: number }[] {
+  const map = new Map<string, number>();
+  for (const r of responses) {
+    for (const c of r.answers.catalogue) map.set(c, (map.get(c) ?? 0) + 1);
+  }
+  return [...map.entries()]
+    .map(([label, count]) => ({ label, count }))
+    .sort((a, b) => b.count - a.count);
+}

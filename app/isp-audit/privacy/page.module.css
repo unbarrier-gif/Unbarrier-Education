@@ -1,0 +1,145 @@
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
+}
+
+.hero {
+  background: var(--ia-accent-bg);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--ia-radius);
+  padding: var(--ia-space-6) var(--ia-space-5);
+  margin-bottom: var(--ia-space-5);
+}
+
+.title {
+  font-size: calc(clamp(1.6rem, 4vw, 2.2rem) * var(--ia-text-scale, 1));
+  margin-bottom: var(--ia-space-2);
+}
+
+.lede {
+  color: var(--ia-fg-muted);
+  max-width: 60ch;
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  margin: 0;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-2);
+  margin-top: var(--ia-space-4);
+}
+
+.chip {
+  font-size: calc(0.8rem * var(--ia-text-scale, 1));
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: var(--radius-pill);
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  color: var(--ia-fg-muted);
+}
+
+.card {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-4);
+}
+
+.card h2 {
+  font-size: calc(1.2rem * var(--ia-text-scale, 1));
+  margin: 0 0 var(--ia-space-2);
+  color: var(--ia-accent);
+}
+
+.card p {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  margin: 0 0 var(--ia-space-3);
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+.card ol,
+.card ul {
+  margin: 0 0 var(--ia-space-3);
+  padding-left: 1.3em;
+  color: var(--ia-fg-muted);
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+.card li {
+  margin-bottom: var(--ia-space-1);
+}
+
+.tableWrap {
+  overflow-x: auto;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: calc(0.88rem * var(--ia-text-scale, 1));
+}
+
+.table th,
+.table td {
+  text-align: left;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--ia-border);
+  vertical-align: top;
+  color: var(--ia-fg-muted);
+}
+
+.table th {
+  font-weight: 700;
+  color: var(--ia-fg);
+  font-size: calc(0.78rem * var(--ia-text-scale, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.note {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.86rem * var(--ia-text-scale, 1));
+  margin-top: var(--ia-space-3);
+}
+
+.fullLink {
+  background: var(--ia-accent-bg);
+  border-color: var(--ia-accent);
+}
+
+.backRow {
+  margin-top: var(--ia-space-6);
+}
+
+/* Compound selector deliberately: the isp-audit layout sets a global
+   `.root a { color: var(--ia-accent) }` (specificity 0,1,1) that would
+   otherwise repaint this button's label pearl-aqua on a pearl-aqua fill.
+   `.wrap .backLink` (0,2,0) clears it. */
+.wrap .backLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 12px 24px;
+  border-radius: var(--radius-pill);
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.wrap .backLink:hover {
+  opacity: 0.88;
+}

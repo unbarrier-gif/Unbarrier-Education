@@ -57,6 +57,7 @@ export type AuditResponse = {
   region: string | null;
   respondentName: string | null;
   respondentRole: string | null;
+  respondentEmail: string | null;
   submittedAt: string;
   answers: Answers;
 };

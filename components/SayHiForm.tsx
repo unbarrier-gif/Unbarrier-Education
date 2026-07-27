@@ -2,6 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
+import Link from 'next/link';
 import { sayHiAction, type FormState } from '@/app/hello/actions';
 import styles from './SayHiForm.module.css';
 
@@ -80,7 +81,16 @@ export function SayHiForm() {
             />
           </label>
 
-          <SubmitButton />
+          <div className={styles.submitRow}>
+            <p className={styles.privacyNote}>
+              We use your email only to reply.{' '}
+              <Link href="/legal/privacy" className={styles.privacyLink}>
+                Privacy notice
+              </Link>
+              .
+            </p>
+            <SubmitButton />
+          </div>
         </form>
 
         <p

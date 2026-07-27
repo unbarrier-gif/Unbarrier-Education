@@ -1,140 +1,337 @@
 .wrap {
-  max-width: 700px;
+  max-width: 840px;
   margin: 0 auto;
   padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
 }
 
-.title {
-  font-size: calc(clamp(1.6rem, 4vw, 2.2rem) * var(--ia-text-scale, 1));
-  margin-bottom: var(--ia-space-3);
+/* ---- print-only document header (matches the downloaded PDF) ---- */
+.printHeader {
+  display: none;
 }
 
-.lede {
+.printMeta {
+  text-align: right;
+  font-size: 0.82rem;
   color: var(--ia-fg-muted);
-  max-width: 60ch;
-  margin-bottom: var(--ia-space-6);
-  font-size: calc(1rem * var(--ia-text-scale, 1));
-  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  line-height: 1.4;
 }
 
-.scoreList {
-  margin-bottom: var(--ia-space-6);
-}
-
-.scoreRow {
+/* ---- on-screen toolbar: generated date + download ---- */
+.toolbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1)) 0;
-  border-bottom: 1px solid var(--ia-border);
+  justify-content: space-between;
+  gap: var(--ia-space-3);
+  flex-wrap: wrap;
+  margin-bottom: var(--ia-space-4);
+}
+
+.generated {
+  font-size: calc(0.85rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg-muted);
+  margin: 0;
+}
+
+.title {
+  font-size: calc(clamp(1.7rem, 4vw, 2.3rem) * var(--ia-text-scale, 1));
+  color: var(--ia-accent);
+  margin-bottom: var(--ia-space-2);
+}
+
+.subline {
+  color: var(--ia-fg);
   font-size: calc(1rem * var(--ia-text-scale, 1));
+  margin-bottom: var(--ia-space-6);
+}
+
+/* ---- top row: score card + radar ---- */
+.topRow {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: var(--ia-space-4);
+  margin-bottom: var(--ia-space-4);
+}
+
+@media (max-width: 640px) {
+  .topRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.scoreCard {
+  background: var(--ia-accent);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: var(--ia-space-5);
+  box-shadow: var(--ia-card-shadow);
+  text-align: center;
+  align-self: start;
+}
+
+.bigScore {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: calc(3.4rem * var(--ia-text-scale, 1));
+  line-height: 1;
+}
+
+.scoreUnit {
+  color: #e6ddf3;
+  font-size: 0.9rem;
+  margin-top: 4px;
 }
 
 .scoreLabel {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--ia-space-2);
+  color: #e6ddf3;
+  font-size: 0.9rem;
 }
 
-.scoreIcon {
-  display: inline-flex;
-  flex: none;
+.scoreDivider {
+  height: 1px;
+  background: rgba(255, 255, 255, 0.25);
+  margin: var(--ia-space-4) 0;
 }
 
-.scoreIcon svg {
-  width: 18px;
-  height: 18px;
-}
-
-.route {
-  border-radius: var(--ia-radius);
-  padding: var(--ia-space-5);
-  margin-bottom: var(--ia-space-6);
-  border: 1px solid var(--ia-border);
-}
-
-.route[data-route='pedagogy'] {
-  background: var(--ia-accent-bg);
-  border-color: var(--ia-accent);
-}
-
-.route[data-route='procurement'] {
-  background: var(--ia-high-bg);
-  border-color: var(--ia-high);
-}
-
-.route[data-route='both'] {
-  background: var(--ia-medium-bg);
-  border-color: var(--ia-medium);
-}
-
-.route[data-route='insufficient'] {
-  background: var(--ia-bg-alt);
-  border-color: var(--ia-border);
-}
-
-.route {
-  font-size: calc(1rem * var(--ia-text-scale, 1));
-  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
-}
-
-.routeTitle {
+.nextEyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  font-size: 0.68rem;
   font-weight: 700;
-  font-size: calc(1.1rem * var(--ia-text-scale, 1));
-  margin-bottom: var(--ia-space-2);
+  color: #cbb8e6;
 }
 
-.catalogue,
-.notes {
-  margin-bottom: var(--ia-space-6);
-  font-size: calc(1rem * var(--ia-text-scale, 1));
+.nextValue {
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-top: 4px;
 }
 
-.catalogue h2,
-.notes h2 {
-  font-size: calc(1.05rem * var(--ia-text-scale, 1));
-  margin-bottom: var(--ia-space-2);
+.radarCard,
+.domainsCard,
+.miniCard {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-5);
 }
 
-.noteItem {
-  border-left: 4px solid var(--ia-border-strong);
-  padding: var(--ia-space-2) 0 var(--ia-space-2) var(--ia-space-4);
-  margin-bottom: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1));
+.cardHeading {
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-size: calc(0.74rem * var(--ia-text-scale, 1));
+  font-weight: 700;
+  color: var(--ia-accent);
+  margin: 0 0 var(--ia-space-3);
 }
 
-.noteDomain {
-  font-weight: 600;
-  margin: 0 0 4px;
+/* ---- domain bars ---- */
+.domainsCard {
+  margin-bottom: var(--ia-space-4);
 }
 
-.noteText {
+.bars {
+  display: flex;
+  flex-direction: column;
+  gap: calc(var(--ia-space-3) * var(--ia-spacing-scale, 1));
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: minmax(110px, 190px) 1fr 2.4em;
+  gap: var(--ia-space-3);
+  align-items: center;
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
+}
+
+.barName {
+  color: var(--ia-fg);
+  line-height: 1.3;
+}
+
+.barTrack {
+  height: 18px;
+  background: #ece8f1;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.barFill[data-band='low'] {
+  background: var(--ia-low-fill);
+}
+
+.barFill[data-band='medium'] {
+  background: var(--ia-medium-fill);
+}
+
+.barFill[data-band='high'] {
+  background: var(--ia-high-fill);
+}
+
+.barValue {
+  text-align: right;
+  font-weight: 700;
+  color: var(--ia-fg);
+}
+
+.barNa {
   color: var(--ia-fg-muted);
+  font-weight: 400;
+  font-size: 0.82em;
+}
+
+/* ---- recommended next step ---- */
+.nextCard {
+  border-radius: var(--radius-lg);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-4);
+  border: 1px solid var(--ia-border);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.nextCard[data-route='pedagogy'] {
+  background: var(--ia-accent-bg);
+  border-color: color-mix(in srgb, var(--ia-accent) 30%, transparent);
+}
+
+.nextCard[data-route='procurement'] {
+  background: var(--ia-high-bg);
+  border-color: color-mix(in srgb, var(--ia-high) 35%, transparent);
+}
+
+.nextCard[data-route='both'] {
+  background: var(--ia-medium-bg);
+  border-color: color-mix(in srgb, var(--ia-medium) 35%, transparent);
+}
+
+.nextCard[data-route='insufficient'] {
+  background: var(--ia-bg-alt);
+}
+
+.nextPill {
+  display: inline-block;
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+  font-size: 0.78rem;
+  font-weight: 700;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.nextTitle {
+  font-size: calc(1.2rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg);
+  margin: var(--ia-space-3) 0 var(--ia-space-2);
+}
+
+.nextBody {
+  color: var(--ia-fg);
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  margin: 0;
+}
+
+/* ---- bottom row ---- */
+.bottomRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--ia-space-4);
+  margin-bottom: var(--ia-space-6);
+}
+
+@media (max-width: 640px) {
+  .bottomRow {
+    grid-template-columns: 1fr;
+  }
+}
+
+.pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-2);
+  margin-bottom: var(--ia-space-3);
+}
+
+.pill {
+  background: var(--ia-high-bg);
+  color: var(--ia-high);
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
+
+.miniCaption {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.82rem * var(--ia-text-scale, 1));
   margin: 0;
   line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
-.closing {
-  color: var(--ia-fg-muted);
-  border-top: 1px solid var(--ia-border);
-  padding-top: var(--ia-space-5);
-  font-size: calc(1rem * var(--ia-text-scale, 1));
+.nextList {
+  margin: 0;
+  padding-left: 1.2em;
+  color: var(--ia-fg);
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
   line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
-/* Print is a one-pager for an SLT meeting: headline, chart, domain
-   breakdown, recommendation — nothing else. The privacy note, catalogue
-   picks, freeform notes and closing caveat are all useful on screen but
-   just clutter on paper. */
-@media print {
-  .lede,
-  .catalogue,
-  .notes,
-  .closing {
-    display: none;
-  }
+.nextList li {
+  margin-bottom: var(--ia-space-2);
+}
 
+.privacyLine {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.85rem * var(--ia-text-scale, 1));
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  border-top: 1px solid var(--ia-border);
+  padding-top: var(--ia-space-4);
+}
+
+.privacyLine a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- print: lay out exactly like the target PDF ---- */
+@media print {
   .wrap {
     max-width: none;
     padding: 0;
+  }
+
+  .printHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--ia-accent);
+    padding-bottom: 8px;
+    margin-bottom: var(--ia-space-5);
+  }
+
+  .toolbar,
+  .privacyLine {
+    display: none;
+  }
+
+  /* Keep each card from breaking across a page mid-block. */
+  .scoreCard,
+  .radarCard,
+  .domainsCard,
+  .nextCard,
+  .miniCard {
+    break-inside: avoid;
   }
 }

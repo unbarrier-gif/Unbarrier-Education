@@ -82,6 +82,31 @@
   box-shadow: 0 0 0 3px rgba(219, 125, 204, 0.25);
 }
 
+.submitRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-3);
+}
+
+.privacyNote {
+  font-size: var(--fs-small);
+  color: var(--text-subtle);
+  margin: 0;
+  max-width: 44ch;
+}
+
+.privacyLink {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacyLink:hover {
+  opacity: 0.85;
+}
+
 .button {
   align-self: flex-end;
   min-width: 120px;
