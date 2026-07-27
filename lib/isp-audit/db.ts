@@ -100,6 +100,18 @@ export async function getResponseById(id: string): Promise<AuditResponse | null>
   return rows[0] ? rowToResponse(rows[0]) : null;
 }
 
+export async function deleteResponse(id: string): Promise<boolean> {
+  await ensureSchema();
+  const sql = neon(getConnectionString());
+  try {
+    const rows = await sql`DELETE FROM isp_audit_responses WHERE id = ${id} RETURNING id`;
+    return rows.length > 0;
+  } catch {
+    // Malformed UUID — nothing to delete.
+    return false;
+  }
+}
+
 export async function getAllResponses(): Promise<AuditResponse[]> {
   await ensureSchema();
   const sql = neon(getConnectionString());

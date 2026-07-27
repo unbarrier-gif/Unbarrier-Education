@@ -120,7 +120,7 @@
 .label {
   display: block;
   font-weight: 600;
-  font-size: 0.9rem;
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
   margin-bottom: 6px;
 }
 

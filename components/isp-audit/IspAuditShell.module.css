@@ -105,19 +105,66 @@
   text-align: center;
 }
 
-/* ---- content: reading-size + spacing scaling scoped to the page body ---- */
+/* ---- pill nav (leadership assessment | admin dashboard | privacy notice) ---- */
+.tabs {
+  max-width: 900px;
+  margin: 16px auto 0;
+  padding: 0 var(--ia-space-4);
+  display: flex;
+  gap: 8px;
+}
+
+/* `.tabs .tab` (0,2,0) beats the layout's global `.root a` (0,1,1), which
+   would otherwise repaint the inactive tab labels purple. */
+.tabs .tab {
+  flex: 1;
+  text-align: center;
+  padding: 11px 10px;
+  border-radius: 12px;
+  font-weight: 600;
+  font-size: 0.92rem;
+  border: 1px solid var(--ia-border);
+  background: var(--ia-bg-alt);
+  color: var(--ia-fg-muted);
+  text-decoration: none;
+  transition: 0.15s;
+}
+
+.tabs .tab:hover {
+  border-color: var(--ia-accent);
+  color: var(--ia-accent);
+}
+
+.tabs .tab[aria-current='page'] {
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+  border-color: var(--ia-accent);
+  box-shadow: var(--ia-card-shadow);
+}
+
+@media (max-width: 560px) {
+  .tabs .tab {
+    font-size: 0.8rem;
+    padding: 10px 6px;
+  }
+}
+
+/* ---- content: reading-size + spacing scaling scoped to the page body ----
+   The default (md) scale is 1.15 so the base body text lands ~18px — a
+   comfortable read without touching A+. The reading controls step from there:
+   sm back to ~16px, lg up to ~22px. */
 .content {
   flex: 1;
-  --ia-text-scale: 1;
+  --ia-text-scale: 1.15;
   --ia-spacing-scale: 1;
 }
 
 .content[data-ia-text-size='sm'] {
-  --ia-text-scale: 0.875;
+  --ia-text-scale: 1;
 }
 
 .content[data-ia-text-size='lg'] {
-  --ia-text-scale: 1.25;
+  --ia-text-scale: 1.4;
 }
 
 .content[data-ia-spacing='true'] {
