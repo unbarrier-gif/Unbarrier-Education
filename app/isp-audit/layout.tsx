@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
-import { Nav } from '@/components/Nav';
-import { Footer } from '@/components/Footer';
+import IspAuditShell from '@/components/isp-audit/IspAuditShell';
 import styles from './layout.module.css';
 
 // Client tool reached via a shared link, not a marketing page — keep it out
@@ -12,9 +11,7 @@ export const metadata: Metadata = {
 export default function IspAuditLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className={styles.root}>
-      <Nav active="audit" />
-      <div className={styles.navSpacer}>{children}</div>
-      <Footer variant="full" />
+      <IspAuditShell>{children}</IspAuditShell>
     </div>
   );
 }

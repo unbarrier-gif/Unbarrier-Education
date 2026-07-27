@@ -67,11 +67,6 @@
   color: var(--ia-accent);
 }
 
-/* Nav is position:fixed — push content clear of it. */
-.navSpacer {
-  padding-top: var(--nav-height);
-}
-
 .root :global(.skipLink) {
   position: absolute;
   left: -9999px;
@@ -88,49 +83,15 @@
 }
 
 @media print {
-  /* Every isp-audit component reads colour through these --ia-* tokens, so
-     redefining them here once is enough to flip the whole subtree from the
-     on-screen dark theme to something printable — without it, the page
-     prints as light text on a white page (most browsers don't print
-     background-color by default, so the dark backdrop these tokens assume
-     just doesn't show up, and the light text becomes invisible on paper). */
+  /* The route now renders its light theme on screen, so print keeps the same
+     --ia-* tokens rather than re-flipping them — this is what makes the
+     downloaded results match what's on screen (and the target PDF). We only
+     force colour printing: browsers drop background-colour by default, which
+     would otherwise lose the purple score card and the coloured domain bars.
+     The shell hides its own header/footer for print separately. */
   .root {
-    /* Headings and any un-classed <p> read the site's global --fg/--fg-muted
-       directly (globals.css), not the --ia-* aliases below — overriding
-       those too, or the page's own h1 headline prints unreadably pale. */
-    --fg: #14181f;
-    --fg-muted: #4b5563;
-    --ia-bg-alt: #f3f4f6;
-    --ia-fg: #14181f;
-    --ia-fg-muted: #4b5563;
-    --ia-border: #d0d5dd;
-    --ia-border-strong: #6b7280;
-    --ia-accent: #0f766e;
-    --ia-accent-text: #fff;
-    --ia-accent-bg: #e6f5f3;
-    --ia-low: #b91c1c;
-    --ia-low-fill: #b91c1c;
-    --ia-low-bg: #fdecec;
-    --ia-medium: #92400e;
-    --ia-medium-fill: #92400e;
-    --ia-medium-bg: #fdf1e3;
-    --ia-high: #166534;
-    --ia-high-fill: #166534;
-    --ia-high-bg: #eaf6ee;
     background: #fff;
-    color: var(--ia-fg);
-  }
-
-  /* Site chrome has no place on a printed page — direct children only, so
-     this doesn't reach into a page's own nested <nav> (e.g. the form's
-     jump-to-domain bar). Bare element selectors aren't hashed by CSS
-     modules, so no :global() needed here. */
-  .root > nav,
-  .root > footer {
-    display: none;
-  }
-
-  .navSpacer {
-    padding-top: 0;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
   }
 }

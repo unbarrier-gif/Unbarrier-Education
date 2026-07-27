@@ -43,6 +43,238 @@
   padding: var(--ia-space-8) 0;
 }
 
+/* ---- stats ---- */
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--ia-space-3);
+  margin-bottom: var(--ia-space-5);
+}
+
+@media (max-width: 560px) {
+  .stats {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-4) var(--ia-space-5);
+}
+
+.statBig {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.9rem;
+  color: var(--ia-accent);
+  line-height: 1;
+}
+
+.statLab {
+  font-size: 0.8rem;
+  color: var(--ia-fg-muted);
+  margin-top: 6px;
+}
+
+/* ---- generic dashboard card ---- */
+.card {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-5);
+}
+
+.cardTitle {
+  font-size: 1.15rem;
+  color: var(--ia-accent);
+  margin: 0 0 4px;
+}
+
+.cardSub {
+  color: var(--ia-fg-muted);
+  font-size: 0.9rem;
+  margin: 0 0 var(--ia-space-4);
+}
+
+/* ---- attention list ---- */
+.attn {
+  display: flex;
+  align-items: center;
+  gap: var(--ia-space-3);
+  padding: var(--ia-space-3) 0;
+  border-bottom: 1px solid var(--ia-border);
+}
+
+.attn:last-child {
+  border-bottom: none;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  flex: none;
+}
+
+.dot[data-band='low'] {
+  background: var(--ia-low-fill);
+}
+
+.dot[data-band='medium'] {
+  background: var(--ia-medium-fill);
+}
+
+.dot[data-band='high'] {
+  background: var(--ia-high-fill);
+}
+
+.attnName {
+  font-weight: 600;
+  font-size: 0.98rem;
+}
+
+.attnScore {
+  margin-left: auto;
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.1rem;
+  flex: none;
+}
+
+.attnScore[data-band='low'] {
+  color: var(--ia-low);
+}
+
+.attnScore[data-band='medium'] {
+  color: var(--ia-medium);
+}
+
+.attnScore[data-band='high'] {
+  color: var(--ia-high);
+}
+
+/* ---- routing cards ---- */
+.routes {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: var(--ia-space-3);
+}
+
+.rcard {
+  border-radius: var(--radius-md);
+  padding: var(--ia-space-4);
+  border: 1px solid var(--ia-border);
+}
+
+.rcard[data-route='pedagogy'] {
+  background: var(--ia-accent-bg);
+}
+
+.rcard[data-route='procurement'] {
+  background: var(--ia-high-bg);
+}
+
+.rcard[data-route='both'] {
+  background: var(--ia-medium-bg);
+}
+
+.rcard[data-route='insufficient'] {
+  background: var(--ia-bg-alt);
+}
+
+.rnum {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.8rem;
+  line-height: 1;
+  color: var(--ia-accent);
+}
+
+.rcard[data-route='procurement'] .rnum {
+  color: var(--ia-high);
+}
+
+.rcard[data-route='both'] .rnum {
+  color: var(--ia-medium);
+}
+
+.rlab {
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 6px;
+}
+
+/* ---- readiness bars + radar ---- */
+.readinessRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-5);
+  align-items: center;
+}
+
+.bars {
+  flex: 1 1 320px;
+  min-width: 260px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--ia-space-3);
+}
+
+.radarBox {
+  flex: 0 1 300px;
+  min-width: 240px;
+}
+
+.barRow {
+  display: grid;
+  grid-template-columns: minmax(110px, 180px) 1fr 2.4em;
+  gap: var(--ia-space-3);
+  align-items: center;
+  font-size: 0.88rem;
+}
+
+.barName {
+  line-height: 1.3;
+}
+
+.barTrack {
+  height: 18px;
+  background: #ece8f1;
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.barFill {
+  height: 100%;
+  border-radius: var(--radius-pill);
+}
+
+.barFill[data-band='low'] {
+  background: var(--ia-low-fill);
+}
+
+.barFill[data-band='medium'] {
+  background: var(--ia-medium-fill);
+}
+
+.barFill[data-band='high'] {
+  background: var(--ia-high-fill);
+}
+
+.barFill[data-band='accent'] {
+  background: var(--ia-accent);
+}
+
+.barValue {
+  text-align: right;
+  font-weight: 700;
+}
+
 .notes {
   margin-top: var(--ia-space-8);
 }

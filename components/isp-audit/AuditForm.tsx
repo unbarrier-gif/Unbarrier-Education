@@ -225,8 +225,10 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
             {d.name}
           </a>
         ))}
-        <span className={styles.progress}>{answeredCount} of {questions.length} questions answered</span>
       </nav>
+      <p className={styles.jumpProgress} aria-live="polite">
+        {answeredCount} of {questions.length} questions answered
+      </p>
 
       <form id="audit-form" onSubmit={handleSubmit} noValidate>
         {errorList.length > 0 && (

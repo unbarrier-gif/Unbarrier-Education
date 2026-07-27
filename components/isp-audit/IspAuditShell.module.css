@@ -1,0 +1,192 @@
+/* Self-contained LIGHT shell for the /isp-audit subtree — the site's own Nav
+   and Footer are dark-theme components whose text is near-invisible on this
+   light page, so this route gets its own light header + footer instead. All
+   colours read the --ia-* light tokens defined on .root in layout.module.css. */
+
+.shell {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* ---- header ---- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 40;
+  background: color-mix(in srgb, #f6f4f0 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--ia-border);
+}
+
+.headerRow {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 12px var(--ia-space-4);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ia-space-3);
+  flex-wrap: wrap;
+}
+
+.tools {
+  display: flex;
+  align-items: center;
+  gap: var(--ia-space-2);
+  flex-wrap: wrap;
+}
+
+.privacyLink {
+  font-size: 0.82rem;
+  font-weight: 700;
+  color: var(--ia-accent);
+  text-decoration: none;
+  margin-right: var(--ia-space-2);
+  border-bottom: 1px solid transparent;
+}
+
+.privacyLink:hover,
+.privacyLink:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.readingLabel {
+  font-size: 0.72rem;
+  color: var(--ia-fg-muted);
+}
+
+.rbtn {
+  min-width: 36px;
+  height: 36px;
+  border: 1px solid var(--ia-border-strong);
+  background: var(--ia-bg-alt);
+  color: var(--ia-accent);
+  border-radius: 10px;
+  font: inherit;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  padding: 0 10px;
+  transition: 0.15s;
+}
+
+.rbtn:hover:not(:disabled) {
+  border-color: var(--ia-accent);
+  background: var(--ia-accent-bg);
+}
+
+.rbtn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.rbtn[aria-pressed='true'] {
+  background: var(--ia-accent);
+  color: var(--ia-accent-text);
+  border-color: var(--ia-accent);
+}
+
+.rbtn:focus-visible {
+  outline: 3px solid var(--ia-focus);
+  outline-offset: 2px;
+}
+
+.sizeValue {
+  font-size: 0.78rem;
+  color: var(--ia-fg-muted);
+  min-width: 3em;
+  text-align: center;
+}
+
+/* ---- content: reading-size + spacing scaling scoped to the page body ---- */
+.content {
+  flex: 1;
+  --ia-text-scale: 1;
+  --ia-spacing-scale: 1;
+}
+
+.content[data-ia-text-size='sm'] {
+  --ia-text-scale: 0.875;
+}
+
+.content[data-ia-text-size='lg'] {
+  --ia-text-scale: 1.25;
+}
+
+.content[data-ia-spacing='true'] {
+  --ia-spacing-scale: 1.45;
+}
+
+/* ---- footer ---- */
+.footer {
+  background: var(--ia-bg-alt);
+  border-top: 1px solid var(--ia-border);
+  margin-top: var(--ia-space-8);
+}
+
+.footerGrid {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 26px var(--ia-space-4);
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ia-space-6);
+  justify-content: space-between;
+  align-items: flex-start;
+}
+
+.footerBrand {
+  max-width: 34ch;
+}
+
+.tagline {
+  font-size: 0.82rem;
+  color: var(--ia-fg-muted);
+  margin: 6px 0 0;
+  line-height: var(--lh-body);
+}
+
+.footCol {
+  font-size: 0.85rem;
+}
+
+.footHeading {
+  color: var(--ia-high);
+  font-weight: 700;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin: 0 0 8px;
+}
+
+.footLink {
+  display: block;
+  color: var(--ia-fg);
+  text-decoration: none;
+  margin-bottom: 5px;
+  border-bottom: 1px solid transparent;
+  width: fit-content;
+}
+
+.footLink:hover,
+.footLink:focus-visible {
+  border-bottom-color: currentColor;
+}
+
+.footBottom {
+  border-top: 1px solid var(--ia-border);
+  padding: 12px var(--ia-space-4);
+  text-align: center;
+  font-size: 0.74rem;
+  color: var(--ia-fg-muted);
+}
+
+@media print {
+  .header,
+  .footer {
+    display: none;
+  }
+}
