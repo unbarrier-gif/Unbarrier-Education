@@ -237,7 +237,8 @@
 
 @media print {
   .header,
-  .footer {
+  .footer,
+  .tabs {
     display: none;
   }
 }

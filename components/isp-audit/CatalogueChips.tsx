@@ -24,8 +24,13 @@ export default function CatalogueChips({
   }
 
   return (
-    <fieldset className={styles.wrap}>
-      <legend className={styles.legend}>Device catalogue preference</legend>
+    // A <div role="group"> rather than <fieldset>/<legend>: a legend renders on
+    // the card's top border and reads as "floating above" the card. This keeps
+    // the heading inside the card while preserving group semantics.
+    <div className={styles.wrap} role="group" aria-labelledby="catalogue-heading">
+      <h2 id="catalogue-heading" className={styles.legend}>
+        Device catalogue preference
+      </h2>
       <p className={styles.hint}>
         If your school could choose from an approved catalogue of devices — not locked to one vendor — what matters
         most? Pick up to {MAX}.
@@ -42,6 +47,6 @@ export default function CatalogueChips({
           );
         })}
       </div>
-    </fieldset>
+    </div>
   );
 }
