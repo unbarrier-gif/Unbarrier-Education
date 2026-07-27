@@ -1,34 +1,46 @@
 .root {
-  /* Unbarrier brand theme — this is the unbarrier.audit strand, so it uses
-     pearl-aqua as its accent (per the site's service-strand convention:
-     audit=pearl-aqua, access=princeton-orange, voice=orchid-mist) rather
-     than the site-wide spring-green action colour. Everything else aliases
-     the real global tokens from globals.css so this stays visually part of
-     the family instead of a bolt-on. */
-  --ia-bg-alt: var(--surface-raised);
-  --ia-fg: var(--text);
-  --ia-fg-muted: var(--text-muted);
-  --ia-border: var(--border-default);
-  --ia-border-strong: var(--border-strong);
-  --ia-focus: var(--focus-ring);
-  --ia-accent: var(--pearl-aqua);
-  --ia-accent-text: var(--amethyst);
-  --ia-accent-bg: rgba(105, 217, 209, 0.14);
+  /* Unbarrier brand theme — the unbarrier.audit strand. On screen this runs a
+     LIGHT theme: a warm off-white page, white cards, a purple (#4a2d6f)
+     accent for links/headings/buttons, with spring-green kept as the
+     positive/progress accent (progress bar, "high" fills). Scoped entirely to
+     /isp-audit — the global site theme is untouched. These values were the
+     print-only palette until this rollout; promoted to on-screen and tuned.
+     Score colours: --ia-*  = text/border tone (AA on white); --ia-*-fill =
+     the brighter chart/bar fill that pairs with white glyph text. */
 
-  /* Score colours — brightened versions of the site's semantic reds/ambers
-     for text/border legibility against the dark amethyst background (the
-     site's own dark-red/amber/green tones read at ~2.5:1 on amethyst, well
-     under the 4.5:1 AA minimum for text). Heatmap cell fills stay closer to
-     the deeper tones since those pair with solid white glyph text instead. */
-  --ia-low: #ff6b6b;
-  --ia-low-fill: #b91c1c;
-  --ia-low-bg: rgba(255, 107, 107, 0.16);
-  --ia-medium: #ffb84d;
-  --ia-medium-fill: #92400e;
-  --ia-medium-bg: rgba(255, 184, 77, 0.16);
-  --ia-high: var(--spring-green);
-  --ia-high-fill: #166534;
-  --ia-high-bg: rgba(56, 255, 153, 0.14);
+  /* Headings and any un-classed <p> in this subtree read the GLOBAL
+     --fg/--fg-muted (globals.css), not the --ia-* aliases below. Override
+     them here too, or they render as the dark theme's near-white text and
+     vanish against the light page. */
+  --fg: #2b2440;
+  --fg-muted: #5c5570;
+
+  --ia-fg: #2b2440;
+  --ia-fg-muted: #5c5570;
+  --ia-bg-alt: #ffffff;
+  --ia-border: #e9e5ef;
+  --ia-border-strong: #d5cfe0;
+  /* Purple focus ring, not the global spring-green: spring-green on white is
+     ~1.3:1, below the 3:1 WCAG 2.1 non-text-contrast floor for a focus
+     indicator. Purple clears it. */
+  --ia-focus: var(--ia-accent);
+  --ia-accent: #4a2d6f;
+  --ia-accent-text: #ffffff;
+  --ia-accent-bg: rgba(74, 45, 111, 0.08);
+
+  --ia-low: #b91c1c;
+  --ia-low-fill: #cf4a5e;
+  --ia-low-bg: #fdecec;
+  --ia-medium: #92400e;
+  --ia-medium-fill: #e39a34;
+  --ia-medium-bg: #fbf1df;
+  --ia-high: #166534;
+  --ia-high-fill: #4bb862;
+  --ia-high-bg: #eaf6ee;
+
+  /* Soft card shadow for the light theme — cards/domain blocks read this. */
+  --ia-card-shadow: 0 1px 2px rgba(51, 30, 80, 0.05),
+    0 8px 24px rgba(51, 30, 80, 0.07);
 
   --ia-radius: var(--radius-md);
   --ia-space-1: var(--space-1);
@@ -39,8 +51,12 @@
   --ia-space-6: var(--space-6);
   --ia-space-8: var(--space-8);
 
+  /* White so text inputs and the jump bar (both background: var(--bg)) sit
+     white against the off-white page. */
+  --bg: #ffffff;
+
   min-height: 100vh;
-  background: var(--bg);
+  background: #f6f4f0;
   color: var(--ia-fg);
   /* Explicit floor per accessibility guidance — stay comfortably above the
      1.4 minimum. The brand's own --lh-body (1.75) already clears this. */

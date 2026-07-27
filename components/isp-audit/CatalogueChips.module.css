@@ -1,8 +1,9 @@
 .wrap {
   padding: var(--ia-space-5);
   background: var(--ia-bg-alt);
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--ia-border);
+  box-shadow: var(--ia-card-shadow);
   margin-bottom: var(--ia-space-8);
 }
 

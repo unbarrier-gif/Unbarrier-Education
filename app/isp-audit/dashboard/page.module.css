@@ -55,7 +55,8 @@
 .noteCard {
   background: var(--ia-bg-alt);
   border: 1px solid var(--ia-border);
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
   padding: var(--ia-space-4) var(--ia-space-5);
   margin-bottom: var(--ia-space-4);
 }

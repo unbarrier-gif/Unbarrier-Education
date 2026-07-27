@@ -84,8 +84,9 @@
   margin-bottom: var(--ia-space-8);
   padding: var(--ia-space-5);
   background: var(--ia-bg-alt);
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-lg);
   border: 1px solid var(--ia-border);
+  box-shadow: var(--ia-card-shadow);
 }
 
 .textInput {
@@ -123,6 +124,11 @@
 .section {
   margin-bottom: calc(var(--ia-space-8) * var(--ia-spacing-scale, 1));
   scroll-margin-top: calc(var(--nav-height) + 16px);
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-5);
 }
 
 .sectionTitle {

@@ -47,10 +47,11 @@
 }
 
 .route {
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-lg);
   padding: var(--ia-space-5);
   margin-bottom: var(--ia-space-6);
   border: 1px solid var(--ia-border);
+  box-shadow: var(--ia-card-shadow);
 }
 
 .route[data-route='pedagogy'] {
