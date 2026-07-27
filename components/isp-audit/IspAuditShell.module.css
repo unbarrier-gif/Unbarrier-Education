@@ -236,6 +236,21 @@
 }
 
 @media print {
+  /* The site's global body background is the dark theme colour; it shows
+     through on any printed area the white content doesn't cover (e.g. below a
+     short results page), which was printing as a big amethyst block on an
+     overflow page. Whiten it, and stop the shell forcing a full-viewport
+     height (100vh in print overflows onto a second page). */
+  :global(html),
+  :global(body) {
+    background: #fff;
+  }
+
+  .shell {
+    display: block;
+    min-height: 0;
+  }
+
   .header,
   .footer,
   .tabs {

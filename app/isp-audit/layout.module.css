@@ -91,6 +91,7 @@
      The shell hides its own header/footer for print separately. */
   .root {
     background: #fff;
+    min-height: 0;
     -webkit-print-color-adjust: exact;
     print-color-adjust: exact;
   }
