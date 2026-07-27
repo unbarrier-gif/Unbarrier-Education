@@ -83,7 +83,7 @@ export default async function DashboardPage() {
       <div className={styles.adminHero}>
         <h1 className={styles.adminHeroTitle}>Admin dashboard</h1>
         <p className={styles.adminHeroText}>
-          Live view — updates automatically as schools respond. This is what Jonathan sees behind the
+          Live view — updates automatically as responses come in. Visible only to people with the
           passcode.
         </p>
       </div>

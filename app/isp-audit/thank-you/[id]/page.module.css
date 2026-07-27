@@ -306,19 +306,20 @@
 }
 
 /* ---- print: lay out exactly like the target PDF ---- */
+/* ---- print: everything on a single A4 page ---- */
 @media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+
   .wrap {
     max-width: none;
     padding: 0;
-  }
-
-  .printHeader {
-    display: flex;
-    align-items: baseline;
-    justify-content: space-between;
-    border-bottom: 2px solid var(--ia-accent);
-    padding-bottom: 8px;
-    margin-bottom: var(--ia-space-5);
+    /* Print at the base size, not the enlarged on-screen reading size, so it
+       stays on one page. */
+    --ia-text-scale: 1;
+    --ia-spacing-scale: 1;
   }
 
   .toolbar,
@@ -326,12 +327,102 @@
     display: none;
   }
 
-  /* Keep each card from breaking across a page mid-block. */
+  .printHeader {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    border-bottom: 2px solid var(--ia-accent);
+    padding-bottom: 6px;
+    margin-bottom: 10px;
+  }
+
+  .title {
+    font-size: 1.35rem;
+    margin-bottom: 2px;
+  }
+
+  .subline {
+    font-size: 0.85rem;
+    margin-bottom: 10px;
+  }
+
+  /* tighten every block and drop shadows for print */
   .scoreCard,
   .radarCard,
   .domainsCard,
   .nextCard,
   .miniCard {
+    box-shadow: none;
     break-inside: avoid;
+    padding: 12px 14px;
+  }
+
+  .topRow,
+  .domainsCard,
+  .nextCard,
+  .bottomRow {
+    margin-bottom: 10px;
+  }
+
+  .topRow {
+    gap: 10px;
+  }
+
+  .scoreCard {
+    padding: 12px;
+  }
+
+  .bigScore {
+    font-size: 2.4rem;
+  }
+
+  .cardHeading {
+    margin-bottom: 6px;
+  }
+
+  /* shrink the radar so the score + radar row stays short */
+  .radarCard svg {
+    max-height: 150px;
+    width: auto;
+    margin: 0 auto;
+    display: block;
+  }
+
+  .bars {
+    gap: 5px;
+  }
+
+  .barTrack {
+    height: 14px;
+  }
+
+  .barRow {
+    font-size: 0.82rem;
+  }
+
+  .nextTitle {
+    font-size: 1rem;
+    margin: 6px 0 4px;
+  }
+
+  .nextBody {
+    font-size: 0.82rem;
+  }
+
+  .bottomRow {
+    gap: 10px;
+  }
+
+  .miniCaption,
+  .nextList {
+    font-size: 0.8rem;
+  }
+
+  .nextList li {
+    margin-bottom: 3px;
+  }
+
+  .pills {
+    margin-bottom: 6px;
   }
 }

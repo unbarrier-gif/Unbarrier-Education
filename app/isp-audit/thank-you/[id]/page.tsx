@@ -65,10 +65,14 @@ export default async function ThankYouPage({ params }: { params: { id: string } 
 
       <div className={styles.toolbar}>
         <p className={styles.generated}>your results · generated {generated}</p>
-        <DownloadResultsButton />
+        <DownloadResultsButton
+          filename={`ISP-Compass-results${
+            response.school ? `-${response.school.replace(/[^\w-]+/g, '-').replace(/^-+|-+$/g, '')}` : ''
+          }`}
+        />
       </div>
 
-      <h1 className={styles.title}>Your assessment results</h1>
+      <h1 className={styles.title}>ISP Learning &amp; Device Compass — your results</h1>
       <p className={styles.subline}>
         {response.school ? <strong>{response.school}</strong> : <strong>Your response</strong>}
         {identityBits ? ` · ${identityBits}` : ''}

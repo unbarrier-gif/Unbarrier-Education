@@ -8,16 +8,18 @@
 }
 
 .legend {
-  font-size: 1.1rem;
+  font-size: calc(1.15rem * var(--ia-text-scale, 1));
   font-weight: 700;
+  color: var(--ia-accent);
   padding: 0;
-  margin-bottom: var(--ia-space-1);
+  margin: 0 0 4px;
 }
 
 .hint {
   color: var(--ia-fg-muted);
-  font-size: 0.9rem;
+  font-size: calc(0.92rem * var(--ia-text-scale, 1));
   margin: 0 0 var(--ia-space-4);
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .chips {
