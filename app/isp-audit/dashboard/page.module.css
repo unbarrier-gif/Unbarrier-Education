@@ -4,22 +4,43 @@
   padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
 }
 
+/* ---- green admin hero ---- */
+.adminHero {
+  background: linear-gradient(135deg, #2f6b3a 0%, #24502d 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 26px 28px;
+  box-shadow: var(--ia-card-shadow);
+  margin-bottom: var(--ia-space-5);
+}
+
+.adminHeroTitle {
+  color: #fff;
+  font-size: calc(clamp(1.5rem, 4vw, 1.9rem) * var(--ia-text-scale, 1));
+  margin-bottom: 6px;
+}
+
+.adminHeroText {
+  color: rgba(255, 255, 255, 0.85);
+  margin: 0;
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  max-width: 60ch;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
 .header {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
   gap: var(--ia-space-4);
-  margin-bottom: var(--ia-space-2);
-}
-
-.title {
-  font-size: clamp(1.5rem, 4vw, 2rem);
+  margin-bottom: var(--ia-space-5);
 }
 
 .count {
   color: var(--ia-fg-muted);
-  margin-bottom: var(--ia-space-6);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+  margin: 0;
 }
 
 .exportLink {
@@ -30,6 +51,7 @@
   padding: 13px 28px;
   border-radius: var(--radius-pill);
   font-weight: 700;
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
   min-height: 44px;
   transition: opacity 150ms ease;
 }
@@ -40,6 +62,7 @@
 
 .empty {
   color: var(--ia-fg-muted);
+  font-size: calc(1rem * var(--ia-text-scale, 1));
   padding: var(--ia-space-8) 0;
 }
 
@@ -68,13 +91,13 @@
 .statBig {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.9rem;
+  font-size: calc(1.9rem * var(--ia-text-scale, 1));
   color: var(--ia-accent);
   line-height: 1;
 }
 
 .statLab {
-  font-size: 0.8rem;
+  font-size: calc(0.85rem * var(--ia-text-scale, 1));
   color: var(--ia-fg-muted);
   margin-top: 6px;
 }
@@ -90,21 +113,21 @@
 }
 
 .cardTitle {
-  font-size: 1.15rem;
+  font-size: calc(1.15rem * var(--ia-text-scale, 1));
   color: var(--ia-accent);
   margin: 0 0 4px;
 }
 
 .cardSub {
   color: var(--ia-fg-muted);
-  font-size: 0.9rem;
+  font-size: calc(0.92rem * var(--ia-text-scale, 1));
   margin: 0 0 var(--ia-space-4);
 }
 
 /* ---- attention list ---- */
 .attn {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: var(--ia-space-3);
   padding: var(--ia-space-3) 0;
   border-bottom: 1px solid var(--ia-border);
@@ -119,6 +142,7 @@
   height: 12px;
   border-radius: 50%;
   flex: none;
+  margin-top: 7px;
 }
 
 .dot[data-band='low'] {
@@ -133,17 +157,29 @@
   background: var(--ia-high-fill);
 }
 
+.attnBody {
+  flex: 1;
+  min-width: 0;
+}
+
 .attnName {
   font-weight: 600;
-  font-size: 0.98rem;
+  font-size: calc(1rem * var(--ia-text-scale, 1));
+}
+
+.attnNote {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
+  margin-top: 2px;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .attnScore {
-  margin-left: auto;
+  flex: none;
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.1rem;
-  flex: none;
+  font-size: calc(1.2rem * var(--ia-text-scale, 1));
+  margin-top: 2px;
 }
 
 .attnScore[data-band='low'] {
@@ -161,8 +197,14 @@
 /* ---- routing cards ---- */
 .routes {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  grid-template-columns: repeat(3, 1fr);
   gap: var(--ia-space-3);
+}
+
+@media (max-width: 640px) {
+  .routes {
+    grid-template-columns: 1fr;
+  }
 }
 
 .rcard {
@@ -172,41 +214,52 @@
 }
 
 .rcard[data-route='pedagogy'] {
-  background: var(--ia-accent-bg);
+  background: var(--ia-low-bg);
 }
 
 .rcard[data-route='procurement'] {
-  background: var(--ia-high-bg);
-}
-
-.rcard[data-route='both'] {
   background: var(--ia-medium-bg);
 }
 
-.rcard[data-route='insufficient'] {
-  background: var(--ia-bg-alt);
+.rcard[data-route='both'] {
+  background: var(--ia-accent-bg);
 }
 
 .rnum {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: 1.8rem;
+  font-size: calc(1.8rem * var(--ia-text-scale, 1));
   line-height: 1;
-  color: var(--ia-accent);
+}
+
+.rcard[data-route='pedagogy'] .rnum {
+  color: var(--ia-low);
 }
 
 .rcard[data-route='procurement'] .rnum {
-  color: var(--ia-high);
-}
-
-.rcard[data-route='both'] .rnum {
   color: var(--ia-medium);
 }
 
+.rcard[data-route='both'] .rnum {
+  color: var(--ia-accent);
+}
+
 .rlab {
-  font-size: 0.85rem;
-  font-weight: 600;
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
+  font-weight: 700;
   margin-top: 6px;
+}
+
+.rblurb {
+  font-size: calc(0.8rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg-muted);
+  margin-top: 3px;
+}
+
+.routeNote {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.88rem * var(--ia-text-scale, 1));
+  margin: var(--ia-space-3) 0 0;
 }
 
 /* ---- readiness bars + radar ---- */
@@ -232,10 +285,10 @@
 
 .barRow {
   display: grid;
-  grid-template-columns: minmax(110px, 180px) 1fr 2.4em;
+  grid-template-columns: minmax(120px, 200px) 1fr 2.6em;
   gap: var(--ia-space-3);
   align-items: center;
-  font-size: 0.88rem;
+  font-size: calc(0.92rem * var(--ia-text-scale, 1));
 }
 
 .barName {
@@ -275,12 +328,13 @@
   font-weight: 700;
 }
 
+/* ---- notes ---- */
 .notes {
-  margin-top: var(--ia-space-8);
+  margin-top: var(--ia-space-6);
 }
 
 .notes h2 {
-  font-size: 1.2rem;
+  font-size: calc(1.2rem * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-4);
 }
 
@@ -294,13 +348,13 @@
 }
 
 .noteCard h3 {
-  font-size: 0.95rem;
+  font-size: calc(1rem * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-2);
 }
 
 .noteMeta {
   color: var(--ia-fg-muted);
-  font-size: 0.85rem;
+  font-size: calc(0.88rem * var(--ia-text-scale, 1));
   margin-bottom: var(--ia-space-3);
 }
 
@@ -310,10 +364,12 @@
 
 .noteQ {
   font-weight: 600;
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
   margin: 0 0 4px;
 }
 
 .noteA {
   margin: 0;
+  font-size: calc(0.95rem * var(--ia-text-scale, 1));
   color: var(--ia-fg-muted);
 }

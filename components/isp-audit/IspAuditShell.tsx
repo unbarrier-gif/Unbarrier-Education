@@ -2,8 +2,15 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Wordmark } from '@/components/Wordmark';
 import styles from './IspAuditShell.module.css';
+
+const TABS = [
+  { href: '/isp-audit', label: 'leadership assessment' },
+  { href: '/isp-audit/dashboard', label: 'admin dashboard' },
+  { href: '/isp-audit/privacy', label: 'privacy notice' },
+];
 
 type TextSize = 'sm' | 'md' | 'lg';
 
@@ -41,6 +48,9 @@ function loadVoices(): Promise<SpeechSynthesisVoice[]> {
  * --ia-text-scale / --ia-spacing-scale that every isp-audit component reads.
  */
 export default function IspAuditShell({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isActive = (href: string) =>
+    href === '/isp-audit' ? pathname === '/isp-audit' : pathname.startsWith(href);
   const [textSize, setTextSize] = useState<TextSize>('md');
   const [extraSpacing, setExtraSpacing] = useState(false);
   const [hydrated, setHydrated] = useState(false);
@@ -171,6 +181,19 @@ export default function IspAuditShell({ children }: { children: React.ReactNode 
           </div>
         </div>
       </header>
+
+      <nav className={styles.tabs} aria-label="ISP Compass sections">
+        {TABS.map((t) => (
+          <Link
+            key={t.href}
+            href={t.href}
+            className={styles.tab}
+            aria-current={isActive(t.href) ? 'page' : undefined}
+          >
+            {t.label}
+          </Link>
+        ))}
+      </nav>
 
       <div
         ref={contentRef}

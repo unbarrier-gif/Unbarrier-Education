@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { checkAdminPasscode, ADMIN_COOKIE_NAME } from '@/lib/isp-audit/adminAuth';
+import { checkAdminPasscode, adminSessionToken, ADMIN_COOKIE_NAME } from '@/lib/isp-audit/adminAuth';
 import { clientIp, rateLimit } from '@/lib/rateLimit';
 
 export const runtime = 'nodejs';
@@ -26,8 +26,14 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: false, error: 'invalid-passcode' }, { status: 401 });
   }
 
+  // Store a hash of the key, not the raw passcode the user just typed.
+  const token = adminSessionToken();
+  if (!token) {
+    return NextResponse.json({ ok: false, error: 'not-configured' }, { status: 401 });
+  }
+
   const res = NextResponse.json({ ok: true });
-  res.cookies.set(ADMIN_COOKIE_NAME, parsed.data.passcode, {
+  res.cookies.set(ADMIN_COOKIE_NAME, token, {
     httpOnly: true,
     secure: process.env.NODE_ENV === 'production',
     sameSite: 'lax',
