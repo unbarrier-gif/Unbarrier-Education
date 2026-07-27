@@ -52,6 +52,14 @@
   margin-bottom: var(--ia-space-4);
 }
 
+/* Grid items default to min-width:auto (min-content). The radar SVG's
+   intrinsic width is 500px, so without this the 1fr column can't shrink below
+   it and the row overflows the (narrower) print page past the right margin. */
+.topRow > *,
+.bottomRow > * {
+  min-width: 0;
+}
+
 @media (max-width: 640px) {
   .topRow {
     grid-template-columns: 1fr;
@@ -310,16 +318,23 @@
 @media print {
   @page {
     size: A4;
-    margin: 12mm;
+    margin: 15mm;
   }
 
   .wrap {
     max-width: none;
     padding: 0;
+    width: 100%;
+    box-sizing: border-box;
     /* Print at the base size, not the enlarged on-screen reading size, so it
        stays on one page. */
     --ia-text-scale: 1;
     --ia-spacing-scale: 1;
+  }
+
+  /* Nothing may bleed past the page margin. */
+  .wrap * {
+    max-width: 100%;
   }
 
   .toolbar,
@@ -354,14 +369,14 @@
   .miniCard {
     box-shadow: none;
     break-inside: avoid;
-    padding: 12px 14px;
+    padding: 10px 12px;
   }
 
   .topRow,
   .domainsCard,
   .nextCard,
   .bottomRow {
-    margin-bottom: 10px;
+    margin-bottom: 8px;
   }
 
   .topRow {
@@ -382,7 +397,7 @@
 
   /* shrink the radar so the score + radar row stays short */
   .radarCard svg {
-    max-height: 150px;
+    max-height: 140px;
     width: auto;
     margin: 0 auto;
     display: block;
