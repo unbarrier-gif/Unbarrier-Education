@@ -34,7 +34,7 @@ const FOOTER_LINK_GROUPS = [
   {
     heading: 'Legal',
     links: [
-      { label: 'Privacy policy', href: '/legal/privacy' },
+      { label: 'Privacy notice', href: '/legal/privacy' },
       { label: 'Terms', href: '/legal/terms' },
     ],
   },
@@ -57,7 +57,7 @@ function SimpleFooter() {
         </p>
         <p className={styles.links}>
           <Link href="/legal/privacy" className={styles.link}>
-            privacy
+            privacy notice
           </Link>
           <span aria-hidden="true" className={styles.dot}>&middot;</span>
           <Link href="/legal/terms" className={styles.link}>

@@ -19,6 +19,7 @@ export function buildResponsesCsv(questionSet: QuestionSet, responses: AuditResp
     'region',
     'respondent_name',
     'respondent_role',
+    'respondent_email',
     ...questions.map((q) => q.id),
     ...domainIds.map((id) => `domain_${id}_score`),
     'route',
@@ -39,6 +40,7 @@ export function buildResponsesCsv(questionSet: QuestionSet, responses: AuditResp
       r.region ?? '',
       r.respondentName ?? '',
       r.respondentRole ?? '',
+      r.respondentEmail ?? '',
       ...questions.map((q) => {
         const v = r.answers.scores[q.id];
         if (v !== undefined) return String(v);

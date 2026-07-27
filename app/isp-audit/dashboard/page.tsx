@@ -58,6 +58,7 @@ export default async function DashboardPage() {
                     Submitted {new Date(r.submittedAt).toLocaleString('en-GB')}
                     {r.respondentName ? ` · ${r.respondentName}` : ''}
                     {r.respondentRole ? ` (${r.respondentRole})` : ''}
+                    {r.respondentEmail ? ` · ${r.respondentEmail}` : ''}
                   </p>
                   {r.answers.catalogue.length > 0 && (
                     <div className={styles.noteQA}>

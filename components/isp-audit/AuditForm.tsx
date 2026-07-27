@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
+import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import type { Answers, QuestionSet, ScoreValue } from '@/lib/isp-audit/types';
 import { allQuestions } from '@/lib/isp-audit/types';
@@ -17,6 +18,7 @@ type Draft = {
   region: string;
   respondentName: string;
   respondentRole: string;
+  respondentEmail: string;
   scores: Record<string, ScoreValue>;
   cantAnswer: string[];
   notes: Record<string, string>;
@@ -29,6 +31,7 @@ const EMPTY_DRAFT: Draft = {
   region: '',
   respondentName: '',
   respondentRole: '',
+  respondentEmail: '',
   scores: {},
   cantAnswer: [],
   notes: {},
@@ -41,7 +44,12 @@ const IDENTITY_FIELD_LABEL: Record<string, string> = {
   region: 'Region',
   respondentName: 'Respondent name',
   respondentRole: 'Role',
+  respondentEmail: 'Email',
 };
+
+// Matches the server's zod .email() closely enough to catch typos before a
+// round-trip — the API is still the real boundary.
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
 export default function AuditForm({ questionSet }: { questionSet: QuestionSet }) {
   const router = useRouter();
@@ -114,6 +122,11 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
     if (!draft.respondentRole.trim()) {
       next.respondentRole = 'Enter your role.';
     }
+    if (!draft.respondentEmail.trim()) {
+      next.respondentEmail = 'Enter your email so we can send your results.';
+    } else if (!EMAIL_RE.test(draft.respondentEmail.trim())) {
+      next.respondentEmail = 'Enter a valid email address.';
+    }
     // Block only an accidental empty click — at least one real score,
     // anywhere, is enough. Multiple people often split a submission by
     // domain (IT lead does device/environment, SENCO does EAL, etc.), so
@@ -157,6 +170,7 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           region: draft.region.trim() || null,
           respondentName: draft.respondentName.trim(),
           respondentRole: draft.respondentRole.trim(),
+          respondentEmail: draft.respondentEmail.trim(),
           answers,
           honeypot,
         }),
@@ -193,6 +207,14 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
         <p className={styles.scoringKey}>
           <strong>Scoring: 0</strong> = doesn’t exist at all &nbsp;·&nbsp; <strong>1</strong> = exists but weak
           &nbsp;·&nbsp; <strong>5</strong> = fully in place and working well.
+        </p>
+        <p className={styles.meta}>
+          We collect your name, email, role and answers to send your results and
+          plan ISP’s review. See our{' '}
+          <Link href="/isp-audit/privacy" className={styles.privacyLink}>
+            privacy notice
+          </Link>
+          .
         </p>
       </div>
 
@@ -252,6 +274,35 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
             {errors.respondentName && (
               <p id="ia-respondentName-error" className={styles.fieldError}>
                 {errors.respondentName}
+              </p>
+            )}
+          </div>
+          <div>
+            <label htmlFor="ia-respondentEmail" className={styles.label}>
+              Email <span className={styles.requiredNote}>(required)</span>
+            </label>
+            <input
+              id="ia-respondentEmail"
+              type="email"
+              className={styles.textInput}
+              value={draft.respondentEmail}
+              onChange={(e) => setField('respondentEmail', e.target.value)}
+              aria-invalid={errors.respondentEmail ? 'true' : undefined}
+              aria-describedby={
+                errors.respondentEmail
+                  ? 'ia-respondentEmail-error'
+                  : 'ia-respondentEmail-hint'
+              }
+              aria-required="true"
+              autoComplete="email"
+            />
+            {errors.respondentEmail ? (
+              <p id="ia-respondentEmail-error" className={styles.fieldError}>
+                {errors.respondentEmail}
+              </p>
+            ) : (
+              <p id="ia-respondentEmail-hint" className={styles.notesHint}>
+                We use it to send your results and follow up — nothing else.
               </p>
             )}
           </div>
@@ -376,6 +427,14 @@ export default function AuditForm({ questionSet }: { questionSet: QuestionSet })
           </button>
           <span className={styles.progress}>{answeredCount} of {questions.length} questions answered</span>
         </div>
+        <p className={styles.submitPrivacy}>
+          By submitting you agree we can hold your answers to run ISP’s review
+          and send you your results. See our{' '}
+          <Link href="/isp-audit/privacy" className={styles.privacyLink}>
+            privacy notice
+          </Link>
+          .
+        </p>
         {submitError && (
           <p className={styles.submitError} role="alert">
             {submitError}

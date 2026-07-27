@@ -232,6 +232,18 @@
   cursor: not-allowed;
 }
 
+.submitPrivacy {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.85rem * var(--ia-text-scale, 1));
+  margin-top: var(--ia-space-3);
+  max-width: 60ch;
+}
+
+.privacyLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .submitError {
   color: var(--ia-low);
 }
