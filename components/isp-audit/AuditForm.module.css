@@ -1,105 +1,110 @@
 .wrap {
   max-width: 760px;
   margin: 0 auto;
-  padding: var(--ia-space-6) var(--ia-space-4) var(--ia-space-8);
+  padding: var(--ia-space-6) var(--ia-space-4) 0;
 }
 
-.intro {
-  margin-bottom: var(--ia-space-6);
+/* ---- overview hero (amethyst, white text) ---- */
+.hero {
+  background: linear-gradient(135deg, #3a1e5c 0%, var(--amethyst) 100%);
+  color: #fff;
+  border-radius: var(--radius-lg);
+  padding: 30px 28px;
+  box-shadow: var(--ia-card-shadow);
+  margin-bottom: var(--ia-space-5);
 }
 
-.title {
-  font-size: calc(clamp(1.6rem, 4vw, 2.2rem) * var(--ia-text-scale, 1));
-  margin-bottom: var(--ia-space-3);
+.heroTitle {
+  font-size: calc(clamp(1.5rem, 4vw, 1.9rem) * var(--ia-text-scale, 1));
+  color: #fff;
+  margin-bottom: 8px;
 }
 
-.introText {
-  color: var(--ia-fg-muted);
+.heroText {
+  color: rgba(255, 255, 255, 0.85);
   max-width: 60ch;
   font-size: calc(1rem * var(--ia-text-scale, 1));
   line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+  margin: 0;
 }
 
-.meta {
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.chip {
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: #efe8fa;
+  padding: 5px 12px;
+  border-radius: var(--radius-pill);
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.chipGreen {
+  background: rgba(56, 255, 153, 0.16);
+  border-color: rgba(56, 255, 153, 0.3);
+  color: #bfffdd;
+}
+
+/* ---- generic card ---- */
+.card {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  padding: var(--ia-space-5);
+  margin-bottom: var(--ia-space-4);
+}
+
+.cardTitle {
+  font-size: calc(1.15rem * var(--ia-text-scale, 1));
+  color: var(--ia-accent);
+  margin: 0 0 4px;
+}
+
+.cardSub {
   color: var(--ia-fg-muted);
   font-size: calc(0.9rem * var(--ia-text-scale, 1));
-  margin-top: var(--ia-space-3);
+  margin: 0 0 var(--ia-space-3);
+}
+
+.instructions {
+  background: var(--ia-accent-bg);
+  border-radius: var(--radius-md);
+  padding: 14px 16px;
+  font-size: calc(0.92rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg);
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .scoringKey {
   color: var(--ia-fg-muted);
   font-size: calc(0.9rem * var(--ia-text-scale, 1));
+  margin-top: var(--ia-space-3);
+}
+
+.privacyNote {
+  color: var(--ia-fg-muted);
+  font-size: calc(0.85rem * var(--ia-text-scale, 1));
   margin-top: var(--ia-space-2);
 }
 
-.jumpNav {
-  /* Clean text links, no chips/boxes — scrolls away with the page (the shell
-     header is the only pinned bar). */
-  background: transparent;
-  border-bottom: 1px solid var(--ia-border);
-  padding: var(--ia-space-3) 0;
-  margin-bottom: var(--ia-space-3);
-  display: flex;
-  flex-wrap: wrap;
-  gap: var(--ia-space-2) var(--ia-space-4);
+.inlineLink {
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
-.jumpLink {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  background: none;
-  color: var(--ia-accent);
-  font-size: calc(0.9rem * var(--ia-text-scale, 1));
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-}
-
-.jumpLink:hover,
-.jumpLink:focus-visible {
-  border-bottom-color: currentColor;
-}
-
-/* The progress counter gets its own full-width line with clearance — it used
-   to sit inline at the right edge of the jump nav where it clipped. */
-.jumpProgress {
-  font-size: calc(0.85rem * var(--ia-text-scale, 1));
-  color: var(--ia-fg-muted);
-  margin: 0 0 var(--ia-space-6);
-}
-
-.jumpIcon {
-  display: inline-flex;
-  flex: none;
-  color: var(--ia-domain-color, var(--ia-accent));
-}
-
-.jumpIcon svg {
-  width: 16px;
-  height: 16px;
-}
-
-.progress {
-  font-size: calc(0.85rem * var(--ia-text-scale, 1));
-  color: var(--ia-fg-muted);
-  margin-left: auto;
-}
-
+/* ---- about you grid ---- */
 .identity {
   display: grid;
-  /* Fixed two columns so Name/Email sit on row one and Role/School on row two,
-     top-aligned — align-items:start keeps rows level even though the Email
-     field is taller (it carries a hint). Collapses to one column on narrow
-     screens. */
   grid-template-columns: 1fr 1fr;
   align-items: start;
   gap: var(--ia-space-4) var(--ia-space-5);
-  margin-bottom: var(--ia-space-8);
-  padding: var(--ia-space-5);
-  background: var(--ia-bg-alt);
-  border-radius: var(--radius-lg);
-  border: 1px solid var(--ia-border);
-  box-shadow: var(--ia-card-shadow);
 }
 
 @media (max-width: 560px) {
@@ -108,30 +113,15 @@
   }
 }
 
-.textInput {
-  width: 100%;
-  padding: var(--ia-space-3);
-  border: 1.5px solid var(--ia-border-strong);
-  border-radius: var(--ia-radius);
-  font: inherit;
-  color: var(--ia-fg);
-  background: var(--bg);
-}
-
-.textInput[aria-invalid='true'] {
-  border-color: var(--ia-low);
+.field {
+  min-width: 0;
 }
 
 .label {
   display: block;
   font-weight: 600;
-  margin-bottom: var(--ia-space-2);
-}
-
-.fieldError {
-  color: var(--ia-low);
   font-size: 0.9rem;
-  margin-top: var(--ia-space-2);
+  margin-bottom: 6px;
 }
 
 .requiredNote {
@@ -140,77 +130,45 @@
   font-size: 0.85em;
 }
 
-.section {
-  margin-bottom: calc(var(--ia-space-8) * var(--ia-spacing-scale, 1));
-  scroll-margin-top: calc(var(--nav-height) + 16px);
-  background: var(--ia-bg-alt);
-  border: 1px solid var(--ia-border);
-  border-radius: var(--radius-lg);
-  box-shadow: var(--ia-card-shadow);
-  padding: var(--ia-space-5);
-}
-
-.sectionTitle {
-  display: flex;
-  align-items: center;
-  gap: var(--ia-space-2);
-  font-size: calc(1.4rem * var(--ia-text-scale, 1));
-  margin-bottom: var(--ia-space-2);
-  padding-bottom: var(--ia-space-2);
-  border-bottom: 2px solid var(--ia-domain-color, var(--ia-border));
-}
-
-.sectionIcon {
-  flex: none;
-  color: var(--ia-domain-color, var(--ia-accent));
-}
-
-.sectionDescription {
-  color: var(--ia-fg-muted);
-  margin-bottom: calc(var(--ia-space-5) * var(--ia-spacing-scale, 1));
-  font-size: calc(0.9rem * var(--ia-text-scale, 1));
-}
-
-.field {
-  /* space-6 (not space-5) is the deliberately roomier baseline gap between
-     questions — confirmed via live render that space-5 read as cramped
-     given how much text each prompt/option row carries. */
-  margin-bottom: calc(var(--ia-space-6) * var(--ia-spacing-scale, 1));
-}
-
-.notesLabel {
-  display: block;
-  font-size: calc(0.9rem * var(--ia-text-scale, 1));
-  font-weight: 600;
-  color: var(--ia-fg-muted);
-  margin-top: var(--ia-space-5);
-  margin-bottom: var(--ia-space-1);
-}
-
-.notesHint {
-  font-size: calc(0.82rem * var(--ia-text-scale, 1));
-  color: var(--ia-fg-muted);
-  margin: 0 0 var(--ia-space-2);
-}
-
-.notesTextarea {
+.textInput {
   width: 100%;
-  min-height: 70px;
-  padding: var(--ia-space-3);
+  padding: 11px 13px;
   border: 1.5px solid var(--ia-border-strong);
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-md);
   font: inherit;
   color: var(--ia-fg);
-  background: var(--bg);
-  resize: vertical;
+  background: #fff;
 }
 
+.textInput:focus {
+  outline: 2px solid var(--ia-accent);
+  border-color: var(--ia-accent);
+}
+
+.textInput[aria-invalid='true'] {
+  border-color: var(--ia-low);
+}
+
+.fieldError {
+  color: var(--ia-low);
+  font-size: 0.9rem;
+  margin-top: 6px;
+}
+
+.fieldHint {
+  font-size: calc(0.82rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg-muted);
+  margin: 6px 0 0;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
+}
+
+/* ---- error summary ---- */
 .errorSummary {
   border: 2px solid var(--ia-low);
   background: var(--ia-low-bg);
-  border-radius: var(--ia-radius);
+  border-radius: var(--radius-md);
   padding: var(--ia-space-4) var(--ia-space-5);
-  margin-bottom: var(--ia-space-6);
+  margin-bottom: var(--ia-space-4);
 }
 
 .errorSummary h2 {
@@ -228,28 +186,153 @@
   color: var(--ia-low);
 }
 
-.submitRow {
+/* ---- domain accordion cards ---- */
+.domainCard {
+  background: var(--ia-bg-alt);
+  border: 1px solid var(--ia-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--ia-card-shadow);
+  margin-bottom: var(--ia-space-4);
+  overflow: hidden;
+  scroll-margin-top: 84px;
+}
+
+.dHeading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.dhead {
+  width: 100%;
   display: flex;
   align-items: center;
-  gap: var(--ia-space-4);
-  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: var(--ia-space-5);
+  text-align: left;
+  font: inherit;
+  color: var(--ia-fg);
+}
+
+.dheadLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+}
+
+.dnum {
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  background: var(--ia-accent-bg);
+  color: var(--ia-accent);
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  flex: none;
+}
+
+.dtitleWrap {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.dtitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: calc(1.05rem * var(--ia-text-scale, 1));
+  color: var(--ia-fg);
+  line-height: 1.25;
+}
+
+.bestfor {
+  align-self: flex-start;
+  background: var(--ia-high-bg);
+  color: var(--ia-high);
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 3px 10px;
+  border-radius: var(--radius-pill);
+}
+
+.caret {
+  color: var(--ia-fg-muted);
+  font-size: 1.2rem;
+  flex: none;
+  transition: transform 0.2s;
+}
+
+.dhead[aria-expanded='false'] .caret {
+  transform: rotate(-90deg);
+}
+
+.dbody {
+  padding: 0 var(--ia-space-5) var(--ia-space-5);
+}
+
+.question {
+  padding-top: calc(var(--ia-space-5) * var(--ia-spacing-scale, 1));
+  margin-top: calc(var(--ia-space-5) * var(--ia-spacing-scale, 1));
+  border-top: 1px solid var(--ia-border);
+}
+
+.question:first-child {
+  border-top: none;
+  margin-top: 0;
+  padding-top: var(--ia-space-2);
+}
+
+.notesLabel {
+  display: block;
+  font-size: calc(0.9rem * var(--ia-text-scale, 1));
+  font-weight: 600;
+  color: var(--ia-fg-muted);
+  margin-top: var(--ia-space-5);
+  margin-bottom: 4px;
+}
+
+.notesTextarea {
+  width: 100%;
+  min-height: 70px;
+  padding: var(--ia-space-3);
+  border: 1.5px solid var(--ia-border-strong);
+  border-radius: var(--radius-md);
+  font: inherit;
+  color: var(--ia-fg);
+  background: #fff;
+  resize: vertical;
+}
+
+/* ---- submit card ---- */
+.submitCard {
+  text-align: center;
 }
 
 .submitButton {
   background: var(--ia-accent);
   color: var(--ia-accent-text);
   border: none;
-  padding: 13px 28px;
+  padding: 15px 30px;
   border-radius: var(--radius-pill);
   font: inherit;
   font-weight: 700;
+  font-size: 1rem;
   cursor: pointer;
   min-height: 44px;
+  box-shadow: var(--ia-card-shadow);
   transition: opacity 150ms ease;
 }
 
 .submitButton:hover:not(:disabled) {
-  opacity: 0.88;
+  opacity: 0.9;
 }
 
 .submitButton:disabled {
@@ -260,17 +343,14 @@
 .submitPrivacy {
   color: var(--ia-fg-muted);
   font-size: calc(0.85rem * var(--ia-text-scale, 1));
-  margin-top: var(--ia-space-3);
-  max-width: 60ch;
-}
-
-.privacyLink {
-  text-decoration: underline;
-  text-underline-offset: 3px;
+  margin: var(--ia-space-3) auto 0;
+  max-width: 54ch;
+  line-height: calc(var(--lh-body) * var(--ia-spacing-scale, 1));
 }
 
 .submitError {
   color: var(--ia-low);
+  margin-top: var(--ia-space-2);
 }
 
 .honeypot {
@@ -279,4 +359,47 @@
   width: 1px;
   height: 1px;
   overflow: hidden;
+}
+
+/* ---- sticky progress bar ---- */
+.progwrap {
+  position: sticky;
+  bottom: 0;
+  z-index: 20;
+  margin-top: var(--ia-space-5);
+  background: color-mix(in srgb, #f6f4f0 94%, transparent);
+  backdrop-filter: blur(8px);
+  border-top: 1px solid var(--ia-border);
+  padding: 12px 0;
+}
+
+.progInner {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 var(--ia-space-4);
+  display: flex;
+  align-items: center;
+  gap: var(--ia-space-4);
+}
+
+.progBar {
+  flex: 1;
+  height: 9px;
+  background: var(--ia-border);
+  border-radius: var(--radius-pill);
+  overflow: hidden;
+}
+
+.progBar > i {
+  display: block;
+  height: 100%;
+  background: var(--spring-green);
+  border-radius: var(--radius-pill);
+  transition: width 0.3s ease;
+}
+
+.progText {
+  font-size: 0.82rem;
+  color: var(--ia-fg-muted);
+  white-space: nowrap;
 }

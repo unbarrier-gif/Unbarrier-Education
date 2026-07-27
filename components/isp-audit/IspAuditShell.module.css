@@ -1,7 +1,8 @@
-/* Self-contained LIGHT shell for the /isp-audit subtree — the site's own Nav
-   and Footer are dark-theme components whose text is near-invisible on this
-   light page, so this route gets its own light header + footer instead. All
-   colours read the --ia-* light tokens defined on .root in layout.module.css. */
+/* Self-contained shell for the /isp-audit subtree. The header and footer are
+   AMETHYST (#210a33, the site's structural dark) with white text and
+   spring-green accents, per the approved preview; the body between them stays
+   light. Setting --text:#fff on the dark bars lets the shared <Wordmark>
+   render white with its green dot without a bespoke wordmark. */
 
 .shell {
   display: flex;
@@ -9,14 +10,14 @@
   min-height: 100vh;
 }
 
-/* ---- header ---- */
+/* ---- header (amethyst) ---- */
 .header {
+  --text: #fff;
   position: sticky;
   top: 0;
   z-index: 40;
-  background: color-mix(in srgb, #f6f4f0 92%, transparent);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid var(--ia-border);
+  background: var(--amethyst);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .headerRow {
@@ -37,34 +38,38 @@
   flex-wrap: wrap;
 }
 
-.privacyLink {
+/* Compound selector: the isp-audit layout sets a global
+   `.root a { color: var(--ia-accent) }` (0,1,1) that would otherwise repaint
+   these shell links purple. `.header`/`.footer` prefixes (0,2,0) win. */
+.header .privacyLink {
   font-size: 0.82rem;
   font-weight: 700;
-  color: var(--ia-accent);
+  color: var(--spring-green);
   text-decoration: none;
   margin-right: var(--ia-space-2);
   border-bottom: 1px solid transparent;
 }
 
-.privacyLink:hover,
-.privacyLink:focus-visible {
+.header .privacyLink:hover,
+.header .privacyLink:focus-visible {
   border-bottom-color: currentColor;
 }
 
 .readingLabel {
   font-size: 0.72rem;
-  color: var(--ia-fg-muted);
+  color: rgba(255, 255, 255, 0.72);
 }
 
+/* White buttons with amethyst text, on the amethyst bar. */
 .rbtn {
   min-width: 36px;
   height: 36px;
-  border: 1px solid var(--ia-border-strong);
-  background: var(--ia-bg-alt);
-  color: var(--ia-accent);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: #fff;
+  color: var(--amethyst);
   border-radius: 10px;
   font: inherit;
-  font-weight: 600;
+  font-weight: 700;
   font-size: 0.9rem;
   cursor: pointer;
   display: grid;
@@ -74,29 +79,28 @@
 }
 
 .rbtn:hover:not(:disabled) {
-  border-color: var(--ia-accent);
-  background: var(--ia-accent-bg);
+  background: #f1ebf8;
 }
 
 .rbtn:disabled {
-  opacity: 0.4;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
 .rbtn[aria-pressed='true'] {
-  background: var(--ia-accent);
-  color: var(--ia-accent-text);
-  border-color: var(--ia-accent);
+  background: var(--spring-green);
+  color: var(--amethyst);
+  border-color: var(--spring-green);
 }
 
 .rbtn:focus-visible {
-  outline: 3px solid var(--ia-focus);
+  outline: 3px solid var(--spring-green);
   outline-offset: 2px;
 }
 
 .sizeValue {
   font-size: 0.78rem;
-  color: var(--ia-fg-muted);
+  color: rgba(255, 255, 255, 0.8);
   min-width: 3em;
   text-align: center;
 }
@@ -120,17 +124,17 @@
   --ia-spacing-scale: 1.45;
 }
 
-/* ---- footer ---- */
+/* ---- footer (amethyst) ---- */
 .footer {
-  background: var(--ia-bg-alt);
-  border-top: 1px solid var(--ia-border);
+  --text: #fff;
+  background: var(--amethyst);
   margin-top: var(--ia-space-8);
 }
 
 .footerGrid {
   max-width: 900px;
   margin: 0 auto;
-  padding: 26px var(--ia-space-4);
+  padding: 30px var(--ia-space-4);
   display: flex;
   flex-wrap: wrap;
   gap: var(--ia-space-6);
@@ -144,8 +148,8 @@
 
 .tagline {
   font-size: 0.82rem;
-  color: var(--ia-fg-muted);
-  margin: 6px 0 0;
+  color: rgba(255, 255, 255, 0.72);
+  margin: 8px 0 0;
   line-height: var(--lh-body);
 }
 
@@ -154,7 +158,7 @@
 }
 
 .footHeading {
-  color: var(--ia-high);
+  color: var(--spring-green);
   font-weight: 700;
   font-size: 0.72rem;
   letter-spacing: 0.06em;
@@ -162,26 +166,26 @@
   margin: 0 0 8px;
 }
 
-.footLink {
+.footer .footLink {
   display: block;
-  color: var(--ia-fg);
+  color: #fff;
   text-decoration: none;
-  margin-bottom: 5px;
+  margin-bottom: 6px;
   border-bottom: 1px solid transparent;
   width: fit-content;
 }
 
-.footLink:hover,
-.footLink:focus-visible {
+.footer .footLink:hover,
+.footer .footLink:focus-visible {
   border-bottom-color: currentColor;
 }
 
 .footBottom {
-  border-top: 1px solid var(--ia-border);
-  padding: 12px var(--ia-space-4);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding: 13px var(--ia-space-4);
   text-align: center;
   font-size: 0.74rem;
-  color: var(--ia-fg-muted);
+  color: rgba(255, 255, 255, 0.6);
 }
 
 @media print {
