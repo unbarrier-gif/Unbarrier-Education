@@ -118,7 +118,7 @@ export default function IspAuditShell({ children }: { children: React.ReactNode 
     <div className={styles.shell}>
       <header className={styles.header}>
         <div className={styles.headerRow}>
-          <Wordmark suffix=".me" size="md" inverse href="/isp-audit" />
+          <Wordmark suffix=".me" size="md" href="/isp-audit" />
           <div className={styles.tools} role="group" aria-label="Page tools">
             <Link href="/isp-audit/privacy" className={styles.privacyLink}>
               privacy
@@ -184,7 +184,7 @@ export default function IspAuditShell({ children }: { children: React.ReactNode 
       <footer className={styles.footer}>
         <div className={styles.footerGrid}>
           <div className={styles.footerBrand}>
-            <Wordmark suffix=".me" size="md" inverse />
+            <Wordmark suffix=".me" size="md" />
             <p className={styles.tagline}>
               Removing barriers to learning and access — for schools, families and the
               neurodivergent community.
