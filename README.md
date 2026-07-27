@@ -64,8 +64,12 @@ All env vars live in Vercel's project settings. Mirror the structure in `.env.ex
 | `RESEND_API_KEY` | server-only | Bearer token for Resend |
 | `SAY_HI_FORWARD_TO` | server-only | Inbox the say-hi form posts to (`hello@unbarrier.me`) |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | public | `unbarrier.me` |
+| `DATABASE_URL` | server-only | Postgres/Neon connection string for ISP Compass responses. `POSTGRES_URL` accepted as an alias. |
+| `ISP_AUDIT_ADMIN_KEY` | server-only | Passcode that unlocks the ISP Compass admin dashboard (`/isp-audit/dashboard`) |
 
 `NEXT_PUBLIC_*` vars are bundled into the browser. Anything sensitive must NOT use that prefix.
+
+> **ISP Compass (`/isp-audit`) requires `DATABASE_URL` (or `POSTGRES_URL`) and `ISP_AUDIT_ADMIN_KEY` to be set in the Vercel _Production_ environment** — without the DB var every submission fails (the respondent sees a retry message; nothing is stored), and without the admin key the dashboard stays locked. The `respondent_email` column is created lazily on first submit.
 
 ## File map (Phase 1)
 
