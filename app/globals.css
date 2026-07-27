@@ -226,6 +226,16 @@ a {
   color: inherit;
 }
 
+/* Print: on the light /isp-audit pages only, whiten the dark site body
+   background so it can't show through beneath the printed content (it was
+   printing as a dark block on the results PDF). Scoped via :has() to the
+   isp-audit root so other dark-themed pages' print output is untouched. */
+@media print {
+  body:has(.ia-print-root) {
+    background: #fff;
+  }
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

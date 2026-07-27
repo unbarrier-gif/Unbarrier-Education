@@ -351,14 +351,19 @@
     margin-bottom: 10px;
   }
 
+  .printHeader {
+    padding-bottom: 5px;
+    margin-bottom: 8px;
+  }
+
   .title {
-    font-size: 1.35rem;
+    font-size: 1.25rem;
     margin-bottom: 2px;
   }
 
   .subline {
-    font-size: 0.85rem;
-    margin-bottom: 10px;
+    font-size: 0.82rem;
+    margin-bottom: 8px;
   }
 
   /* tighten every block and drop shadows for print */
@@ -369,75 +374,84 @@
   .miniCard {
     box-shadow: none;
     break-inside: avoid;
-    padding: 10px 12px;
+    padding: 9px 11px;
   }
 
   .topRow,
   .domainsCard,
   .nextCard,
   .bottomRow {
-    margin-bottom: 8px;
+    margin-bottom: 6px;
   }
 
   .topRow {
-    gap: 10px;
+    gap: 8px;
   }
 
   .scoreCard {
-    padding: 12px;
+    padding: 10px;
   }
 
   .bigScore {
-    font-size: 2.4rem;
+    font-size: 2rem;
+  }
+
+  .scoreDivider {
+    margin: 6px 0;
   }
 
   .cardHeading {
-    margin-bottom: 6px;
+    margin-bottom: 4px;
   }
 
   /* shrink the radar so the score + radar row stays short */
   .radarCard svg {
-    max-height: 140px;
+    max-height: 120px;
     width: auto;
     margin: 0 auto;
     display: block;
   }
 
   .bars {
-    gap: 5px;
+    gap: 3px;
   }
 
   .barTrack {
-    height: 14px;
+    height: 12px;
   }
 
   .barRow {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
   }
 
   .nextTitle {
-    font-size: 1rem;
-    margin: 6px 0 4px;
+    font-size: 0.95rem;
+    margin: 4px 0 3px;
   }
 
   .nextBody {
-    font-size: 0.82rem;
+    font-size: 0.8rem;
+  }
+
+  .nextPill {
+    padding: 3px 12px;
+    font-size: 0.72rem;
   }
 
   .bottomRow {
-    gap: 10px;
+    gap: 8px;
   }
 
   .miniCaption,
   .nextList {
-    font-size: 0.8rem;
+    font-size: 0.78rem;
   }
 
   .nextList li {
-    margin-bottom: 3px;
+    margin-bottom: 2px;
   }
 
   .pills {
-    margin-bottom: 6px;
+    margin-bottom: 5px;
   }
 }

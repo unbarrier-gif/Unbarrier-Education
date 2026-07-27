@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 
 export default function IspAuditLayout({ children }: { children: React.ReactNode }) {
   return (
-    <div className={styles.root}>
+    <div className={`${styles.root} ia-print-root`}>
       <IspAuditShell>{children}</IspAuditShell>
     </div>
   );
