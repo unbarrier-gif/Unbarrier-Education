@@ -210,10 +210,123 @@ function renderBlock(b: BlockNode): ReactElement | null {
           <code>{plain(b.code.rich_text)}</code>
         </pre>
       );
+    case 'video': {
+      const caption = b.video.caption;
+      if (b.video.type === 'file') {
+        const captionNode =
+          caption.length > 0 ? renderRichText(caption) : null;
+        return (
+          <figure className={styles.figure}>
+            <video
+              className={styles.videoNative}
+              src={b.video.file.url}
+              controls
+              preload="metadata"
+            />
+            {captionNode && (
+              <figcaption className={styles.figcaption}>
+                {captionNode}
+              </figcaption>
+            )}
+          </figure>
+        );
+      }
+      const embed = toEmbedUrl(b.video.external.url);
+      return embed
+        ? iframeFigure(embed, caption)
+        : linkFallback(b.video.external.url, caption);
+    }
+    case 'embed': {
+      const embed = toEmbedUrl(b.embed.url);
+      return embed
+        ? iframeFigure(embed, b.embed.caption)
+        : linkFallback(b.embed.url, b.embed.caption);
+    }
     default:
-      // unsupported (table, columns, toggles, embeds, etc.)
+      // unsupported (table, columns, toggles, etc.)
       return null;
   }
+}
+
+// Notion `video`/`embed` blocks pointing at YouTube or Vimeo are turned into
+// a responsive, lazy-loaded iframe. Uploaded video files render as a native
+// <video>. Anything we don't recognise degrades to a plain link rather than
+// vanishing (the old default case silently dropped these).
+function iframeFigure(
+  embedUrl: string,
+  caption: RichTextItemResponse[],
+): ReactElement {
+  const title = plain(caption) || 'Embedded video';
+  const captionNode = caption.length > 0 ? renderRichText(caption) : null;
+  return (
+    <figure className={styles.figure}>
+      <div className={styles.videoWrap}>
+        <iframe
+          className={styles.videoFrame}
+          src={embedUrl}
+          title={title}
+          loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allowFullScreen
+          referrerPolicy="strict-origin-when-cross-origin"
+        />
+      </div>
+      {captionNode && (
+        <figcaption className={styles.figcaption}>{captionNode}</figcaption>
+      )}
+    </figure>
+  );
+}
+
+function linkFallback(
+  url: string,
+  caption: RichTextItemResponse[],
+): ReactElement {
+  return (
+    <figure className={styles.figure}>
+      <a
+        className={styles.link}
+        href={url}
+        target="_blank"
+        rel="noopener noreferrer"
+      >
+        {plain(caption) || 'Watch the video'}
+      </a>
+    </figure>
+  );
+}
+
+function toEmbedUrl(raw: string): string | null {
+  let u: URL;
+  try {
+    u = new URL(raw);
+  } catch {
+    return null;
+  }
+  const host = u.hostname.replace(/^www\./, '');
+  if (host === 'youtu.be') {
+    const id = u.pathname.slice(1);
+    return id ? `https://www.youtube.com/embed/${id}` : null;
+  }
+  if (host === 'youtube.com' || host === 'm.youtube.com') {
+    if (u.pathname === '/watch') {
+      const id = u.searchParams.get('v');
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+    if (u.pathname.startsWith('/embed/')) return raw;
+    if (u.pathname.startsWith('/shorts/')) {
+      const id = u.pathname.split('/')[2];
+      return id ? `https://www.youtube.com/embed/${id}` : null;
+    }
+  }
+  if (host === 'vimeo.com') {
+    const id = u.pathname.split('/').filter(Boolean)[0];
+    return id && /^\d+$/.test(id)
+      ? `https://player.vimeo.com/video/${id}`
+      : null;
+  }
+  if (host === 'player.vimeo.com') return raw;
+  return null;
 }
 
 function renderRichText(items: RichTextItemResponse[]): ReactElement[] {

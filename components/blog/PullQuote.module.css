@@ -12,7 +12,11 @@
   font-weight: 700;
   line-height: 1.28;
   letter-spacing: -0.015em;
-  color: var(--text);
+  /* Pull-quote text now carries the accent colour (spring-green by default,
+     overridable via the `color` prop) instead of body cream — big, bold and
+     green. spring-green #38ff99 on amethyst #210a33 is ~11:1, well past
+     WCAG AA, and the 700 weight keeps colour from being the only signal. */
+  color: var(--c);
 }
 
 .cite {
