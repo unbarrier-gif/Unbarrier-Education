@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Why your hands move — unbarrier.me</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=Lexend:wght@300;400;500;600&family=Comfortaa:wght@600;700&family=Cherry+Bomb+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --amethyst:#210a33; --amethyst-deep:#150520;
+  --text:#f0ebe5; --text-muted:rgba(240,235,229,0.65); --text-subtle:rgba(240,235,229,0.57);
+  --spring-green:#38ff99;
+  --princeton-orange:#ff8a1c;
+  --orchid-mist:#db7dcc;
+  --pearl-aqua:#69d9d1;
+  --school-bus-yellow:#ffc203;
+  --radius-md:12px; --radius-lg:18px; --radius-pill:100px;
+  --shadow-lg:0 20px 50px rgba(0,0,0,.4);
+  --glow-green:0 0 40px rgba(56,255,153,.35);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--amethyst-deep); color:var(--text);
+  font-family:"Lexend",system-ui,sans-serif; font-size:1.05rem; line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+}
+p{letter-spacing:.01em}
+h1,h2,h3,.eyebrow{font-family:"Outfit",system-ui,sans-serif;line-height:1.15}
+a{color:var(--spring-green)}
+.wordmark{font-family:"Comfortaa",cursive;font-weight:700;letter-spacing:-.012em;line-height:1;color:var(--text);text-decoration:none;white-space:nowrap;font-size:1.25rem}
+.wordmark .dot{color:var(--spring-green)}
+
+/* top strip */
+.topbar{
+  display:flex;flex-wrap:wrap;gap:1rem;align-items:center;justify-content:space-between;
+  padding:1rem 1.5rem;background:var(--amethyst);border-bottom:1px solid rgba(240,235,229,.12);
+}
+.a11y-bar{display:flex;flex-wrap:wrap;gap:.4rem;align-items:center}
+.a11y-btn{
+  font-family:"Lexend",sans-serif;font-size:.82rem;color:var(--text);
+  background:transparent;border:1px solid rgba(240,235,229,.35);
+  border-radius:var(--radius-pill);padding:.35rem .8rem;cursor:pointer;
+}
+.a11y-btn:hover{border-color:var(--spring-green);color:var(--spring-green)}
+.a11y-btn:focus-visible{outline:3px solid var(--school-bus-yellow);outline-offset:2px}
+.a11y-btn[aria-pressed="true"]{background:var(--spring-green);color:var(--amethyst-deep);border-color:var(--spring-green);font-weight:600}
+.a11y-size{display:flex;align-items:center;gap:.35rem;font-size:.82rem;color:var(--text-muted)}
+
+/* layout */
+main{max-width:66ch;margin:0 auto;padding:3rem 1.5rem 4rem}
+.eyebrow{
+  font-size:.8rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--school-bus-yellow);margin:0 0 .75rem
+}
+h1{font-size:clamp(2rem,6vw,2.9rem);font-weight:800;margin:0 0 1rem}
+h1 .accent{color:var(--school-bus-yellow)}
+.standfirst{font-size:1.15rem;color:var(--text);margin:0 0 2.5rem}
+h2{font-size:1.45rem;font-weight:700;margin:2.75rem 0 .85rem}
+h3{font-size:1.05rem;font-weight:600;margin:1.5rem 0 .4rem;color:var(--school-bus-yellow)}
+hr{border:0;border-top:1px solid rgba(240,235,229,.15);margin:2.5rem 0}
+
+/* big number */
+.stat{
+  background:var(--amethyst);border:1px solid rgba(255,194,3,.35);
+  border-radius:var(--radius-lg);padding:1.5rem;margin:1.75rem 0;text-align:center;
+  box-shadow:var(--shadow-lg);
+}
+.stat .figure{
+  display:block;font-family:"Outfit",sans-serif;font-weight:800;
+  font-size:clamp(3rem,13vw,4.5rem);line-height:1;color:var(--school-bus-yellow)
+}
+.stat .caption{display:block;margin-top:.6rem;font-size:.98rem;color:var(--text)}
+.stat .src{display:block;margin-top:.5rem;font-size:.82rem;color:var(--text-subtle)}
+
+/* callout */
+.callout{
+  background:var(--amethyst);border-left:4px solid var(--spring-green);
+  border-radius:var(--radius-md);padding:1.1rem 1.3rem;margin:1.75rem 0;
+}
+.callout p{margin:0}
+.callout strong{color:var(--spring-green)}
+
+/* try list */
+.try{list-style:none;padding:0;margin:1rem 0 0;counter-reset:t}
+.try li{
+  counter-increment:t;position:relative;padding:1rem 1rem 1rem 3.4rem;margin-bottom:.75rem;
+  background:var(--amethyst);border:1px solid rgba(240,235,229,.14);border-radius:var(--radius-md);
+}
+.try li::before{
+  content:counter(t);position:absolute;left:1rem;top:1rem;
+  width:1.7rem;height:1.7rem;border-radius:50%;
+  background:var(--school-bus-yellow);color:var(--amethyst-deep);
+  font-family:"Outfit",sans-serif;font-weight:700;font-size:.95rem;
+  display:flex;align-items:center;justify-content:center;
+}
+.try strong{display:block;color:var(--text);font-weight:600;margin-bottom:.15rem}
+.try span{color:var(--text-muted);font-size:.96rem}
+
+.honest{font-size:.95rem;color:var(--text-muted)}
+.sources{font-size:.9rem;color:var(--text-muted)}
+.sources li{margin-bottom:.6rem}
+
+/* photos */
+.photo{margin:2.25rem 0;border-radius:var(--radius-lg);overflow:hidden;border:1px solid rgba(240,235,229,.14);box-shadow:var(--shadow-lg);background:var(--amethyst)}
+.photo img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;filter:saturate(.8) brightness(.9) contrast(1.03)}
+.photo figcaption{font-size:.78rem;line-height:1.5;color:var(--text-subtle);padding:.65rem .95rem}
+.photo figcaption a{color:var(--text-muted);text-decoration:none}
+.photo figcaption a:hover{color:var(--spring-green);text-decoration:underline}
+.hero-photo{margin:0 0 2.5rem}
+.hero-photo img{aspect-ratio:21/9}
+html.contrast-high .photo img{filter:none}
+
+/* footer */
+.site-footer{background:var(--amethyst);border-top:1px solid rgba(240,235,229,.12);padding:2.5rem 1.5rem 1.5rem}
+.footer-grid{max-width:1080px;margin:0 auto;display:grid;gap:2rem;grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
+.footer-brand p{font-size:.92rem;color:var(--text-muted);margin:.75rem 0 0;max-width:34ch}
+.footer-heading{font-family:"Outfit",sans-serif;font-weight:600;font-size:.85rem;letter-spacing:.08em;text-transform:uppercase;color:var(--text);margin:0 0 .6rem}
+.footer-col ul{list-style:none;padding:0;margin:0}
+.footer-col li{margin-bottom:.45rem}
+.footer-col a{font-size:.92rem;color:var(--text-muted);text-decoration:none}
+.footer-col a:hover{color:var(--spring-green);text-decoration:underline}
+.footer-bottom{max-width:1080px;margin:2rem auto 0;padding-top:1.25rem;border-top:1px solid rgba(240,235,229,.12);display:flex;flex-wrap:wrap;gap:.5rem;justify-content:space-between}
+.footer-bottom p{margin:0;font-size:.85rem;color:var(--text-subtle)}
+
+/* a11y modes */
+html.contrast-high{--text:#ffffff;--text-muted:rgba(255,255,255,.82);--glow-green:none}
+html.contrast-high .a11y-btn,html.contrast-high .site-footer{border-color:#fff}
+html[data-text-size='sm']{font-size:87.5%}
+html[data-text-size='lg']{font-size:125%}
+html[data-spacing='true'] p{letter-spacing:.06em;word-spacing:.16em;line-height:1.9}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <a class="wordmark" href="https://www.unbarrier.me" aria-label="unbarrier.me">unbarrier<span class="dot">.</span>me</a>
+  <div class="a11y-bar" role="group" aria-label="Reading preferences">
+    <button type="button" class="a11y-btn" id="ac-contrast" aria-pressed="false">high contrast</button>
+    <div class="a11y-size" role="group" aria-label="Text size">
+      <button type="button" class="a11y-btn" id="ac-smaller" aria-label="Decrease text size">A&#8722;</button>
+      <span id="ac-size" aria-live="polite">100%</span>
+      <button type="button" class="a11y-btn" id="ac-bigger" aria-label="Increase text size">A+</button>
+    </div>
+    <button type="button" class="a11y-btn" id="ac-spacing" aria-pressed="false">extra spacing</button>
+    <button type="button" class="a11y-btn" id="ac-listen" aria-label="Listen to this page">listen</button>
+  </div>
+</div>
+
+<main id="main-content">
+
+  <p class="eyebrow">One page · read it in four minutes</p>
+  <h1>Why your hands <span class="accent">move</span></h1>
+  <p class="standfirst">You said you doodle at work, and that you worry it looks like you have checked out. Here is what the research actually says about that.</p>
+
+  <figure class="photo hero-photo">
+    <img src="https://images.unsplash.com/photo-1525337049715-1b9fc9acf61a?fm=jpg&amp;q=70&amp;w=1400&amp;auto=format&amp;fit=crop" alt="Close-up of a pair of open palms held out, warmly lit." loading="lazy" width="1400" height="600">
+    <figcaption>Photo by <a href="https://unsplash.com/@claudz">Claudia Love</a> on <a href="https://unsplash.com/photos/person-opening-palms-close-up-photo--v9tsExFF9w">Unsplash</a></figcaption>
+  </figure>
+
+  <h2>The short version</h2>
+  <p>Doodling and fidgeting are not what happens instead of concentrating. For a lot of people, they are part of how concentrating happens. The pen gives your brain a small, easy job so the rest of it can stay on the thing you are meant to be listening to.</p>
+
+  <div class="callout">
+    <p><strong>The doodle is a bridge, not an escape.</strong> It carries you from one task to the next without your attention falling in the gap.</p>
+  </div>
+
+  <h2>The study everyone quotes</h2>
+  <p>Jackie Andrade, a psychologist at the University of Plymouth, ran an experiment in 2009. Forty people listened to a deliberately dull recorded phone message and had to note down who was coming to a party. Half of them were also given shapes to shade in while they listened. Afterwards, everyone got a surprise memory test.</p>
+
+  <div class="stat">
+    <span class="figure">29%</span>
+    <span class="caption">more information recalled by the people who were shading shapes, compared with the people who just listened</span>
+    <span class="src">Andrade, <em>Applied Cognitive Psychology</em>, 2009</span>
+  </div>
+
+  <p>Andrade's explanation is that when a task is boring, the mind does not sit quietly and wait. It wanders off. Shading shapes takes up just enough attention to stop the wandering, but not enough to compete with the listening. Checking your phone is not the same thing, because that is a whole second task pulling in the other direction.</p>
+
+  <figure class="photo">
+    <img src="https://images.unsplash.com/photo-1780241623929-a695fdac13cc?fm=jpg&amp;q=70&amp;w=1200&amp;auto=format&amp;fit=crop" alt="A hand drawing circles on paper with a pencil, an eraser resting nearby." loading="lazy" width="1200" height="675">
+    <figcaption>Photo by <a href="https://unsplash.com/@hrsavaliya">Hitesh Savaliya</a> on <a href="https://unsplash.com/photos/hand-drawing-circles-on-paper-with-a-pencil-and-eraser-bqyCHL1Kl7Y">Unsplash</a></figcaption>
+  </figure>
+
+  <h2>And the ADHD side of it</h2>
+  <p>A separate line of research has looked at movement specifically. Sarver, Rapport and colleagues, working with boys aged eight to twelve, found that higher rates of movement were associated with better working memory scores in the children with ADHD — and slightly worse scores in the children without it. Their reading is that the movement is a way of keeping alertness up when the brain is being asked to hold and juggle information.</p>
+  <p>Julie Schweitzer's team at UC Davis has since reported similar patterns in adults. Their term for the small unconscious stuff — twirling, tapping, doodling, rocking — is <em>intrinsic fidgeting</em>, and they describe it as linked to better attention rather than worse.</p>
+
+  <div class="callout">
+    <p><strong>Worth being straight with you:</strong> these are small studies, mostly done in labs, and mostly with children. They do not prove that doodling will fix a hard day at work. What they do show is that the assumption behind "stop fidgeting and pay attention" does not hold up, and that it may have things backwards for some brains.</p>
+  </div>
+
+  <figure class="photo">
+    <img src="https://images.unsplash.com/photo-1763575648452-282e12a329d9?fm=jpg&amp;q=70&amp;w=1200&amp;auto=format&amp;fit=crop" alt="Two hands working on a drawing in an open sketchbook." loading="lazy" width="1200" height="675">
+    <figcaption>Photo by <a href="https://unsplash.com/@kwami_heude_50">Kwami Fattah Al Sissi</a> on <a href="https://unsplash.com/photos/hands-drawing-a-design-in-a-sketchbook-GUm3xOp3m70">Unsplash</a></figcaption>
+  </figure>
+
+  <h2>What that means at work</h2>
+  <p>You have been treating the doodling as something to hide. It is worth reconsidering that. Not as an excuse, and not as something to announce — just as a working method you can name if someone asks.</p>
+
+  <ol class="try">
+    <li>
+      <strong>Own the notepad</strong>
+      <span>Keep a plain pad next to you and let the pen move while you listen. If anyone asks, the honest answer is that it helps you hold on to what is being said.</span>
+    </li>
+    <li>
+      <strong>Use it as the gap between tasks</strong>
+      <span>Three to five minutes of doodling between two different jobs, rather than trying to switch cold. The switch is the hard part, not the work.</span>
+    </li>
+    <li>
+      <strong>Notice when the fidgeting steps up</strong>
+      <span>More movement than usual often means the task has got heavier or you have been at it too long. Treat it as information, not as a fault.</span>
+    </li>
+  </ol>
+
+  <figure class="photo">
+    <img src="https://images.unsplash.com/photo-1496911402449-92a89a664775?fm=jpg&amp;q=70&amp;w=1200&amp;auto=format&amp;fit=crop" alt="A pair of open hands photographed in black and white, dusted with dark sand." loading="lazy" width="1200" height="675">
+    <figcaption>Photo by <a href="https://unsplash.com/@sabine_van_straaten">Sabine van Straaten</a> on <a href="https://unsplash.com/photos/grayscale-photo-of-persons-hands-Y3X4jYrXNsQ">Unsplash</a></figcaption>
+  </figure>
+
+  <hr>
+
+  <h2>Where this came from</h2>
+  <ul class="sources">
+    <li>Andrade, J. (2009). What does doodling do? <em>Applied Cognitive Psychology.</em> <a href="https://onlinelibrary.wiley.com/doi/abs/10.1002/acp.1561">Read the abstract</a></li>
+    <li>Sarver, Rapport, Kofler, Raiker &amp; Friedman (2015). Hyperactivity in ADHD: impairing deficit or compensatory behaviour? <em>Journal of Abnormal Child Psychology.</em></li>
+    <li>UC Davis Health (2024). Does fidgeting help people with ADHD focus? <a href="https://health.ucdavis.edu/news/headlines/does-fidgeting-help-people-with-adhd-focus-/2024/10">Read the article</a></li>
+    <li>CHADD. How does fidgeting enhance focus for individuals with ADHD? <a href="https://chadd.org/attention-article/how-does-fidgeting-enhance-focus-for-individuals-with-adhd/">Read the article</a></li>
+  </ul>
+
+  <p class="honest">Written for you after our session on 14 August. Nothing here needs doing today.</p>
+
+</main>
+
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <a class="wordmark" href="https://www.unbarrier.me" aria-label="unbarrier.me">unbarrier<span class="dot">.</span>me</a>
+      <p>Removing barriers to learning and access — for schools, families, and the neurodivergent community.</p>
+    </div>
+    <nav class="footer-col" aria-label="Services">
+      <p class="footer-heading">Services</p>
+      <ul>
+        <li><a href="https://www.unbarrier.me/access">unbarrier.access</a></li>
+        <li><a href="https://www.unbarrier.me/voice">unbarrier.voice</a></li>
+        <li><a href="https://www.unbarrier.me/loop-breakers">unbarrier.loop-breakers</a></li>
+        <li><a href="https://www.unbarrier.me/blog">Notes from Nici (blog)</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Get in touch">
+      <p class="footer-heading">Get in touch</p>
+      <ul>
+        <li><a href="https://www.unbarrier.me/hello">Hello →</a></li>
+        <li><a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a></li>
+      </ul>
+    </nav>
+    <nav class="footer-col" aria-label="Legal">
+      <p class="footer-heading">Legal</p>
+      <ul>
+        <li><a href="https://www.unbarrier.me/legal/privacy">Privacy notice</a></li>
+        <li><a href="https://www.unbarrier.me/legal/terms">Terms</a></li>
+      </ul>
+    </nav>
+  </div>
+  <div class="footer-bottom">
+    <p>&copy; 2026 Nici Foote / unbarrier.me &middot; Unbarrier Education Ltd &middot; Co.&nbsp;No.&nbsp;16603630</p>
+    <p>Built with inclusion first.</p>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root=document.documentElement, ls=window.localStorage;
+  function get(k){try{return ls.getItem(k)}catch(e){return null}}
+  function set(k,v){try{ls.setItem(k,v)}catch(e){}}
+  var cBtn=document.getElementById('ac-contrast');
+  function applyC(m){root.classList.toggle('contrast-high',m==='high');cBtn.setAttribute('aria-pressed',m==='high');set('unbarrier:contrast',m)}
+  applyC(get('unbarrier:contrast')||(window.matchMedia&&matchMedia('(prefers-contrast: more)').matches?'high':'default'));
+  cBtn.addEventListener('click',function(){applyC(root.classList.contains('contrast-high')?'default':'high')});
+  var order=['sm','md','lg'],label={sm:'87%',md:'100%',lg:'125%'},size=get('unbarrier:text-size')||'md';
+  var out=document.getElementById('ac-size');
+  function applyS(){root.setAttribute('data-text-size',size);if(size==='md')root.removeAttribute('data-text-size');out.textContent=label[size];set('unbarrier:text-size',size)}
+  applyS();
+  document.getElementById('ac-smaller').addEventListener('click',function(){size=order[Math.max(0,order.indexOf(size)-1)];applyS()});
+  document.getElementById('ac-bigger').addEventListener('click',function(){size=order[Math.min(2,order.indexOf(size)+1)];applyS()});
+  var sp=get('unbarrier:spacing')==='true',spBtn=document.getElementById('ac-spacing');
+  function applyP(){if(sp)root.setAttribute('data-spacing','true');else root.removeAttribute('data-spacing');spBtn.setAttribute('aria-pressed',String(sp));set('unbarrier:spacing',String(sp))}
+  applyP();
+  spBtn.addEventListener('click',function(){sp=!sp;applyP()});
+  var lBtn=document.getElementById('ac-listen');
+  if(!('speechSynthesis' in window)){lBtn.style.display='none';return}
+  var speaking=false;
+  lBtn.addEventListener('click',function(){
+    if(speaking){speechSynthesis.cancel();speaking=false;lBtn.textContent='listen';return}
+    var root2=document.getElementById('main-content')||document.querySelector('main');if(!root2)return;
+    var blocks=root2.querySelectorAll('h1,h2,h3,p,li');speechSynthesis.cancel();
+    blocks.forEach(function(b){var t=(b.textContent||'').trim();if(t)speechSynthesis.speak(new SpeechSynthesisUtterance(t))});
+    speaking=true;lBtn.textContent='stop';
+  });
+})();
+</script>
+
+</body>
+</html>
