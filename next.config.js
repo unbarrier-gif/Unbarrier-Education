@@ -28,6 +28,10 @@ const nextConfig = {
         source: '/goodnotes-training',
         destination: '/goodnotes-training.html',
       },
+      {
+        source: '/goodnotes',
+        destination: '/goodnotes/index.html',
+      },
     ];
   },
   // Cap the homepage edge-cache lifetime to 60s with a 5-minute SWR window.
