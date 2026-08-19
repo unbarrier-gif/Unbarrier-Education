@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Goodnotes in your school — start here | unbarrier</title>
+<meta name="description" content="Everything a school needs to get Goodnotes working properly: set-up for staff, devices and students, the teacher workflow, ready-made resources, and free training funded by Goodnotes.">
+<link rel="canonical" href="https://www.unbarrier.me/goodnotes">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Goodnotes in your school — start here">
+<meta property="og:description" content="Goodnotes works when it's embedded, not just installed. Set-up, workflow, resources, and free training funded by Goodnotes.">
+<meta property="og:url" content="https://www.unbarrier.me/goodnotes">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Comfortaa:wght@400;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --purple: #210a33;
+    --purple-2: #2b1042;
+    --green: #38ff99;
+    --aqua: #69d9d1;
+    --yellow: #ffc203;
+    --orange: #ff8a1c;
+    --orchid: #db7dcc;
+    --cream: #f0ebe5;
+    --muted: rgba(240,235,229,0.65);   /* text-muted 6.90:1 — the documented ladder */
+    --text-subtle: rgba(240,235,229,0.57);
+    --fs-body: 1.05rem;
+    --container-wide: 1200px;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--purple);
+    color: var(--cream);
+    font-family: 'Lexend', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 1.4rem; }
+  h1, h2, h3 { font-family: 'Outfit', sans-serif; }
+  a { color: var(--aqua); }
+
+  /* eyebrow */
+  .eyebrow {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--orchid);
+    margin-bottom: 0.7rem;
+  }
+
+  /* ---------- hero ---------- */
+  .hero { padding: 4.5rem 0 3rem; position: relative; overflow: hidden; }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -120px; right: -120px;
+    width: 380px; height: 380px;
+    background: radial-gradient(circle, rgba(56,255,153,0.12), transparent 65%);
+    pointer-events: none;
+  }
+  .hero h1 {
+    font-size: clamp(1.9rem, 5vw, 3rem);
+    font-weight: 700;
+    line-height: 1.25;
+    max-width: 640px;
+  }
+  .hero h1 em {
+    font-style: normal;
+    color: var(--green);
+    position: relative;
+    white-space: nowrap;
+  }
+  .hero h1 em svg {
+    position: absolute;
+    left: 0; bottom: -0.28em;
+    width: 100%; height: 0.5em;
+    overflow: visible;
+  }
+  .hero h1 em path {
+    fill: none;
+    stroke: var(--green);
+    stroke-width: 5;
+    stroke-linecap: round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw 1.4s ease-out 0.4s forwards;
+  }
+  @keyframes draw { to { stroke-dashoffset: 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .hero h1 em path { animation: none; stroke-dashoffset: 0; }
+  }
+  .hero p.lede {
+    margin-top: 1.3rem;
+    max-width: 560px;
+    font-size: 1.02rem;
+    color: var(--muted);
+  }
+  .hero .cta {
+    display: inline-block;
+    margin-top: 1.8rem;
+    background: var(--green);
+    color: var(--purple);
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-decoration: none;
+    padding: 0.85rem 1.7rem;
+    border-radius: 999px;
+  }
+  .hero .cta:hover { background: var(--aqua); }
+
+  /* ---------- role router ---------- */
+  .router { padding: 1.5rem 0 3rem; }
+  .router-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 0.9rem;
+  }
+  .door {
+    display: block;
+    text-decoration: none;
+    background: var(--purple-2);
+    border: 1px solid rgba(240,235,229,0.08);
+    border-top: 4px solid var(--aqua);
+    border-radius: 14px;
+    padding: 1.3rem 1.2rem 1.4rem;
+    color: var(--cream);
+    transition: transform 0.15s ease, border-color 0.15s ease;
+  }
+  .door:hover { transform: translateY(-3px); }
+  .door.green { border-top-color: var(--green); }
+  .door.yellow { border-top-color: var(--yellow); }
+  .door.orchid { border-top-color: var(--orchid); }
+  .door .d-who {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 0.98rem;
+    margin-bottom: 0.4rem;
+  }
+  .door .d-go {
+    font-size: 0.8rem;
+    color: var(--muted);
+    margin-bottom: 0.8rem;
+  }
+  .door .d-arrow {
+    font-family: 'Comfortaa', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--aqua);
+  }
+  .door.green .d-arrow { color: var(--green); }
+  .door.yellow .d-arrow { color: var(--yellow); }
+  .door.orchid .d-arrow { color: var(--orchid); }
+
+  /* ---------- sections ---------- */
+  section.block { padding: 2.6rem 0; border-top: 1px solid rgba(240,235,229,0.07); }
+  section.block h2 {
+    font-size: 1.45rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+  }
+  section.block p.intro {
+    color: var(--muted);
+    max-width: 580px;
+    font-size: 0.92rem;
+    margin-bottom: 1.6rem;
+  }
+
+  /* setup cards */
+  .setup-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 0.8rem;
+  }
+  .setup {
+    background: rgba(240,235,229,0.04);
+    border-radius: 12px;
+    padding: 1.1rem 1.1rem 1.2rem;
+    border-left: 3px solid var(--aqua);
+  }
+  .setup:nth-child(2) { border-left-color: var(--green); }
+  .setup:nth-child(3) { border-left-color: var(--yellow); }
+  .setup:nth-child(4) { border-left-color: var(--orange); }
+  .setup:nth-child(5) { border-left-color: var(--orchid); }
+  .setup h3 { font-size: 0.88rem; font-weight: 700; margin-bottom: 0.4rem; }
+  .setup p { font-size: 0.78rem; color: var(--muted); margin-bottom: 0.6rem; }
+  .setup a { font-size: 0.76rem; font-weight: 500; }
+
+  /* update callout */
+  .callout {
+    background: rgba(255,194,3,0.07);
+    border: 1px dashed rgba(255,194,3,0.4);
+    border-radius: 12px;
+    padding: 1.2rem 1.4rem;
+    max-width: 640px;
+  }
+  .callout h3 { font-size: 0.95rem; color: var(--yellow); margin-bottom: 0.4rem; }
+  .callout p { font-size: 0.85rem; color: var(--cream); }
+
+  /* video cards */
+  .video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 0.9rem;
+  }
+  .video {
+    display: block;
+    text-decoration: none;
+    background: var(--purple-2);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(240,235,229,0.08);
+    color: var(--cream);
+  }
+  .video .v-thumb {
+    height: 96px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 1.6rem;
+    color: var(--purple);
+  }
+  .video:nth-child(1) .v-thumb { background: linear-gradient(135deg, var(--green), var(--aqua)); }
+  .video:nth-child(2) .v-thumb { background: linear-gradient(135deg, var(--aqua), var(--orchid)); }
+  .video:nth-child(3) .v-thumb { background: linear-gradient(135deg, var(--yellow), var(--orange)); }
+  .video:nth-child(4) .v-thumb { background: linear-gradient(135deg, var(--orchid), var(--green)); }
+  .video .v-body { padding: 0.9rem 1rem 1.1rem; }
+  .video h3 { font-size: 0.85rem; font-weight: 700; margin-bottom: 0.3rem; }
+  .video p { font-size: 0.75rem; color: var(--muted); }
+
+  /* NDTE */
+  .ndte {
+    background: var(--purple-2);
+    border-radius: 16px;
+    padding: 2rem 1.6rem;
+    border: 1px solid rgba(56,255,153,0.2);
+  }
+  .ndte-loop {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    align-items: center;
+    margin: 1.4rem 0 1.8rem;
+  }
+  .ndte-node {
+    background: var(--purple);
+    border: 2px solid var(--green);
+    border-radius: 999px;
+    padding: 0.55rem 1.2rem;
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    color: var(--green);
+  }
+  .ndte-node:nth-child(3) { border-color: var(--aqua); color: var(--aqua); }
+  .ndte-node:nth-child(5) { border-color: var(--yellow); color: var(--yellow); }
+  .ndte-node:nth-child(7) { border-color: var(--orchid); color: var(--orchid); }
+  .ndte-arrow { color: var(--muted); font-size: 1rem; }
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 0.8rem;
+  }
+  .step {
+    background: rgba(240,235,229,0.04);
+    border-radius: 10px;
+    padding: 0.9rem 1rem;
+    display: flex;
+    gap: 0.8rem;
+    align-items: flex-start;
+  }
+  .step .n {
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--green);
+    line-height: 1.4;
+  }
+  .step p { font-size: 0.8rem; color: var(--cream); }
+  .step p span { color: var(--muted); display: block; font-size: 0.74rem; }
+
+  /* playful + workflow + students: shared list cards */
+  .list-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 0.9rem;
+  }
+  .list-card {
+    background: rgba(240,235,229,0.04);
+    border-radius: 12px;
+    padding: 1.2rem 1.3rem;
+    border-top: 3px solid var(--orchid);
+  }
+  .list-card.aqua { border-top-color: var(--aqua); }
+  .list-card.yellow { border-top-color: var(--yellow); }
+  .list-card h3 { font-size: 0.92rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .list-card ul { list-style: none; }
+  .list-card li {
+    font-size: 0.8rem;
+    color: var(--muted);
+    padding: 0.25rem 0 0.25rem 1rem;
+    position: relative;
+  }
+  .list-card li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--green);
+    font-size: 0.75rem;
+  }
+
+  /* closing CTA */
+  .close-cta {
+    text-align: center;
+    padding: 3.5rem 0 4rem;
+    border-top: 1px solid rgba(240,235,229,0.07);
+  }
+  .close-cta h2 { font-size: 1.5rem; font-weight: 700; margin-bottom: 0.6rem; }
+  .close-cta p { color: var(--muted); font-size: 0.9rem; max-width: 480px; margin: 0 auto 1.6rem; }
+  .close-cta a.cta {
+    display: inline-block;
+    background: var(--green);
+    color: var(--purple);
+    font-family: 'Comfortaa', sans-serif;
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+    padding: 0.9rem 2rem;
+    border-radius: 999px;
+  }
+  .footer {
+    padding: 1.5rem 0 3rem;
+    font-size: 0.72rem;
+    color: rgba(240,235,229,0.35);
+    text-align: center;
+  }
+
+  /* ---------- skip link + focus ---------- */
+  .skip-link { position:absolute; left:-9999px; top:0; background:var(--green); color:var(--purple);
+    font-family:'Outfit',sans-serif; font-weight:700; font-size:0.8rem; padding:0.7rem 1.1rem; z-index:200; border-radius:0 0 10px 0; }
+  .skip-link:focus { left:0; }
+  :focus-visible { outline:2px solid var(--green); outline-offset:2px; border-radius:4px; }
+
+  /* ---------- sticky top nav ---------- */
+  .topbar {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--purple);
+    border-bottom: 1px solid rgba(255,255,255,0.10);
+  }
+  .topbar-inner {
+    max-width: 1100px; margin: 0 auto; padding: 0.75rem 1.4rem;
+    display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap;
+  }
+  .topbar .wordmark {
+    font-family:'Comfortaa',sans-serif; font-weight:700; font-size:1rem;
+    color:var(--cream); text-decoration:none; white-space:nowrap;
+  }
+  .topbar .wordmark .me { color: var(--green); }
+  .topnav { display:flex; gap:1.1rem; flex-wrap:wrap; margin-left:auto; align-items:center; }
+  .topnav a {
+    color: var(--cream); text-decoration:none; font-size:0.82rem; font-weight:400;
+    padding: 0.25rem 0; border-bottom: 2px solid transparent; white-space:nowrap;
+  }
+  .topnav a:hover { border-bottom-color: var(--green); }
+  .topnav a.pill {
+    background: var(--green); color: var(--purple); font-family:'Outfit',sans-serif; font-weight:700;
+    border-radius: 999px; padding: 0.45rem 1rem; border-bottom:none; font-size:0.8rem;
+  }
+  .topnav a.pill:hover { filter: brightness(1.08); border-bottom:none; }
+  @media (max-width: 780px) {
+    .topnav { margin-left:0; gap:0.8rem; }
+    .topnav a { font-size:0.76rem; }
+  }
+
+  /* ---------- images ---------- */
+  .shot { margin: 1.8rem 0 0; }
+  .shot img {
+    display:block; width:100%; height:auto; border-radius:14px;
+    box-shadow: 0 22px 55px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.06);
+  }
+  .shot.tilt img { transform: rotate(-1.2deg); }
+  .shot figcaption { margin-top: 0.9rem; font-size:0.8rem; color:var(--muted); line-height:1.7; }
+  .shot figcaption strong { color: var(--cream); }
+  .split { display:grid; grid-template-columns: 1fr 1fr; gap:1.6rem; align-items:center; margin-top:1.8rem; }
+  @media (max-width: 780px) { .split { grid-template-columns:1fr; } }
+
+  /* video thumbs now carry real screenshots */
+  .v-thumb {
+    position: relative; padding: 0 !important; overflow: hidden;
+    background: var(--purple-2) !important; aspect-ratio: 16/10;
+  }
+  .v-thumb img { display:block; width:100%; height:100%; object-fit:contain; }
+  .v-thumb .num {
+    position:absolute; left:0.6rem; top:0.6rem; z-index:2;
+    width:26px; height:26px; border-radius:8px;
+    background: var(--green); color: var(--purple);
+    font-family:'Outfit',sans-serif; font-weight:800; font-size:0.85rem;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-list { margin-top: 1.4rem; display:grid; gap:0.7rem; }
+  .faq details {
+    background: rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.09);
+    border-radius: 12px; padding: 0 1.1rem;
+  }
+  .faq summary {
+    cursor: pointer; list-style: none; padding: 1rem 0;
+    font-family:'Outfit',sans-serif; font-weight:600; font-size:0.95rem; color: var(--cream);
+    display:flex; align-items:center; gap:0.7rem;
+  }
+  .faq summary::-webkit-details-marker { display:none; }
+  .faq summary::after {
+    content:'+'; margin-left:auto; color: var(--green); font-size:1.3rem; line-height:1; font-weight:400;
+  }
+  .faq details[open] summary::after { content:'−'; }
+  .faq details[open] summary { border-bottom:1px solid rgba(255,255,255,0.08); }
+  .faq .a { padding: 0.9rem 0 1.1rem; font-size:0.88rem; color:#d6cfe0; line-height:1.75; }
+  .faq .a a { color: var(--green); }
+
+  /* ---------- CTA band ---------- */
+  .cta-row { display:flex; gap:0.8rem; flex-wrap:wrap; align-items:center; margin-top:1.4rem; }
+  .cta-ghost {
+    display:inline-block; padding:0.85rem 1.6rem; border-radius:999px;
+    border:1px solid rgba(240,235,229,0.4); color:var(--cream); text-decoration:none;
+    font-family:'Outfit',sans-serif; font-weight:700; font-size:0.9rem;
+  }
+  .cta-ghost:hover { background: rgba(255,255,255,0.06); }
+  .cta-note { font-size:0.8rem; color:var(--muted); margin-top:0.9rem; }
+
+  /* ---------- canonical footer ---------- */
+  .site-footer { border-top:1px solid rgba(255,255,255,0.10); margin-top:0; padding:2.6rem 0 2rem; }
+  .site-footer .fwordmark { font-family:'Comfortaa',sans-serif; font-weight:700; font-size:1.1rem; color:var(--cream); text-decoration:none; }
+  .site-footer .fwordmark .me { color: var(--green); }
+  .site-footer .ftagline { margin-top:0.6rem; font-size:0.82rem; color:var(--muted); line-height:1.7; max-width:44ch; }
+  .footer-grid { display:grid; grid-template-columns:1.6fr 1fr 1fr 1fr; gap:1.6rem; }
+  .footer-grid .col-heading { font-family:'Outfit',sans-serif; font-size:0.6rem; font-weight:700; letter-spacing:0.16em; text-transform:uppercase; color:var(--aqua); margin-bottom:0.6rem; }
+  .footer-grid ul { list-style:none; margin:0; padding:0; }
+  .footer-grid li { margin-bottom:0.35rem; }
+  .footer-grid a { color:var(--muted); text-decoration:none; font-size:0.8rem; }
+  .footer-grid a:hover { color:var(--cream); text-decoration:underline; }
+  .footer-bottom { margin-top:1.8rem; padding-top:1.1rem; border-top:1px solid rgba(255,255,255,0.07);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:0.6rem; font-size:0.74rem; color:var(--muted); }
+  @media (max-width: 700px) { .footer-grid { grid-template-columns:1fr 1fr; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    * { animation:none !important; transition:none !important; }
+    .shot.tilt img { transform:none; }
+  }
+
+  /* ==================================================================
+     BRAND CORRECTIONS — against Decisions & Rules (26 Jul / 11 Aug 2026)
+     and the unbarrier html one-pager standard.
+     ================================================================== */
+
+  /* Type: lexend body at 1.05rem, full-strength, with the letter-spacing
+     that stops lines fusing. Dimness is not the default on an
+     accessibility site — components opt DOWN to muted, they don't start there. */
+  body { font-size: var(--fs-body); color: var(--cream); font-weight: 400; }
+  p, li { letter-spacing: 0.01em; }
+
+  /* Comfortaa is wordmark + display only. It had drifted onto the eyebrow,
+     the door headings and every button. */
+  .eyebrow, .d-who, .cta, .close-cta a.cta, .callout h3 { font-family: 'Outfit', sans-serif; }
+
+  /* Body sizes were down at 12–13px. Nothing carrying real copy goes below
+     0.95rem; supporting copy bottoms out at 0.88rem. */
+  p.lede { font-size: 1.15rem; color: var(--cream); }
+  p.intro { font-size: 1rem; color: var(--muted); }
+  .d-go { font-size: 0.95rem; color: var(--muted); }
+  .setup p { font-size: 0.92rem; color: var(--muted); }
+  .video p, .v-body p { font-size: 0.9rem; color: var(--muted); }
+  .step p { font-size: 0.95rem; color: var(--cream); }
+  .step p span { font-size: 0.8rem; }
+  .callout p { font-size: 0.95rem; color: var(--cream); }
+  .faq .a { font-size: 1rem; color: var(--cream); }
+  .shot figcaption { font-size: 0.9rem; }
+  .close-cta p { font-size: 1.05rem; color: var(--cream); }
+  .ftagline, .footer-bottom { font-size: 0.85rem; }
+  .footer-grid a { font-size: 0.88rem; }
+
+  /* Containers: four tokens, not ad-hoc widths. Bands + card grids at
+     --container-wide; prose stays at the 66ch reading measure. */
+  .wrap { max-width: var(--container-wide); }
+  .topbar-inner { max-width: var(--container-wide); }
+  p.lede, p.intro, .faq .a, .shot figcaption, .close-cta p, .ftagline {
+    max-width: 66ch;
+  }
+  .close-cta p { margin-left: auto; margin-right: auto; }
+
+  /* CTA row: centred in a centred section, and the gap below the buttons
+     matches the gap above them. */
+  .close-cta .cta-row { justify-content: center; margin-top: 1.6rem; }
+  .close-cta p.cta-note { margin-top: 1.6rem; margin-bottom: 0; font-size: 0.9rem; color: var(--muted); }
+
+  /* Credibility strip */
+  .creds { border-top: 1px solid rgba(240,235,229,0.07); padding: 2.6rem 0 0; }
+  .creds-inner { display: flex; align-items: center; gap: 1.8rem; flex-wrap: wrap; justify-content: center; text-align: center; }
+  .creds img { height: 54px; width: auto; display: block; }
+  .creds .cred-text { font-size: 0.9rem; color: var(--muted); line-height: 1.8; max-width: 46ch; text-align: left; }
+  .creds .cred-text strong { color: var(--cream); }
+  @media (max-width: 620px) { .creds .cred-text { text-align: center; } }
+
+  .readnext {
+    display: block; text-decoration: none;
+    background: rgba(105,217,209,0.06);
+    border: 1px solid rgba(105,217,209,0.28);
+    border-left: 4px solid var(--aqua);
+    border-radius: 14px; padding: 1.3rem 1.5rem;
+    transition: background 0.15s ease;
+  }
+  .readnext:hover { background: rgba(105,217,209,0.11); }
+  .rn-label { display:block; font-family:'Outfit',sans-serif; font-size:0.6rem; font-weight:700;
+    letter-spacing:0.18em; text-transform:uppercase; color:var(--aqua); margin-bottom:0.5rem; }
+  .rn-title { display:block; font-family:'Outfit',sans-serif; font-size:1.15rem; font-weight:700;
+    color:var(--cream); line-height:1.35; margin-bottom:0.5rem; }
+  .rn-blurb { display:block; font-size:0.95rem; color:var(--muted); line-height:1.75; max-width:66ch; }
+  .rn-go { display:inline-block; margin-top:0.8rem; font-family:'Outfit',sans-serif; font-weight:700;
+    font-size:0.88rem; color:var(--green); }
+
+  /* ==================================================================
+     SPRING CLEAN — alignment, colour discipline, dual coding, rhythm
+     ================================================================== */
+
+  /* 1. Every card is a column, and every card link sits on the same
+     baseline at the bottom of the box. This is what was making the
+     grids read as ragged. */
+  .router-grid, .setup-grid, .video-grid, .list-grid { align-items: stretch; }
+  .door, .setup, .video, .list-card {
+    display: flex; flex-direction: column; height: 100%;
+  }
+  .door .d-arrow,
+  .setup a,
+  .video .v-body { margin-top: auto; }
+  .list-card ul { margin-top: auto; }
+
+  /* 2. One link style everywhere. The doors were uppercase + tracked,
+     the setup cards were underlined sentence case — two treatments for
+     the same job. */
+  .door .d-arrow, .setup a {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0;
+    text-transform: none;
+    text-decoration: none;
+    padding-top: 1rem;
+    display: block;
+  }
+  .setup a { color: var(--aqua); }
+  .door:hover .d-arrow, .setup a:hover { text-decoration: underline; }
+
+  /* 3. Colour discipline. Seven accents were being used decoratively,
+     so none of them meant anything.
+     KEEP: the four doors (colour = which audience you are) and the NDTE
+     nodes (colour = named stage).
+     DROP: everywhere else — one accent, and let structure carry meaning. */
+  .setup { border-left-color: var(--aqua) !important; }
+  .list-card { border-top-color: var(--aqua); }
+
+  /* 4. Dual coding — an icon on every card, so colour is never the only
+     signal (WCAG 1.4.1) and the eye has something to land on. */
+  .c-icon { display: block; margin-bottom: 0.7rem; flex-shrink: 0; }
+  .door .c-icon { color: var(--aqua); }
+  .door.green .c-icon { color: var(--green); }
+  .door.yellow .c-icon { color: var(--yellow); }
+  .door.orchid .c-icon { color: var(--orchid); }
+  .list-card .c-icon { color: var(--aqua); }
+
+  /* 5. The set-up row is an ordered sequence — number it, don't colour it.
+     Five columns at this width squeezed the copy into five-line wraps. */
+  .setup-grid { grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+  .setup { padding: 1.2rem 1.3rem 1.3rem; position: relative; }
+  .s-num {
+    font-family: 'Outfit', sans-serif; font-weight: 800; font-size: 0.95rem;
+    color: var(--purple); background: var(--aqua);
+    width: 26px; height: 26px; border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 0.7rem;
+  }
+  .setup h3 { font-size: 1rem; }
+
+  /* 6. Card interiors: room to breathe, consistent heading size. */
+  .door { padding: 1.4rem 1.4rem 1.5rem; }
+  .door .d-who { font-size: 1.05rem; margin-bottom: 0.5rem; }
+  .door .d-go { margin-bottom: 0.9rem; }
+  .list-card { padding: 1.3rem 1.4rem 1.4rem; }
+  .list-card h3 { font-size: 1rem; margin-bottom: 0.8rem; }
+  .list-card li { font-size: 0.92rem; padding: 0.32rem 0 0.32rem 1.3rem; }
+  .list-card li::before { color: var(--aqua); font-size: 0.85rem; }
+  .video h3 { font-size: 1rem; margin-bottom: 0.35rem; }
+  .step { padding: 1rem 1.1rem; }
+
+  /* 7. Section rhythm. Every section was the same weight, so nothing
+     told the eye where it was in the page. */
+  section.block { padding: 3.4rem 0; }
+  section.block h2 { font-size: 1.75rem; margin-bottom: 0.6rem; }
+  .eyebrow { margin-bottom: 0.55rem; }
+  section.block p.intro { margin-bottom: 2rem; }
+  .router { padding: 2rem 0 3.4rem; }
+
+  /* 8. Focus + hover states on the whole card, not just the text. */
+  .door:focus-visible, .video:focus-visible, .readnext:focus-visible {
+    outline: 2px solid var(--green); outline-offset: 3px;
+  }
+  .video { transition: transform 0.15s ease, border-color 0.15s ease; }
+  .video:hover { transform: translateY(-3px); border-color: rgba(105,217,209,0.4); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .door:hover, .video:hover { transform: none; }
+  }
+
+  /* ---------- who's turning up ---------- */
+  .creds { border-top: 1px solid rgba(240,235,229,0.07); padding: 3.4rem 0; }
+  .who-card {
+    display: grid;
+    grid-template-columns: 236px 1fr;
+    gap: 2.2rem;
+    align-items: start;
+    background: var(--purple-2);
+    border: 1px solid rgba(240,235,229,0.08);
+    border-radius: 18px;
+    padding: 2rem 2.2rem;
+    max-width: 940px;   /* prose is capped at 62ch — don't leave the card
+                           stretched across dead space beside it */
+  }
+  .who-photo img {
+    display: block; width: 236px; height: 236px;
+    border-radius: 16px; object-fit: cover;
+    box-shadow: 0 0 0 1px rgba(240,235,229,0.16);
+  }
+  .who-body h2 { font-size: 1.6rem; margin-bottom: 0.9rem; }
+  .who-body .eyebrow { margin-bottom: 0.5rem; }
+  .who-lede {
+    font-size: 1rem; color: var(--cream); line-height: 1.8;
+    max-width: 62ch; margin-bottom: 0.9rem;
+  }
+  .who-creds {
+    list-style: none; margin: 1.4rem 0 0; padding: 0;
+    display: flex; flex-wrap: wrap; gap: 0.6rem; align-items: center;
+  }
+  .who-creds li {
+    font-family: 'Outfit', sans-serif; font-weight: 600; font-size: 0.82rem;
+    color: var(--muted);
+    border: 1px solid rgba(240,235,229,0.16);
+    border-radius: 999px; padding: 0.4rem 0.9rem;
+    letter-spacing: 0;
+  }
+  .who-creds li.who-badge {
+    border: none; padding: 0; background: none;
+  }
+  .who-creds li.who-badge img { display: block; height: 40px; width: auto; }
+  .who-creds li.who-badge { margin-right: 0.5rem; padding-right: 0.9rem; border-right: 1px solid rgba(240,235,229,0.16); border-radius: 0; }
+  @media (max-width: 620px) { .who-creds li.who-badge { border-right: none; padding-right: 0; margin-right: 0; } }
+  @media (max-width: 720px) {
+    .who-card { grid-template-columns: 1fr; gap: 1.4rem; padding: 1.6rem 1.4rem; justify-items: start; }
+    .who-photo img { width: 200px; height: 200px; }
+  }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="wordmark" href="https://www.unbarrier.me">unbarrier<span class="me">.me</span></a>
+    <nav class="topnav" aria-label="On this page">
+      <a href="#setup">Set up</a>
+      <a href="#learn">Learn the tool</a>
+      <a href="#embed">Embed it</a>
+      <a href="#workflow">Teacher workflow</a>
+      <a href="#students">Students</a>
+      <a href="#faq">FAQ</a>
+      <a class="pill" href="mailto:nici@unbarrier.me?subject=Goodnotes%20in%20our%20school">Email Nici</a>
+    </nav>
+  </div>
+</div>
+
+<main id="main">
+
+<!-- HERO -->
+<header class="hero">
+  <div class="wrap">
+    <div class="eyebrow">Goodnotes in your school</div>
+    <h1>Goodnotes works when it's <em>embedded<svg viewBox="0 0 300 24" preserveAspectRatio="none"><path d="M4 16 C 60 22, 140 6, 296 14"/></svg></em> — not just installed.</h1>
+    <p class="lede">Everything you need is on this page. Find your starting point below — whether you're setting up devices, planning your first unit, or leading a whole-school rollout.</p>
+    <a class="cta" href="https://calendar.app.google/XqYZb8d84rRsG6tA8">Book a conversation</a>
+    <figure class="shot tilt" style="margin-top:2.4rem;">
+      <img src="img/hero.jpg" width="1400" height="961" alt="An iPad showing a Goodnotes lesson on plant cell structure: a labelled diagram annotated in green Apple Pencil handwriting, with a row of named pupil thumbnails along the bottom so the teacher can see every child's work live.">
+      <figcaption><strong>This is embedded.</strong> One shared lesson, every pupil's page visible to the teacher in real time — not thirty separate files nobody sees until marking.</figcaption>
+    </figure>
+
+  </div>
+</header>
+
+<!-- ROLE ROUTER -->
+<nav class="router">
+  <div class="wrap">
+    <div class="eyebrow">Start where you are</div>
+    <div class="router-grid">
+      <a class="door green" href="#embed">
+        <svg class="c-icon" width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 21h18"/><path d="M5 21V8l7-4 7 4v13"/><path d="M10 21v-5h4v5"/></svg>
+        <div class="d-who">I lead a school</div>
+        <div class="d-go">Strategy, embedding, and what confident use looks like across a term.</div>
+        <div class="d-arrow">Strategy &amp; embedding <span aria-hidden="true">&darr;</span></div>
+      </a>
+      <a class="door" href="#workflow">
+        <svg class="c-icon" width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 4h18v12H3z"/><path d="M12 16v4"/><path d="M8 20h8"/><path d="M7 8h6M7 11h4"/></svg>
+        <div class="d-who">I teach</div>
+        <div class="d-go">Your first workflow, ready-made resources, and quick wins for the classroom.</div>
+        <div class="d-arrow">The teacher workflow <span aria-hidden="true">&darr;</span></div>
+      </a>
+      <a class="door yellow" href="#setup">
+        <svg class="c-icon" width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="3" width="16" height="13" rx="2"/><path d="M2 20h20"/><path d="M9 16h6"/></svg>
+        <div class="d-who">I run the devices</div>
+        <div class="d-go">Set-up, MDM deployment, accounts, and keeping the app updated.</div>
+        <div class="d-arrow">Set-up &amp; deployment <span aria-hidden="true">&darr;</span></div>
+      </a>
+      <a class="door orchid" href="#students">
+        <svg class="c-icon" width="22" height="22" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3"/><path d="M2.5 19c0-3.3 2.9-5 6.5-5s6.5 1.7 6.5 5"/><path d="m18 5 .9 2.1L21 8l-2.1.9L18 11l-.9-2.1L15 8l2.1-.9z"/></svg>
+        <div class="d-who">I'm exploring with students</div>
+        <div class="d-go">Inspiration, playful learning, and what learners can do from day one.</div>
+        <div class="d-arrow">Students start here <span aria-hidden="true">&darr;</span></div>
+      </a>
+    </div>
+  </div>
+</nav>
+
+<!-- GET SET UP -->
+<section class="block" id="setup">
+  <div class="wrap">
+    <div class="eyebrow">Step one</div>
+    <h2>Get set up</h2>
+    <p class="intro">Five set-ups, five audiences. Do them in this order and nothing gets missed.</p>
+    <div class="setup-grid">
+      <div class="setup">
+        <span class="s-num" aria-hidden="true">1</span>
+        <h3>You</h3>
+        <p>Your account, your device, your first notebook. 15 minutes, tops.</p>
+        <a href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">Setup guide →</a>
+      </div>
+      <div class="setup">
+        <span class="s-num" aria-hidden="true">2</span>
+        <h3>Your team</h3>
+        <p>Invite teachers to the admin console and get everyone signed in.</p>
+        <a href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">Team guide →</a>
+      </div>
+      <div class="setup">
+        <span class="s-num" aria-hidden="true">3</span>
+        <h3>Your devices</h3>
+        <p>MDM deployment, licence keys, and what your IT lead needs to know.</p>
+        <a href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">Device guide →</a>
+      </div>
+      <div class="setup">
+        <span class="s-num" aria-hidden="true">4</span>
+        <h3>Your students</h3>
+        <p>Class folders, QR-code joining, and getting a class in within one lesson.</p>
+        <a href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">Student guide →</a>
+      </div>
+      <div class="setup">
+        <span class="s-num" aria-hidden="true">5</span>
+        <h3>Your parents</h3>
+        <p>Answering the screen-time question — why handwriting on iPad is active learning.</p>
+        <a href="mailto:nici@unbarrier.me?subject=Goodnotes%20in%20our%20school">Ask me for the parent letter →</a>
+      </div>
+    </div>
+
+    <figure class="shot" style="margin-top:1.8rem;">
+      <img src="img/setup-admin.jpg" width="1100" height="706" alt="The Goodnotes Education Admin Console open on a MacBook, on the User Management screen: 1,000 users broken down into owners, admins, 100 teachers and 895 students, each row showing name, status and role.">
+      <figcaption><strong>One console, every school.</strong> A multi-academy trust can run each school as its own organisation under one central admin account — separate domains, one place to manage them.</figcaption>
+    </figure>
+
+    <div style="margin-top:1.4rem;">
+      <div class="callout">
+        <h3>Keep the app updated</h3>
+        <p>Goodnotes ships updates weekly, and smaller ones don't install automatically. Build a habit: open the App Store, tap update, once a week. Most "it's not working" moments are just an old version.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LEARN THE TOOL -->
+<section class="block" id="learn">
+  <div class="wrap">
+    <div class="eyebrow">Step two</div>
+    <h2>Learn the tool</h2>
+    <p class="intro">Four short videos take you from first open to teaching live. All of them — plus activity cards and quick-start PDFs — live on the resource board.</p>
+    <div class="video-grid">
+      <a class="video" href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">
+        <div class="v-thumb"><span class="num" aria-hidden="true">1</span><img src="img/v1-getting-started.jpg" width="800" height="500" alt="A Goodnotes weekly planner page open on an iPad, handwritten and colour-coded."></div>
+        <div class="v-body"><h3>Getting started</h3><p>Sign in, find your space, open your first notebook.</p></div>
+      </a>
+      <a class="video" href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">
+        <div class="v-thumb"><span class="num" aria-hidden="true">2</span><img src="img/v2-class-folder.jpg" width="800" height="500" alt="A Goodnotes class folder with the class navigator open, showing every pupil in the class as a named tile."></div>
+        <div class="v-body"><h3>Your class folder</h3><p>Set up a class, add content, invite students.</p></div>
+      </a>
+      <a class="video" href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">
+        <div class="v-thumb"><span class="num" aria-hidden="true">3</span><img src="img/v3-teach-live.jpg" width="800" height="500" alt="A Goodnotes lesson being taught live: a labelled plant-cell diagram annotated in real time with pupil thumbnails visible."></div>
+        <div class="v-body"><h3>Teach live</h3><p>Prepare, teach, and see every student's thinking in real time.</p></div>
+      </a>
+      <a class="video" href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">
+        <div class="v-thumb"><span class="num" aria-hidden="true">4</span><img src="img/v4-feedback.jpg" width="800" height="500" alt="Goodnotes smart clustering grouping pupils' answers together so a teacher can mark by pattern rather than one by one."></div>
+        <div class="v-body"><h3>Feedback that lands</h3><p>Answer zones, smart clustering, and marking without the pile.</p></div>
+      </a>
+    </div>
+    <p style="margin-top:1.2rem; font-size:0.85rem;"><a href="https://padlet.com/nici25/goodnotes-education-teacher-resource-board-4ryrhdmeqo37hfnj">Open the full resource board →</a></p>
+  </div>
+</section>
+
+<!-- INSTALLED TO EMBEDDED -->
+<section class="block" id="embed">
+  <div class="wrap">
+    <div class="eyebrow">The real work</div>
+    <h2>From installed to embedded</h2>
+    <p class="intro">An app on a device changes nothing. Embedding it in strategy, pedagogy and workflow changes everything. The NDTE cycle is how we get there. <a href="https://www.unbarrier.me/blog/goodnotes-in-schools-installed-or-embedded">I wrote about the difference here &rarr;</a></p>
+    <div class="ndte">
+      <div class="ndte-loop">
+        <div class="ndte-node">Notice</div><span class="ndte-arrow">→</span>
+        <div class="ndte-node">Design</div><span class="ndte-arrow">→</span>
+        <div class="ndte-node">Try</div><span class="ndte-arrow">→</span>
+        <div class="ndte-node">Embed</div><span class="ndte-arrow">↺</span>
+      </div>
+      <h3 style="font-size:0.95rem; margin-bottom:0.9rem;">Your first six steps towards confidence</h3>
+      <div class="steps">
+        <div class="step"><div class="n">1</div><p>Notice one moment in your week where paper or workflow slows learning down.<span>Notice</span></p></div>
+        <div class="step"><div class="n">2</div><p>Pick one existing unit — don't build anything new yet.<span>Notice</span></p></div>
+        <div class="step"><div class="n">3</div><p>Design one activity in that unit for Goodnotes: one page, one answer zone.<span>Design</span></p></div>
+        <div class="step"><div class="n">4</div><p>Try it with one class. Watch what students do, not what the app does.<span>Try</span></p></div>
+        <div class="step"><div class="n">5</div><p>Keep what worked, drop what didn't, and run it again next week.<span>Try</span></p></div>
+        <div class="step"><div class="n">6</div><p>Make it routine — the same touchpoint, every week, until it's just how you teach.<span>Embed</span></p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLAYFUL LEARNING -->
+<section class="block" style="padding-top:0;"><div class="wrap">
+    <a class="readnext" href="https://www.unbarrier.me/blog/goodnotes-in-schools-installed-or-embedded">
+      <span class="rn-label">Read next &middot; notes from Nici</span>
+      <span class="rn-title">Goodnotes in schools: installed, or embedded?</span>
+      <span class="rn-blurb">"We have Goodnotes" doesn't mean teachers know when it improves learning, or that learners can use it independently. The longer argument, with what embedding actually looks like.</span>
+      <span class="rn-go">Read the post &rarr;</span>
+    </a>
+</div></section>
+
+<section class="block" id="playful">
+  <div class="wrap">
+    <div class="eyebrow">Ready-made</div>
+    <h2>Playful learning — download these</h2>
+    <p class="intro">Low-stakes, high-engagement starters. Drop them into a class folder and go.</p>
+    <div class="list-grid">
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/><circle cx="12" cy="12" r="3.5"/></svg>
+        <h3>First-week icebreakers</h3>
+        <ul>
+          <li>About-me page</li>
+          <li>Birthday board</li>
+          <li>Tool explorer challenge cards</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 21h5"/><path d="M10 18h4"/><path d="M12 3a6 6 0 0 1 3.5 10.9V15h-7v-1.1A6 6 0 0 1 12 3z"/></svg>
+        <h3>Thinking routines</h3>
+        <ul>
+          <li>See, Think, Wonder template</li>
+          <li>Sketch-noting starter pages</li>
+          <li>Retrieval grids</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m13 2-7 11h5l-1 9 7-11h-5z"/></svg>
+        <h3>Subject sparks</h3>
+        <ul>
+          <li>SDG discussion pack</li>
+          <li>Future of learning pack</li>
+          <li>Revision layouts</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TEACHER WORKFLOW -->
+<section class="block" id="workflow">
+  <div class="wrap">
+
+    <div class="eyebrow">For teachers</div>
+    <h2>Teacher workflow — start here</h2>
+    <p class="intro">One simple rhythm that fits what you already do: prepare, teach, feed back. Goodnotes slots into each stage — it doesn't replace your core tools.</p>
+    <figure class="shot" style="margin:2rem 0 0;">
+      <img src="img/workflow-prep.jpg" width="1100" height="706" alt="Goodnotes in prep mode on a MacBook: an algebra worksheet with empty answer boxes being drawn onto the page, ready to hand out to a class.">
+      <figcaption><strong>Prep is where it lives or dies.</strong> A worksheet you already have becomes a set of answer zones in a couple of minutes — that's the bit that decides whether staff are still using it in week six.</figcaption>
+    </figure>
+    <div class="list-grid">
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="m14.5 4.5 3 3L8 17l-4 1 1-4z"/></svg>
+        <h3>Prepare</h3>
+        <ul>
+          <li>Build in your private space first</li>
+          <li>Add one answer zone with the question written in</li>
+          <li>Move it to the class folder when you're ready</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v11H3z"/><path d="M12 16v4M8 20h8"/></svg>
+        <h3>Teach</h3>
+        <ul>
+          <li>Use Follow Me to guide the pace</li>
+          <li>View by question to see every learner live</li>
+          <li>Hide and show what students see</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/><path d="m8.5 10 2 2 4-4"/></svg>
+        <h3>Feed back</h3>
+        <ul>
+          <li>Write directly onto individual student layers</li>
+          <li>Pick a model answer, let clustering group the rest</li>
+          <li>You stay in the loop — always</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STUDENTS -->
+<section class="block" id="students">
+  <div class="wrap">
+
+    <div class="eyebrow">For learners</div>
+    <h2>Students — be inspired, start here</h2>
+    <p class="intro">Handwriting isn't old-fashioned. It's how thinking becomes visible. Start with these.</p>
+    <figure class="shot tilt" style="margin:2rem 0 0;">
+      <img src="img/students.jpg" width="1000" height="562" alt="A Goodnotes group project page: several pupils working on the same shared document, each contributing handwritten notes and diagrams.">
+      <figcaption><strong>Thinking made visible.</strong> Pupils working the same page together — you can see who understood it, and who is quietly stuck.</figcaption>
+    </figure>
+    <div class="list-grid">
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 20h16"/><path d="m14.5 4.5 3 3L8 17l-4 1 1-4z"/></svg>
+        <h3>Make your notes yours</h3>
+        <ul>
+          <li>Sketch-note one lesson this week</li>
+          <li>Build a revision notebook that looks like you</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6z"/><circle cx="12" cy="12" r="2.5"/></svg>
+        <h3>Show your thinking</h3>
+        <ul>
+          <li>Annotate, don't just highlight</li>
+          <li>Use layers to plan, draft, improve</li>
+        </ul>
+      </div>
+      <div class="list-card">
+        <svg class="c-icon" width="20" height="20" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M9 9h6M9 13h6M9 17h3"/></svg>
+        <h3>Own your learning</h3>
+        <ul>
+          <li>Keep everything in one place, synced</li>
+          <li>Your notebooks travel with you — school to home</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CLOSING CTA -->
+
+<!-- FAQ -->
+<section class="block faq" id="faq">
+  <div class="wrap">
+    <div class="eyebrow">Before you ask</div>
+    <h2>Questions I get asked most</h2>
+    <p class="intro">The honest answers. If yours isn't here, email me and I'll answer it properly.</p>
+
+    <div class="faq-list">
+      <details>
+        <summary>Is the training actually free?</summary>
+        <div class="a">Yes. Goodnotes funds it, so there's no cost and no invoice to your school. You're not buying anything and I'm not selling you a licence — Goodnotes Education is free for schools.</div>
+      </details>
+
+      <details>
+        <summary>We're a trust with a lot of schools. Do we need a separate admin console for each one?</summary>
+        <div class="a">No. Each school can be set up as its own organisation inside one Goodnotes Education account, keeping its own email domain, while your central trust account manages and switches between them from a single Admin Console. You can start with a handful of schools and add the rest later.</div>
+      </details>
+
+      <details>
+        <summary>Do we need iPads? What about Chromebooks and Windows?</summary>
+        <div class="a">Goodnotes is at its best on iPad with an Apple Pencil, because handwriting is the point. It also runs on Mac, Windows, Android and the web — so mixed estates work, they just work differently. Tell me what your estate looks like and I'll tell you straight what you'll get out of it.</div>
+      </details>
+
+      <details>
+        <summary>We're a Google school. Does that matter?</summary>
+        <div class="a">Not really. Goodnotes sits alongside Google Workspace rather than replacing it — Docs and Classroom keep doing what they do, and Goodnotes handles the handwritten, visual, work-it-out-on-the-page thinking that a text box can't. Sign-in works with your Google accounts.</div>
+      </details>
+
+      <details>
+        <summary>How long until staff are actually using it — not just logged in?</summary>
+        <div class="a">The set-up is quick; the habit is the slow bit. Realistically: one session to get everyone in and confident with a first workflow, then a few weeks of one small routine repeated. Schools that stall are almost always the ones that installed it and told staff to explore. That's the whole reason this page exists.</div>
+      </details>
+
+      <details>
+        <summary>What about pupils with SEND, dyslexia, or slow processing?</summary>
+        <div class="a">This is my actual specialism — I'm dyslexic, ADHD and dyscalculic, and I spent 26 years in classrooms as a SEND specialist. Handwriting, colour, layout and the freedom to draw a thought rather than type it are exactly what a lot of neurodivergent learners need. But a tool doesn't do inclusion on its own; how you use it does. That's the conversation.</div>
+      </details>
+
+      <details>
+        <summary>What happens after the free session — do you then try to sell me something?</summary>
+        <div class="a">Only if you want it. The free conversation and the Goodnotes-funded training stand on their own. If you decide you want deeper inclusion work afterwards — an accessibility audit, ongoing advisory, classroom modelling — that's separate paid consultancy, and I'll say so plainly rather than sliding it in.</div>
+      </details>
+
+      <details>
+        <summary>Who are you, exactly?</summary>
+        <div class="a">Nici Foote. Apple Professional Learning Specialist, Google Innovator, certified Goodnotes trainer, 26 years in classrooms across international and UK state schools, now running unbarrier education ltd. Shortlisted for the Edufuturists Uprising Awards 2026.</div>
+      </details>
+    </div>
+  </div>
+</section>
+
+
+<section class="creds" id="who">
+  <div class="wrap">
+    <div class="who-card">
+      <div class="who-photo">
+        <img src="img/nici.jpg" width="720" height="720" alt="Nici Foote smiling and holding her Edufuturists Uprising 2026 award plaque, which reads Highly Commended Accessibility Champion, Nici Foote.">
+      </div>
+      <div class="who-body">
+        <p class="eyebrow">Who's actually turning up</p>
+        <h2>Nici Foote</h2>
+        <p class="who-lede">26 years in classrooms before this — SEND specialist, international and UK state. I've been the person at the back of the room being told a new tool will fix everything, so I don't open with features.</p>
+        <p class="who-lede">I'm dyslexic, ADHD and dyscalculic. That isn't a disclosure at the bottom of an email — it's why I notice what I notice when I watch a lesson.</p>
+        <ul class="who-creds">
+          <li class="who-badge"><img src="img/apls-badge.svg" width="307" height="68" alt="Apple Professional Learning Specialist"></li>
+          <li>Google Innovator</li>
+          <li>Certified Goodnotes trainer</li>
+          <li>Highly Commended, Accessibility Champion &middot; Edufuturists Uprising 2026</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="close-cta">
+  <div class="wrap">
+    <h2>Not sure where to start?</h2>
+    <p>Tell me where your school is with Goodnotes — even in two lines — and I'll point you at the right first step. No pitch, no pressure, no cost.</p>
+    <div class="cta-row">
+      <a class="cta" href="mailto:nici@unbarrier.me?subject=Goodnotes%20in%20our%20school">Email me: nici@unbarrier.me</a>
+      <a class="cta-ghost" href="https://calendar.app.google/XqYZb8d84rRsG6tA8">Or book 45 minutes →</a>
+    </div>
+    <p class="cta-note">Training is funded by Goodnotes, so there's nothing to pay and nothing to sign. I take a limited number of these each term.</p>
+  </div>
+</section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <a class="fwordmark" href="https://www.unbarrier.me">unbarrier<span class="me">.me</span></a>
+        <p class="ftagline">Removing barriers to learning and access — for schools, families, and the neurodivergent community.</p>
+      </div>
+      <div>
+        <p class="col-heading">Services</p>
+        <ul>
+          <li><a href="https://www.unbarrier.me/access">unbarrier.access</a></li>
+          <li><a href="https://www.unbarrier.me/voice">unbarrier.voice</a></li>
+          <li><a href="https://www.unbarrier.me/blog">Notes from Nici (blog)</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="col-heading">Get in touch</p>
+        <ul>
+          <li><a href="https://www.unbarrier.me/hello">Hello &rarr;</a></li>
+          <li><a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a></li>
+        </ul>
+      </div>
+      <div>
+        <p class="col-heading">Legal</p>
+        <ul>
+          <li><a href="https://www.unbarrier.me/legal/privacy">Privacy notice</a></li>
+          <li><a href="https://www.unbarrier.me/legal/terms">Terms</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> Nici Foote / unbarrier.me · Unbarrier Education Ltd · Co.&nbsp;No.&nbsp;16603630</span>
+      <span>Built with inclusion first. · Delivered in partnership with Goodnotes <em>[partnership line pending Goodnotes approval]</em></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  var y=document.getElementById('year');
+  if (y) { y.textContent = String(new Date().getFullYear()); }
+</script>
+
+</body>
+</html>
