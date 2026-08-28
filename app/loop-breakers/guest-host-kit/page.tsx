@@ -80,7 +80,7 @@ const TIMELINE = [
 export default function GuestHostKitPage() {
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <article className={styles.page}>
           <header className={styles.cover}>

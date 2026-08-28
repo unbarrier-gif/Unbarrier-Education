@@ -12,7 +12,7 @@ import styles from './page.module.css';
 export const metadata: Metadata = {
   title: 'Unbarrier · designed for difference.',
   description:
-    "I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through. Loop Breakers is where we get unstuck together.",
+    "I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through.",
   alternates: { canonical: '/hello' },
 };
 

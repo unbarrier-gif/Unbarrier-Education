@@ -19,7 +19,6 @@ const LINKS = [
   { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
-  { key: 'loop-breakers', label: 'loop breakers', href: '/loop-breakers', dot: 'var(--school-bus-yellow)' },
   { key: 'blog', label: 'blog', href: '/blog' },
   { key: 'about', label: 'about', href: '/#about' },
 ] as const;

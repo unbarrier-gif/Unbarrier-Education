@@ -14,9 +14,7 @@ export function HelloHero() {
 
       <p className={styles.bio}>
         I&rsquo;m Nici. I help schools, neurodivergent humans, and the people
-        who love them find clearer ways through.{' '}
-        <strong className={styles.loopBreakers}>Loop Breakers</strong> is where
-        we get unstuck together.
+        who love them find clearer ways through.
       </p>
     </header>
   );

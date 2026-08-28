@@ -52,10 +52,6 @@
   max-width: 42ch;
 }
 
-.loopBreakers {
-  color: var(--text);
-  font-weight: 700;
-}
 
 @media (min-width: 720px) {
   .hero {

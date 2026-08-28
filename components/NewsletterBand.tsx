@@ -44,7 +44,7 @@ export function NewsletterBand() {
         </p>
 
         <p className={styles.consent}>
-          Yes, send me the Loop Breakers newsletter from Nici Foote
+          Yes, send me the newsletter from Nici Foote
           (Unbarrier Education Ltd) — practical writing on neurodiversity,
           belonging, and inclusion. Unsubscribe any time. Privacy:{' '}
           <Link href="/legal/privacy">unbarrier.me/legal/privacy</Link>

@@ -6,7 +6,7 @@ import styles from './page.module.css';
 export default function GuestNotFound() {
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <section className={styles.summary}>
           <h1>That Guest Stage isn&apos;t live.</h1>
