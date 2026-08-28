@@ -1,0 +1,225 @@
+.main {
+  padding-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.main section {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* ── hero ─────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5.4vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-4) 0 0;
+  max-width: 18ch;
+}
+
+.accent {
+  color: var(--princeton-orange);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 58ch;
+  margin: var(--space-5) 0 0;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/* ── sections ─────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+}
+
+/* Small label above the statement it introduces — the statement below is
+   the line that carries the weight, so this one stays quiet. */
+.sectionEyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--princeton-orange);
+  margin: 0;
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+  max-width: 24ch;
+}
+
+/* The per-school publication line. Sized as a statement, not a heading. */
+.statement {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-3) 0 var(--space-5);
+  max-width: 22ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0 0 var(--space-4);
+}
+
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+/* The funding line. Given its own treatment because it is the one paragraph
+   on the page whose exact wording is legally load-bearing. */
+.funding {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 62ch;
+  margin: var(--space-5) 0 0;
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--princeton-orange);
+  border-radius: var(--radius-md);
+}
+
+/* ── the three steps ──────────────────────────────────────────────── */
+
+.steps {
+  list-style: none;
+  margin: var(--space-6) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.step {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--princeton-orange);
+  border-radius: var(--radius-md);
+}
+
+.stepTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--text);
+  margin: 0 0 var(--space-2);
+}
+
+.stepNum {
+  color: var(--princeton-orange);
+}
+
+.stepBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.stepAside {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+}
+
+/* ── who this is for ──────────────────────────────────────────────── */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 62ch;
+}
+
+.listItem {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  padding-left: var(--space-5);
+}
+
+.listItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--princeton-orange);
+}
+
+/* ── close ────────────────────────────────────────────────────────── */
+
+.close {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5rem) var(--space-5);
+}
+
+.closeHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 26ch;
+}

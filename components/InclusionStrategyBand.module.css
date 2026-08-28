@@ -1,0 +1,66 @@
+/* TEMPORARY — retires with lib/inclusion-strategy-promo.ts. */
+
+.band {
+  position: relative;
+  padding: clamp(2rem, 5vw, 3rem) var(--space-5);
+  background: var(--surface-raised);
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
+}
+
+.inner {
+  max-width: 820px;
+  margin: 0 auto;
+  border-left: 3px solid var(--princeton-orange);
+  padding-left: var(--space-5);
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--princeton-orange);
+  margin: 0;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3.2vw, 2rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-3) 0 0;
+  max-width: 24ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: var(--space-3) 0 0;
+  max-width: 56ch;
+}
+
+.link {
+  display: inline-block;
+  margin-top: var(--space-4);
+  font-family: var(--font-body);
+  font-weight: 600;
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}

@@ -24,12 +24,13 @@ type Props = {
 // original casing is preserved in output). Longest-first so a longer token
 // wins if two ever shared a prefix. Each token reuses an existing semantic
 // colour token — no new design tokens. Bold is applied alongside colour so
-// colour isn't the only signal (WCAG 1.4.1); all four pass AA on amethyst.
+// colour isn't the only signal (WCAG 1.4.1); all three pass AA on amethyst.
+// `loop breakers` was removed 28 Aug 2026 — the strand is retired, and
+// brand-colouring it made old posts read as though it were still live.
 const BRANDS: { match: string; className: string }[] = [
   { match: 'unbarrier.access', className: styles.brandPremium },
   { match: 'unbarrier.audit', className: styles.brandQuiet },
   { match: 'unbarrier.voice', className: styles.brandHuman },
-  { match: 'loop breakers', className: styles.brandPayoff },
 ].sort((a, b) => b.match.length - a.match.length);
 
 function highlightBrands(text: string): ReactNode {

@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { AboutBeliefs } from '@/components/AboutBeliefs';
 import { Footer } from '@/components/Footer';
 import { HomeHero } from '@/components/HomeHero';
+import { InclusionStrategyBand } from '@/components/InclusionStrategyBand';
 import { Nav } from '@/components/Nav';
 import { PickYourStartingPoint } from '@/components/PickYourStartingPoint';
 import { Services } from '@/components/Services';
@@ -32,6 +33,8 @@ export default function HomePage() {
         <StatStrip />
         <Services />
         <AboutBeliefs />
+        {/* TEMPORARY until 31 Dec 2026 — see lib/inclusion-strategy-promo.ts */}
+        <InclusionStrategyBand />
         <PickYourStartingPoint />
         <Footer variant="full" />
       </main>

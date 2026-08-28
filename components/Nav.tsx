@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { ContrastToggle } from './ContrastToggle';
 import { MobileNavDrawer } from './MobileNavDrawer';
 import { Wordmark } from './Wordmark';
+import { isInclusionStrategyPromoActive } from '@/lib/inclusion-strategy-promo';
 import styles from './Nav.module.css';
 
 // Phase 3 link-swap: audit still anchor-scrolls to #services until that
@@ -16,6 +17,9 @@ import styles from './Nav.module.css';
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
 // --dot CSS var set inline below. Plain links (blog/about) omit `dot`.
 const LINKS = [
+  // TEMPORARY until 31 Dec 2026 — gated below on
+  // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
+  { key: 'inclusion-strategy', label: 'inclusion strategy', href: '/inclusion-strategy' },
   { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
@@ -24,6 +28,15 @@ const LINKS = [
 ] as const;
 
 type LinkKey = (typeof LINKS)[number]['key'];
+
+// The inclusion-strategy entry is a dated promotion, not a permanent nav item.
+// Filtering here (rather than at each render site) keeps the desktop list and
+// the mobile drawer in step. Remove the entry from LINKS above and this
+// filter together in January — grep INCLUSION_STRATEGY_PROMO_RETIRE_AFTER.
+const VISIBLE_LINKS = LINKS.filter(
+  (link) =>
+    link.key !== 'inclusion-strategy' || isInclusionStrategyPromoActive(),
+);
 
 type Props = {
   /** Highlight a single link as the current page. Default: nothing highlighted. */
@@ -109,7 +122,7 @@ export function Nav({ active }: Props) {
         <Wordmark href="/" size="md" ariaLabel="unbarrier.me — home" />
         <div className={styles.right}>
           <ul className={styles.links}>
-            {LINKS.map((link) => {
+            {VISIBLE_LINKS.map((link) => {
               const isActive = active === link.key;
               const dot = 'dot' in link ? link.dot : undefined;
               return (
@@ -152,7 +165,7 @@ export function Nav({ active }: Props) {
       <MobileNavDrawer
         open={drawerOpen}
         onClose={() => setDrawerOpen(false)}
-        links={LINKS}
+        links={VISIBLE_LINKS}
         activeKey={active}
       />
     </nav>
