@@ -2,7 +2,6 @@ import type { Metadata } from 'next';
 import { AboutBeliefs } from '@/components/AboutBeliefs';
 import { Footer } from '@/components/Footer';
 import { HomeHero } from '@/components/HomeHero';
-import { HomeLoopTease } from '@/components/HomeLoopTease';
 import { Nav } from '@/components/Nav';
 import { PickYourStartingPoint } from '@/components/PickYourStartingPoint';
 import { Services } from '@/components/Services';
@@ -34,7 +33,6 @@ export default function HomePage() {
         <Services />
         <AboutBeliefs />
         <PickYourStartingPoint />
-        <HomeLoopTease />
         <Footer variant="full" />
       </main>
     </>

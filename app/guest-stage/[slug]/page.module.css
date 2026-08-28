@@ -19,3 +19,34 @@
   color: var(--text-muted);
   margin: 0;
 }
+
+/* Paused notice — sits above the hero on a guest host's page while Loop
+   Breakers is retired. Uses --text (not --text-muted) so it clears AA
+   against the page background rather than reading as fine print. */
+.pausedNotice {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--school-bus-yellow);
+  border-radius: var(--radius-md);
+  max-width: 760px;
+  /* .main sets padding-top: 0 and the nav is fixed, so this notice has to
+     clear it itself — the hero below does the same via its own padding. */
+  margin: calc(var(--nav-height) + var(--space-4)) auto 0;
+  padding: var(--space-4) var(--space-5);
+}
+
+.pausedLink {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.pausedLink:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}

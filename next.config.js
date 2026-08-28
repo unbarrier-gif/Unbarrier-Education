@@ -16,6 +16,24 @@ const nextConfig = {
         destination: 'https://www.unbarrier.me/hello',
         permanent: true,
       },
+      // Loop Breakers is retired (28 Aug 2026). Its two bookable surfaces
+      // 301 to the /loop-breakers holding page instead of 404ing, so a link
+      // from search, a bookmark or an old newsletter lands on "paused".
+      // `statusCode: 301` rather than `permanent: true` — the latter emits
+      // 308, and the handoff specified 301.
+      //
+      // Deliberately NOT `/guest-stage/:path*`: the guest host's own page at
+      // /guest-stage/<slug> stays reachable. Only the index redirects.
+      {
+        source: '/loop-breakers/sessions',
+        destination: '/loop-breakers',
+        statusCode: 301,
+      },
+      {
+        source: '/guest-stage',
+        destination: '/loop-breakers',
+        statusCode: 301,
+      },
     ];
   },
   // Clean, emailable URL for the GoodNotes one-pager — the file lives as

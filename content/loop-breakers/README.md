@@ -1,14 +1,22 @@
 # Loop Breakers content
 
+> **Loop Breakers is retired (28 Aug 2026).** `/loop-breakers` is a holding
+> page; `/loop-breakers/sessions` and `/guest-stage` 301 to it. Booking URLs
+> have been removed from `sessions.json` and every session CTA renders
+> disabled. TidyCal was retired as the booking surface on 21 Aug 2026 — do
+> not reintroduce TidyCal links here. The notes below apply if the room
+> restarts on a new booking provider.
+
 ## Editing sessions
 
 Sessions are listed in [sessions.json](sessions.json). To add a new session:
 
 1. Copy any existing session block as a template.
 2. Fill in: `slug` (kebab-case, unique), `date` (YYYY-MM-DD), `theme` (one-line title), `blurb` (1–2 sentences).
-3. For `bookingUrl`:
-   - **Tuesday Loop Breakers** → use `https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch`
-   - **Wednesday Guest Stage** → use `https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking`
+3. There is no `bookingUrl` field any more. Restoring booking means adding it
+   back to `LBSession` in [sessions.ts](sessions.ts) and re-enabling
+   [ctaForSession.ts](../../components/loop-breakers/sessions/ctaForSession.ts),
+   which is the single place every session CTA is built.
 4. Set `isGuestStage: true` if it's a Wednesday Guest Stage; otherwise `false`.
 5. `status` values:
    - `"open"` — booking now
@@ -21,12 +29,3 @@ Sessions are listed in [sessions.json](sessions.json). To add a new session:
 
 After editing, push to `feat/hello`. The page revalidates within 60s of deploy — past sessions auto-hide on the landing page; upcoming sessions appear in chronological order.
 
-## TidyCal URLs
-
-The `tidycal` block at the top of `sessions.json` is the source of truth for booking links. If TidyCal slugs ever change, update them here once and every consumer picks up the new URL.
-
-| Key | URL |
-|---|---|
-| `tuesday` | https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch |
-| `guestStage` | https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking |
-| `oneToOne` | https://tidycal.com/nici/chat-with-nici |

@@ -15,15 +15,6 @@ const STARTERS = [
     href: 'mailto:nici@unbarrier.me?subject=audit',
   },
   {
-    accent: 'var(--school-bus-yellow)',
-    accentRgb: '255, 194, 3',
-    label: 'Join Loop Breakers',
-    blurb:
-      'A free Tuesday session for the loop you can’t break alone. Neurodivergent people, founders, anyone.',
-    cta: '/loop-breakers →',
-    href: '/loop-breakers',
-  },
-  {
     accent: 'var(--spring-green)',
     accentRgb: '56, 255, 153',
     label: 'Just email me',
@@ -43,8 +34,8 @@ export function PickYourStartingPoint() {
           <Eyebrow>Where to next?</Eyebrow>
           <h2 className={styles.heading}>Pick your starting point</h2>
           <p className={styles.lede}>
-            Three ways to get this moving. Audit if you need evidence, Loop
-            Breakers if you need community, email if you need a human.
+            Two ways to get this moving. Audit if you need evidence, email if
+            you need a human.
           </p>
         </div>
         <div className={styles.grid}>
