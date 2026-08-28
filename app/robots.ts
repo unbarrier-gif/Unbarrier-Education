@@ -1,19 +1,15 @@
 import type { MetadataRoute } from 'next';
 
-// Block crawlers from any /loop-breakers/guest-host-kit/ path that has
-// a hyphen in the segment after — that's our private guest-letter URLs
-// (urlSlug = `<name>-<8-hex>`). The bare /loop-breakers/guest-host-kit
-// kit page itself is public and indexable.
-//
-// Per-page noindex + dynamicParams=false on the [urlSlug] route are the
-// real privacy guarantee; this is belt-and-braces.
+// The guest-host-kit Disallow that used to live here was removed on
+// 28 Aug 2026: Loop Breakers is retired, the route is deleted, and
+// /loop-breakers/guest-host-kit/* now 301s to the holding page. There is
+// nothing left to hide from crawlers.
 export default function robots(): MetadataRoute.Robots {
   return {
     rules: [
       {
         userAgent: '*',
         allow: '/',
-        disallow: '/loop-breakers/guest-host-kit/*-',
       },
     ],
   };

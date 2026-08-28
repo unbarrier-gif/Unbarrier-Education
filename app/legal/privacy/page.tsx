@@ -265,9 +265,6 @@ export default function PrivacyPage() {
             <strong>MailerLite</strong> · newsletter
           </li>
           <li>
-            <strong>TidyCal</strong> · bookings
-          </li>
-          <li>
             <strong>Vercel</strong> · website hosting, and the database behind
             our assessment tools
           </li>
