@@ -5,12 +5,15 @@ import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import styles from './page.module.css';
 
-// Loop Breakers is retired until further notice (28 Aug 2026). The route
-// stays live and indexable so no bookmark, newsletter link or business card
-// 404s — holding copy only, per the approved page drafts. No prices, no
-// session ladder, no booking links. The LB* components and the
-// /loop-breakers/sessions + /guest-host-kit subtrees are untouched by this
-// change; retiring those is a separate decision.
+// Loop Breakers is retired (28 Aug 2026). This is the only page left: the
+// route stays live and indexable so no bookmark, newsletter link or business
+// card 404s — holding copy only, per the approved page drafts. No prices, no
+// session ladder, no booking links.
+//
+// Every other Loop Breakers surface (/loop-breakers/sessions, the guest-host
+// kit, /guest-stage and the guest pages) was deleted and 301s here — see the
+// redirects in next.config.js. The guest hosts' own letters and artwork were
+// archived to /_archive before deletion.
 
 export const metadata: Metadata = {
   title: 'loopbreakers is paused · unbarrier.me',
