@@ -165,3 +165,12 @@
   white-space: nowrap;
   border: 0;
 }
+
+.banner {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: var(--space-4);
+}

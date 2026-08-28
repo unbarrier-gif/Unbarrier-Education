@@ -12,11 +12,19 @@ type CardKey =
   | 'three_questions';
 
 type Props = {
-  card: CardKey;
+  /** Plausible event label. Legacy keys get their locked colour from ACCENT. */
+  card: CardKey | (string & {});
   title: string;
   meta: string;
   href: string;
   external?: boolean;
+  /** Colour override — Notion-driven cards pass their own accent. */
+  accent?: string;
+  accentRgb?: string;
+  /** Thumbnail src. Omit for the tinted fallback tile. */
+  image?: string;
+  /** Character on the fallback tile. Defaults to the title's first letter. */
+  initial?: string;
 };
 
 // Colour order is locked: green, pink, aqua, orange, yellow.
@@ -38,9 +46,22 @@ const ACCENT_RGB: Record<CardKey, string> = {
   three_questions: '227, 161, 176',
 };
 
-export function CtaCard({ card, title, meta, href, external = true }: Props) {
+export function CtaCard({
+  card,
+  title,
+  meta,
+  href,
+  external = true,
+  accent,
+  accentRgb,
+  image,
+  initial,
+}: Props) {
   function handleClick() {
-    if (typeof window !== 'undefined' && typeof window.plausible === 'function') {
+    if (
+      typeof window !== 'undefined' &&
+      typeof window.plausible === 'function'
+    ) {
       window.plausible('cta_click', { props: { card } });
     }
   }
@@ -50,8 +71,8 @@ export function CtaCard({ card, title, meta, href, external = true }: Props) {
     : {};
 
   const style = {
-    '--accent': ACCENT[card],
-    '--accent-rgb': ACCENT_RGB[card],
+    '--accent': accent ?? ACCENT[card as CardKey] ?? 'var(--spring-green)',
+    '--accent-rgb': accentRgb ?? ACCENT_RGB[card as CardKey] ?? '56, 255, 153',
   } as CSSProperties;
 
   return (
@@ -63,6 +84,17 @@ export function CtaCard({ card, title, meta, href, external = true }: Props) {
       style={style}
       {...externalProps}
     >
+      {/* Decorative: the title next to it already names the destination. */}
+      <span className={styles.thumb} aria-hidden="true">
+        {image ? (
+          <img src={image} alt="" loading="lazy" decoding="async" />
+        ) : (
+          <span className={styles.initial}>
+            {initial ?? title.trim().charAt(0).toUpperCase()}
+          </span>
+        )}
+      </span>
+
       <span className={styles.body}>
         <span className={styles.title}>
           <span className={styles.arrow} aria-hidden="true">
@@ -78,6 +110,9 @@ export function CtaCard({ card, title, meta, href, external = true }: Props) {
 
 declare global {
   interface Window {
-    plausible?: (event: string, opts?: { props?: Record<string, string> }) => void;
+    plausible?: (
+      event: string,
+      opts?: { props?: Record<string, string> },
+    ) => void;
   }
 }
