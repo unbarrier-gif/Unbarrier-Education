@@ -38,19 +38,12 @@ export type LBSession = {
   status: SessionStatus;
   tags: string[];
   accent: string;      // CSS var token, e.g. 'var(--spring-green)'
-  bookingUrl: string;
   replay?: boolean;
 };
 
 export const SESSIONS = (data.sessions as LBSession[])
   .slice()
   .sort((a, b) => a.date.localeCompare(b.date));
-
-export const TIDYCAL = data.tidycal as {
-  tuesday: string;
-  guestStage: string;
-  oneToOne: string;
-};
 
 export const upcomingSessions = (): LBSession[] =>
   SESSIONS.filter((s) => s.status !== 'past');

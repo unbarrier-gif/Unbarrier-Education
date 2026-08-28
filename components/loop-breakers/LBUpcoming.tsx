@@ -68,20 +68,9 @@ export function LBUpcoming() {
                     </span>
                     <span className={styles.note}>{s.price.note}</span>
                   </div>
-                  {cta.disabled ? (
-                    <span className={styles.cta} data-disabled="true">
-                      {cta.label}
-                    </span>
-                  ) : (
-                    <a
-                      href={cta.href}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={styles.cta}
-                    >
-                      {cta.label}
-                    </a>
-                  )}
+                  <span className={styles.cta} data-disabled="true">
+                    {cta.label}
+                  </span>
                 </article>
               );
             })}

@@ -2,7 +2,7 @@
 
 The site at **[unbarrier.me](https://unbarrier.me)**. Phase 1 ships a single page — `/hello` — the QR-target on the back of the Cardiff conference flyer (Wed 29 Apr 2026).
 
-- Bio + 4 CTA cards (TidyCal link-out)
+- Bio + CTA cards (driven from Notion)
 - MailerLite newsletter opt-in
 - "Just say hi" form (forwards to inbox via Resend, also adds to MailerLite)
 - Plausible analytics with custom events
@@ -58,9 +58,6 @@ All env vars live in Vercel's project settings. Mirror the structure in `.env.ex
 |---|---|---|
 | `MAILERLITE_API_KEY` | server-only | Bearer token for the MailerLite REST API |
 | `MAILERLITE_GROUP_ID` | server-only | `185831469000688733` (Loop Breakers list) |
-| `NEXT_PUBLIC_TIDYCAL_TUESDAY` | public | Tuesday Loop Breakers booking URL |
-| `NEXT_PUBLIC_TIDYCAL_GUEST` | public | Wednesday Guest Stage booking URL |
-| `NEXT_PUBLIC_TIDYCAL_COACHING` | public | Accessible Coaching booking URL |
 | `RESEND_API_KEY` | server-only | Bearer token for Resend |
 | `SAY_HI_FORWARD_TO` | server-only | Inbox the say-hi form posts to (`hello@unbarrier.me`) |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | public | `unbarrier.me` |
@@ -105,7 +102,6 @@ components/
 lib/
   mailerlite.ts           addSubscriber (treats 422 as success)
   resend.ts               sendSayHi
-  tidycal.ts              re-exports the 3 booking URLs from env
   rateLimit.ts            in-memory map, 5/IP/hour
 middleware.ts             multi-zone subdomain routing
 public/assets/
@@ -143,12 +139,11 @@ public/assets/
 | Newsletter signup success | `newsletter_signup` | — |
 | Say-hi success | `say_hi_sent` | — |
 
-Outbound TidyCal links also auto-track via the `script.outbound-links.tagged-events.js` Plausible loader, giving us redundant data on the same clicks.
+Outbound links auto-track via the `script.outbound-links.tagged-events.js` Plausible loader. (TidyCal was retired as the booking surface on 21 Aug 2026; Loop Breakers is paused and `/loop-breakers/sessions` and `/guest-stage` 301 to the `/loop-breakers` holding page.)
 
 ## Acceptance (Spec §09)
 
 - [ ] `/hello` renders mobile (375px) + desktop (1280px)
-- [ ] All 4 CTA cards open correct TidyCal URL in new tab
 - [ ] Newsletter form adds a test email to MailerLite group `185831469000688733`
 - [ ] Say-hi form delivers to `hello@unbarrier.me` within 60s
 - [ ] Plausible shows `cta_click`, `newsletter_signup`, `say_hi_sent` events

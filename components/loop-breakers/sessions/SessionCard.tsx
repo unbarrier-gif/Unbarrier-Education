@@ -103,21 +103,9 @@ export function SessionCard({ session: s }: Props) {
                 {s.price.amount}
               </span>
             ) : null}
-            {cta.disabled ? (
-              <span className={styles.cta} data-disabled="true">
-                {cta.label}
-              </span>
-            ) : (
-              <a
-                href={cta.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                className={styles.cta}
-                data-status={s.status}
-              >
-                {cta.label}
-              </a>
-            )}
+            <span className={styles.cta} data-disabled="true">
+              {cta.label}
+            </span>
           </div>
         </div>
       </div>

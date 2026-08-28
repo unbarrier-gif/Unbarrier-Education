@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import type { GuestStage } from '@/content/loop-breakers/guests';
 import {
   formatSessionDate,
@@ -19,7 +20,7 @@ export function GuestStageBookingBlock({ guest, session }: Props) {
     >
       <div className={styles.card}>
         <div className={styles.cardHead}>
-          <p className={styles.eyebrow}>Book your seat</p>
+          <p className={styles.eyebrow}>booking paused</p>
           {session ? (
             <p className={styles.priceLine}>
               <span className={styles.price}>
@@ -43,29 +44,19 @@ export function GuestStageBookingBlock({ guest, session }: Props) {
             {session.seatsLeft} of {session.seats} seats left
           </p>
         ) : null}
-        {session ? (
+        <p className={styles.unavailable}>
+          loop breakers is paused, so there is nothing to book at the moment.{' '}
+          <Link className={styles.mailto} href="/loop-breakers">
+            what&rsquo;s happening
+          </Link>
+          {' '}— or say hello at{' '}
           <a
-            href={session.bookingUrl}
-            target="_blank"
-            rel="noopener noreferrer"
-            className={styles.cta}
+            className={styles.mailto}
+            href="mailto:hello@unbarrier.me?subject=Guest Stage interest"
           >
-            Book this Guest Stage →
+            hello@unbarrier.me
           </a>
-        ) : (
-          <p className={styles.unavailable}>
-            Booking link not yet live. Drop a line to{' '}
-            <a
-              className={styles.mailto}
-              href="mailto:hello@unbarrier.me?subject=Guest Stage interest"
-            >
-              hello@unbarrier.me
-            </a>{' '}
-            to be notified.
-          </p>
-        )}
-        <p className={styles.note}>
-          Payment via Stripe at booking. Free reschedule up to 24h before.
+          .
         </p>
       </div>
     </section>

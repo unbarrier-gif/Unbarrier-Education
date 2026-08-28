@@ -1,9 +1,4 @@
 {
-  "tidycal": {
-    "tuesday": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch",
-    "guestStage": "https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking",
-    "oneToOne": "https://tidycal.com/nici/chat-with-nici"
-  },
   "sessions": [
     {
       "slug": "may-2026-first-loop-breakers",
@@ -23,8 +18,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "open",
       "tags": ["Founders", "Launch", "First session"],
-      "accent": "var(--spring-green)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--spring-green)"
     },
     {
       "slug": "may-2026-week-2",
@@ -44,8 +38,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "open",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "may-2026-week-3",
@@ -65,8 +58,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "may-2026-guest-stage-nicki-hambleton",
@@ -87,8 +79,7 @@
       "price": { "amount": 25, "currency": "£", "note": "Flat £25 — no access tier on Wednesdays" },
       "status": "soon",
       "tags": ["Guest Stage", "Visual thinking", "Creativity"],
-      "accent": "var(--orchid-mist)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sketch-noting-for-joy-and-for-thinking"
+      "accent": "var(--orchid-mist)"
     },
     {
       "slug": "may-2026-week-4",
@@ -108,8 +99,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "jun-2026-week-1",
@@ -129,8 +119,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Pricing", "Founders"],
-      "accent": "var(--princeton-orange)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--princeton-orange)"
     },
     {
       "slug": "jun-2026-week-2",
@@ -150,8 +139,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "jun-2026-week-3",
@@ -171,8 +159,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "jun-2026-week-4",
@@ -192,8 +179,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "jun-2026-week-5",
@@ -213,8 +199,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "jul-2026-week-1",
@@ -234,8 +219,7 @@
       "price": { "amount": 10, "currency": "£", "note": "One-off · £5 access seat on request" },
       "status": "soon",
       "tags": ["Founders"],
-      "accent": "var(--pearl-aqua)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch"
+      "accent": "var(--pearl-aqua)"
     },
     {
       "slug": "apr-2026-first-loop",
@@ -256,7 +240,6 @@
       "status": "past",
       "tags": ["Archive"],
       "accent": "var(--school-bus-yellow)",
-      "bookingUrl": "https://tidycal.com/nici/loop-breakers-sessions-vision-to-launch",
       "replay": false
     }
   ]

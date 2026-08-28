@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { Footer } from '@/components/Footer';
 import { Nav } from '@/components/Nav';
@@ -55,6 +56,18 @@ export default function GuestStagePage({ params }: { params: Params }) {
     <>
       <Nav />
       <main className={styles.main}>
+        {/* Loop Breakers is paused (28 Aug 2026). The booking link below is
+            disabled, but this page stays up: the writing and the sketch-notes
+            on it are the guest host's own work, and retiring them is not a
+            code decision. */}
+        <p className={styles.pausedNotice}>
+          loop breakers sessions are paused — this page stays up for the work
+          on it.{' '}
+          <Link href="/loop-breakers" className={styles.pausedLink}>
+            what&rsquo;s happening
+          </Link>
+        </p>
+
         <GuestStageHero guest={guest} session={session} />
 
         {guest.guest.heroImage ? (
