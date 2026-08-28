@@ -7,7 +7,12 @@ import { HelloHero } from '@/components/HelloHero';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { SayHiForm } from '@/components/SayHiForm';
+import { getHelloLinks, groupLinks } from '@/lib/hello-links';
 import styles from './page.module.css';
+
+// Cards come from Notion so Nici can change what's on /hello before a talk
+// without a deploy. 60s matches the blog and loop-breakers pages.
+export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'Unbarrier · designed for difference.',
@@ -16,62 +21,97 @@ export const metadata: Metadata = {
   alternates: { canonical: '/hello' },
 };
 
-export default function HelloPage() {
+export default async function HelloPage() {
+  const links = await getHelloLinks();
+  const groups = links ? groupLinks(links) : null;
+
   return (
     <>
       <Nav />
       <main className={styles.main}>
         <HelloHero />
 
-        <section className={styles.cards} aria-labelledby="start-here">
-          <h2 id="start-here" className={styles.eyebrow}>
-            Start here
-          </h2>
-          <div className={styles.list}>
-            <CtaCard
-              card="three_questions"
-              title="Three questions before you start"
-              meta="For schools weighing up new tech. Ten minutes, no right answers."
-              href="/three-questions"
-              external={false}
-            />
-            <CtaCard
-              card="seven_questions"
-              title="The seven questions"
-              meta="The talk, on one page. Pick one. Ask it Monday."
-              href="/the-takeaway.html"
-              external={true}
-            />
-            <CtaCard
-              card="belonging_check"
-              title="The belonging check"
-              meta="A prompt to build a 5-minute form for your people. Does your setting have a belonging problem?"
-              href="/belonging-check"
-              external={false}
-            />
-            <CtaCard
-              card="receipts"
-              title="The receipts"
-              meta="Six numbers under the talk. The belonging fact sheet."
-              href="/the-receipts.html"
-              external={true}
-            />
-            <CtaCard
-              card="one_read"
-              title="One read"
-              meta="The system wasn't built for the 60% in the middle. I'm building it differently."
-              href="https://www.unbarrier.me/blog/the-system-wasnt-built-for-the-60-percent-in-the-middle"
-              external={true}
-            />
-            <CtaCard
-              card="conversation"
-              title="Start a conversation"
-              meta="Tell me what's happening. No forms, no funnels."
-              href="https://calendar.app.google/WEZqBDRFhPFzsqUw5"
-              external={true}
-            />
-          </div>
-        </section>
+        {groups ? (
+          groups.map((group) => (
+            <section
+              key={group.group}
+              className={styles.cards}
+              aria-labelledby={`group-${group.group.replace(/\s+/g, '-')}`}
+            >
+              <h2
+                id={`group-${group.group.replace(/\s+/g, '-')}`}
+                className={styles.eyebrow}
+              >
+                {group.heading}
+              </h2>
+              <div className={styles.list}>
+                {group.links.map((link) => (
+                  <CtaCard
+                    key={link.id}
+                    card={link.slug}
+                    title={link.title}
+                    meta={link.meta}
+                    href={link.href}
+                    external={link.external}
+                    accent={link.accent}
+                    accentRgb={link.accentRgb}
+                  />
+                ))}
+              </div>
+            </section>
+          ))
+        ) : (
+          /* Fallback: Notion unreachable or nothing ticked. /hello never renders empty. */
+          <section className={styles.cards} aria-labelledby="start-here">
+            <h2 id="start-here" className={styles.eyebrow}>
+              Start here
+            </h2>
+            <div className={styles.list}>
+              <CtaCard
+                card="three_questions"
+                title="Three questions before you start"
+                meta="For schools weighing up new tech. Ten minutes, no right answers."
+                href="/three-questions"
+                external={false}
+              />
+              <CtaCard
+                card="seven_questions"
+                title="The seven questions"
+                meta="The talk, on one page. Pick one. Ask it Monday."
+                href="/the-takeaway.html"
+                external={true}
+              />
+              <CtaCard
+                card="belonging_check"
+                title="The belonging check"
+                meta="A prompt to build a 5-minute form for your people. Does your setting have a belonging problem?"
+                href="/belonging-check"
+                external={false}
+              />
+              <CtaCard
+                card="receipts"
+                title="The receipts"
+                meta="Six numbers under the talk. The belonging fact sheet."
+                href="/the-receipts.html"
+                external={true}
+              />
+              <CtaCard
+                card="one_read"
+                title="One read"
+                meta="The system wasn't built for the 60% in the middle. I'm building it differently."
+                href="https://www.unbarrier.me/blog/the-system-wasnt-built-for-the-60-percent-in-the-middle"
+                external={true}
+              />
+              <CtaCard
+                card="conversation"
+                title="Start a conversation"
+                meta="Tell me what's happening. No forms, no funnels."
+                href="https://calendar.app.google/WEZqBDRFhPFzsqUw5"
+                external={true}
+              />
+            </div>
+          </section>
+        )}
 
         <section className={styles.bandWrap}>
           <Glow

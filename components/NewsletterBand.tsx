@@ -37,16 +37,16 @@ export function NewsletterBand() {
     <section className={styles.band} aria-labelledby="newsletter-heading">
       <div className={styles.inner}>
         <h2 id="newsletter-heading" className={styles.heading}>
-          One note from me, once a month.
+          notice. One note from me, once a month.
         </h2>
         <p className={styles.sub}>
-          Maybe less. Never more. Unsubscribe anytime.
+          Maybe less. Never more. The first one goes out 9 September.
         </p>
 
         <p className={styles.consent}>
-          Yes, send me the Loop Breakers newsletter from Nici Foote
-          (Unbarrier Education Ltd) — practical writing on neurodiversity,
-          belonging, and inclusion. Unsubscribe any time. Privacy:{' '}
+          Yes, send me notice — the monthly letter from Nici Foote
+          (Unbarrier Education Ltd) on inclusion, belonging, and what
+          actually reaches the child. Unsubscribe any time. Privacy:{' '}
           <Link href="/legal/privacy">unbarrier.me/legal/privacy</Link>
         </p>
 
