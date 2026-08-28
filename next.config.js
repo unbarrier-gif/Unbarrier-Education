@@ -29,6 +29,10 @@ const nextConfig = {
         destination: '/goodnotes-training.html',
       },
       {
+        source: '/three-questions',
+        destination: '/three-questions.html',
+      },
+      {
         source: '/goodnotes',
         destination: '/goodnotes/index.html',
       },
