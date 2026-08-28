@@ -11,6 +11,12 @@ This doc is for the next Claude Code session (likely on Mac) picking up Phase 2 
 
 **Phase 2 foundation** &mdash; built and pushed, awaiting review + merge:
 - PR #2: `feat/phase-2/foundation` &rarr; `main` (layered on top of `feat/hello`)
+> **Superseded, 28 Aug 2026.** Loop Breakers is retired. `middleware.ts` and
+> `app/loop/` were deleted; `loop.unbarrier.me` now 301s to
+> `unbarrier.me/loop-breakers` via `next.config.js`. Everything below about
+> multi-zone routing and the loop subdomain is kept as a record of what was
+> built, not as instructions. Do not action the Vercel/DNS checklist.
+
 - Adds `middleware.ts` for multi-zone subdomain routing (unbarrier.me + loop.unbarrier.me on a single Next.js app)
 - Adds `app/loop/` placeholder ("landing soon")
 - README + `docs/local-setup.md` updated

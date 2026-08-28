@@ -43,10 +43,6 @@ export default function TermsPage() {
         <h2 className={styles.h3}>what we offer</h2>
         <ul>
           <li>
-            <strong>Loop Breakers sessions</strong> &mdash; small-group or 1:1
-            coaching, 90-minute format, delivered via Google Meet.
-          </li>
-          <li>
             <strong>Unbarrier services</strong> &mdash; audit, access, and
             voice consultancy packages described on the site.
           </li>
@@ -61,7 +57,8 @@ export default function TermsPage() {
         <h2 className={styles.h3}>booking &amp; payment</h2>
         <ul>
           <li>
-            you book via TidyCal. prices are shown at the point of booking.
+            bookings are arranged directly with us. prices are confirmed in
+            writing before you commit.
           </li>
           <li>
             payment is taken via Stripe at booking, unless otherwise agreed.

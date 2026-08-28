@@ -18,22 +18,21 @@ The site at **[unbarrier.me](https://unbarrier.me)**. Phase 1 ships a single pag
 - MailerLite REST API (direct fetch, no SDK)
 - Plausible analytics
 - Zod for validation
-- Multi-zone subdomain routing via `middleware.ts` (single Next app serves both `unbarrier.me` and `loop.unbarrier.me`)
 
-## Architecture — multi-zone routing (Phase 2)
+## Architecture — one domain
 
-One Next.js app, two domains. `middleware.ts` reads the request host and rewrites paths into the right route subtree.
+`unbarrier.me` serves everything from `app/`. There is no multi-zone routing and no `middleware.ts`: both were removed on 28 Aug 2026 when Loop Breakers was retired.
 
-| Host | Resolves from |
+**Retired subdomains.** These 301 to the main domain, defined in `next.config.js` so the rules are reviewable in a diff rather than hidden in the Vercel dashboard:
+
+| Host | 301s to |
 |---|---|
-| `unbarrier.me` (and `www.`) | `app/page.tsx`, `app/hello/`, `app/legal/`, `app/blog/`, &hellip; |
-| `loop.unbarrier.me` (and `www.`) | `app/loop/*` &mdash; middleware silently prepends `/loop` |
+| `loop.unbarrier.me` (and `www.`) | `https://www.unbarrier.me/loop-breakers` |
+| `loop-breakers.unbarrier.me` | `https://www.unbarrier.me/hello` |
 
-Direct hits to `unbarrier.me/loop/*` 308-redirect to the canonical `loop.unbarrier.me/*` URL.
+Every path on those subdomains redirects, including the root and anything that would previously have 404'd. The in-app paths `/loop` and `/loop/*` 301 to `/loop-breakers` as well.
 
-**Vercel previews** don&rsquo;t carry the subdomain &mdash; access loop content on a preview URL by hitting `/loop` directly: `https://<preview>.vercel.app/loop/sessions`.
-
-**Vercel project setup**: both `unbarrier.me` and `loop.unbarrier.me` must be assigned to the same Vercel project (Settings &rarr; Domains). DNS is via Bluehost.
+**Vercel project setup**: keep `loop.unbarrier.me` assigned to the `unbarrier-me` project — the redirect only runs if the request reaches this app. Removing the domain from the project would 404 those URLs instead of redirecting them. DNS is via Bluehost.
 
 ## Run locally
 
@@ -84,11 +83,6 @@ app/
     privacy/page.tsx      Phase 2: real privacy text from Legal Pages v1
     terms/page.tsx        Phase 2: real terms text from Legal Pages v1
     legal.module.css
-  loop/                   Phase 2: loop.unbarrier.me content tree
-    layout.tsx
-    page.tsx              "landing soon" placeholder
-    page.module.css
-    not-found.tsx
   api/
     say-hi/route.ts       POST handler — Zod + honeypot + rate limit
 components/
@@ -103,7 +97,6 @@ lib/
   mailerlite.ts           addSubscriber (treats 422 as success)
   resend.ts               sendSayHi
   rateLimit.ts            in-memory map, 5/IP/hour
-middleware.ts             multi-zone subdomain routing
 public/assets/
   illustrations/          hero-bring-the-joy.png + Phase 2 art
   logos/                  brand mark
@@ -116,9 +109,7 @@ public/assets/
 - `feat/hello` is the default and production branch. Branch off it, PR back into it, never push direct.
 - Phase 1: `feat/hello` shipped as PR #1. Cardiff hard-deadline 29 Apr.
 - Phase 2: one branch per route, each PR&rsquo;d to `feat/hello` independently.
-  - `feat/phase-2/foundation` &mdash; middleware + `/loop` scaffolding.
   - `feat/phase-2/homepage` &mdash; unbarrier.me homepage (Week 1).
-  - `feat/phase-2/loop-landing` &mdash; loop.unbarrier.me landing + sessions (Week 2).
   - `feat/phase-2/host-kit` &mdash; guest host kit + Nicki + Gemma (Week 3 / 3.5).
   - `feat/phase-2/blog` &mdash; blog system + index (Week 4).
 - Phase 3: TBD &mdash; newsletter funnel, content, polish.
