@@ -108,7 +108,7 @@ Commit `CLAUDE.md`, and you're set.
 - `MAILERLITE_GROUP_ID` &mdash; already public-known: `185831469000688733`
 - `SAY_HI_FORWARD_TO` &mdash; `hello@unbarrier.me`
 
-Public vars (`NEXT_PUBLIC_TIDYCAL_*`, `NEXT_PUBLIC_PLAUSIBLE_DOMAIN`) have hard-coded fallbacks in the code, so they work without `.env.local`.
+Public vars (`NEXT_PUBLIC_PLAUSIBLE_DOMAIN`) have hard-coded fallbacks in the code, so they work without `.env.local`. (`NEXT_PUBLIC_TIDYCAL_*` no longer exists — TidyCal was retired 21 Aug 2026 and `lib/tidycal.ts` was deleted; nothing reads those vars now.)
 
 ## ISP audit tool (`/isp-audit`) — one-time setup
 

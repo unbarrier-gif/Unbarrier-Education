@@ -16,6 +16,43 @@ const nextConfig = {
         destination: 'https://www.unbarrier.me/hello',
         permanent: true,
       },
+      // loop.unbarrier.me is retired (28 Aug 2026). The whole subdomain 301s
+      // to the holding page — every path, including the root and anything
+      // that would previously have 404'd, so nothing on it can render.
+      //
+      // Deliberately here in version control rather than as a Vercel
+      // dashboard redirect: this is reviewable in a diff, a dashboard rule is
+      // invisible to whoever comes next.
+      //
+      // These run before middleware and before the filesystem, which is why
+      // deleting app/loop/ is safe — the redirect answers first.
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'loop.unbarrier.me' }],
+        destination: 'https://www.unbarrier.me/loop-breakers',
+        statusCode: 301,
+      },
+      {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'www.loop.unbarrier.me' }],
+        destination: 'https://www.unbarrier.me/loop-breakers',
+        statusCode: 301,
+      },
+      // The same content used to be reachable at unbarrier.me/loop/* , which
+      // middleware 308'd to the subdomain. Middleware is gone, so these two
+      // now go straight to the holding page instead of taking two hops.
+      // `/loop` and `/loop/:path*` do not match `/loop-breakers` — different
+      // path segment.
+      {
+        source: '/loop',
+        destination: '/loop-breakers',
+        statusCode: 301,
+      },
+      {
+        source: '/loop/:path*',
+        destination: '/loop-breakers',
+        statusCode: 301,
+      },
       // Loop Breakers is fully retired (28 Aug 2026). Every surface it had
       // 301s to the /loop-breakers holding page instead of 404ing, so links
       // from search, bookmarks, old newsletters and the guest hosts' own
