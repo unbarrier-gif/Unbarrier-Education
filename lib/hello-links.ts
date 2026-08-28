@@ -18,6 +18,7 @@
 //   Group    (select)       "today" | "for schools" | "for you" | "read and talk"
 //   Order    (number)       low first, within the group
 //   Show     (checkbox)     unticked rows never render
+//   Image    (url)          card thumbnail; empty falls back to a tinted tile
 //   Accent   (select)       "green" | "aqua" | "orchid" | "yellow" | "orange" | "pink mist"
 //   New tab  (checkbox)
 //
@@ -78,15 +79,27 @@ export type HelloLink = {
   accent: string;
   accentRgb: string;
   external: boolean;
+  /** Card thumbnail. Empty string means "render the tinted fallback tile". */
+  image: string;
+  /** First character of the title, shown on the fallback tile. */
+  initial: string;
   /** Stable-ish key for the Plausible cta_click event. */
   slug: string;
 };
 
 function plainText(prop: unknown): string {
   const rich = (prop as { rich_text?: { plain_text: string }[] })?.rich_text;
-  if (Array.isArray(rich)) return rich.map((r) => r.plain_text).join('').trim();
+  if (Array.isArray(rich))
+    return rich
+      .map((r) => r.plain_text)
+      .join('')
+      .trim();
   const title = (prop as { title?: { plain_text: string }[] })?.title;
-  if (Array.isArray(title)) return title.map((r) => r.plain_text).join('').trim();
+  if (Array.isArray(title))
+    return title
+      .map((r) => r.plain_text)
+      .join('')
+      .trim();
   return '';
 }
 
@@ -133,6 +146,8 @@ function toLink(page: PageObjectResponse): HelloLink | null {
     accent: ACCENT_TOKEN[accentKey] ?? ACCENT_TOKEN.green,
     accentRgb: ACCENT_RGB[accentKey] ?? ACCENT_RGB.green,
     external: checkbox(props['New tab']),
+    image: (props.Image as { url?: string | null })?.url?.trim() ?? '',
+    initial: title.trim().charAt(0).toUpperCase(),
     slug: slugify(title),
   };
 }
