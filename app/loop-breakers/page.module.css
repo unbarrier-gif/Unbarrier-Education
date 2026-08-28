@@ -1,7 +1,69 @@
 .main {
   padding-top: 0;
+  position: relative;
+  overflow: hidden;
 }
 
-.main section {
-  scroll-margin-top: 90px;
+.wrap {
+  position: relative;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: clamp(3rem, 10vw, 6rem) var(--space-5) clamp(4rem, 12vw, 7rem);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.eyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--school-bus-yellow);
+  margin: 0;
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  line-height: 1.05;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 56ch;
+  margin: 0;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 56ch;
+  margin: 0;
+}
+
+.link {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.link:hover {
+  text-decoration-thickness: 2px;
+}
+
+.link:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
 }

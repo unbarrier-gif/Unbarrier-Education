@@ -48,7 +48,7 @@ Open <http://localhost:3000/hello>.
 
 ## Deploy
 
-Vercel project `unbarrier-me` is GitHub-connected — pushes to any branch get a preview URL, merges to `main` ship to production. Domain `unbarrier.me` already points at Vercel.
+Vercel project `unbarrier-me` is GitHub-connected — pushes to any branch get a preview URL, merges to `feat/hello` ship to production. `feat/hello` is the default/production branch; there is no `main`. Domain `unbarrier.me` already points at Vercel.
 
 ## Environment variables
 
@@ -117,8 +117,9 @@ public/assets/
 
 ## Branch / PR model
 
-- Phase 1: `feat/hello` &rarr; PR #1 to `main`. Cardiff hard-deadline 29 Apr.
-- Phase 2: one branch per route, each PR&rsquo;d to `main` independently.
+- `feat/hello` is the default and production branch. Branch off it, PR back into it, never push direct.
+- Phase 1: `feat/hello` shipped as PR #1. Cardiff hard-deadline 29 Apr.
+- Phase 2: one branch per route, each PR&rsquo;d to `feat/hello` independently.
   - `feat/phase-2/foundation` &mdash; middleware + `/loop` scaffolding.
   - `feat/phase-2/homepage` &mdash; unbarrier.me homepage (Week 1).
   - `feat/phase-2/loop-landing` &mdash; loop.unbarrier.me landing + sessions (Week 2).

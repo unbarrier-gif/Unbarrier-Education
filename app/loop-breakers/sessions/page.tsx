@@ -20,7 +20,7 @@ export const revalidate = 60;
 export default function SessionsPage() {
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <header className={styles.hero}>
           <p className={styles.crumbs}>

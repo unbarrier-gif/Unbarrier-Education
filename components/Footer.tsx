@@ -14,13 +14,16 @@ type Props = {
 // link compounds per page view because footer is global. When /audits
 // lands, restore as { label: 'unbarrier.audit', href: '/audits' } in
 // the Services group below.
+// 28 Aug 2026: `unbarrier.loop-breakers` removed from Services — the strand
+// is retired and /loop-breakers is now a holding page. The route stays live
+// and indexable so existing bookmarks don't 404; it just isn't advertised
+// as a current service in the global footer any more.
 const FOOTER_LINK_GROUPS = [
   {
     heading: 'Services',
     links: [
       { label: 'unbarrier.access', href: '/access' },
       { label: 'unbarrier.voice', href: '/voice' },
-      { label: 'unbarrier.loop-breakers', href: '/loop-breakers' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
   },

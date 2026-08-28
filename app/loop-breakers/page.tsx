@@ -1,21 +1,21 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Footer } from '@/components/Footer';
+import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { LBHero } from '@/components/loop-breakers/LBHero';
-import { LBProblem } from '@/components/loop-breakers/LBProblem';
-import { LBHow } from '@/components/loop-breakers/LBHow';
-import { LBUpcoming } from '@/components/loop-breakers/LBUpcoming';
-import { LBPricing } from '@/components/loop-breakers/LBPricing';
-import { LBOneToOne } from '@/components/loop-breakers/LBOneToOne';
-import { LBTestimonial } from '@/components/loop-breakers/LBTestimonial';
-import { LBShape } from '@/components/loop-breakers/LBShape';
-import { LBMeetNici } from '@/components/loop-breakers/LBMeetNici';
 import styles from './page.module.css';
 
+// Loop Breakers is retired until further notice (28 Aug 2026). The route
+// stays live and indexable so no bookmark, newsletter link or business card
+// 404s — holding copy only, per the approved page drafts. No prices, no
+// session ladder, no booking links. The LB* components and the
+// /loop-breakers/sessions + /guest-host-kit subtrees are untouched by this
+// change; retiring those is a separate decision.
+
 export const metadata: Metadata = {
-  title: 'Loop Breakers · unbarrier.me',
+  title: 'loopbreakers is paused · unbarrier.me',
   description:
-    "A held room for neurodivergent women circling an idea — because the loop breaks when someone else sees it. £10 Tuesdays, pay-as-you-go.",
+    'loopbreakers is paused while we concentrate on the education work — audits, partnerships, and the voice instrument. if it starts again we will say so here first.',
   alternates: { canonical: '/loop-breakers' },
 };
 
@@ -26,19 +26,45 @@ export const revalidate = 60;
 export default function LoopBreakersPage() {
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
-        <LBHero />
-        <LBProblem />
-        <LBHow />
-        <LBUpcoming />
-        <LBPricing />
-        <LBOneToOne />
-        <LBTestimonial />
-        <LBShape />
-        <LBMeetNici />
-        <Footer variant="full" />
+        <Glow
+          color="var(--school-bus-yellow)"
+          left="-140px"
+          top="2%"
+          size={520}
+          opacity={0.08}
+          blur={160}
+        />
+
+        <div className={styles.wrap}>
+          <p className={styles.eyebrow}>loop breakers</p>
+
+          <h1 className={styles.heading}>loopbreakers is paused.</h1>
+
+          <p className={styles.lede}>
+            the coaching room isn&rsquo;t running at the moment. we&rsquo;re
+            concentrating on the education work &mdash; audits, partnerships,
+            and the voice instrument &mdash; and we&rsquo;d rather say that
+            plainly than leave a page up that looks open when it isn&rsquo;t.
+          </p>
+
+          <p className={styles.body}>
+            if you were part of it, thank you. it mattered. if it starts again
+            we&rsquo;ll say so here first.
+          </p>
+
+          <p className={styles.body}>
+            if you came looking for the education work,{' '}
+            <Link href="/access" className={styles.link}>
+              that&rsquo;s here
+            </Link>
+            .
+          </p>
+        </div>
       </main>
+
+      <Footer variant="full" />
     </>
   );
 }

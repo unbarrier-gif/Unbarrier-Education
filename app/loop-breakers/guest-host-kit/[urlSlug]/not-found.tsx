@@ -6,7 +6,7 @@ import styles from './page.module.css';
 export default function LetterNotFound() {
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <article style={{ maxWidth: 720, margin: '0 auto', padding: '5rem 2rem' }}>
           <h1>That letter isn&apos;t live.</h1>

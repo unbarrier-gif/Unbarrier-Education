@@ -53,7 +53,7 @@ export default function GuestStagePage({ params }: { params: Params }) {
 
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <GuestStageHero guest={guest} session={session} />
 

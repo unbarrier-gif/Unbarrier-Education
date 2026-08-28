@@ -48,7 +48,7 @@ export default function LetterPage({ params }: { params: Params }) {
 
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <Letter />
         <Footer variant="full" />

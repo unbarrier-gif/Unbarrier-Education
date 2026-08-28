@@ -25,7 +25,7 @@ export default function GuestStageIndex() {
 
   return (
     <>
-      <Nav active="loop-breakers" />
+      <Nav />
       <main className={styles.main}>
         <header className={styles.hero}>
           <p className={styles.crumbs}>

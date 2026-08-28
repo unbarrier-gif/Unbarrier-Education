@@ -15,8 +15,8 @@ import styles from './page.module.css';
 
 // Holding page for unbarrier.access. Modelled on /voice's holding-page
 // pattern: small, honest, real voice. Replaces the /#services anchor for
-// the access strand. Upgrades to the full version (five named routes +
-// £650 day rate) once pricing is pressure-tested with a real client and
+// the access strand. Upgrades to the full version (five named routes,
+// pricing) once pricing is pressure-tested with a real client and
 // BETT/Apple credibility is earned with permission. Source draft: Notion
 // page 355bbd60-0b3f-8188-aff6-fa38b4ab63a3 (locked 3 May 2026).
 // Section 2 observations (D22) and SEO additions (D24, D25) shipped per

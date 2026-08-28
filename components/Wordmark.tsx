@@ -7,11 +7,13 @@ type Size = 'sm' | 'md' | 'lg' | 'xl';
 
 const SIZES: Record<Size, number> = { sm: 16, md: 22, lg: 34, xl: 56 };
 
+// Canonical sub-brand dot colours: audit=pearl-aqua, access=princeton-orange,
+// voice=orchid-mist. Matches Nav.tsx LINKS and the /access + /voice pages.
 const DOT_COLOR: Record<Suffix, string> = {
   '.me': 'var(--spring-green)',
   '.audit': 'var(--pearl-aqua)',
-  '.access': 'var(--orchid-mist)',
-  '.voice': 'var(--princeton-orange)',
+  '.access': 'var(--princeton-orange)',
+  '.voice': 'var(--orchid-mist)',
   '.hub': 'var(--school-bus-yellow)',
 };
 
