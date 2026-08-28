@@ -8,7 +8,8 @@ type CardKey =
   | 'belonging_check'
   | 'receipts'
   | 'one_read'
-  | 'conversation';
+  | 'conversation'
+  | 'three_questions';
 
 type Props = {
   card: CardKey;
@@ -25,6 +26,7 @@ const ACCENT: Record<CardKey, string> = {
   receipts: 'var(--pearl-aqua)',
   one_read: 'var(--princeton-orange)',
   conversation: 'var(--school-bus-yellow)',
+  three_questions: 'var(--pink-mist)',
 };
 
 const ACCENT_RGB: Record<CardKey, string> = {
@@ -33,6 +35,7 @@ const ACCENT_RGB: Record<CardKey, string> = {
   receipts: '105, 217, 209',
   one_read: '255, 138, 28',
   conversation: '255, 194, 3',
+  three_questions: '227, 161, 176',
 };
 
 export function CtaCard({ card, title, meta, href, external = true }: Props) {

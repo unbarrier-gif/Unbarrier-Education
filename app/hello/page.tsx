@@ -29,6 +29,13 @@ export default function HelloPage() {
           </h2>
           <div className={styles.list}>
             <CtaCard
+              card="three_questions"
+              title="Three questions before you start"
+              meta="For schools weighing up new tech. Ten minutes, no right answers."
+              href="/three-questions"
+              external={false}
+            />
+            <CtaCard
               card="seven_questions"
               title="The seven questions"
               meta="The talk, on one page. Pick one. Ask it Monday."
@@ -60,7 +67,7 @@ export default function HelloPage() {
               card="conversation"
               title="Start a conversation"
               meta="Tell me what's happening. No forms, no funnels."
-              href="https://tidycal.com/nici/chat-with-nici"
+              href="https://calendar.app.google/WEZqBDRFhPFzsqUw5"
               external={true}
             />
           </div>

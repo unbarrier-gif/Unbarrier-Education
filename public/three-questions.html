@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Three questions before you start — unbarrier</title>
+<meta name="description" content="Three questions for schools weighing up new technology. Ten minutes, on your own or with your team. No right answers.">
+<link rel="canonical" href="https://www.unbarrier.me/three-questions">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Three questions before you start">
+<meta property="og:description" content="Three questions for schools weighing up new technology. Ten minutes, on your own or with your team. No right answers.">
+<meta property="og:url" content="https://www.unbarrier.me/three-questions">
+<meta property="og:image" content="https://www.unbarrier.me/assets/og-hello.png">
+<meta name="twitter:card" content="summary_large_image">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800&family=Comfortaa:wght@400;600;700&family=Lexend:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --green: #38ff99;
+    --purple: #210a33;
+    --aqua: #69d9d1;
+    --pink: #e3a1b0;
+    --cream: #f0ebe5;
+    --muted: rgba(240, 235, 229, 0.65);
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html, body { height: auto; overflow-x: hidden; }
+  body {
+    background: var(--purple);
+    font-family: 'Lexend', system-ui, sans-serif;
+    color: var(--cream);
+    padding: 2.5rem 1.25rem 5rem;
+    line-height: 1.75;
+  }
+  .page { max-width: 700px; margin: 0 auto; }
+
+  .brand-row {
+    display: flex; justify-content: space-between; align-items: baseline;
+    gap: 1rem; flex-wrap: wrap; margin-bottom: 2.5rem;
+  }
+  .wordmark {
+    font-family: 'Comfortaa', sans-serif; font-weight: 700;
+    font-size: 1rem; color: var(--cream); text-decoration: none;
+  }
+  .eyebrow {
+    font-family: 'Outfit', sans-serif; font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink);
+  }
+
+  h1 {
+    font-family: 'Outfit', sans-serif; font-weight: 800;
+    font-size: clamp(2.1rem, 6vw, 3.2rem); line-height: 1.06;
+    letter-spacing: -0.025em; margin-bottom: 1.5rem;
+  }
+  h1 em { font-style: normal; color: var(--pink); }
+
+  .intro { font-size: 1.1rem; color: var(--muted); max-width: 34em; }
+  .intro p + p { margin-top: 0.9rem; }
+
+  .questions { margin: 3rem 0 0; list-style: none; }
+  .q {
+    border-left: 4px solid var(--pink);
+    padding: 0 0 0 1.5rem;
+    margin-bottom: 2.75rem;
+  }
+  .q:nth-child(2) { border-left-color: var(--aqua); }
+  .q:nth-child(3) { border-left-color: var(--green); }
+  .q-num {
+    font-family: 'Outfit', sans-serif; font-weight: 700;
+    font-size: 0.72rem; letter-spacing: 0.14em;
+    color: var(--muted); display: block; margin-bottom: 0.5rem;
+  }
+  .q h2 {
+    font-family: 'Outfit', sans-serif; font-weight: 700;
+    font-size: clamp(1.3rem, 3vw, 1.7rem); line-height: 1.3;
+    letter-spacing: -0.02em; margin-bottom: 0.75rem;
+  }
+  .q p { color: var(--muted); max-width: 34em; }
+
+  .close {
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding-top: 2.25rem; margin-top: 1rem;
+  }
+  .close p { font-size: 1.1rem; margin-bottom: 1.75rem; }
+
+  .cta {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    background: var(--green); color: var(--purple);
+    font-family: 'Comfortaa', sans-serif; font-weight: 700; font-size: 0.95rem;
+    padding: 0.95rem 1.75rem; border-radius: 999px;
+    text-decoration: none; transition: transform 0.15s ease;
+  }
+  .cta:hover { transform: scale(1.03); }
+  .cta:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
+
+  .secondary { margin-top: 1.5rem; font-size: 0.95rem; color: var(--muted); }
+  .secondary a { color: var(--cream); text-decoration: underline; text-underline-offset: 3px; }
+  .secondary a:focus-visible { outline: 3px solid var(--green); outline-offset: 3px; }
+
+  footer {
+    margin-top: 4rem; padding-top: 1.5rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    font-size: 0.82rem; color: rgba(240,235,229,0.5);
+  }
+  footer a { color: rgba(240,235,229,0.5); text-decoration: underline; text-underline-offset: 3px; }
+</style>
+</head>
+<body>
+<main class="page">
+
+  <div class="brand-row">
+    <a class="wordmark" href="https://www.unbarrier.me/hello">unbarrier</a>
+    <span class="eyebrow">For schools</span>
+  </div>
+
+  <h1>Three questions <em>before you start</em></h1>
+
+  <div class="intro">
+    <p>You don't need a plan for the technology yet. You need to know what you're solving.</p>
+    <p>Sit with these three before we talk. On your own, or with your team. Ten minutes.</p>
+  </div>
+
+  <ol class="questions">
+    <li class="q">
+      <span class="q-num">01</span>
+      <h2>What does it look like in your classrooms on a good day?</h2>
+      <p>Start with the lesson, not the app. If you can describe the good day, you can tell whether the technology got you nearer to it.</p>
+    </li>
+    <li class="q">
+      <span class="q-num">02</span>
+      <h2>Who on your staff is still working around the tech rather than with it?</h2>
+      <p>Every school has them. They're not the problem, they're the measure. The workaround is the data.</p>
+    </li>
+    <li class="q">
+      <span class="q-num">03</span>
+      <h2>How would you know it had reached the child?</h2>
+      <p>Installed is easy to prove. Reached is the harder question, and it's the one almost nobody asks.</p>
+    </li>
+  </ol>
+
+  <div class="close">
+    <p>No right answers. Bring what you've got.</p>
+    <a class="cta" href="https://calendar.app.google/NZvdEgfvb9kbjkAXA" target="_blank" rel="noopener noreferrer">Book 45 minutes</a>
+    <p class="secondary">Using goodnotes in school? Start here: <a href="https://www.unbarrier.me/goodnotes">unbarrier.me/goodnotes</a></p>
+  </div>
+
+  <footer>
+    unbarrier education ltd · <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a> · <a href="https://www.unbarrier.me/legal/privacy">Privacy</a>
+  </footer>
+
+</main>
+</body>
+</html>
