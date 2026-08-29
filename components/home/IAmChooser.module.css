@@ -1,0 +1,75 @@
+.section {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+  scroll-margin-top: var(--nav-height);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.4vw, 2.2rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-6);
+  max-width: 24ch;
+}
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+/* Each route is one large target. Grid rather than inline so the whole block
+   — who, body and destination — is a single tap area rather than a small
+   link at the end of a paragraph. */
+.route {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--spring-green);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  min-height: 44px;
+  transition: background 150ms ease, border-color 150ms ease;
+}
+
+.route:hover {
+  background: var(--surface-lift);
+  border-color: var(--border-strong);
+  border-left-color: var(--spring-green);
+}
+
+.who {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.1rem;
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+}
+
+.destination {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--spring-green);
+  font-style: italic;
+}
+
+.arrow {
+  font-style: normal;
+}

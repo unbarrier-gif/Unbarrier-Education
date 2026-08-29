@@ -1,136 +1,117 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { Button } from '@/components/Button';
 import { CtaCard } from '@/components/CtaCard';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
-import { HelloHero } from '@/components/HelloHero';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
-import { SayHiForm } from '@/components/SayHiForm';
 import { TodayBlock } from '@/components/TodayBlock';
-import { getHelloLinks, groupLinks } from '@/lib/hello-links';
+import { BOOKING_URL } from '@/lib/booking';
+import { getHelloLinks, groupLinks, isTodayGroup } from '@/lib/hello-links';
+import { HELLO_FALLBACK_GROUPS } from './fallback';
 import styles from './page.module.css';
 
-// Cards come from Notion so Nici can change what's on /hello before a talk
-// without a deploy. 60s matches the blog and loop-breakers pages.
+// /hello — the stage page. Nici says this url out loud from a platform and a
+// room scans a QR code into it, on conference wifi, immediately. It replaces
+// linktree in November.
+//
+// Copy from the approved page drafts (28 Aug 2026).
+//
+// THREE THINGS ABOUT THIS PAGE ARE NOT NEGOTIABLE:
+//
+//  1. NO HERO. Links are above the fold. The brand mark, the "designed for
+//     difference" display headline and the bio paragraph that used to sit here
+//     pushed the first link off a phone screen, which is the one thing this
+//     page cannot do. There is no credential strip here either, for the same
+//     reason — /hello is a link hub, not a sales page.
+//
+//  2. EDITABLE WITHOUT A DEPLOY. Cards come from Notion (lib/hello-links.ts).
+//     `revalidate = 60` below is what makes that true: the page is
+//     incrementally regenerated, so an edit in Notion appears within about a
+//     minute with no branch, no PR and no deploy. A statically generated page
+//     would satisfy the letter of "Notion driven" and defeat the entire point —
+//     do not remove the revalidate.
+//
+//  3. IT RENDERS EVEN WHEN NOTION DOES NOT, and that outranks freshness.
+//     Notion can be slow, rate-limited, down, or missing a token. On this page
+//     that failure is a 500 in front of a live audience holding phones.
+//     getHelloLinks() returns null on every failure — no token, no database id,
+//     network error, API error, or nothing ticked — and the committed fallback
+//     in ./fallback.ts renders instead. Never an error, never an empty page,
+//     never a spinner. Stale beats absent here.
+
 export const revalidate = 60;
 
 export const metadata: Metadata = {
-  title: 'Unbarrier · designed for difference.',
+  title: 'hello — everything i said i’d send | unbarrier.me',
   description:
-    "I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through.",
+    'you just met me somewhere. here’s everything i said i’d send. no sign-up, no gate.',
   alternates: { canonical: '/hello' },
 };
 
 export default async function HelloPage() {
   const links = await getHelloLinks();
-  const groups = links ? groupLinks(links) : null;
+  // One expression, one decision: live cards if Notion gave us any, the
+  // committed fallback otherwise.
+  const groups = links ? groupLinks(links) : HELLO_FALLBACK_GROUPS;
 
-  // The today block's own heading is the first today row's Meta — that's the
-  // one line Nici changes on the morning of an event ("Goodnotes · BSS").
-  const todayHeading =
-    groups?.find((g) => g.group === 'today')?.links[0]?.meta ??
-    'Everything from the session';
+  const todayGroup = groups.find((g) => isTodayGroup(g.group));
+  const cardGroups = groups.filter((g) => !isTodayGroup(g.group));
+
+  // The today block's heading is the first today row's Meta — the one line
+  // Nici changes on the morning of an event.
+  const todayHeading = todayGroup?.links[0]?.meta ?? 'everything from the session';
 
   return (
     <>
       <Nav />
       <main className={styles.main}>
-        <HelloHero />
+        {/* Compact, not a hero: two lines, then links. */}
+        <header className={styles.intro}>
+          <h1 className={styles.headline}>
+            you just met me somewhere. here&rsquo;s everything i said i&rsquo;d
+            send.
+          </h1>
+          <p className={styles.introLine}>
+            no sign-up, no gate. take what&rsquo;s useful and ignore the rest.
+          </p>
+        </header>
 
-        {groups?.some((g) => g.group === 'today') && (
-          <TodayBlock
-            heading={todayHeading}
-            links={groups.find((g) => g.group === 'today')!.links}
-          />
+        {todayGroup && (
+          <TodayBlock heading={todayHeading} links={todayGroup.links} />
         )}
 
-        {groups ? (
-          groups
-            .filter((group) => group.group !== 'today')
-            .map((group) => (
-              <section
-                key={group.group}
-                className={styles.cards}
-                aria-labelledby={`group-${group.group.replace(/\s+/g, '-')}`}
-              >
-                <h2
-                  id={`group-${group.group.replace(/\s+/g, '-')}`}
-                  className={styles.eyebrow}
-                >
-                  {group.heading}
-                </h2>
-                <div className={styles.list}>
-                  {group.links.map((link) => (
-                    <CtaCard
-                      key={link.id}
-                      card={link.slug}
-                      title={link.title}
-                      meta={link.meta}
-                      href={link.href}
-                      external={link.external}
-                      accent={link.accent}
-                      accentRgb={link.accentRgb}
-                      image={link.image}
-                      initial={link.initial}
-                    />
-                  ))}
-                </div>
-              </section>
-            ))
-        ) : (
-          /* Fallback: Notion unreachable or nothing ticked. /hello never renders empty. */
-          <section className={styles.cards} aria-labelledby="start-here">
-            <h2 id="start-here" className={styles.eyebrow}>
-              Start here
-            </h2>
-            <div className={styles.list}>
-              <CtaCard
-                card="three_questions"
-                title="Three questions before you start"
-                meta="For schools weighing up new tech. Ten minutes, no right answers."
-                href="/three-questions"
-                external={false}
-              />
-              <CtaCard
-                card="seven_questions"
-                title="The seven questions"
-                meta="The talk, on one page. Pick one. Ask it Monday."
-                href="/the-takeaway.html"
-                external={true}
-              />
-              <CtaCard
-                card="belonging_check"
-                title="The belonging check"
-                meta="A prompt to build a 5-minute form for your people. Does your setting have a belonging problem?"
-                href="/belonging-check"
-                external={false}
-              />
-              <CtaCard
-                card="receipts"
-                title="The receipts"
-                meta="Six numbers under the talk. The belonging fact sheet."
-                href="/the-receipts.html"
-                external={true}
-              />
-              <CtaCard
-                card="one_read"
-                title="One read"
-                meta="The system wasn't built for the 60% in the middle. I'm building it differently."
-                href="https://www.unbarrier.me/blog/the-system-wasnt-built-for-the-60-percent-in-the-middle"
-                external={true}
-              />
-              <CtaCard
-                card="conversation"
-                title="Start a conversation"
-                meta="Tell me what's happening. No forms, no funnels."
-                href="https://calendar.app.google/WEZqBDRFhPFzsqUw5"
-                external={true}
-              />
-            </div>
-          </section>
-        )}
+        {cardGroups.map((group) => {
+          const id = `group-${group.group.replace(/[^a-z0-9]+/gi, '-')}`;
+          return (
+            <section key={group.group} className={styles.cards} aria-labelledby={id}>
+              <h2 id={id} className={styles.eyebrow}>
+                {group.heading}
+              </h2>
+              <div className={styles.list}>
+                {group.links.map((link) => (
+                  <CtaCard
+                    key={link.id}
+                    card={link.slug}
+                    title={link.title}
+                    meta={link.meta}
+                    href={link.href}
+                    external={link.external}
+                    accent={link.accent}
+                    accentRgb={link.accentRgb}
+                    image={link.image}
+                    initial={link.initial}
+                  />
+                ))}
+              </div>
+            </section>
+          );
+        })}
 
+        {/* "notice" — the approved copy's newsletter line. The subscribe block
+            itself is the conversion-layer branch; this is the band that is
+            already built and already posts to MailerLite. Nothing new here. */}
         <section className={styles.bandWrap}>
           <Glow
             color="var(--school-bus-yellow)"
@@ -143,29 +124,31 @@ export default async function HelloPage() {
           <NewsletterBand />
         </section>
 
-        <section className={styles.bandWrap}>
-          <Glow
-            color="var(--orchid-mist)"
-            top="-60px"
-            left="-120px"
-            size={420}
-            opacity={0.08}
-            blur={160}
-          />
-          <SayHiForm />
+        {/* The one call to action on this page. The approved copy closes on
+            "if you want to talk about your setting — that's what we actually
+            do. start here." The say-hi form that used to sit here was a second,
+            competing action and is not in the approved copy; the component and
+            its API route are untouched, just no longer rendered. */}
+        <section className={styles.close} aria-labelledby="talk">
+          <h2 id="talk" className={styles.closeHeading}>
+            if you want to talk about your setting
+          </h2>
+          <p className={styles.closeLine}>
+            that&rsquo;s what we actually do. start here.
+          </p>
+          <Button href={BOOKING_URL} color="var(--spring-green)" external>
+            book a discovery call →
+          </Button>
         </section>
 
-        <section
-          className={styles.dataNote}
-          aria-label="how we handle your data"
-        >
-          <p>A note on what happens with your data:</p>
+        <section className={styles.dataNote} aria-label="how we handle your data">
+          <p>a note on what happens with your data:</p>
           <p>
-            If you book a discovery call, sign up to the newsletter, or send a
-            hello, your details are handled per our{' '}
-            <Link href="/legal/privacy">Privacy Policy</Link>. You can
-            unsubscribe, ask what we hold, or ask us to delete it any time —
-            just email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
+            if you book a discovery call or sign up to the newsletter, your
+            details are handled per our{' '}
+            <Link href="/legal/privacy">privacy notice</Link>. you can
+            unsubscribe, ask what we hold, or ask us to delete it any time — just
+            email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
           </p>
         </section>
       </main>

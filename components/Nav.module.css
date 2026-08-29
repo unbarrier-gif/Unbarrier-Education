@@ -79,6 +79,15 @@
   box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.15);
 }
 
+/* The wordmark is the home link and a tap target. 44px hit area; the text
+   size is untouched. */
+.brandLink,
+.inner > a:first-child {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+}
+
 .pill {
   font-family: var(--font-body);
   font-weight: 700;
@@ -88,6 +97,10 @@
   padding: 9px 20px;
   border-radius: var(--radius-pill);
   text-decoration: none;
+  /* 44px minimum — this is a primary control on a phone. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
   transition: opacity 150ms ease;
   white-space: nowrap;
 }
@@ -105,6 +118,10 @@
   cursor: pointer;
   border-radius: var(--radius-sm);
   transition: background 150ms ease;
+  /* 44px minimum — the only way to the nav on a phone. */
+  min-width: 44px;
+  min-height: 44px;
+  place-items: center;
 }
 
 .hamburger:hover {
@@ -135,5 +152,16 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
+  }
+}
+
+/* At 320px the row is wordmark + pill + hamburger, and raising the hamburger
+   to the 44px minimum pushed its right edge past the viewport — the only way
+   into the nav was clipped off-screen. The pill goes instead: it is duplicated
+   inside the mobile drawer, so nothing is lost, and the hamburger is what has
+   to survive at the narrowest width. */
+@media (max-width: 360px) {
+  .pill {
+    display: none;
   }
 }

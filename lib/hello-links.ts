@@ -15,7 +15,10 @@
 //   Title    (title)
 //   Meta     (rich_text)
 //   URL      (url)          relative ("/goodnotes") or absolute
-//   Group    (select)       "today" | "for schools" | "for you" | "read and talk"
+//   Group    (select)       "from today's session" | "the question sets" |
+//                            "the one-pagers"
+//                            legacy, still valid: "today" | "for schools" |
+//                            "for you" | "read and talk"
 //   Order    (number)       low first, within the group
 //   Show     (checkbox)     unticked rows never render
 //   Image    (url)          card thumbnail; empty falls back to a tinted tile
@@ -34,8 +37,23 @@ const DATABASE_ID = process.env.NOTION_HELLO_DATABASE_ID;
 
 const notion = TOKEN ? new Client({ auth: TOKEN }) : null;
 
+// GROUPS ARE ADDITIVE. The approved /hello copy names three groups — from
+// today's session, the question sets, the one-pagers. The live Notion database
+// is already populated against the ORIGINAL four values, and renaming a select
+// option in Notion does not retag the rows: it would empty the live page the
+// moment this deployed.
+//
+// So the original four stay valid and keep rendering, and the three approved
+// ones are added alongside. Nici retags rows at her own pace, or never, and
+// nothing breaks either way. Display order is the order below.
+//
+// When every row has been retagged, delete the four legacy entries here and
+// their headings below — and only then.
 export const HELLO_GROUPS = [
   'today',
+  "from today's session",
+  'the question sets',
+  'the one-pagers',
   'for schools',
   'for you',
   'read and talk',
@@ -44,11 +62,16 @@ export const HELLO_GROUPS = [
 export type HelloGroup = (typeof HELLO_GROUPS)[number];
 
 /** Group heading shown above each block. "today" is deliberately event-neutral. */
+// Lowercase, per the site-wide copy rule. The old Title Case headings were
+// from before that rule reached /hello.
 export const GROUP_HEADING: Record<HelloGroup, string> = {
-  today: 'Your stuff from today',
-  'for schools': 'For schools',
-  'for you': 'For you',
-  'read and talk': 'Read and talk',
+  today: 'from today’s session',
+  "from today's session": 'from today’s session',
+  'the question sets': 'the question sets',
+  'the one-pagers': 'the one-pagers',
+  'for schools': 'for schools',
+  'for you': 'for you',
+  'read and talk': 'read and talk',
 };
 
 const ACCENT_TOKEN: Record<string, string> = {
@@ -184,6 +207,16 @@ export const getHelloLinks = cache(async (): Promise<HelloLink[] | null> => {
     return null;
   }
 });
+
+/** The two group values that render as the "today" panel rather than cards. */
+export const TODAY_GROUPS: readonly HelloGroup[] = [
+  'today',
+  "from today's session",
+];
+
+export function isTodayGroup(g: HelloGroup): boolean {
+  return TODAY_GROUPS.includes(g);
+}
 
 /** Groups that actually have cards, in the fixed display order. */
 export function groupLinks(

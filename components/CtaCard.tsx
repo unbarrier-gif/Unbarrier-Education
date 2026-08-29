@@ -1,6 +1,7 @@
 'use client';
 
 import type { CSSProperties } from 'react';
+import Image from 'next/image';
 import styles from './CtaCard.module.css';
 
 type CardKey =
@@ -26,6 +27,36 @@ type Props = {
   /** Character on the fallback tile. Defaults to the title's first letter. */
   initial?: string;
 };
+
+// THE THUMBNAIL HOST GUARD.
+//
+// This card's image URL is typed into Notion by hand, so it can be any host.
+// next/image throws at render time on a host that isn't in next.config.js's
+// remotePatterns — which on /hello means a 500 in front of a live audience
+// holding phones, caused by pasting a link. That is the one failure this page
+// cannot have.
+//
+// So: known host -> optimised <Image>. Anything else -> the tinted initial
+// tile, which is the same fallback an empty Image field already gets. A
+// mistyped host costs a thumbnail, never the page.
+//
+// Keep this list in step with `images.remotePatterns` in next.config.js.
+const OPTIMISABLE_HOSTS = [
+  'prod-files-secure.s3.us-west-2.amazonaws.com',
+  's3.us-west-2.amazonaws.com',
+  'images.unsplash.com',
+];
+
+function canOptimise(src?: string): boolean {
+  if (!src) return false;
+  // Same-origin paths are always fine.
+  if (src.startsWith('/')) return true;
+  try {
+    return OPTIMISABLE_HOSTS.includes(new URL(src).hostname);
+  } catch {
+    return false;
+  }
+}
 
 // Colour order is locked: green, pink, aqua, orange, yellow.
 const ACCENT: Record<CardKey, string> = {
@@ -86,8 +117,8 @@ export function CtaCard({
     >
       {/* Decorative: the title next to it already names the destination. */}
       <span className={styles.thumb} aria-hidden="true">
-        {image ? (
-          <img src={image} alt="" loading="lazy" decoding="async" />
+        {canOptimise(image) ? (
+          <Image src={image!} alt="" width={56} height={56} />
         ) : (
           <span className={styles.initial}>
             {initial ?? title.trim().charAt(0).toUpperCase()}

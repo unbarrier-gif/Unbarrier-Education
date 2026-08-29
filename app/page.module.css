@@ -1,4 +1,279 @@
+/* ========================================================================
+   The home page.
+   Same token vocabulary and rhythm as app/route-page.module.css (the six
+   routes from #68), but its own file: home has a wider measure, a hero stat
+   block and an evidence-card grid the route pages don't need, and the route
+   pages carry a per-page --route-accent that home doesn't.
+   ======================================================================== */
+
 .main {
   min-height: 100vh;
   background: var(--bg);
+  padding-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.main section {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* ── hero ─────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5.2vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 20ch;
+}
+
+/* Colour-only accent — the heading face never changes mid-heading. */
+.accent {
+  color: var(--spring-green);
+}
+
+/* The sourced figure directly under the headline. Given a border and a quiet
+   surface so it reads as a citation rather than as more headline. */
+.heroStat {
+  margin: var(--space-6) 0 0;
+  padding: var(--space-4) var(--space-5);
+  max-width: 58ch;
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--pearl-aqua);
+  border-radius: var(--radius-md);
+}
+
+.heroStatLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  margin: 0;
+}
+
+.heroStatFigure {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  color: var(--pearl-aqua);
+}
+
+.heroStatSource {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 58ch;
+  margin: var(--space-5) 0 0;
+}
+
+/* ── sections ─────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+  max-width: 26ch;
+}
+
+/* A line sized as a statement rather than a heading. */
+.statement {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+  max-width: 26ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0 0 var(--space-4);
+}
+
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.aside {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+  max-width: 60ch;
+}
+
+/* ── evidence cards ───────────────────────────────────────────────── */
+
+.cards {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-top: 3px solid var(--pearl-aqua);
+  border-radius: var(--radius-md);
+}
+
+.cardFigure {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--pearl-aqua);
+  margin: 0 0 var(--space-3);
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.cardSource {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: 0;
+  max-width: 62ch;
+}
+
+/* ── boxed steps ──────────────────────────────────────────────────── */
+
+.options {
+  list-style: none;
+  margin: var(--space-5) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.option {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--spring-green);
+  border-radius: var(--radius-md);
+}
+
+.optionBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* ── bulleted lists ───────────────────────────────────────────────── */
+
+.list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 62ch;
+}
+
+.listItem {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  padding-left: var(--space-5);
+}
+
+.listItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--spring-green);
+}
+
+/* ── close ────────────────────────────────────────────────────────── */
+
+.close {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5rem) var(--space-5);
+}
+
+.closeHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 30ch;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
 }

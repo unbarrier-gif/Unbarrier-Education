@@ -1,6 +1,8 @@
 .btn {
   display: inline-flex;
   align-items: center;
+  /* 44px minimum. It sits in the nav on /hello and was a 28px target. */
+  min-height: 44px;
   gap: 6px;
   font-family: var(--font-heading);
   font-size: 12px;
