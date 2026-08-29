@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Button } from '@/components/Button';
+import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
@@ -207,6 +208,7 @@ export default function InclusionStrategyPage() {
               {BOOKING_LABEL}
             </Button>
           </div>
+          <CredentialStrip />
         </header>
 
         <SectionBar color="var(--princeton-orange)" />
