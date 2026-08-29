@@ -36,7 +36,13 @@ const CARDS = [
     label: 'unbarrier.voice',
     sub: 'Student voice · Evidence · Impact',
     desc: "You say your product is accessible. I'll go into schools, gather real student voice and usage data, and tell you whether it actually is.",
-    href: '/voice',
+    // ⛔ Was '/voice'. That route is unpublished pending legal sign-off and
+    // must not be linked from anywhere — this card is on the home page, so it
+    // linked it from the site's most-visited surface. This card's audience is
+    // already "EdTech Companies", and /edtech is where that reader belongs.
+    // Branch D replaces this component with the five-route "i am" chooser;
+    // this is the minimum change that stops the link existing until then.
+    href: '/edtech',
   },
 ];
 

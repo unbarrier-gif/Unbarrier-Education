@@ -1,0 +1,396 @@
+/* ========================================================================
+   Shared route-page layout — /audit, /edtech, /access, /voice, /about, /faq
+   ------------------------------------------------------------------------
+   Extends the pattern established by /inclusion-strategy (#67) rather than
+   restating it six times. Six near-identical page.module.css files would
+   drift within a term, and the drift shows up as one page with a different
+   measure or heading rhythm to the other five.
+
+   The per-page strand colour arrives as --route-accent, set inline on .main
+   at each call site. Canonical mapping: audit = pearl-aqua,
+   access = princeton-orange, voice = orchid-mist. /edtech, /about and /faq
+   are not strands and pick a neutral action colour rather than borrowing one.
+
+   Everything below is built from tokens in app/globals.css. No new colours.
+   ======================================================================== */
+
+.main {
+  padding-top: 0;
+  position: relative;
+  overflow: hidden;
+}
+
+.main section {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* ── hero ─────────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+}
+
+.heading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.1rem, 5.4vw, 3.3rem);
+  line-height: 1.08;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-4) 0 0;
+  max-width: 20ch;
+}
+
+/* Colour-only accent. The heading face never changes mid-heading. */
+.accent {
+  color: var(--route-accent);
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 58ch;
+  margin: var(--space-5) 0 0;
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+  margin-top: var(--space-6);
+}
+
+/* ── sections ─────────────────────────────────────────────────────── */
+
+.section {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+  max-width: 26ch;
+}
+
+/* A quiet label above a statement that carries the weight instead. */
+.sectionEyebrow {
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--route-accent);
+  margin: 0;
+}
+
+.statement {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+  line-height: 1.15;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-3) 0 var(--space-5);
+  max-width: 24ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 62ch;
+  margin: 0 0 var(--space-4);
+}
+
+.body:last-child {
+  margin-bottom: 0;
+}
+
+.strong {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.aside {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+  max-width: 60ch;
+}
+
+/* ── bulleted lists ───────────────────────────────────────────────── */
+
+.list {
+  list-style: none;
+  margin: 0 0 var(--space-5);
+  padding: 0;
+  display: grid;
+  gap: var(--space-3);
+  max-width: 62ch;
+}
+
+.list:last-child {
+  margin-bottom: 0;
+}
+
+.listItem {
+  position: relative;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  padding-left: var(--space-5);
+}
+
+.listItem::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--route-accent);
+}
+
+/* ── boxed items — options, steps, tiers, cards ───────────────────── */
+
+.options {
+  list-style: none;
+  margin: var(--space-5) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.option {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--route-accent);
+  border-radius: var(--radius-md);
+}
+
+.optionBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* A price stated on its own, after the thing it prices. */
+.priceLine {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: var(--lh-snug);
+  color: var(--text);
+  margin: var(--space-5) 0 0;
+}
+
+/* ── evidence cards ("the gap") ───────────────────────────────────── */
+
+.cards {
+  list-style: none;
+  margin: var(--space-6) 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: var(--space-4);
+}
+
+.card {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-top: 3px solid var(--route-accent);
+  border-radius: var(--radius-md);
+}
+
+.cardFigure {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.6rem, 3.6vw, 2.2rem);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--route-accent);
+  margin: 0 0 var(--space-3);
+}
+
+.cardBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.cardSource {
+  font-family: var(--font-body);
+  font-size: var(--fs-caption);
+  line-height: 1.6;
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+}
+
+/* ── pricing tiers ────────────────────────────────────────────────── */
+
+.tiers {
+  list-style: none;
+  margin: var(--space-6) 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-4);
+}
+
+.tier {
+  padding: var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--route-accent);
+  border-radius: var(--radius-md);
+}
+
+.tierHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-2) var(--space-4);
+  margin: 0 0 var(--space-3);
+}
+
+.tierName {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.08rem;
+  color: var(--text);
+}
+
+.tierPrice {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 1.08rem;
+  color: var(--route-accent);
+}
+
+.tierBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.tierAside {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: var(--space-3) 0 0;
+}
+
+/* ── the seven questions (shared by /access and /voice) ───────────── */
+
+.questions {
+  margin: var(--space-6) 0 0;
+  display: grid;
+  gap: var(--space-4);
+  max-width: 62ch;
+}
+
+.question {
+  padding: var(--space-4) var(--space-5);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-md);
+}
+
+.questionTerm {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.02rem;
+  color: var(--route-accent);
+  margin: 0 0 var(--space-2);
+}
+
+.questionBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  /* <dd> carries a default indent in every browser. */
+  margin: 0;
+}
+
+/* ── faq question/answer blocks ───────────────────────────────────── */
+
+.qaList {
+  display: grid;
+  gap: clamp(2rem, 5vw, 3rem);
+  margin: 0;
+}
+
+.qaQuestion {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.3rem, 2.8vw, 1.7rem);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-4);
+  max-width: 28ch;
+}
+
+/* ── close ────────────────────────────────────────────────────────── */
+
+.close {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  padding: clamp(3rem, 7vw, 5rem) var(--space-5);
+}
+
+.closeHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 30ch;
+}
+
+/* ── inline links in body copy ────────────────────────────────────────
+   Underlined, not colour-only: colour alone is not a sufficient cue that
+   something is a link (WCAG 1.4.1), and this site's body copy already
+   carries brand colour on emphasis. */
+.inlineLink {
+  color: var(--route-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inlineLink:hover {
+  text-decoration-thickness: 2px;
+}

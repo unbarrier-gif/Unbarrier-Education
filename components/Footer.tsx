@@ -10,10 +10,15 @@ type Props = {
 };
 
 // D45 (10 May 2026): footer strand links updated to the dedicated routes.
-// `unbarrier.audit` removed entirely until /audits ships — broken footer
-// link compounds per page view because footer is global. When /audits
-// lands, restore as { label: 'unbarrier.audit', href: '/audits' } in
-// the Services group below.
+// `unbarrier.audit` was removed entirely until the route shipped, because a
+// broken footer link compounds per page view — the footer is global. The route
+// is /audit (singular, not the /audits the old note guessed at) and it now
+// exists, so the link is back in the Services group below.
+//
+// ⛔ `unbarrier.voice` REMOVED and must stay removed until legal signs off the
+// retention period and the two-purpose privacy notice. The footer is global,
+// so one entry here linked the unpublished route from every page on the site.
+// See app/voice/page.tsx.
 // 28 Aug 2026: `unbarrier.loop-breakers` removed from Services — the strand
 // is retired and /loop-breakers is now a holding page. The route stays live
 // and indexable so existing bookmarks don't 404; it just isn't advertised
@@ -22,14 +27,17 @@ const FOOTER_LINK_GROUPS = [
   {
     heading: 'Services',
     links: [
+      { label: 'unbarrier.audit', href: '/audit' },
       { label: 'unbarrier.access', href: '/access' },
-      { label: 'unbarrier.voice', href: '/voice' },
+      { label: 'For EdTech companies', href: '/edtech' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
   },
   {
     heading: 'Get in touch',
     links: [
+      { label: 'About Nici', href: '/about' },
+      { label: 'FAQ', href: '/faq' },
       { label: 'Hello →', href: '/hello' },
       { label: 'nici@unbarrier.me', href: 'mailto:nici@unbarrier.me' },
     ],

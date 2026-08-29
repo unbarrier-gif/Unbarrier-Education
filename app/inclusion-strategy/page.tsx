@@ -1,10 +1,12 @@
 import type { Metadata } from 'next';
 import { Button } from '@/components/Button';
+import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from './page.module.css';
 
 // /inclusion-strategy — the one page on the site with revenue attached to a
@@ -26,12 +28,18 @@ import styles from './page.module.css';
 //  3. The "shared responsibility across your whole leadership team" quote is
 //     a direct quote from the published guidance. Do not paraphrase it.
 //
+// VOCABULARY RULING (Nici, 29 Aug 2026): unbarrier.voice runs on seven
+// QUESTIONS. Always "questions", never "domains". The 5/6/7 conflict was never
+// three counts of one thing — it was two frameworks sharing a word. "Domains"
+// belongs exclusively to the six domains of inclusion, which is a separate
+// framework. This page said "the seven domains"; it now says "the seven
+// questions", in the body copy and in the FAQPage schema. Nothing is
+// renumbered — see components/SevenQuestions.tsx for the seven.
+//
 // There is deliberately NO week count anywhere on this page. A hardcoded
 // countdown is right on the day it ships and wrong every day after, and a
 // stale countdown on a deadline page is worse than no countdown at all. The
 // fixed statutory date does that work instead, and never goes out of date.
-
-const DISCOVERY_CALL = 'https://calendar.app.google/WEZqBDRFhPFzsqUw5';
 
 const CANONICAL = 'https://www.unbarrier.me/inclusion-strategy';
 
@@ -67,7 +75,7 @@ const STEPS: Array<{ n: string; title: string; body: string; aside: string }> = 
   {
     n: '1',
     title: 'a readiness check',
-    body: 'what is actually reaching learners in your setting now, across the seven domains.',
+    body: 'what is actually reaching learners in your setting now, across the seven questions.',
     aside: 'you cannot write an honest strategy from an impression.',
   },
   {
@@ -134,7 +142,7 @@ const FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: 'what does the support actually involve?',
-    a: 'a readiness check — what is actually reaching learners in your setting now, across the seven domains. modelling in classrooms — we work alongside your staff in real lessons, so the strategy describes practice that exists rather than practice you hope for. a guided writing session — your leadership team in a room, writing it, with us asking the questions and holding the structure.',
+    a: 'a readiness check — what is actually reaching learners in your setting now, across the seven questions. modelling in classrooms — we work alongside your staff in real lessons, so the strategy describes practice that exists rather than practice you hope for. a guided writing session — your leadership team in a room, writing it, with us asking the questions and holding the structure.',
   },
   {
     q: 'is this a one-off document?',
@@ -204,10 +212,11 @@ export default function InclusionStrategyPage() {
             it.
           </p>
           <div className={styles.ctaRow}>
-            <Button href={DISCOVERY_CALL} color="var(--princeton-orange)" external>
-              book a discovery call →
+            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+              {BOOKING_LABEL}
             </Button>
           </div>
+          <CredentialStrip />
         </header>
 
         <SectionBar color="var(--princeton-orange)" />
@@ -345,8 +354,8 @@ export default function InclusionStrategyPage() {
             whether we can help in the time.
           </h2>
           <div className={styles.ctaRow}>
-            <Button href={DISCOVERY_CALL} color="var(--princeton-orange)" external>
-              book a discovery call →
+            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+              {BOOKING_LABEL}
             </Button>
           </div>
         </section>

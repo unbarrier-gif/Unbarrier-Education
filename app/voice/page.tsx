@@ -1,181 +1,260 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import Image from 'next/image';
 import { Button } from '@/components/Button';
+import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
-import styles from './page.module.css';
+import { SevenQuestions } from '@/components/SevenQuestions';
+import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
+import styles from '@/app/route-page.module.css';
 
-// Holding page for unbarrier.voice. Stays small, honest, and a clear signal
-// to EdTech firms that Nici is in this work and they can come and talk.
-// Replaced wholesale with the full named version once the partnership
-// conversation with the EdTech team is complete and case-study permission
-// is granted. See _inbound/voice/voice-holding-notes.md for what is
-// deliberately NOT on this page and why.
+// ⛔ /voice — BUILT, NOT PUBLISHED.
+//
+// Legal has not signed off the retention period or the two-purpose privacy
+// notice. Unlinked and noindex is not a nice-to-have, it is the condition of
+// this route existing at all. All of the following are load-bearing and must
+// stay true until legal signs off:
+//
+//   * noindex, nofollow in the metadata below.
+//   * NOT in the nav (components/Nav.tsx), NOT in the footer
+//     (components/Footer.tsx), NOT in the sitemap (app/sitemap.ts).
+//   * NO link to it from any other page. /access and /edtech both mention
+//     "unbarrier.voice" in body copy — those mentions are TEXT and must not
+//     become links. components/Services.tsx on the home page used to link here
+//     and no longer does.
+//
+// WHEN LEGAL SIGNS OFF, four things come back together: the robots block
+// below, the nav entry, the footer entry, and the sitemap entry. Grep
+// "/voice" before assuming you have found them all.
+//
+// The hero line keeps "the child" rather than "learners". It is one of the two
+// deliberate exceptions to the site-wide vocabulary rule — the instrument's
+// founding claim, and it is what makes the line land. Everything else on this
+// page says learners.
+
+const CANONICAL = 'https://www.unbarrier.me/voice';
 
 export const metadata: Metadata = {
-  title: 'unbarrier.voice — for EdTech companies',
+  title: 'unbarrier.voice — the audit that starts with the child',
   description:
-    "I help EdTech teams build products people actually use, understand, and benefit from. The bit between a product launch and a child who's actually using it.",
-  alternates: { canonical: '/voice' },
-  openGraph: {
-    title: 'unbarrier.voice — for EdTech companies',
-    description:
-      "I help EdTech teams build products people actually use, understand, and benefit from.",
-    url: 'https://unbarrier.me/voice',
-    type: 'website',
+    'unbarrier.voice measures the one thing readiness tools skip: whether the technology, the access and the communication actually reach the learner they were bought for.',
+  alternates: { canonical: CANONICAL },
+  // ⛔ DO NOT REMOVE without legal sign-off on the retention period and the
+  // two-purpose privacy notice. See the header comment above.
+  robots: {
+    index: false,
+    follow: false,
+    googleBot: { index: false, follow: false },
   },
 };
 
-const CTA_EMAIL =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello';
-
-const HERO_CTA =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20partnership%20conversation';
-
-const OBSERVATIONS = [
+const TWO_WAYS: Array<{ lead: string; body: string; aside: string }> = [
   {
-    n: '01',
-    text: "Teachers want to be 99.8% confident in a tool before they use it. Most products are designed for the 5% who'll fiddle until it works. The other 95% open it, get stuck, and go back to whatever they were doing before.",
+    lead: 'delivered',
+    body: 'nici in the room. an apple professional learning specialist watching what a survey cannot see: the workaround a learner has invented, the setting nobody turned on, the moment an adult steps in three seconds too early. learner data captured alongside it.',
+    aside:
+      'very few people can put an accessibility specialist in your classrooms for a day. that is where the value sits.',
   },
   {
-    n: '02',
-    text: "The current generation arriving into reception are less ready for school than any I've taught. Less language, less regulation, less stamina. Products designed for the child you imagined three years ago aren't the children turning up next September.",
-  },
-  {
-    n: '03',
-    text: 'In early years, there is almost no accessible data for the students themselves. We collect data about them, in clipboards and tally charts. We rarely give them data they can see, hold, and use to talk about their own day.',
-  },
-  {
-    n: '04',
-    text: "By the time we notice a child has crashed out, it's too late. Most products tell you what happened after it happened. The useful data is the friction in the moment — the cognitive load, the dignity moment, the small disengagement no analytics dashboard captures.",
-  },
-  {
-    n: '05',
-    text: 'Children need the pattern before they need the variation. Most tools default to choice and randomisation because it looks engaging on a demo. In a real classroom, choice without pattern is overwhelm. The pattern is the bit that helps them learn.',
+    lead: 'the tool',
+    body: 'self-serve. your own staff and learners complete it, and the picture builds itself. scalable across a trust, and it runs without anyone from unbarrier in the building.',
+    aside: 'the backbone.',
   },
 ];
+
+const WHAT_YOU_GET_BACK: string[] = [
+  'a one-page picture of where access is reaching learners, and where it isn’t.',
+  'the gaps named, in language a governor understands, so the spend can be defended and the next step funded.',
+  'a baseline you can measure again later, so “impact” stops being a word and becomes a number you can stand behind.',
+];
+
+const TWO_CONSENTS: string[] = [
+  'your result is yours. the school’s own picture, for the school.',
+  'separately, and only if you opt in, an anonymised layer builds sector-level insight into what is reaching learners and what isn’t, across settings.',
+  'these are two different things, so they take two different consents. bundling them would make neither one valid.',
+];
+
+const SERVICE_SCHEMA = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: 'unbarrier.voice',
+  serviceType:
+    'Learner-side accessibility measurement instrument for schools and trusts',
+  description:
+    'a device-agnostic instrument that measures whether the technology, the access and the communication in a setting actually reach the learner they were bought for, built on the learner’s own experience. available delivered, in classrooms, with a self-serve tool in development.',
+  url: CANONICAL,
+  provider: {
+    '@type': 'Organization',
+    name: 'Unbarrier Education Ltd',
+    url: 'https://www.unbarrier.me',
+  },
+  areaServed: { '@type': 'Country', name: 'United Kingdom' },
+  audience: {
+    '@type': 'EducationalAudience',
+    educationalRole: 'Schools and multi-academy trusts',
+  },
+};
 
 export default function VoicePage() {
   return (
     <>
-      <Nav active="voice" />
-      <main className={styles.main}>
-        <Glow color="var(--orchid-mist)" left="-120px" top="6%" size={620} opacity={0.1} />
-        <Glow color="var(--spring-green)" right="-100px" top="40%" size={460} opacity={0.07} />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
+      />
 
-        {/* 1. HERO — eyebrow with bullet dot, two-tone H1, lede, CTA, credibility
-            subtext. Mirrors /access hero structure. CTA is /voice-specific
-            (orchid, partnership-conversation mailto) and the credibility line
-            names the EdTech-relevant credentials only. */}
+      <Nav />
+
+      <main
+        className={styles.main}
+        style={{ '--route-accent': 'var(--orchid-mist)' } as CSSProperties}
+      >
+        <Glow color="var(--orchid-mist)" left="-120px" top="4%" size={620} opacity={0.1} />
+        <Glow color="var(--spring-green)" right="-100px" top="46%" size={460} opacity={0.07} />
+
         <header className={styles.hero}>
-          <p className={styles.eyebrow}>
-            <span aria-hidden="true" className={styles.dot} />
-            unbarrier.voice · partnership invitation
-          </p>
+          <Eyebrow color="var(--orchid-mist)">unbarrier.voice</Eyebrow>
+          {/* "the child", not "learners" — deliberate, and the only place on
+              this page it appears. The instrument's founding claim. */}
           <h1 className={styles.heading}>
-            Students are
-            <br />
-            <span className={styles.accent}>our why.</span>
+            the audit that starts with the child and{' '}
+            <span className={styles.accent}>works backwards.</span>
           </h1>
-          <p className={styles.heroBody}>
-            I help you build products people actually use, understand, trust,
-            and benefit from.
+          <p className={styles.lede}>
+            every readiness tool scores the organisation. unbarrier.voice
+            measures the one thing they skip: whether the technology, the access
+            and the communication actually reach the learner they were bought
+            for. device-agnostic. built on the learner&rsquo;s own experience.
+            it is the measurement layer under everything unbarrier does.
           </p>
-          <div className={styles.heroCtaRow}>
-            <Button href={HERO_CTA} color="var(--orchid-mist)">
-              Start a partnership conversation
+          <div className={styles.ctaRow}>
+            <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
+              {BOOKING_LABEL}
             </Button>
-            <a href="/#about" className={styles.heroFormLink}>
-              About Nici →
-            </a>
           </div>
-          <div className={styles.heroSubtext}>
-            <Image
-              src="/assets/apls-badge.svg"
-              alt="Apple Professional Learning Specialist"
-              width={307}
-              height={68}
-              className={styles.aplsLockup}
-              priority
-            />
-            <p className={styles.heroSubtextLine}>
-              Apple Professional Learning Specialist · 26 years in classrooms
-            </p>
-          </div>
+          <CredentialStrip />
         </header>
 
-        {/* 2. WHAT I SEE */}
         <SectionBar color="var(--orchid-mist)" />
-        <section id="voice-what-i-see" className={styles.observations}>
-          <div className={styles.observationsHead}>
-            <Eyebrow color="var(--orchid-mist)">What I see, again and again</Eyebrow>
-            <h2 className={styles.h2}>
-              The bit between a product launch
-              <br />
-              and a child who&apos;s{' '}
-              <span className={styles.accent}>actually using it</span>.
-            </h2>
-            <p className={styles.observationsLede}>
-              Five things I notice every time I&apos;m in a classroom watching what
-              children do with EdTech, or in a product room watching what adults
-              assume children do.
-            </p>
-          </div>
 
-          <ol className={styles.observationsList}>
-            {OBSERVATIONS.map(({ n, text }) => (
-              <li key={n} className={styles.observation}>
-                <span aria-hidden="true" className={styles.bigNum}>
-                  {n}
-                </span>
-                <p className={styles.observationLabel}>observation {n}</p>
-                <p className={styles.observationText}>{text}</p>
+        {/* Deliberately identical to the block on /access — same component. */}
+        <SevenQuestions
+          id="seven-questions"
+          heading="seven questions, asked from the learner’s side"
+        />
+
+        <section className={styles.section} aria-labelledby="two-ways">
+          <h2 id="two-ways" className={styles.sectionHeading}>
+            two ways to run it
+          </h2>
+          <ul className={styles.options}>
+            {TWO_WAYS.map((way) => (
+              <li key={way.lead} className={styles.option}>
+                <p className={styles.optionBody}>
+                  <strong className={styles.strong}>{way.lead}</strong> —{' '}
+                  {way.body}
+                </p>
+                <p className={styles.aside}>{way.aside}</p>
               </li>
             ))}
-          </ol>
-        </section>
-
-        {/* 3. WHERE I'M AT */}
-        <SectionBar color="var(--spring-green)" />
-        <section id="voice-where" className={styles.where}>
-          <Glow color="var(--spring-green)" left="62%" top="-10%" size={500} opacity={0.06} />
-          <div className={styles.whereInner}>
-            <Eyebrow color="var(--spring-green)">Where I&apos;m at</Eyebrow>
-            <h2 className={styles.h2}>I&apos;m shaping this slowly, on purpose.</h2>
-            <p className={styles.whereParagraph}>
-              unbarrier.voice is the work I&apos;m building next, drawing on what I&apos;ve
-              learned across years of classroom practice and inside EdTech product
-              rooms. I&apos;m not ready to put the full offer in front of the world yet —
-              the people I&apos;ve worked with deserve to hear about it from me first.
-            </p>
-            <p className={styles.whereParagraph}>
-              What I can say: it sits between learners and product teams, on
-              purpose. It&apos;s structured pupil intelligence — not feedback, not
-              focus groups, not workshops, not audits. Closer to the kind of
-              user research a serious product team would commission, designed
-              for the audience that actually uses your product.
-            </p>
-            <p className={styles.whereParagraph}>
-              If any of that is what your team has been quietly missing —
-              email me. Early conversations shape this work, and I&apos;d rather
-              build it with the people who need it than guess at what they need.
-            </p>
-          </div>
-        </section>
-
-        {/* 4. CTA */}
-        <SectionBar color="var(--orchid-mist)" />
-        <section className={styles.cta}>
-          <Eyebrow color="var(--orchid-mist)">If any of this lands</Eyebrow>
-          <h2 className={styles.h2}>Tell me what you&apos;re building.</h2>
-          <p className={styles.ctaLede}>
-            A short email is plenty. The product, where you&apos;re up to, what&apos;s on
-            your mind. I&apos;ll listen properly before I say anything useful.
+          </ul>
+          <p className={styles.body}>
+            most schools use both: the tool for breadth, a delivered visit for
+            depth.
           </p>
-          <Button href={CTA_EMAIL} color="var(--orchid-mist)">nici@unbarrier.me →</Button>
+        </section>
+
+        <section className={styles.section} aria-labelledby="what-you-get">
+          <h2 id="what-you-get" className={styles.sectionHeading}>
+            what you get back
+          </h2>
+          <ul className={styles.list}>
+            {WHAT_YOU_GET_BACK.map((line) => (
+              <li key={line} className={styles.listItem}>
+                {line}
+              </li>
+            ))}
+          </ul>
+          {/* Three image slots are still outstanding: the one-page report, the
+              exported pdf, and the across-schools admin view. Nothing is
+              rendered for them — an empty frame or a placeholder image would
+              be a promise we cannot currently keep on the one page whose whole
+              argument is not performing certainty. */}
+        </section>
+
+        <section className={styles.section} aria-labelledby="two-consents">
+          <h2 id="two-consents" className={styles.sectionHeading}>
+            two purposes, two consents. never bundled.
+          </h2>
+          <ul className={styles.list}>
+            {TWO_CONSENTS.map((line) => (
+              <li key={line} className={styles.listItem}>
+                {line}
+              </li>
+            ))}
+          </ul>
+          <p className={styles.body}>
+            that isn&rsquo;t a legal footnote. it is the whole point of an
+            instrument built to be trusted.
+          </p>
+        </section>
+
+        <section className={styles.section} aria-labelledby="the-layer">
+          <h2 id="the-layer" className={styles.sectionHeading}>
+            the layer under the work
+          </h2>
+          <p className={styles.body}>
+            in the ndte cycle — notice → design → try → embed — voice is what
+            makes <strong className={styles.strong}>notice</strong> and{' '}
+            <strong className={styles.strong}>embed</strong> into measurements
+            rather than impressions. it is the same instrument at both ends,
+            which is the only reason the difference between them means anything.
+          </p>
+          <p className={styles.body}>
+            unbarrier.voice is what unbarrier.audit and unbarrier.access both
+            run on. a discovery day uses it to find the gaps. a partnership year
+            uses it to prove the movement between the start and the end. same
+            seven questions, every time.
+          </p>
+        </section>
+
+        <SectionBar color="var(--orchid-mist)" />
+
+        <section className={styles.close} aria-labelledby="available-now">
+          <h2 id="available-now" className={styles.closeHeading}>
+            delivered is available now. the tool is being built with the first
+            schools who want it.
+          </h2>
+          <p className={styles.lede}>
+            <strong className={styles.strong}>
+              you can have the delivered version today.
+            </strong>{' '}
+            nici in your classrooms, observing what a survey cannot see, with
+            learner data captured alongside it. that needs no software and it is
+            the part with the most value in it.
+          </p>
+          <p className={styles.lede}>
+            <strong className={styles.strong}>
+              the self-serve tool is being built with its first schools, not for
+              them.
+            </strong>{' '}
+            we are looking for three founding cohorts. research runs this autumn
+            and feeds directly into what the instrument asks and how it reports
+            — so the schools who join now shape it around a real setting rather
+            than an imagined one.
+          </p>
+          <p className={styles.lede}>
+            if that is you, tell us about your setting and we&rsquo;ll keep you
+            in the loop as it takes shape. no date promised, and nothing to pay.
+          </p>
+          <div className={styles.ctaRow}>
+            <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
+              {BOOKING_LABEL}
+            </Button>
+          </div>
         </section>
 
         <Footer variant="full" />
