@@ -74,12 +74,34 @@ export const metadata: Metadata = {
 // below replaces it and is verified exact against the DfE Technology in
 // Schools Survey 2024 to 2025 (published November 2025).
 //
-// BOTH FIGURES IN THE REPLACEMENT ARE MEASURED ON TEACHERS, NOT SCHOOLS.
-// "34% → 60%" is the proportion of primary TEACHERS who said assistive
-// technology was available in their school. "41%" is the proportion of
-// TEACHERS who could say it was completely or mostly fit for purpose. Do not
-// rewrite either as "of schools" — that is a different population and a
+// BOTH FIGURES IN THE REPLACEMENT ARE MEASURED ON TEACHERS, NOT SCHOOLS, AND
+// ON TWO DIFFERENT TEACHER POPULATIONS. "34% to 60%" is the proportion of
+// PRIMARY TEACHERS who said assistive technology was available in their
+// school. "41%" is the proportion of TEACHERS AS A WHOLE who could say it was
+// completely or mostly fit for purpose. The body states the two populations
+// separately on purpose — they are not the same denominator and collapsing
+// them into one sentence would invent a claim the survey does not make. Do not
+// rewrite either as "of schools" — that is a different population again, and a
 // different claim.
+//
+// THE HEADLINE IS A WORD, NOT A FIGURE, and that is deliberate (29 Aug 2026).
+// It used to read "34% → 60%". Both numbers came out of the headline and into
+// the body:
+//
+//   * "60%" is Nici's own framing on the home page — "i call them the 60% in
+//     the middle" — and it is explicitly NOT a statistic. There is no published
+//     figure behind it, which is exactly why that line was rephrased to own it
+//     as hers. A sourced 60% in large type one page away undoes that: a reader
+//     who has seen both reads the home page number as data.
+//   * "41%" collides too. The home page uses 41% for an unrelated figure — the
+//     proportion of school leaders with any monitoring mechanism in 2023.
+//     Two different 41%s in headline type across two pages is a trap.
+//
+// "nearly doubled" also came out. 34 to 60 is not a doubling, and on a page
+// that sells evidence an overstated number is the whole problem in miniature.
+//
+// The headline is now a word, matching the "adults" card beside it. The
+// figures are all still here, in the body, with their populations named.
 //
 // REMOVED. The draft's first card read "£900m — annual edtech spend by english
 // schools… (written evidence to a parliamentary committee, april 2026)". The
@@ -90,8 +112,8 @@ export const metadata: Metadata = {
 // third to balance the layout.
 const THE_GAP: Array<{ figure: string; body: string; source?: string }> = [
   {
-    figure: '34% → 60%',
-    body: 'the proportion of primary teachers with assistive technology available in their school nearly doubled between 2023 and 2025. over the same period, the proportion of teachers who could say it was completely or mostly fit for purpose was 41%.',
+    figure: 'availability',
+    body: 'between 2023 and 2025 the proportion of primary teachers with assistive technology available in their school rose from 34% to 60%. across teachers as a whole, 41% could say it was completely or mostly fit for purpose. availability got counted. whether it reached a learner did not.',
     source:
       'dfe, technology in schools survey 2024 to 2025, published november 2025',
   },
