@@ -174,3 +174,43 @@
   border-radius: 12px;
   margin-bottom: var(--space-4);
 }
+
+/* ── the consent checkbox ─────────────────────────────────────────────
+   The row is the tap target: clicking the label toggles the box, so the
+   whole line is operable rather than just the 20px square. */
+.consentRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: var(--space-2) 0;
+}
+
+.checkbox {
+  flex: 0 0 auto;
+  width: 20px;
+  height: 20px;
+  margin: 0;
+  /* accent-color keeps the native control — and with it the native checked
+     state, the native focus ring behaviour and every assistive-tech
+     affordance — while matching the band. A custom-drawn box would have to
+     re-implement all three. */
+  accent-color: var(--school-bus-yellow);
+  cursor: pointer;
+  /* The row's line-height is larger than the box, so nudge it onto the
+     first line of the label. */
+  margin-top: 2px;
+}
+
+.consentLabel {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text);
+  cursor: pointer;
+}
+
+.statusLink {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}

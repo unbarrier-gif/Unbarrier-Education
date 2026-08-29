@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server';
 import { z } from 'zod';
-import { addSubscriber } from '@/lib/mailerlite';
 import { sendSayHi } from '@/lib/resend';
 import { clientIp, rateLimit } from '@/lib/rateLimit';
 
@@ -51,8 +50,9 @@ export async function POST(req: Request) {
     );
   }
 
-  // Add to MailerLite (best effort — email forward is the priority).
-  await addSubscriber(parsed.data.email);
+  // NO addSubscriber CALL HERE, AND THERE MUST NOT BE ONE. Same rule as
+  // sayHiAction: a contact-form submission is not consent to marketing, and
+  // bundling the two is exactly what the consent spec forbids.
 
   const sent = await sendSayHi(parsed.data.email, parsed.data.message);
   if (!sent.ok) {
