@@ -13,6 +13,11 @@ import styles from './Nav.module.css';
 // /audit did not exist and returned 404. It exists now, so the nav points at
 // the route rather than scrolling someone to a card about it.
 //
+// ⛔ /voice IS DELIBERATELY ABSENT and must stay absent until legal signs off
+// the retention period and the two-purpose privacy notice. Unlinked is the
+// condition of that route existing at all — see app/voice/page.tsx.
+// /faq is reachable from the footer rather than here; six items is what fits.
+//
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
 // --dot CSS var set inline below. Plain links (blog/about) omit `dot`.
@@ -20,11 +25,15 @@ const LINKS = [
   // TEMPORARY until 31 Dec 2026 — gated below on
   // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
   { key: 'inclusion-strategy', label: 'inclusion strategy', href: '/inclusion-strategy' },
+  // The services group. audit and access are strands and carry their canonical
+  // dot colours; edtech is a route, not a strand, so it has no dot.
   { key: 'audit', label: 'audit', href: '/audit', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
-  { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
+  { key: 'edtech', label: 'edtech', href: '/edtech' },
   { key: 'blog', label: 'blog', href: '/blog' },
-  { key: 'about', label: 'about', href: '/#about' },
+  // /about is a route now, so this points at it rather than anchor-scrolling
+  // to the beliefs section on the home page.
+  { key: 'about', label: 'about', href: '/about' },
 ] as const;
 
 type LinkKey = (typeof LINKS)[number]['key'];
