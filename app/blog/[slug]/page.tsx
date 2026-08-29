@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { timingSafeEqual } from 'node:crypto';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Nav } from '@/components/Nav';
 import { ReadingControls } from '@/components/ReadingControls';
 import { NotionRenderer } from '@/components/blog/NotionRenderer';
@@ -173,6 +174,8 @@ export default async function BlogPostPage({
           <ReadingControls />
           <NotionRenderer blocks={blocks} />
           <PostFooter />
+          <NewsletterBand route={`/blog/${params.slug}`} weight="full" />
+
           <Footer variant="full" />
         </main>
       </>

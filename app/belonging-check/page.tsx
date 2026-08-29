@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { CopyPrompt } from './CopyPrompt';
@@ -36,6 +37,7 @@ export default function BelongingCheckPage() {
         </section>
 
         <CopyPrompt />
+        <NewsletterBand route="/belonging-check" weight="full" />
       </main>
 
       <Footer variant="full" />

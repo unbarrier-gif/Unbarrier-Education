@@ -3,10 +3,7 @@
 import { headers } from 'next/headers';
 import { z } from 'zod';
 import { addSubscriber } from '@/lib/mailerlite';
-import {
-  CONSENT_WORDING,
-  CONSENT_SOURCE_SUBSCRIBE_BLOCK,
-} from '@/lib/consent';
+import { CONSENT_WORDING, consentSource } from '@/lib/consent';
 import { sendSayHi } from '@/lib/resend';
 import { clientIp, rateLimit } from '@/lib/rateLimit';
 
@@ -43,7 +40,14 @@ const NEWSLETTER_CONSENT_ERROR =
 const NEWSLETTER_FAILURE =
   'we couldn’t sign you up just then. it’s us, not you —';
 
+/**
+ * `route` is BOUND SERVER-SIDE by the caller (NewsletterBand binds it before
+ * passing the action to useFormState). It is deliberately not read from
+ * formData: a consent record naming the collecting surface is only worth
+ * anything if the submitter cannot choose what it says.
+ */
 export async function subscribeAction(
+  route: string,
   _prev: FormState,
   formData: FormData,
 ): Promise<FormState> {
@@ -81,7 +85,7 @@ export async function subscribeAction(
     // The wording written to the consent record is the same constant the
     // checkbox label renders — see lib/consent.ts.
     wording: CONSENT_WORDING,
-    source: CONSENT_SOURCE_SUBSCRIBE_BLOCK,
+    source: consentSource(route),
     ip,
   });
   if (!result.ok) {
