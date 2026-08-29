@@ -9,9 +9,9 @@ import { Wordmark } from './Wordmark';
 import { isInclusionStrategyPromoActive } from '@/lib/inclusion-strategy-promo';
 import styles from './Nav.module.css';
 
-// Phase 3 link-swap: audit still anchor-scrolls to #services until that
-// route ships. access and voice both point at live holding pages.
-// Tracked in _inbound/Task List.html.
+// The audit item pointed at `/#services`, an anchor on the home page, because
+// /audit did not exist and returned 404. It exists now, so the nav points at
+// the route rather than scrolling someone to a card about it.
 //
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
@@ -20,7 +20,7 @@ const LINKS = [
   // TEMPORARY until 31 Dec 2026 — gated below on
   // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
   { key: 'inclusion-strategy', label: 'inclusion strategy', href: '/inclusion-strategy' },
-  { key: 'audit', label: 'audit', href: '/#services', dot: 'var(--pearl-aqua)' },
+  { key: 'audit', label: 'audit', href: '/audit', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
   { key: 'blog', label: 'blog', href: '/blog' },
