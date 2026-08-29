@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import { AccessMenu } from './_components/AccessMenu';
 import { AccessRoutes } from './_components/AccessRoutes';
 import { AccessInsetExample } from './_components/AccessInsetExample';
@@ -46,8 +47,6 @@ export const metadata: Metadata = {
   },
 };
 
-const HERO_CTA =
-  'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20hello';
 const ENQUIRY_CTA =
   'mailto:access@unbarrier.me?subject=unbarrier.access%20%E2%80%94%20enquiry';
 const ENQUIRY_FORM =
@@ -197,8 +196,8 @@ export default function AccessPage() {
             children who need them.
           </p>
           <div className={styles.heroCtaRow}>
-            <Button href={HERO_CTA} color="var(--princeton-orange)">
-              Email Nici →
+            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+              {BOOKING_LABEL}
             </Button>
             <a href={ENQUIRY_FORM} className={styles.heroFormLink}>
               Fill the enquiry form →

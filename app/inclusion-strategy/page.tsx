@@ -5,6 +5,7 @@ import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from './page.module.css';
 
 // /inclusion-strategy — the one page on the site with revenue attached to a
@@ -30,8 +31,6 @@ import styles from './page.module.css';
 // countdown is right on the day it ships and wrong every day after, and a
 // stale countdown on a deadline page is worse than no countdown at all. The
 // fixed statutory date does that work instead, and never goes out of date.
-
-const DISCOVERY_CALL = 'https://calendar.app.google/WEZqBDRFhPFzsqUw5';
 
 const CANONICAL = 'https://www.unbarrier.me/inclusion-strategy';
 
@@ -204,8 +203,8 @@ export default function InclusionStrategyPage() {
             it.
           </p>
           <div className={styles.ctaRow}>
-            <Button href={DISCOVERY_CALL} color="var(--princeton-orange)" external>
-              book a discovery call →
+            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+              {BOOKING_LABEL}
             </Button>
           </div>
         </header>
@@ -345,8 +344,8 @@ export default function InclusionStrategyPage() {
             whether we can help in the time.
           </h2>
           <div className={styles.ctaRow}>
-            <Button href={DISCOVERY_CALL} color="var(--princeton-orange)" external>
-              book a discovery call →
+            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+              {BOOKING_LABEL}
             </Button>
           </div>
         </section>

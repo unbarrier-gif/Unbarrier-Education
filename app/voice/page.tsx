@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
+import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from './page.module.css';
 
 // Holding page for unbarrier.voice. Stays small, honest, and a clear signal
@@ -31,9 +32,6 @@ export const metadata: Metadata = {
 
 const CTA_EMAIL =
   'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20hello';
-
-const HERO_CTA =
-  'mailto:nici@unbarrier.me?subject=unbarrier.voice%20%E2%80%94%20partnership%20conversation';
 
 const OBSERVATIONS = [
   {
@@ -85,8 +83,8 @@ export default function VoicePage() {
             and benefit from.
           </p>
           <div className={styles.heroCtaRow}>
-            <Button href={HERO_CTA} color="var(--orchid-mist)">
-              Start a partnership conversation
+            <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
+              {BOOKING_LABEL}
             </Button>
             <a href="/#about" className={styles.heroFormLink}>
               About Nici →
