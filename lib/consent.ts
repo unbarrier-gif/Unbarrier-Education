@@ -34,11 +34,15 @@ export const CONSENT_SOURCE_SUBSCRIBE_BLOCK = 'subscribe block';
  * record has to name the surface that collected it, or "which page was this
  * person actually looking at" becomes unanswerable.
  *
- * `route` is supplied by the page and bound to the server action server-side —
- * it never arrives as form input, so it cannot be forged by a submitter. The
- * scrub below is belt-and-braces against a bad literal in a page, not against
- * an attacker: a consent record is evidence, and evidence should not be able
- * to contain arbitrary text.
+ * `route` is supplied by the page and bound to the server action server-side
+ * rather than posted as a form field, so it is not a value a submitter types
+ * in. That is provenance recorded in good faith, and no more: the bind itself
+ * happens in a client component, so `consent_source` is not tamper-proof
+ * evidence and is not a security control. Do not describe it as unforgeable.
+ *
+ * The scrub below is belt-and-braces against a bad literal in a page, not
+ * against an attacker: a consent record should not be able to carry arbitrary
+ * text.
  */
 export function consentSource(route: string): string {
   const cleaned = route

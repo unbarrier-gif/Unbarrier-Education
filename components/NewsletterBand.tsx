@@ -64,9 +64,11 @@ function SubmitButton() {
 }
 
 export function NewsletterBand({ route, weight = 'standard' }: Props) {
-  // Bound server-side: the route reaches the action as an encrypted bound
-  // argument rather than as a form field, so a submitter cannot choose what
-  // their own consent record says about where they signed up.
+  // Bound server-side: the route reaches the action as a bound argument rather
+  // than as a form field, so it is not something a submitter types in. That
+  // makes consent_source provenance recorded in good faith — nothing stronger.
+  // This bind sits in a client component, so it is not tamper-proof evidence
+  // and not a security control. Never call it unforgeable.
   const [state, formAction] = useFormState(
     subscribeAction.bind(null, route),
     initialState,

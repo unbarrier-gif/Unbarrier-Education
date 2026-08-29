@@ -43,8 +43,10 @@ const NEWSLETTER_FAILURE =
 /**
  * `route` is BOUND SERVER-SIDE by the caller (NewsletterBand binds it before
  * passing the action to useFormState). It is deliberately not read from
- * formData: a consent record naming the collecting surface is only worth
- * anything if the submitter cannot choose what it says.
+ * formData, so it is not a field a submitter fills in. Take it for what it is:
+ * provenance, recorded in good faith. The bind happens inside a client
+ * component, so `consent_source` is not tamper-proof evidence and must not be
+ * relied on as a security control.
  */
 export async function subscribeAction(
   route: string,
