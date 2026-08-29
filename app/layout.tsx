@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from 'next';
 import { Outfit, Comfortaa, Cherry_Bomb_One, Lexend } from 'next/font/google';
 import Script from 'next/script';
+import { ORGANIZATION_SCHEMA } from '@/lib/schema/organization';
 import './globals.css';
 
 const outfit = Outfit({
@@ -103,6 +104,15 @@ export default function RootLayout({
       <head>
         {/* eslint-disable-next-line react/no-danger */}
         <script dangerouslySetInnerHTML={{ __html: CONTRAST_BOOTSTRAP }} />
+        {/* Organization JSON-LD, sitewide. The block itself lives in
+            lib/schema/organization.ts so branch D's layout changes and this
+            one do not collide over the same lines. */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(ORGANIZATION_SCHEMA),
+          }}
+        />
       </head>
       <body>
         {children}
