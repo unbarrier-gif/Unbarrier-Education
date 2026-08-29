@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import Image from 'next/image';
 import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
 import { subscribeAction, type FormState } from '@/app/hello/actions';
@@ -36,14 +37,19 @@ export function NewsletterBand() {
   return (
     <section className={styles.band} aria-labelledby="newsletter-heading">
       <div className={styles.inner}>
-        {/* Decorative: the heading below carries the same words. */}
-        <img
+        {/* Decorative: the heading below carries the same words.
+            next/image, not <img> — this renders above the fold on /hello, the
+            page a room opens off a QR code on conference wifi, and the
+            intrinsic size stops it shifting the layout while it loads.
+            Intrinsic dimensions are the file's real 900x180; CSS caps the
+            rendered width at 420. */}
+        <Image
           src="/assets/hello/notice-banner.webp"
           alt=""
           aria-hidden="true"
+          width={900}
+          height={180}
           className={styles.banner}
-          loading="lazy"
-          decoding="async"
         />
 
         <h2 id="newsletter-heading" className={styles.heading}>

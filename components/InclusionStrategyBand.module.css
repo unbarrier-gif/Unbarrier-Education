@@ -53,6 +53,11 @@
   color: var(--spring-green);
   text-decoration: underline;
   text-underline-offset: 3px;
+  /* 44px hit area — this is the band's only action and it renders on a phone.
+     Text size unchanged. */
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
 }
 
 .link:hover {

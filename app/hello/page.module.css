@@ -1,16 +1,56 @@
+/* /hello — phone first. Someone is using this one-handed, standing up, in a
+   room, on bad wifi. Every rule here is in service of that. */
+
 .main {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 var(--space-5);
+  /* Tight top padding: the first link has to be above the fold on a 320px-wide
+     phone, so the space between the nav and the intro is the minimum that
+     still reads as a gap. */
+  padding: calc(var(--nav-height) + var(--space-4)) var(--space-5) 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(3rem, 6vw, 5rem);
+  gap: clamp(2rem, 5vw, 3.5rem);
 }
+
+/* ── intro — two lines, not a hero ────────────────────────────────── */
+
+.intro {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  /* Deliberately smaller than every other h1 on the site. This is a link hub;
+     the headline's job is to orient someone in two seconds and then get out of
+     the way of the links. */
+  font-size: clamp(1.4rem, 4.2vw, 1.9rem);
+  line-height: 1.18;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 24ch;
+}
+
+.introLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 46ch;
+}
+
+/* ── card groups ──────────────────────────────────────────────────── */
 
 .cards {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
+  scroll-margin-top: var(--nav-height);
 }
 
 .eyebrow {
@@ -20,20 +60,57 @@
   letter-spacing: var(--ls-eyebrow);
   text-transform: uppercase;
   color: var(--school-bus-yellow);
-  margin: 0 0 var(--space-2);
+  margin: 0;
 }
 
+/* 12px between adjacent tap targets. WCAG 2.5.8 lets a target under the
+   minimum pass if it is surrounded by enough space; the cards clear 44px on
+   their own, and this keeps a thumb from catching the neighbour. */
 .list {
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
 }
 
+/* ── bands ────────────────────────────────────────────────────────── */
+
 .bandWrap {
   position: relative;
   overflow: hidden;
   border-radius: 18px;
 }
+
+/* ── close — the one call to action ───────────────────────────────── */
+
+.close {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  scroll-margin-top: var(--nav-height);
+}
+
+.closeHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.25rem, 3.4vw, 1.6rem);
+  line-height: 1.2;
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 24ch;
+}
+
+.closeLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0 0 var(--space-2);
+  max-width: 46ch;
+}
+
+/* ── data note ────────────────────────────────────────────────────── */
 
 .dataNote {
   font-family: var(--font-body);
@@ -44,6 +121,7 @@
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
+  padding-bottom: var(--space-8);
 }
 
 .dataNote p {
