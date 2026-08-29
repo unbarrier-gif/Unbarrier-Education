@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
-import { sayHiAction, type FormState } from '@/app/hello/actions';
+import { sayHiAction, type FormState } from '@/app/actions';
 import styles from './SayHiForm.module.css';
 
 const initialState: FormState = { status: 'idle' };

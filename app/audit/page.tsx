@@ -5,6 +5,7 @@ import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
@@ -358,6 +359,9 @@ export default function AuditPage() {
             </Button>
           </div>
         </section>
+
+        <NewsletterBand route="/audit" weight="standard" />
+
 
         <Footer variant="full" />
       </main>

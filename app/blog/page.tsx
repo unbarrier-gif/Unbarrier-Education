@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Nav } from '@/components/Nav';
 import { BlogHero } from '@/components/blog/BlogHero';
 import { BlogIndex } from '@/components/blog/BlogIndex';
@@ -32,6 +33,8 @@ export default async function BlogIndexPage() {
       <main className={styles.main}>
         <BlogHero />
         <BlogIndex posts={posts} />
+        <NewsletterBand route="/blog" weight="full" />
+
         <Footer variant="full" />
       </main>
     </>

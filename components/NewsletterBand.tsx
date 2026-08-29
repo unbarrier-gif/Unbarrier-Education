@@ -4,7 +4,7 @@ import { useEffect, useRef } from 'react';
 import Image from 'next/image';
 import { useFormState, useFormStatus } from 'react-dom';
 import Link from 'next/link';
-import { subscribeAction, type FormState } from '@/app/hello/actions';
+import { subscribeAction, type FormState } from '@/app/actions';
 import { CONSENT_WORDING } from '@/lib/consent';
 import styles from './NewsletterBand.module.css';
 
@@ -26,10 +26,33 @@ import styles from './NewsletterBand.module.css';
 // The form keeps `noValidate` so a failed submit shows our own message rather
 // than a browser tooltip. `required` on the checkbox stays for assistive tech;
 // the server is what actually enforces it.
+//
+// TWO WEIGHTS, ONE BLOCK — never two components. The wording, the checkbox and
+// everything above is identical on every page; `weight` changes presentation
+// only:
+//   * `full`     — pages where the reader has just been given something free
+//                  (/blog, a post, /hello, /belonging-check). Carries the
+//                  decorative notice banner.
+//   * `standard` — the default, for offer pages. No banner: that asset is a
+//                  /hello-era graphic and it would outweigh the page's own
+//                  call to action on a page that is selling something.
+//
+// `route` is REQUIRED so no page can quietly ship a signup whose consent
+// record cannot name the page it came from. It is bound to the server action
+// below, server-side — see app/actions.ts.
 
 const FALLBACK_EMAIL = 'nici@unbarrier.me';
 
 const initialState: FormState = { status: 'idle' };
+
+type Weight = 'standard' | 'full';
+
+type Props = {
+  /** The route this block is rendered on, e.g. "/blog" or "/blog/some-slug". */
+  route: string;
+  /** Presentation only. Never changes what consent is captured. */
+  weight?: Weight;
+};
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -40,8 +63,14 @@ function SubmitButton() {
   );
 }
 
-export function NewsletterBand() {
-  const [state, formAction] = useFormState(subscribeAction, initialState);
+export function NewsletterBand({ route, weight = 'standard' }: Props) {
+  // Bound server-side: the route reaches the action as an encrypted bound
+  // argument rather than as a form field, so a submitter cannot choose what
+  // their own consent record says about where they signed up.
+  const [state, formAction] = useFormState(
+    subscribeAction.bind(null, route),
+    initialState,
+  );
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
@@ -57,17 +86,23 @@ export function NewsletterBand() {
   }, [state]);
 
   return (
-    <section className={styles.band} aria-labelledby="newsletter-heading">
+    <section
+      className={`${styles.band} ${weight === 'full' ? styles.full : styles.standard}`}
+      aria-labelledby="newsletter-heading"
+    >
       <div className={styles.inner}>
-        {/* Decorative: the heading below carries the same word. */}
-        <Image
-          src="/assets/hello/notice-banner.webp"
-          alt=""
-          aria-hidden="true"
-          width={900}
-          height={180}
-          className={styles.banner}
-        />
+        {/* Decorative: the heading below carries the same word. `full` only —
+            see the weight note above. */}
+        {weight === 'full' && (
+          <Image
+            src="/assets/hello/notice-banner.webp"
+            alt=""
+            aria-hidden="true"
+            width={900}
+            height={180}
+            className={styles.banner}
+          />
+        )}
 
         <h2 id="newsletter-heading" className={styles.heading}>
           notice

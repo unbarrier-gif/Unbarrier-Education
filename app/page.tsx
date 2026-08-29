@@ -3,6 +3,7 @@ import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { InclusionStrategyBand } from '@/components/InclusionStrategyBand';
 import { Nav } from '@/components/Nav';
@@ -265,6 +266,9 @@ export default function HomePage() {
             </Button>
           </div>
         </section>
+
+        <NewsletterBand route="/" weight="standard" />
+
 
         <Footer variant="full" />
       </main>

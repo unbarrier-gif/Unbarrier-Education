@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { SectionBar } from '@/components/SectionBar';
@@ -262,6 +263,9 @@ export default function FaqPage() {
             ))}
           </div>
         </div>
+
+        <NewsletterBand route="/faq" weight="standard" />
+
 
         <Footer variant="full" />
       </main>

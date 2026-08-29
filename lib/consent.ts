@@ -20,4 +20,31 @@ export const CONSENT_WORDING =
 // can be traced back to the surface that collected it — the spec's rule that
 // subscribing is never bundled with anything else only holds if we can show
 // which form it came from.
+//
+// This stays the PREFIX rather than the whole value, so records written when
+// the block lived only on /hello remain directly comparable with records
+// written now it is on twelve routes. Do not change it.
 export const CONSENT_SOURCE_SUBSCRIBE_BLOCK = 'subscribe block';
+
+/**
+ * The `consent_source` value for a signup, e.g.
+ *   "subscribe block · /blog/planned-is-not-the-same-as-received"
+ *
+ * On one page the bare prefix was enough. On twelve it is not: a consent
+ * record has to name the surface that collected it, or "which page was this
+ * person actually looking at" becomes unanswerable.
+ *
+ * `route` is supplied by the page and bound to the server action server-side —
+ * it never arrives as form input, so it cannot be forged by a submitter. The
+ * scrub below is belt-and-braces against a bad literal in a page, not against
+ * an attacker: a consent record is evidence, and evidence should not be able
+ * to contain arbitrary text.
+ */
+export function consentSource(route: string): string {
+  const cleaned = route
+    .trim()
+    .toLowerCase()
+    .replace(/[^a-z0-9/_-]/g, '')
+    .slice(0, 80);
+  return `${CONSENT_SOURCE_SUBSCRIBE_BLOCK} · ${cleaned || 'unknown-route'}`;
+}

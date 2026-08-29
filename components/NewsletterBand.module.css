@@ -3,8 +3,23 @@
   background: linear-gradient(135deg, rgba(255, 194, 3, 0.10), rgba(255, 194, 3, 0.04));
   border: 1.5px solid rgba(255, 194, 3, 0.3);
   border-radius: 18px;
-  padding: 28px;
   overflow: hidden;
+}
+
+/* ── the two weights ──────────────────────────────────────────────────
+   Presentation only. Nothing here changes what is captured, what the
+   checkbox says, or whether it starts unticked. */
+
+/* Offer pages. Tighter, no banner — subscribe is the consolation prize
+   here and must not outweigh the page's own call to action. */
+.standard {
+  padding: 22px;
+}
+
+/* Resource pages, where the reader has just been given something free and
+   this is the main event. */
+.full {
+  padding: 28px;
 }
 
 .band::before {
@@ -28,7 +43,7 @@
 .heading {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(1.5rem, 3vw, 2rem);
+  font-size: clamp(1.35rem, 2.6vw, 1.7rem);
   letter-spacing: -0.025em;
   color: #fff;
   line-height: var(--lh-tight);
@@ -213,4 +228,10 @@
   color: inherit;
   text-decoration: underline;
   text-underline-offset: 3px;
+}
+
+/* `full` gets the larger heading; `standard` keeps the smaller default above
+   so it sits under, not over, the page's own closing heading. */
+.full .heading {
+  font-size: clamp(1.5rem, 3vw, 2rem);
 }

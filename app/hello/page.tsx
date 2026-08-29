@@ -109,21 +109,6 @@ export default async function HelloPage() {
           );
         })}
 
-        {/* "notice" — the approved copy's newsletter line. The subscribe block
-            itself is the conversion-layer branch; this is the band that is
-            already built and already posts to MailerLite. Nothing new here. */}
-        <section className={styles.bandWrap}>
-          <Glow
-            color="var(--school-bus-yellow)"
-            top="-80px"
-            right="-100px"
-            size={420}
-            opacity={0.08}
-            blur={160}
-          />
-          <NewsletterBand />
-        </section>
-
         {/* The one call to action on this page. The approved copy closes on
             "if you want to talk about your setting — that's what we actually
             do. start here." The say-hi form that used to sit here was a second,
@@ -151,6 +136,21 @@ export default async function HelloPage() {
             email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
           </p>
         </section>
+        {/* "notice" — the approved copy's newsletter line. Below the close CTA,
+            per the spec: subscribe is never above the primary ask. `full`
+            weight — this is a resource page. */}
+        <section className={styles.bandWrap}>
+          <Glow
+            color="var(--school-bus-yellow)"
+            top="-80px"
+            right="-100px"
+            size={420}
+            opacity={0.08}
+            blur={160}
+          />
+          <NewsletterBand route="/hello" weight="full" />
+        </section>
+
       </main>
 
       <Footer variant="full" />
