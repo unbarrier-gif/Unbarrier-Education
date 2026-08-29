@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <Wordmark size="md" href="/hello" />
         <p className={styles.eyebrow}>01 · privacy</p>
         <h1 className={styles.title}>privacy notice</h1>
-        <p className={styles.meta}>Last updated: 27 July 2026 · Version 1.0</p>
+        <p className={styles.meta}>Last updated: 29 August 2026 · Version 1.1</p>
       </div>
 
       <section className={styles.section}>
@@ -203,7 +203,10 @@ export default function PrivacyPage() {
           <strong>if you subscribe to the newsletter</strong>
         </p>
         <ul>
-          <li>what: name and email</li>
+          <li>
+            what: your email address, and the date and wording of the consent
+            you gave
+          </li>
           <li>why: to send you writing you asked for</li>
           <li>
             lawful basis: consent · withdrawable in one click from any email
@@ -262,7 +265,9 @@ export default function PrivacyPage() {
             details
           </li>
           <li>
-            <strong>MailerLite</strong> · newsletter
+            <strong>MailerLite Ltd</strong> · newsletter · 88 Harcourt Street,
+            Dublin 2, Ireland · their data processing agreement is part of their
+            terms of use, and applies from the date we accepted them
           </li>
           <li>
             <strong>Vercel</strong> · website hosting, and the database behind
