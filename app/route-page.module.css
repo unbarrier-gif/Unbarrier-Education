@@ -338,6 +338,7 @@
   font-size: 1rem;
   line-height: var(--lh-body);
   color: var(--text-muted);
+  /* <dd> carries a default indent in every browser. */
   margin: 0;
 }
 
@@ -378,4 +379,18 @@
   color: var(--text);
   margin: 0;
   max-width: 30ch;
+}
+
+/* ── inline links in body copy ────────────────────────────────────────
+   Underlined, not colour-only: colour alone is not a sufficient cue that
+   something is a link (WCAG 1.4.1), and this site's body copy already
+   carries brand colour on emphasis. */
+.inlineLink {
+  color: var(--route-accent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.inlineLink:hover {
+  text-decoration-thickness: 2px;
 }

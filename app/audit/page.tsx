@@ -1,5 +1,6 @@
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
@@ -291,10 +292,11 @@ export default function AuditPage() {
           </p>
         </section>
 
-        {/* The approved draft carries a reviewer note under this section
-            ("the cross-cutting questions live on the faq"). It is editorial
-            commentary about where content lives, not page copy, so it is not
-            rendered — /faq is reachable from the footer. */}
+        {/* The approved draft carries a reviewer note under this section:
+            "the cross-cutting questions live on the faq". The copy points a
+            reader there at exactly this moment, so the section ends with a
+            contextual link rather than leaving footer reachability to do the
+            work on its own. */}
         <section className={styles.section} aria-labelledby="what-to-expect">
           <h2 id="what-to-expect" className={styles.sectionHeading}>
             what to expect
@@ -306,6 +308,13 @@ export default function AuditPage() {
               </li>
             ))}
           </ul>
+          <p className={styles.body}>
+            the cross-cutting questions live on{' '}
+            <Link href="/faq" className={styles.inlineLink}>
+              the faq
+            </Link>
+            .
+          </p>
         </section>
 
         <section className={styles.section} aria-labelledby="who-for">
