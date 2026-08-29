@@ -20,25 +20,27 @@ import styles from '@/app/route-page.module.css';
 // drifts from the visible page the first time an answer is edited and then
 // Google is being served copy nobody reviewed.
 //
-// ⚠️ ONE LINE ON THIS PAGE IS NO LONGER STRICTLY TRUE. Under "what does it
-// cost?": "the tiers are published in full on the access page". After the
-// trust-tier hold applied in this branch, /access publishes advisory and
-// partner with numbers, names the trust route without one, and says edtech has
-// no public price — so the tiers are not published in full. Left exactly as
-// approved rather than quietly softened, and flagged for Nici in the PR. The
-// same problem exists in /access's own "the tiers above, in full" line.
-// "a partnership year starts at £2,250" IS still true: advisory is the entry
-// tier and it is published.
+// TWO DELIBERATE DEPARTURES FROM THE APPROVED DRAFT, both ruled by Nici on
+// 29 Aug 2026 and both removals rather than rewrites:
+//
+//  1. "the tiers are published IN FULL on the access page" — "in full" is gone.
+//     After the trust-tier hold, /access publishes two tiers with numbers,
+//     names the trust route without one, and says edtech has no public price.
+//     "a partnership year starts at £2,250" is untouched and still true:
+//     advisory is the entry tier and it is published.
+//  2. The hero said "before they email ME". The copy pack's own rule is "we",
+//     with /about as the single exception; this line had escaped it and every
+//     answer below it already said "we".
 
 const CANONICAL = 'https://www.unbarrier.me/faq';
 
 export const metadata: Metadata = {
-  title: 'faq — the things people ask before they email me | unbarrier.me',
+  title: 'faq — the things people ask before they email us | unbarrier.me',
   description:
     'how we work, who we work with, how long things take, where we can work, what it costs, what happens to the data, and how accessible the work itself is.',
   alternates: { canonical: CANONICAL },
   openGraph: {
-    title: 'faq — the things people ask before they email me',
+    title: 'faq — the things people ask before they email us',
     description:
       'how we work, who we work with, what it costs, what happens to the data, and how accessible the work itself is.',
     url: CANONICAL,
@@ -119,9 +121,10 @@ const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
         kind: 'ul',
         items: [
           `a discovery day is ${PRICE_DISCOVERY_DAY}. that is the whole commitment, and there is no lock-in after it.`,
-          // ⚠️ See the header comment. "in full" no longer holds after the
-          // trust-tier hold. Approved copy, left as approved, flagged.
-          `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published in full on the access page.`,
+          // "in full" deleted (Nici, 29 Aug 2026) — after the trust-tier
+          // hold on /access it was no longer true. The matching line on
+          // /access had the same deletion.
+          `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published on the access page.`,
           'everything else is quoted as a package: one number for a defined outcome, not a stack of day invoices.',
           '50% on order, 50% at the midpoint.',
           'we don’t do free scoping. the discovery day is the scoping, and it is priced honestly rather than given away and recovered somewhere you can’t see.',
@@ -221,7 +224,7 @@ export default function FaqPage() {
           <Eyebrow color="var(--spring-green)">faq</Eyebrow>
           <h1 className={styles.heading}>
             the things people ask{' '}
-            <span className={styles.accent}>before they email me.</span>
+            <span className={styles.accent}>before they email us.</span>
           </h1>
           <p className={styles.lede}>
             schools decide before the first conversation, so these are answered

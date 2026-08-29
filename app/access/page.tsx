@@ -112,10 +112,13 @@ const SIX_PARTS =
 // the trust route is "named, not offered — do not put it on the same page as
 // the two numbers above, or it becomes a third option and nobody chooses".
 //
-// The whole priced bullet comes off, not just the numbers: its scope ("up to
-// six schools", "twelve pooled on-site half-days") only means anything
-// alongside the price it was scoped against. What remains is the route, named,
-// and where to take it.
+// NAMED IS THE LOAD-BEARING HALF of "named, not offered". The route has to be
+// findable — a trust lead arriving from the home chooser needs to see
+// something for them — so it keeps a description. What comes off is every
+// figure and every piece of scope that only meant anything against the price
+// it was scoped against: "from £18,000 / year", "up to six schools",
+// "additional schools £2,000 each", "twelve pooled on-site half-days".
+// Do not reintroduce a number or a count here without lifting the hold.
 //
 // "edtech partner — no public price" stays exactly as approved.
 const TIERS: Array<{
@@ -140,7 +143,7 @@ const TIERS: Array<{
   {
     name: 'trust partner',
     price: TRUST_TIER_SCOPING,
-    body: 'several settings, one picture across all of them.',
+    body: 'several settings, one picture across all of them, and a trust-level view.',
   },
   {
     name: 'edtech partner',
@@ -160,16 +163,16 @@ const STANDARD_TERMS: string[] = [
   `no free scoping. the ${PRICE_DISCOVERY_DAY} discovery day is the scoping, priced honestly.`,
 ];
 
-// ⚠️ "the tiers above, in full" is no longer strictly true after the trust-tier
-// hold above — three of the four tiers carry a number and the trust route does
-// not. Left exactly as approved rather than quietly softened, and flagged for
-// Nici in the PR. The same sentence appears on /faq ("the tiers are published
-// in full on the access page") and has the same problem.
+// "in full" was deleted from the cost line below (Nici, 29 Aug 2026). It was
+// true when every tier carried a number; after the trust-tier hold above it
+// was not, and a false claim about pricing on the page that sells the pricing
+// is the one place it cannot sit. Removal of a false statement, not a rewrite.
+// The same deletion was made to the matching line on /faq.
 const ANSWERED_UP_FRONT: string[] = [
   'what actually happens across a partnership year.',
   'how much of your staff’s time it takes.',
   'what is delivered, term by term.',
-  'what it costs — the tiers above, in full, before you ask.',
+  'what it costs — the tiers above, before you ask.',
   'proof it has worked elsewhere.',
 ];
 

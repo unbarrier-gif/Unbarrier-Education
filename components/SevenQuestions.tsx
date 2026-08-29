@@ -11,9 +11,15 @@ import styles from '@/app/route-page.module.css';
 // page, so it renders in princeton-orange on /access and orchid-mist on
 // /voice without either page overriding anything.
 //
-// Marked up as a <dl>: seven terms, each with its definition. That is what
-// this is, and it gives a screen reader the pairing for free — a flat list of
-// <li>s would read the domain name and its question as one run-on string.
+// VOCABULARY (Nici, 29 Aug 2026): these are seven QUESTIONS. Never "domains".
+// "Domains" belongs to the six domains of inclusion, a separate framework —
+// and the ISP Learning & Device Compass on /isp-audit has seven domains of its
+// own, which are also not these. Three frameworks, one word; this one owns
+// "questions".
+//
+// Marked up as a <dl>: seven terms, each with its question. That is what this
+// is, and it gives a screen reader the pairing for free — a flat list of <li>s
+// would read the name and its question as one run-on string.
 
 export const SEVEN_QUESTIONS: Array<{ term: string; question: string }> = [
   {
