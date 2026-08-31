@@ -1,4 +1,10 @@
-import type { Answers, AuditResponse, QuestionSet } from './types';
+import type {
+  Answers,
+  AuditResponse,
+  QuestionSet,
+  ScorableAnswers,
+  ScorableSet,
+} from './types';
 
 export type DomainScore = { id: string; name: string; score: number; answered: number; total: number };
 
@@ -16,7 +22,10 @@ export type DomainScore = { id: string; name: string; score: number; answered: n
  * single submission routinely leaves whole domains untouched, which isn't
  * the same thing as a bad score).
  */
-export function domainScores(questionSet: QuestionSet, answers: Answers): DomainScore[] {
+export function domainScores(
+  questionSet: ScorableSet,
+  answers: ScorableAnswers,
+): DomainScore[] {
   return questionSet.domains.map((d) => {
     let sum = 0;
     let n = 0;

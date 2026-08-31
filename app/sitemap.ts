@@ -21,6 +21,9 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // below all use WWW to match their own canonical tags.
     { url: 'https://www.unbarrier.me/access', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://www.unbarrier.me/audit', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    // The free check is the primary cta on /audit and the teacher/senco route
+    // in the home chooser, so it is a landing page in its own right.
+    { url: 'https://www.unbarrier.me/readiness-check', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: 'https://www.unbarrier.me/edtech', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://www.unbarrier.me/about', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://www.unbarrier.me/faq', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
