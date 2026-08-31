@@ -53,14 +53,6 @@ export const metadata: Metadata = {
       'a partnership year is what happens after you know. three terms alongside your staff. one number for a defined outcome, quoted as a year and invoiced by term.',
     url: CANONICAL,
     type: 'website',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 

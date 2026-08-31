@@ -57,14 +57,6 @@ export const metadata: Metadata = {
       'a discovery day is the small, honest first step to find out what is actually landing with learners, and what isn’t. one day. £500. no lock-in.',
     url: CANONICAL,
     type: 'website',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 

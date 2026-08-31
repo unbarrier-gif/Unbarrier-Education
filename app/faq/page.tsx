@@ -46,14 +46,6 @@ export const metadata: Metadata = {
       'how we work, who we work with, what it costs, what happens to the data, and how accessible the work itself is.',
     url: CANONICAL,
     type: 'website',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 

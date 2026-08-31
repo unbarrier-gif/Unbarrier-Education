@@ -48,14 +48,6 @@ export const metadata: Metadata = {
       "I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through.",
     url: `${SITE_URL}/hello`,
     siteName: 'Unbarrier',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
     locale: 'en_GB',
     type: 'website',
   },
@@ -64,7 +56,6 @@ export const metadata: Metadata = {
     title: 'Unbarrier · designed for difference.',
     description:
       "I'm Nici. I help schools, neurodivergent humans, and the people who love them find clearer ways through.",
-    images: ['/assets/og-hello.png'],
   },
 };
 

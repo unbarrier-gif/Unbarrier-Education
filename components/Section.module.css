@@ -1,0 +1,27 @@
+/* Full-bleed ground; the measure lives on .inner so the background reaches
+   the viewport edge while the text keeps the 900px home measure. */
+.section {
+  position: relative;
+  width: 100%;
+}
+
+.inner {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
+}
+
+.base {
+  background: var(--bg);
+}
+
+.deep {
+  background: var(--bg-alt);
+}
+
+/* pearl-aqua 8% over --amethyst-deep. Flat hex rather than a colour-mix or a
+   stacked gradient so the value that was contrast-tested is the value that
+   ships and can be re-tested. See the note in Section.tsx before changing it. */
+.tint {
+  background: var(--bg-tint);
+}

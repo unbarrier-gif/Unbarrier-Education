@@ -44,14 +44,6 @@ export const metadata: Metadata = {
       'inclusion specialist, apple professional learning specialist, and a dyslexic, adhd and dyscalculic educator.',
     url: CANONICAL,
     type: 'profile',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 

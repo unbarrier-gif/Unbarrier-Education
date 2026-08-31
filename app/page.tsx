@@ -6,7 +6,10 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { InclusionStrategyBand } from '@/components/InclusionStrategyBand';
+import { Icon } from '@/components/Icon';
+import type { IconName } from '@/components/Icon';
 import { Nav } from '@/components/Nav';
+import { Section } from '@/components/Section';
 import { SectionBar } from '@/components/SectionBar';
 import { IAmChooser } from '@/components/home/IAmChooser';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
@@ -33,14 +36,6 @@ export const metadata: Metadata = {
       'we help schools, trusts and edtech make sure the tools they have already bought actually reach the learners they were bought for.',
     url: 'https://www.unbarrier.me/',
     type: 'website',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 
@@ -85,24 +80,28 @@ const NATIONAL_PICTURE: Array<{ figure: string; body: string }> = [
   },
 ];
 
-const NDTE: Array<{ lead: string; body: string; aside: string }> = [
+const NDTE: Array<{ lead: string; icon: IconName; body: string; aside: string }> = [
   {
     lead: 'notice',
+    icon: 'ndte-notice',
     body: 'find out what is actually happening for learners, not what the strategy says should be.',
     aside: 'this is where unbarrier.voice does its work.',
   },
   {
     lead: 'design',
+    icon: 'ndte-design',
     body: 'build the change with your team, not for them. the people who have to run it on a tuesday are in the room when it is designed.',
     aside: 'otherwise it is your plan, not theirs.',
   },
   {
     lead: 'try',
+    icon: 'ndte-try',
     body: 'model it in real classrooms, with real learners, while your staff watch.',
     aside: 'not a twilight. not a slide deck.',
   },
   {
     lead: 'embed',
+    icon: 'ndte-embed',
     body: 'make it hold after we have gone.',
     aside:
       'that is the whole test, and it is the step most consultancy skips because it is the one you cannot invoice twice.',
@@ -165,7 +164,7 @@ export default function HomePage() {
 
         <SectionBar color="var(--spring-green)" />
 
-        <section className={styles.section} aria-labelledby="the-thesis">
+        <Section ground="deep" labelledBy="the-thesis">
           <h2 id="the-thesis" className={styles.statement}>
             buying a device for a send learner without a strategy isn&rsquo;t
             inclusion. it&rsquo;s a tick-box.
@@ -175,9 +174,9 @@ export default function HomePage() {
             landed with the learner it was meant for. that is the gap we work
             in.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="national-picture">
+        <Section labelledBy="national-picture">
           <h2 id="national-picture" className={styles.sectionHeading}>
             what the national picture shows
           </h2>
@@ -193,7 +192,7 @@ export default function HomePage() {
             source for all three: dfe, technology in schools survey 2024 to
             2025, published november 2025.
           </p>
-        </section>
+        </Section>
 
         {/* TEMPORARY until 31 Dec 2026 — see lib/inclusion-strategy-promo.ts.
             Sits directly above the chooser, per the handoff: the deadline page
@@ -202,13 +201,18 @@ export default function HomePage() {
 
         <IAmChooser />
 
-        <section className={styles.section} aria-labelledby="ndte">
+        <Section ground="tint" labelledBy="ndte">
           <Eyebrow color="var(--spring-green)">
             how the work runs — the ndte cycle
           </Eyebrow>
-          <h2 id="ndte" className={styles.statement}>
-            notice → design → try → embed.
-          </h2>
+          <div className={styles.statementRow}>
+            {/* ndte-cycle is the one display-size glyph in the set — never
+                render it below ~40px or the four stage dots close up. */}
+            <Icon name="ndte-cycle" size={44} />
+            <h2 id="ndte" className={styles.statement}>
+              notice → design → try → embed.
+            </h2>
+          </div>
           <p className={styles.body}>
             however you come in, it runs the same way. four words, and you can
             hold a whole year against them.
@@ -216,10 +220,13 @@ export default function HomePage() {
           <ul className={styles.options}>
             {NDTE.map((step) => (
               <li key={step.lead} className={styles.option}>
-                <p className={styles.optionBody}>
-                  <strong className={styles.strong}>{step.lead}</strong> —{' '}
-                  {step.body}
+                {/* Icon plus text. The icon is decorative and aria-hidden —
+                    the word next to it is what carries the meaning. */}
+                <p className={styles.optionLead}>
+                  <Icon name={step.icon} />
+                  <strong className={styles.strong}>{step.lead}</strong>
                 </p>
+                <p className={styles.optionBody}>{step.body}</p>
                 {/* "unbarrier.voice" below is text, never a link. */}
                 <p className={styles.aside}>{step.aside}</p>
               </li>
@@ -234,9 +241,9 @@ export default function HomePage() {
             is what makes <em>notice</em> and <em>embed</em> measurable instead
             of felt. a partnership year is all four, three terms running.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-we-believe">
+        <Section ground="deep" labelledBy="what-we-believe">
           <h2 id="what-we-believe" className={styles.sectionHeading}>
             what we believe
           </h2>
@@ -247,7 +254,7 @@ export default function HomePage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
         <SectionBar color="var(--spring-green)" />
 
