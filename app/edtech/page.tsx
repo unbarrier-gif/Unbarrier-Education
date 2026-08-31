@@ -46,6 +46,16 @@ export const metadata: Metadata = {
       'classroom research from the learner’s side, implementation design for the schools that buy you, and an honest review of what you are claiming.',
     url: CANONICAL,
     type: 'website',
+    images: [
+      {
+        // A segment that exports its own `openGraph` does not inherit the
+        // file-based card — openGraph is replaced per segment, not merged.
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'unbarrier — designed for difference. did it reach the child?',
+      },
+    ],
   },
 };
 

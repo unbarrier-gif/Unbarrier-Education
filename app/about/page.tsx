@@ -44,6 +44,16 @@ export const metadata: Metadata = {
       'inclusion specialist, apple professional learning specialist, and a dyslexic, adhd and dyscalculic educator.',
     url: CANONICAL,
     type: 'profile',
+    images: [
+      {
+        // A segment that exports its own `openGraph` does not inherit the
+        // file-based card — openGraph is replaced per segment, not merged.
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'unbarrier — designed for difference. did it reach the child?',
+      },
+    ],
   },
 };
 

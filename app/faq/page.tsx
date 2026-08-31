@@ -46,6 +46,16 @@ export const metadata: Metadata = {
       'how we work, who we work with, what it costs, what happens to the data, and how accessible the work itself is.',
     url: CANONICAL,
     type: 'website',
+    images: [
+      {
+        // A segment that exports its own `openGraph` does not inherit the
+        // file-based card — openGraph is replaced per segment, not merged.
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'unbarrier — designed for difference. did it reach the child?',
+      },
+    ],
   },
 };
 

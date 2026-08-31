@@ -151,6 +151,17 @@ add a `<link rel="icon">` tag or a manual `og:image` — either will win over
 them.** The manual `/assets/og-hello.png` entries were removed from all eight
 route files on 31 Aug 2026 for exactly this reason.
 
+**But a route segment that exports its own `openGraph` does not inherit the
+file-based card.** `openGraph` is replaced per segment, not merged, so removing
+those entries left every route except `/` with no card at all. Each route now
+names `/opengraph-image.png` explicitly, and a blog post with no cover image
+falls back to it rather than shipping a bare link.
+
+`/inclusion-strategy` is the one override: `app/inclusion-strategy/opengraph-image.png`
+sits in its own segment, so the file convention picks it up with no entry
+needed. It has the deadline on it. Give any future route its own card the same
+way — a PNG in the segment, plus an `opengraph-image.alt.txt` beside it.
+
 Tagline: **designed for difference. did it reach the child?**
 The lockup carries the question only; the full line goes in the footer.
 

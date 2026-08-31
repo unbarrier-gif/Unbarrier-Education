@@ -91,13 +91,18 @@ export async function generateMetadata({
         description,
         url,
         type: 'article',
-        images: post.coverUrl ? [{ url: post.coverUrl }] : undefined,
+        // A post with no cover falls back to the site-wide card rather
+        // than shipping no card at all — a bare link is the worst case
+        // for the thing most likely to be shared.
+        images: post.coverUrl
+          ? [{ url: post.coverUrl }]
+          : [{ url: '/opengraph-image.png', width: 1200, height: 630, alt: 'unbarrier — designed for difference. did it reach the child?' }],
       },
       twitter: {
         card: 'summary_large_image',
         title: post.title,
         description,
-        images: post.coverUrl ? [post.coverUrl] : undefined,
+        images: post.coverUrl ? [post.coverUrl] : ['/opengraph-image.png'],
       },
     };
   } catch (err) {
