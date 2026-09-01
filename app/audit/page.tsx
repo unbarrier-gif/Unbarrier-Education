@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
+import { ScopeLine } from '@/components/ScopeLine';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
@@ -191,6 +192,7 @@ export default function AuditPage() {
             </Button>
           </div>
           <CredentialStrip />
+          <ScopeLine />
         </header>
 
         <SectionBar color="var(--pearl-aqua)" />
@@ -323,10 +325,25 @@ export default function AuditPage() {
             who this is for
           </h2>
           <p className={styles.body}>
-            schools and trusts who have already invested in the tools and want
-            to know, honestly, whether it is reaching the learners it was bought
-            for. especially where inclusion and send are the point, not an
-            afterthought.
+            schools, trusts and colleges who have already invested in the tools
+            and want to know, honestly, whether it is reaching the learners it
+            was bought for. especially where inclusion and send are the point,
+            not an afterthought.
+          </p>
+          {/* 1 Sep 2026. Working with the whole chain is deliberate and it is
+              the thesis, not a wider net cast to catch more buyers. The
+              approved first paragraph is unchanged apart from "and colleges". */}
+          <p className={styles.body}>
+            <strong className={styles.strong}>
+              and we work with everyone in the chain, on purpose.
+            </strong>{' '}
+            the teaching assistant who sets it up. the teacher who plans around
+            it. the technician who configures it. the leader who signed it off.
+          </p>
+          <p className={styles.body}>
+            a learner is anyone in a learning capacity, so the teaching
+            assistant learning a new tool is a learner too. if it only reaches
+            the person who bought it, it hasn&rsquo;t reached anyone.
           </p>
         </section>
 

@@ -1,0 +1,19 @@
+/* Deliberately quieter than the credential strip above it: that line is the
+   claim to authority, this one is the map. --text-subtle measures 5.54:1 on
+   amethyst, comfortably over the AA floor. */
+.scope {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: 1.7;
+  color: var(--text-subtle);
+  max-width: 66ch;
+  margin: var(--space-3) 0 0;
+}
+
+.sep {
+  color: var(--pearl-aqua);
+}
+
+.tail {
+  color: var(--text-muted);
+}
