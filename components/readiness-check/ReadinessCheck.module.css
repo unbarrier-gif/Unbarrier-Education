@@ -1,0 +1,163 @@
+/* The readiness check. Built from tokens in app/globals.css — no new colours.
+   Panel copy uses --text-muted or --text-subtle only: --text-faint sits at
+   4.51:1 on plain amethyst, so it fails on every tinted surface. */
+
+.wrap { display: grid; gap: var(--space-8); }
+
+.questions { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-5); counter-reset: q; }
+.question { margin: 0; }
+
+.fieldset {
+  margin: 0;
+  padding: var(--space-5);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--pearl-aqua);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+}
+.legend { display: block; padding: 0; margin: 0 0 var(--space-4); }
+.domain {
+  display: block;
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--pearl-aqua);
+  margin-bottom: var(--space-2);
+}
+.prompt {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 56ch;
+}
+
+.scale { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.step { position: relative; display: inline-flex; }
+/* The radio stays a real, focusable radio — clipped, never display:none,
+   which would take it out of the tab order and off assistive tech. */
+.radio {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: 0; padding: 0; border: 0;
+  clip-path: inset(50%);
+  overflow: hidden; white-space: nowrap;
+}
+.stepLabel {
+  display: inline-block;
+  padding: 8px 14px;
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-pill);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: background 150ms ease, border-color 150ms ease, color 150ms ease;
+}
+.step:hover .stepLabel { border-color: var(--border-strong); color: var(--text); }
+.radio:checked + .stepLabel {
+  background: var(--spring-green);
+  border-color: var(--spring-green);
+  color: var(--text-inverse);
+  font-weight: 700;
+}
+.radio:focus-visible + .stepLabel {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 3px;
+}
+
+.showRow { display: grid; gap: var(--space-4); }
+.progress { font-family: var(--font-body); font-size: 0.95rem; line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0; }
+
+.primary {
+  justify-self: start;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 14px 26px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--spring-green);
+  color: var(--text-inverse);
+  cursor: pointer;
+}
+.primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.result {
+  padding: var(--space-6);
+  border: 1px solid var(--border-default);
+  border-top: 3px solid var(--spring-green);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  display: grid;
+  gap: var(--space-5);
+}
+.result:focus-visible { outline: 2px solid var(--focus-ring); outline-offset: 3px; }
+.resultHeading { font-size: var(--fs-h3); margin: 0; }
+.caveat { font-family: var(--font-body); font-size: 0.98rem; line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0; font-style: italic; }
+
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--space-3); }
+.bar { display: grid; grid-template-columns: 8.5rem 1fr auto; gap: var(--space-4); align-items: center; }
+@media (max-width: 620px) { .bar { grid-template-columns: 1fr; gap: var(--space-1); } }
+.barName { font-family: var(--font-heading); font-weight: 700; font-size: 0.95rem; color: var(--text); }
+.track { display: block; height: 10px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.10); overflow: hidden; }
+.fill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--text-subtle); }
+.fill[data-band='high'] { background: var(--spring-green); }
+.fill[data-band='medium'] { background: var(--school-bus-yellow); }
+.fill[data-band='low'] { background: var(--princeton-orange); }
+.barValue { font-family: var(--font-heading); font-size: 0.9rem; font-weight: 600; color: var(--text-muted); }
+.reading { font-family: var(--font-body); font-size: var(--fs-body-lg); line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0; }
+.reading strong { color: var(--text); }
+
+.follow { display: grid; gap: var(--space-5); }
+.followHeading { font-size: var(--fs-h4); margin: 0; }
+.followLede { font-family: var(--font-body); line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0; }
+
+.check { display: grid; grid-template-columns: 22px 1fr; gap: var(--space-4); align-items: start; font-family: var(--font-body); line-height: var(--lh-body); color: var(--text-muted); max-width: 66ch; cursor: pointer; }
+.check strong { color: var(--text); }
+/* A native checkbox with appearance:auto. Nothing overlays it, nothing strips
+   its outline, and nothing anywhere listens for the spacebar — the browser's
+   own behaviour is the behaviour. */
+.box { appearance: auto; width: 20px; height: 20px; margin: 4px 0 0; accent-color: var(--spring-green); cursor: pointer; }
+
+.thesis {
+  display: grid; gap: var(--space-3);
+  padding: var(--space-5);
+  border: 1px solid var(--border-default);
+  border-left: 3px solid var(--orchid-mist);
+  border-radius: var(--radius-md);
+  background: var(--surface-raised);
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 66ch;
+}
+.thesis p { margin: 0; color: inherit; }
+.thesis strong { color: var(--text); }
+.thesisLead { font-family: var(--font-heading); font-weight: 800; font-size: var(--fs-h4); color: var(--text) !important; letter-spacing: var(--ls-tight); }
+.thesisFoot { font-size: 0.92rem; color: var(--text-subtle) !important; }
+
+.segments { display: grid; gap: var(--space-4); padding-left: calc(22px + var(--space-4)); }
+.selectRow { display: grid; gap: var(--space-2); margin: 0; max-width: 34ch; }
+.selectLabel { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-muted); }
+.select, .email {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  padding: 11px 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-strong);
+  background: var(--amethyst-deep);
+  color: var(--text);
+}
+.emailRow { display: grid; gap: var(--space-2); max-width: 40ch; }
+.emailLabel { font-family: var(--font-body); font-size: 0.95rem; color: var(--text-muted); }
+.emailHint { color: var(--text-subtle); }
+
+.honeypot { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+
+.error { font-family: var(--font-body); color: var(--princeton-orange); margin: 0; }
+.ok { font-family: var(--font-body); color: var(--spring-green); margin: 0; }

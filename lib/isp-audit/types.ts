@@ -51,6 +51,30 @@ export type Answers = {
   platform: string | null;
 };
 
+/**
+ * THE SHARED SCORING SHAPE.
+ *
+ * `domainScores` only ever reads domain ids, names and question ids. Typing it
+ * against the full `QuestionSet` forced any other caller to invent ISP-only
+ * fields — catalogue options, platform options, school suggestions — that mean
+ * nothing to it. The readiness check (`lib/readiness-check/`) is that other
+ * caller: it shares the ENGINE, deliberately, and shares no data whatsoever.
+ *
+ * `QuestionSet` and `Answers` still satisfy these, so nothing about the ISP
+ * tool changes. This widens a parameter type; it does not touch any logic.
+ */
+export type ScorableSet = {
+  domains: ReadonlyArray<{
+    id: string;
+    name: string;
+    questions: ReadonlyArray<{ id: string }>;
+  }>;
+};
+
+export type ScorableAnswers = {
+  scores: Readonly<Record<string, ScoreValue>>;
+};
+
 export type AuditResponse = {
   id: string;
   school: string;

@@ -10,9 +10,14 @@
 // saying "take the free readiness check" that opens a calendar is the same
 // broken promise as a "book" button that opens an email client.
 //
-// BRANCH E: build /readiness-check, then flip READINESS_CHECK_ENABLED to true.
-// That is the whole change. Nothing else on /audit needs touching.
-export const READINESS_CHECK_ENABLED = false;
+// BRANCH E, 31 AUG 2026: /readiness-check is built, so the flag is on and the
+// label and the destination move together as designed. Nothing else on /audit
+// was touched, exactly as this comment promised.
+//
+// Turning this back to false is a safe, complete rollback: the cta reverts to
+// the booking link AND the label reverts with it. Do that rather than editing
+// copy if the check ever has to come down.
+export const READINESS_CHECK_ENABLED = true;
 
 export const READINESS_CHECK_HREF = '/readiness-check';
 
