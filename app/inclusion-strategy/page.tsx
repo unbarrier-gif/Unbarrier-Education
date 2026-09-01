@@ -59,14 +59,6 @@ export const metadata: Metadata = {
       'every school with an inclusive mainstream fund allocation has to publish its own inclusion strategy by 31 december 2026. we help your leadership team write it — guided, not done for you.',
     url: CANONICAL,
     type: 'website',
-    images: [
-      {
-        url: '/assets/og-hello.png',
-        width: 1200,
-        height: 630,
-        alt: 'Unbarrier — designed for difference.',
-      },
-    ],
   },
 };
 

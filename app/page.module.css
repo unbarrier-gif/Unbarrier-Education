@@ -49,7 +49,7 @@
   margin: var(--space-6) 0 0;
   padding: var(--space-4) var(--space-5);
   max-width: 58ch;
-  background: var(--surface-raised);
+  background: var(--panel-aqua);
   border: 1px solid var(--border-default);
   border-left: 3px solid var(--pearl-aqua);
   border-radius: var(--radius-md);
@@ -88,13 +88,10 @@
 }
 
 /* ── sections ─────────────────────────────────────────────────────── */
-
-.section {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: clamp(2.5rem, 6vw, 4rem) var(--space-5);
-}
+/* The old `.section` rule lived here and was applied six times, identically,
+   which is why every section on this page sat on the same ground. It has
+   moved into components/Section.module.css, where the measure travels with a
+   ground. The classes below are the CONTENT of a section, not its frame. */
 
 .sectionHeading {
   font-family: var(--font-heading);
@@ -105,6 +102,21 @@
   color: var(--text);
   margin: 0 0 var(--space-5);
   max-width: 26ch;
+}
+
+/* The ndte statement and its display-size cycle glyph. The row keeps the
+   icon on the text colour so the glyph strokes read as currentColor and only
+   its .accent path stays spring green. */
+.statementRow {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+}
+
+.statementRow .statement {
+  margin-bottom: 0;
 }
 
 /* A line sized as a statement rather than a heading. */
@@ -160,7 +172,7 @@
 
 .card {
   padding: var(--space-5);
-  background: var(--surface-raised);
+  background: var(--panel-aqua);
   border: 1px solid var(--border-default);
   border-top: 3px solid var(--pearl-aqua);
   border-radius: var(--radius-md);
@@ -206,10 +218,21 @@
 
 .option {
   padding: var(--space-5);
-  background: var(--surface-raised);
+  /* --panel-green is measured over --bg-tint, which is the only ground this
+     panel ever sits on. Moving this list to another ground means re-measuring. */
+  background: var(--panel-green);
   border: 1px solid var(--border-default);
   border-left: 3px solid var(--spring-green);
   border-radius: var(--radius-md);
+}
+
+/* The step name with its glyph. Icon plus text, always. */
+.optionLead {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  color: var(--text);
+  margin: 0 0 var(--space-3);
 }
 
 .optionBody {

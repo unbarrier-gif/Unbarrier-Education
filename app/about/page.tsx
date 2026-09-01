@@ -46,10 +46,12 @@ export const metadata: Metadata = {
     type: 'profile',
     images: [
       {
-        url: '/assets/og-hello.png',
+        // A segment that exports its own `openGraph` does not inherit the
+        // file-based card — openGraph is replaced per segment, not merged.
+        url: '/opengraph-image.png',
         width: 1200,
         height: 630,
-        alt: 'Unbarrier — designed for difference.',
+        alt: 'unbarrier — designed for difference. did it reach the child?',
       },
     ],
   },

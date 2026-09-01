@@ -46,6 +46,23 @@
   /* ── SEMANTIC ROLES ────────────────────────────────────────────────── */
   --bg:               var(--amethyst);
   --bg-alt:           var(--amethyst-deep);
+  /* Third section ground: pearl-aqua 8% over --amethyst-deep, flattened.
+     8% is the CEILING, not a taste call — --text-faint (0.50) measures
+     4.54:1 here and 4.48:1 at 10%, i.e. under the AA floor. Measure any
+     replacement before shipping it. See components/Section.tsx. */
+  --bg-tint:          #1c162e;
+
+  /* TINTED PANELS. The design finding was "raise the panels from white 3–5%
+     to a sub-brand colour at 6–12%". 8% is what shipped, and each value is a
+     flat hex of a measured mix, not a live overlay, so the number that was
+     tested is the number that renders.
+       --panel-aqua   pearl-aqua   8% over --amethyst   (subtle 5.30 · muted 6.43)
+       --panel-green  spring-green 8% over --bg-tint    (subtle 5.08 · muted 6.10)
+     NOTE THE ONE RULE THESE CARRY: --text-faint (0.50) is already at 4.51:1
+     on plain amethyst, so it fails on EVERY tinted panel. Panel copy uses
+     --text-muted or --text-subtle. Do not put --text-faint inside one. */
+  --panel-aqua:       #271b40;
+  --panel-green:      #1e2937;
   --fg:               var(--text);
   --fg-muted:         var(--text-muted);
   --action:           var(--spring-green);
@@ -139,6 +156,12 @@ html.contrast-high {
   --surface-raised: rgba(255, 255, 255, 0.08);
   --surface-lift:   rgba(255, 255, 255, 0.12);
   --color-card-bg:  rgba(255, 255, 255, 0.10);
+
+  /* Tinted panels lift with everything else rather than staying tinted. The
+     --bg-tint section ground is left alone: it is contrast-tested, and the
+     high-contrast text tokens above only widen the margin. */
+  --panel-aqua:     rgba(255, 255, 255, 0.10);
+  --panel-green:    rgba(255, 255, 255, 0.10);
 
   /* Disable ambient blur orbs — they reduce edge contrast on text. */
   --glow-opacity-multiplier: 0;
@@ -244,4 +267,31 @@ a {
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+
+/* ── BRAND ICON ACCENT ──────────────────────────────────────────────────── */
+/* Every inlined brand icon carries exactly one spring-green element on its
+   own path, tagged .accent — the pupil in the eye, the top plate in embed,
+   the leading zero on a numeral. Everything else on the icon is currentColor.
+   This rule themes the accent; the high-contrast block below drops it. Never
+   merge the accent back into the main path, or high contrast has nothing to
+   switch off. The icons are inlined as JSX, never <img src="….svg"> — an
+   <img> cannot inherit `color`, so a currentColor icon renders black on
+   amethyst and vanishes. */
+.accent {
+  stroke: var(--spring-green);
+}
+
+/* The numerals are filled type, not stroked, so they carry stroke="none". */
+.accent[stroke='none'] {
+  fill: var(--spring-green);
+}
+
+html.contrast-high .accent {
+  stroke: currentColor;
+}
+
+html.contrast-high .accent[stroke='none'] {
+  fill: currentColor;
 }
