@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
 import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
+import { ScopeLine } from '@/components/ScopeLine';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
@@ -328,6 +329,7 @@ export default function AccessPage() {
             </Button>
           </div>
           <CredentialStrip />
+          <ScopeLine />
         </header>
 
         <SectionBar color="var(--princeton-orange)" />
@@ -391,6 +393,31 @@ export default function AccessPage() {
             why the work is sold as a year, not a stack of day invoices. you get
             one number for a defined outcome, not an invoice that grows every
             time someone asks a question.
+          </p>
+        </section>
+
+        {/* 1 Sep 2026. Sits directly after "how the work runs" because it is
+            part of how the work runs, not a widening of who we will sell to.
+            The argument is the thesis: a tool can be bought well and set up
+            well and still not reach the learner, because one person in the
+            chain was never asked. */}
+        <section className={styles.section} aria-labelledby="who-is-in-the-room">
+          <h2 id="who-is-in-the-room" className={styles.sectionHeading}>
+            who is in the room
+          </h2>
+          <p className={styles.body}>
+            a partnership year works with everyone the tool has to pass
+            through, not only the people who chose it. teaching assistants,
+            teachers, senco and inclusion leads, senior leaders, technicians.
+          </p>
+          <p className={styles.body}>
+            that is deliberate, and it is the thesis. something can be bought
+            well, configured well, and still not reach the learner, because one
+            person in that chain was never asked.
+          </p>
+          <p className={styles.body}>
+            a learner is anyone in a learning capacity. the teaching assistant
+            learning a new tool is a learner too.
           </p>
         </section>
 
