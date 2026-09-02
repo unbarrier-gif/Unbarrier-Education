@@ -7,6 +7,7 @@ import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { InclusionStrategyBand } from '@/components/InclusionStrategyBand';
 import { Icon } from '@/components/Icon';
+import { Mark } from '@/components/Lockup';
 import type { IconName } from '@/components/Icon';
 import { Nav } from '@/components/Nav';
 import { Section } from '@/components/Section';
@@ -254,6 +255,9 @@ export default function HomePage() {
         </Section>
 
         <section className={styles.close} aria-labelledby="close">
+          {/* The one watermark on the site. Ground only, never behind text —
+              see .watermark in page.module.css for the measurements. */}
+          <Mark className={styles.watermark} />
           <h2 id="close" className={styles.closeHeading}>
             tell us what you&rsquo;re working with. if we can help, we&rsquo;ll
             say how. if we can&rsquo;t, we&rsquo;ll point you to someone who

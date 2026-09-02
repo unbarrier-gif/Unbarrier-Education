@@ -283,15 +283,37 @@ a {
   stroke: var(--spring-green);
 }
 
-/* The numerals are filled type, not stroked, so they carry stroke="none". */
+/* Filled type — the numerals and the letters in the inlined lockups
+   (components/Lockup.tsx) — is not stroked, so it carries stroke="none". The
+   stroke reset here is what keeps the rule above from drawing a hairline
+   around a filled glyph. */
 .accent[stroke='none'] {
   fill: var(--spring-green);
+  stroke: none;
 }
 
+/* The sub-brand lockups. The full stop stays spring green; the strand name
+   after it takes the strand's colour, selected by data-strand on the group
+   that wraps those letters. Canonical mapping (the token comments above):
+   audit = pearl-aqua, access = princeton-orange. voice (orchid-mist) and hub
+   (school-bus-yellow) are not inlined — /voice is on legal hold and /hub has
+   no route — so they have no rule here yet; add one when they do. */
+[data-strand='audit'] .accent[stroke='none'] {
+  fill: var(--pearl-aqua);
+}
+
+[data-strand='access'] .accent[stroke='none'] {
+  fill: var(--princeton-orange);
+}
+
+/* High contrast: every accent, spring green or strand colour, drops to
+   currentColor. These selectors outrank the strand rules above on
+   specificity, so no strand rule needs its own override. */
 html.contrast-high .accent {
   stroke: currentColor;
 }
 
 html.contrast-high .accent[stroke='none'] {
   fill: currentColor;
+  stroke: none;
 }

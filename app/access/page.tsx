@@ -3,7 +3,7 @@ import type { Metadata } from 'next';
 import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { ScopeLine } from '@/components/ScopeLine';
-import { Eyebrow } from '@/components/Eyebrow';
+import { StrandLockup } from '@/components/Lockup';
 import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
@@ -305,7 +305,9 @@ export default function AccessPage() {
         <Glow color="var(--spring-green)" right="-100px" top="46%" size={460} opacity={0.07} />
 
         <header className={styles.hero}>
-          <Eyebrow color="var(--princeton-orange)">unbarrier.access</Eyebrow>
+          {/* The sub-brand lockup, inlined, in place of the text eyebrow that
+              read "unbarrier.access". Same words, now the aria-label. */}
+          <StrandLockup strand="access" className={styles.lockup} />
           <h1 className={styles.heading}>
             everyone audits digital maturity.{' '}
             <span className={styles.accent}>

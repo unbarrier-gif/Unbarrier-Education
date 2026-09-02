@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import { ContrastToggle } from './ContrastToggle';
-import { Wordmark } from './Wordmark';
+import { StraplineLockup } from './Lockup';
 import styles from './Footer.module.css';
 
 type Variant = 'simple' | 'full';
@@ -87,7 +87,10 @@ function FullFooter() {
     <footer className={styles.fullFooter}>
       <div className={styles.fullGrid}>
         <div className={styles.brandCol}>
-          <Wordmark size="lg" />
+          {/* The full lockup — mark, wordmark, "did it reach the child?" —
+              and this is the one place on the site it belongs. Inlined; sized
+              in Footer.module.css to the column, never wider than it. */}
+          <StraplineLockup className={styles.lockup} />
           <p className={styles.tagline}>
             Removing barriers to learning and access — for schools, families,
             and the neurodivergent community.

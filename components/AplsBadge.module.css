@@ -1,0 +1,16 @@
+/* The APLS badge, inline in the credential strip's <p>. Inline-block so it
+   flows with the text and wraps with it on a narrow screen. The gap to the
+   phrase before it is a margin, NOT a space character — a space would be a
+   text node and change the strip's text content. Height is in em so the badge
+   scales with the reading-size preference like the text beside it. --text matches the
+   emphasised phrase beside it; in high contrast that is pure white. */
+.badge {
+  display: inline-block;
+  vertical-align: middle;
+  height: 1.75em;
+  width: auto;
+  margin: 0 0 0 var(--space-3);
+  color: var(--text);
+  position: relative;
+  top: -1px;
+}

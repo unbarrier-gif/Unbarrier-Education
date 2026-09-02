@@ -27,12 +27,17 @@
   padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
 }
 
+/* Hero type (approved 2 Sep 2026). --fs-display is the token the hero was the
+   one place ignoring; it tops out at 4.5rem. 1.3 is the equivalent air at
+   display size — 1.08 crushed it. Letter-spacing is out of negative: --ls-tight
+   pulled the letters together at this size, and --ls-loose is an eyebrow value
+   and too wide here. --ls-tight itself is unchanged; other things use it. */
 .headline {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(2.1rem, 5.2vw, 3.3rem);
-  line-height: 1.08;
-  letter-spacing: var(--ls-tight);
+  font-size: var(--fs-display);
+  line-height: 1.3;
+  letter-spacing: 0.01em;
   color: var(--text);
   margin: 0;
   max-width: 20ch;
@@ -294,6 +299,32 @@
   flex-wrap: wrap;
   gap: var(--space-4);
   margin-top: var(--space-6);
+}
+
+/* The watermark — the mark, once, large and faint, on the close section's
+   ground. It sits to the RIGHT of the heading and the CTA row, never behind
+   them: at 1280 the widest text in this section ends at ~900px from the left
+   edge of the viewport and the mark starts at ~920px, so the ground under every
+   glyph is plain --bg and the measured text contrast is unchanged (see the
+   PR report for the before/after numbers). Below 960px there is no ground to
+   the right of the text, so the mark is off rather than under copy. Decorative
+   and aria-hidden; pointer-events off so it never intercepts a click. */
+.watermark {
+  position: absolute;
+  top: 50%;
+  right: -130px;
+  width: 300px;
+  height: auto;
+  transform: translateY(-50%);
+  color: var(--text);
+  opacity: 0.05;
+  pointer-events: none;
+}
+
+@media (max-width: 959px) {
+  .watermark {
+    display: none;
+  }
 }
 
 /* ── high contrast ────────────────────────────────────────────────── */

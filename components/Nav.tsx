@@ -21,14 +21,17 @@ import styles from './Nav.module.css';
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
 // Nav.module.css `.link[data-has-dot='true']::before`, sourced from the
 // --dot CSS var set inline below. Plain links (blog/about) omit `dot`.
+// ORDER (2 Sep 2026): the ladder first — audit, then access — then the rest.
 const LINKS = [
-  // TEMPORARY until 31 Dec 2026 — gated below on
-  // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
-  { key: 'inclusion-strategy', label: 'inclusion strategy', href: '/inclusion-strategy' },
   // The services group. audit and access are strands and carry their canonical
   // dot colours; edtech is a route, not a strand, so it has no dot.
   { key: 'audit', label: 'audit', href: '/audit', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
+  // TEMPORARY until 31 Dec 2026 — gated below on
+  // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
+  // No dot: it is a campaign route like edtech and blog, not a sub-brand, and
+  // its colour is orange — a dot here would put two orange dots in one nav.
+  { key: 'inclusion-strategy', label: 'inclusion strategy', href: '/inclusion-strategy' },
   { key: 'edtech', label: 'edtech', href: '/edtech' },
   { key: 'blog', label: 'blog', href: '/blog' },
   // /about is a route now, so this points at it rather than anchor-scrolling
