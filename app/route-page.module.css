@@ -49,6 +49,20 @@
   color: var(--route-accent);
 }
 
+/* The inlined sub-brand lockup at the top of /audit and /access, where the
+   text eyebrow used to be. Height, not width, is the fixed side: the two
+   lockups differ in width ("access" is longer than "audit") and must not be
+   stretched to match. currentColor is the text colour; the coloured letters
+   are .accent paths themed in globals.css. */
+.lockup {
+  display: block;
+  height: 44px;
+  width: auto;
+  max-width: 100%;
+  color: var(--text);
+  margin: 0 0 14px;
+}
+
 .lede {
   font-family: var(--font-body);
   font-size: var(--fs-body-lg);

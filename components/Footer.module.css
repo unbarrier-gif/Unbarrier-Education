@@ -72,6 +72,18 @@
   gap: 1rem;
 }
 
+/* The strapline lockup. Width is the column's, capped so the wordmark inside
+   it sits at roughly the optical weight of the 34px text wordmark it replaced
+   (the text runs about three-quarters of the lockup's width). currentColor is
+   the text colour; the full stop is the .accent path, themed in globals.css. */
+.lockup {
+  display: block;
+  width: 100%;
+  max-width: 264px;
+  height: auto;
+  color: var(--text);
+}
+
 .tagline {
   font-family: var(--font-body);
   font-size: 0.85rem;

@@ -1,3 +1,4 @@
+import { AplsBadge } from './AplsBadge';
 import styles from './CredentialStrip.module.css';
 
 // The credential strip. Sits directly under the hero on every service and
@@ -19,8 +20,13 @@ import styles from './CredentialStrip.module.css';
 //     four credentials together into one unpunctuated sentence. As written,
 //     the strip's text content is byte-identical to the approved line, so a
 //     screen reader and a sighted reader get exactly the same thing.
+//   * the APLS badge (components/AplsBadge.tsx) is decorative — aria-hidden,
+//     no text nodes, and NO whitespace text node either side of it, so the
+//     strip's text content stays byte-identical with it in place. It sits
+//     beside the phrase that already names the credential; it adds nothing to
+//     the announced string.
 //
-// NOT applied to the home page or /hello — those are branch D.
+// Applied on the home page too (app/page.tsx), since branch D.
 
 const CREDENTIALS = [
   '26 years in classrooms',
@@ -35,6 +41,7 @@ export function CredentialStrip() {
       <strong className={styles.accreditation}>
         apple professional learning specialist
       </strong>
+      <AplsBadge />
       {CREDENTIALS.map((credential) => (
         <span key={credential}>
           <span className={styles.sep}>{' · '}</span>
