@@ -46,8 +46,13 @@ const BUTTON = 'Send me notice';
 const UNDER_THE_BUTTON =
   'Weekly is the aim. I’m ADHD, so it’s a wild ride. I’d rather say that now than pretend to a schedule I can’t hold.';
 
+// The controller clause is deliberate. The band's default privacy paragraph
+// names the controller in the block (consent mechanic 3, shipped 28 Aug 2026);
+// the first approved /notice line (21 Aug) predated that and dropped it. The
+// copy pack was updated 2 Sep 2026 to carry it, so the newer mechanic holds on
+// the page where most people will actually tick the box.
 const PRIVACY =
-  'Your address is used for notice and nothing else, ever. One-click unsubscribe on every email.';
+  'Your address is used for notice and nothing else, ever. One-click unsubscribe on every email. It’s sent by unbarrier education ltd (company no. 16603630).';
 
 export const metadata: Metadata = {
   title: `notice · ${HEADLINE}`,
