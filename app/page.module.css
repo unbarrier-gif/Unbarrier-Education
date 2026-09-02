@@ -27,17 +27,16 @@
   padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
 }
 
-/* Hero type (approved 2 Sep 2026). --fs-display is the token the hero was the
-   one place ignoring; it tops out at 4.5rem. 1.3 is the equivalent air at
-   display size — 1.08 crushed it. Letter-spacing is out of negative: --ls-tight
-   pulled the letters together at this size, and --ls-loose is an eyebrow value
-   and too wide here. --ls-tight itself is unchanged; other things use it. */
+/* Hero type (resized 2 Sep 2026). --fs-display is the hero's token and this
+   is its only consumer, so the size lives on the token in globals.css, not
+   here. Line-height and letter-spacing are the same tight tokens every other
+   heading uses, so the hero tracks them rather than carrying its own values. */
 .headline {
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: var(--fs-display);
-  line-height: 1.3;
-  letter-spacing: 0.01em;
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
   color: var(--text);
   margin: 0;
   max-width: 20ch;
