@@ -235,3 +235,15 @@
 .full .heading {
   font-size: clamp(1.5rem, 3vw, 2rem);
 }
+
+/* ── the optional note under the button ──────────────────────────────
+   Rendered only when a page passes `note` (today: /notice). The band is a
+   tinted panel, so this uses --text-muted, never --text-faint. */
+.note {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: 1.55;
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 56ch;
+}

@@ -1,0 +1,41 @@
+/* /notice — one block and one line. Same measure and rhythm as /hello, whose
+   `full`-weight subscribe block this page is built around. Everything below
+   is tokens from app/globals.css. No new colours, no new grounds. */
+
+.main {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.bandWrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+}
+
+/* ── the standing thesis line ─────────────────────────────────────────
+   Body text on the page ground (--bg), so --text-muted is well inside the
+   contrast floor. The link is underlined, not colour-only (WCAG 1.4.1). */
+.thesis {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  max-width: 58ch;
+  margin: 0;
+  padding: 0 var(--space-2);
+}
+
+.thesisLink {
+  color: var(--pearl-aqua);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.thesisLink:hover {
+  text-decoration-thickness: 2px;
+}
