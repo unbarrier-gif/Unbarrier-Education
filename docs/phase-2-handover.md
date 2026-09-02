@@ -45,7 +45,6 @@ Env vars (from PR #1 work) needed in Vercel for /hello forms to work:
 - `MAILERLITE_GROUP_ID` &mdash; `185831469000688733`
 - `RESEND_API_KEY` (Production + Preview) &mdash; **must be named exactly this**, not "Resend"
 - `SAY_HI_FORWARD_TO` &mdash; `hello@unbarrier.me`
-- `NEXT_PUBLIC_TIDYCAL_TUESDAY` / `_GUEST` / `_COACHING` (Production + Preview)
 - `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` &mdash; `unbarrier.me` (**Production only** &mdash; ticking Preview pollutes analytics)
 
 ## Phase 2 plan reference
