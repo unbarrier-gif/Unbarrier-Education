@@ -219,8 +219,9 @@
 
 .option {
   padding: var(--space-5);
-  /* --panel-green is measured over --bg-tint, which is the only ground this
-     panel ever sits on. Moving this list to another ground means re-measuring. */
+  /* --panel-green is the ruled 10% lift over --amethyst (2 Sep 2026). Text
+     contrast is measured against the panel itself, so it holds on any ground
+     in the ladder — including the superseded --bg-tint this list still sits on. */
   background: var(--panel-green);
   border-radius: var(--radius-md);
 }
