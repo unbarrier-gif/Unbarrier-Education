@@ -19,10 +19,11 @@ import styles from './AplsBadge.module.css';
 // the site today is amethyst. The goodnotes one-pager (public/goodnotes/) has
 // its own copy of the two-line white file and is not this component.
 //
-// DECORATIVE. It sits beside text that already says "apple professional
-// learning specialist", so it is aria-hidden with an empty alt and adds
-// nothing to what a screen reader announces. It contributes no text node, so
-// the credential strip's text content is unchanged by its presence.
+// DECORATIVE. It sits at the end of the byline, and the line directly below
+// it already says "apple professional learning specialist", so it is
+// aria-hidden with an empty alt and adds nothing to what a screen reader
+// announces. It contributes no text node, so the credential strip's text
+// content is unchanged by its presence.
 
 export type BadgeGround = 'amethyst' | 'white';
 

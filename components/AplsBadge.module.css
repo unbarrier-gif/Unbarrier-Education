@@ -10,7 +10,7 @@
 .badge {
   display: inline-block;
   vertical-align: middle;
-  height: 1.75em;
+  height: 2.25em;
   width: auto;
   margin: 0 0 0 var(--space-3);
   position: relative;
