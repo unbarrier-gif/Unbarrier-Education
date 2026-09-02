@@ -11,6 +11,17 @@
    access = princeton-orange, voice = orchid-mist. /edtech, /about and /faq
    are not strands and pick a neutral action colour rather than borrowing one.
 
+   GROUNDS AND PANELS (2 Sep 2026). The route pages sit on the ground ladder
+   through components/Section.tsx — 500 → 400 → 300, and 200 for the closing
+   band — so a section change is a change of ground, not a gap. Boxed items
+   sit on the panel that matches the section's JOB, not the page's strand:
+   evidence and numbers on light blue, anything human on dark pink, dates and
+   deadlines on orange, what-happens-next on green. The modifiers are at the
+   bottom of the boxed-items block. Each page carries exactly ONE
+   full-strength block (.pull) — the accent as a block with new world blue
+   text on it. One. Adding a second is the wrong fix for a page that feels
+   flat; change the ground instead.
+
    Everything below is built from tokens in app/globals.css. No new colours.
    ======================================================================== */
 
@@ -81,6 +92,9 @@
 
 /* ── sections ─────────────────────────────────────────────────────── */
 
+/* The bare section, for a route not yet on the wrapper (/voice). The five
+   public routes render <Section measure="route"> instead, which carries the
+   same measure and padding on its inner column. */
 .section {
   position: relative;
   max-width: 820px;
@@ -194,13 +208,14 @@
   gap: var(--space-4);
 }
 
-/* Boxed items sit on a tinted ground rather than behind an outline. The
-   ground is --panel-aqua on every route: it is measured over --amethyst, which
-   is the only ground these sections use, and at 8% it reads as a lift, not as
-   the audit strand's colour. Panel copy is --text-muted / --text-subtle only. */
+/* Boxed items sit on a lifted panel rather than behind an outline. The
+   default is --panel-lightblue (evidence); a section whose job is different
+   adds one of the .panel* modifiers below. Text contrast is measured against
+   the panel itself, so a panel holds on any ground in the ladder. Panel copy
+   is --text-muted / --text-subtle only — --text-faint fails on every panel. */
 .option {
   padding: var(--space-5);
-  background: var(--panel-aqua);
+  background: var(--panel-lightblue);
   border-radius: var(--radius-md);
 }
 
@@ -210,16 +225,6 @@
   line-height: var(--lh-body);
   color: var(--text-muted);
   margin: 0;
-}
-
-/* A price stated on its own, after the thing it prices. */
-.priceLine {
-  font-family: var(--font-heading);
-  font-weight: 700;
-  font-size: 1.15rem;
-  line-height: var(--lh-snug);
-  color: var(--text);
-  margin: var(--space-5) 0 0;
 }
 
 /* ── evidence cards ("the gap") ───────────────────────────────────── */
@@ -235,7 +240,7 @@
 
 .card {
   padding: var(--space-5);
-  background: var(--panel-aqua);
+  background: var(--panel-lightblue);
   border-radius: var(--radius-md);
 }
 
@@ -278,7 +283,7 @@
 
 .tier {
   padding: var(--space-5);
-  background: var(--panel-aqua);
+  background: var(--panel-lightblue);
   border-radius: var(--radius-md);
 }
 
@@ -332,8 +337,58 @@
 
 .question {
   padding: var(--space-4) var(--space-5);
-  background: var(--panel-aqua);
+  background: var(--panel-lightblue);
   border-radius: var(--radius-md);
+}
+
+/* ── panel by job ─────────────────────────────────────────────────── */
+/* Applied beside .option / .card / .tier. Declared after them so the
+   modifier wins on order, not on specificity. */
+.panelEvidence {
+  background: var(--panel-lightblue);
+}
+
+.panelHuman {
+  background: var(--panel-darkpink);
+}
+
+.panelDeadline {
+  background: var(--panel-orange);
+}
+
+.panelAction {
+  background: var(--panel-green);
+}
+
+/* ── the full-strength block ──────────────────────────────────────── */
+/* The one permitted full-strength move: techy green as a block, new world
+   blue text on it (13.8:1). ONE PER PAGE. It is an impact statement, so it is
+   set in the heading face; body copy does not go on green. Nothing inside it
+   is a link, so the green focus ring never has to sit on a green ground. In
+   high contrast the block stays green — the accent is on-brand, and the edge
+   is the colour change itself. */
+.pull {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(1.2rem, 2.4vw, 1.5rem);
+  line-height: 1.3;
+  letter-spacing: var(--ls-tight);
+  color: var(--amethyst);
+  background: var(--spring-green);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  margin: var(--space-5) 0 0;
+  max-width: 34ch;
+}
+
+/* An emphasised lead inside the block keeps the block's colour, not --text. */
+.pull .strong {
+  color: inherit;
+}
+
+/* Directly under a section heading the heading's own margin is the gap. */
+.sectionHeading + .pull {
+  margin-top: 0;
 }
 
 .questionTerm {
@@ -354,12 +409,6 @@
 }
 
 /* ── faq question/answer blocks ───────────────────────────────────── */
-
-.qaList {
-  display: grid;
-  gap: clamp(2rem, 5vw, 3rem);
-  margin: 0;
-}
 
 .qaQuestion {
   font-family: var(--font-heading);

@@ -6,6 +6,7 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { Section, type SectionGround } from '@/components/Section';
 import { PRICE_ACCESS_ADVISORY, PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import styles from '@/app/route-page.module.css';
 
@@ -58,9 +59,18 @@ export const metadata: Metadata = {
   },
 };
 
-// A block is either a paragraph or a bulleted list. Both the rendered page and
-// the JSON-LD are built from this, so they cannot disagree.
-type Block = { kind: 'p'; text: string } | { kind: 'ul'; items: string[] };
+// A block is a paragraph, a bulleted list, or — exactly once on the page —
+// the full-strength block. Both the rendered page and the JSON-LD are built
+// from this, so they cannot disagree.
+//
+// GROUNDS (2 Sep 2026). Each question is its own section on the ground
+// ladder, so the page reads as eight rooms rather than one column of prose.
+// The last question is the closing band (200). ONE `pull` block on the whole
+// page; it is the FAQ's one full-strength block.
+type Block =
+  | { kind: 'p'; text: string }
+  | { kind: 'ul'; items: string[] }
+  | { kind: 'pull'; text: string };
 
 const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
   {
@@ -160,7 +170,7 @@ const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
         text: 'you email us and tell us what you’re working with. we reply with either how we can help, or the name of someone who would help you better. if it is a yes, we have a short call, we send a written scope with one number on it, and you decide.',
       },
       {
-        kind: 'p',
+        kind: 'pull',
         text: 'no pipeline. no chasing. if you go quiet, we’ll assume the timing was wrong and leave you alone.',
       },
     ],
@@ -189,9 +199,15 @@ const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
 /** Flatten an answer into the single string schema.org wants. */
 function answerText(blocks: Block[]): string {
   return blocks
-    .map((block) => (block.kind === 'p' ? block.text : block.items.join(' ')))
+    .map((block) => (block.kind === 'ul' ? block.items.join(' ') : block.text))
     .join(' ');
 }
+
+// The ladder each question steps down, from the hero on the page ground. The
+// last question closes the page, so it takes the well.
+const LADDER: SectionGround[] = ['second', 'deep', 'base'];
+const groundFor = (i: number): SectionGround =>
+  i === FAQ.length - 1 ? 'well' : LADDER[i % LADDER.length];
 
 const FAQ_SCHEMA = {
   '@context': 'https://schema.org',
@@ -236,32 +252,37 @@ export default function FaqPage() {
           <CredentialStrip />
         </header>
 
-        <div className={styles.section}>
-          <div className={styles.qaList}>
-            {FAQ.map((item) => (
-              <section key={item.id} aria-labelledby={item.id}>
-                <h2 id={item.id} className={styles.qaQuestion}>
-                  {item.question}
-                </h2>
-                {item.answer.map((block, i) =>
-                  block.kind === 'p' ? (
-                    <p key={i} className={styles.body}>
-                      {block.text}
-                    </p>
-                  ) : (
-                    <ul key={i} className={styles.list}>
-                      {block.items.map((line) => (
-                        <li key={line} className={styles.listItem}>
-                          {line}
-                        </li>
-                      ))}
-                    </ul>
-                  )
-                )}
-              </section>
-            ))}
-          </div>
-        </div>
+        {FAQ.map((item, i) => (
+          <Section
+            key={item.id}
+            measure="route"
+            ground={groundFor(i)}
+            labelledBy={item.id}
+          >
+            <h2 id={item.id} className={styles.qaQuestion}>
+              {item.question}
+            </h2>
+            {item.answer.map((block, j) =>
+              block.kind === 'p' ? (
+                <p key={j} className={styles.body}>
+                  {block.text}
+                </p>
+              ) : block.kind === 'pull' ? (
+                <p key={j} className={styles.pull}>
+                  {block.text}
+                </p>
+              ) : (
+                <ul key={j} className={styles.list}>
+                  {block.items.map((line) => (
+                    <li key={line} className={styles.listItem}>
+                      {line}
+                    </li>
+                  ))}
+                </ul>
+              )
+            )}
+          </Section>
+        ))}
 
         <NewsletterBand route="/faq" weight="standard" />
 

@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { Section } from '@/components/Section';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from '@/app/route-page.module.css';
 
@@ -27,6 +28,10 @@ import styles from '@/app/route-page.module.css';
 //  2. The "open" list at the end of the approved draft — miee, collaborators,
 //     speaking, photo — is NOT page copy. It is a decision list for Nici. None
 //     of it is rendered here and none of it should be added.
+//
+// GROUNDS (2 Sep 2026). Four sections, walking the ladder from the hero. No
+// boxed items on this page, so no panels. One full-strength block: "it is
+// the method", the first paragraph of "how we work".
 
 const CANONICAL = 'https://www.unbarrier.me/about';
 
@@ -151,7 +156,7 @@ export default function AboutPage() {
           <CredentialStrip />
         </header>
 
-        <section className={styles.section} aria-labelledby="what-we-do">
+        <Section measure="route" ground="second" labelledBy="what-we-do">
           <h2 id="what-we-do" className={styles.sectionHeading}>
             what we do
           </h2>
@@ -162,9 +167,9 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-we-dont-do">
+        <Section measure="route" ground="deep" labelledBy="what-we-dont-do">
           <h2 id="what-we-dont-do" className={styles.sectionHeading}>
             what we don&rsquo;t do
           </h2>
@@ -175,7 +180,7 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
         {/*
           ⚠️ TODO — "why this work". THE ONLY SECTION OF THIS SITE THAT IS NOT
@@ -196,11 +201,13 @@ export default function AboutPage() {
           "why this work" and the four sentences, and delete this comment.
         */}
 
-        <section className={styles.section} aria-labelledby="how-we-work">
+        <Section measure="route" ground="base" labelledBy="how-we-work">
           <h2 id="how-we-work" className={styles.sectionHeading}>
             how we work
           </h2>
-          <p className={styles.body}>
+          {/* The page's one full-strength block: the method, in the first
+              person. */}
+          <p className={styles.pull}>
             i am dyslexic, adhd and dyscalculic. that is not a disclosure at the
             bottom of the page, it is the method. i design for the person at the
             back of the room because i have been the person at the back of the
@@ -211,9 +218,9 @@ export default function AboutPage() {
             decision at a time. if you need something in a different format,
             ask. it isn&rsquo;t a favour.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="credentials">
+        <Section measure="route" ground="second" labelledBy="credentials">
           <h2 id="credentials" className={styles.sectionHeading}>
             credentials
           </h2>
@@ -229,7 +236,7 @@ export default function AboutPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
         <NewsletterBand route="/about" weight="standard" />
 

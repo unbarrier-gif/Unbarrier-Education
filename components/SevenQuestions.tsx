@@ -1,3 +1,4 @@
+import { Section, type SectionGround } from '@/components/Section';
 import styles from '@/app/route-page.module.css';
 
 // The seven questions. Rendered on /access and on /voice, and the two are
@@ -63,11 +64,15 @@ type Props = {
   heading: string;
   /** Anchor id, used for aria-labelledby. */
   id: string;
+  /** Where this lands in the page's ground ladder. Default: the page. */
+  ground?: SectionGround;
 };
 
-export function SevenQuestions({ heading, id }: Props) {
+export function SevenQuestions({ heading, id, ground = 'base' }: Props) {
+  // The questions sit on the evidence panel (light blue): they are the
+  // instrument, whichever strand's page they appear on.
   return (
-    <section className={styles.section} aria-labelledby={id}>
+    <Section measure="route" ground={ground} labelledBy={id}>
       <h2 id={id} className={styles.sectionHeading}>
         {heading}
       </h2>
@@ -79,6 +84,6 @@ export function SevenQuestions({ heading, id }: Props) {
           </div>
         ))}
       </dl>
-    </section>
+    </Section>
   );
 }
