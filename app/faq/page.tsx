@@ -6,7 +6,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { PRICE_ACCESS_ADVISORY, PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import styles from '@/app/route-page.module.css';
 
@@ -236,8 +235,6 @@ export default function FaqPage() {
           </p>
           <CredentialStrip />
         </header>
-
-        <SectionBar color="var(--spring-green)" />
 
         <div className={styles.section}>
           <div className={styles.qaList}>

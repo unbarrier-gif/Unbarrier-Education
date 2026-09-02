@@ -10,7 +10,6 @@ import { Icon } from '@/components/Icon';
 import type { IconName } from '@/components/Icon';
 import { Nav } from '@/components/Nav';
 import { Section } from '@/components/Section';
-import { SectionBar } from '@/components/SectionBar';
 import { IAmChooser } from '@/components/home/IAmChooser';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from './page.module.css';
@@ -162,8 +161,6 @@ export default function HomePage() {
           <CredentialStrip />
         </header>
 
-        <SectionBar color="var(--spring-green)" />
-
         <Section ground="deep" labelledBy="the-thesis">
           <h2 id="the-thesis" className={styles.statement}>
             buying a device for a send learner without a strategy isn&rsquo;t
@@ -255,8 +252,6 @@ export default function HomePage() {
             ))}
           </ul>
         </Section>
-
-        <SectionBar color="var(--spring-green)" />
 
         <section className={styles.close} aria-labelledby="close">
           <h2 id="close" className={styles.closeHeading}>

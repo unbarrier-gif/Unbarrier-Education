@@ -6,7 +6,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from './page.module.css';
 
@@ -212,8 +211,6 @@ export default function InclusionStrategyPage() {
           <CredentialStrip />
         </header>
 
-        <SectionBar color="var(--princeton-orange)" />
-
         <section className={styles.section} aria-labelledby="not-noticed">
           <h2 id="not-noticed" className={styles.sectionEyebrow}>
             the thing most people have not noticed yet
@@ -338,8 +335,6 @@ export default function InclusionStrategyPage() {
             ))}
           </ul>
         </section>
-
-        <SectionBar color="var(--princeton-orange)" />
 
         <section className={styles.close} aria-labelledby="close">
           <h2 id="close" className={styles.closeHeading}>

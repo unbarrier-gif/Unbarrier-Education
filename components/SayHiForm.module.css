@@ -1,20 +1,10 @@
+/* A tinted panel with no outline — same treatment as NewsletterBand. */
 .band {
   position: relative;
   background: rgba(219, 125, 204, 0.06);
-  border: 1px solid rgba(219, 125, 204, 0.25);
   border-radius: 18px;
   padding: 28px;
   overflow: hidden;
-}
-
-.band::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(to right, var(--orchid-mist), transparent);
 }
 
 .inner {
@@ -53,7 +43,10 @@
   width: 100%;
   padding: 14px 16px;
   border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  /* Field boundary, kept on purpose. 0.36 white measures 3.2:1 against this
+     ground (the non-text contrast floor is 3:1); the 0.12 it shipped with was
+     1.4:1 and not perceivable in the default theme. */
+  border: 1.5px solid rgba(255, 255, 255, 0.36);
   background: rgba(0, 0, 0, 0.3);
   color: var(--fg);
   font-family: var(--font-body);
@@ -165,4 +158,14 @@
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
   border: 0;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .band {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .input,
+:global(html.contrast-high) .textarea {
+  border-color: var(--border-strong);
 }

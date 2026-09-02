@@ -9,7 +9,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import { PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import {
@@ -197,8 +196,6 @@ export default function AuditPage() {
           <ScopeLine />
         </header>
 
-        <SectionBar color="var(--pearl-aqua)" />
-
         {READINESS_CHECK_ENABLED && (
           <section className={styles.section} aria-labelledby="try-it-first">
             <h2 id="try-it-first" className={styles.sectionHeading}>
@@ -348,8 +345,6 @@ export default function AuditPage() {
             the person who bought it, it hasn&rsquo;t reached anyone.
           </p>
         </section>
-
-        <SectionBar color="var(--pearl-aqua)" />
 
         <section className={styles.close} aria-labelledby="close">
           <h2 id="close" className={styles.closeHeading}>

@@ -1,7 +1,21 @@
+/* A tinted panel with no outline. The tint and the radius stay; the 1.5px
+   yellow edge and the 80px gradient bar came off with every other drawn edge
+   on the site (2 Sep 2026).
+
+   THE MEASURE LIVES HERE, IN THE COMPONENT. This block is rendered bare on /
+   (a direct child of <main>) and inside a wrapper on /notice, /hello and the
+   blog. With no cap it inherited the viewport on / — roughly 1900px of form.
+   .band carries the tint, so the cap has to sit on .band for the visible
+   panel to be bounded; .inner carries the same 900px measure that
+   components/Section.module.css uses so the text column can never exceed it
+   either. Inside a narrower wrapper (/notice is 720px) neither cap bites and
+   the band is unchanged. */
 .band {
   position: relative;
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
   background: linear-gradient(135deg, rgba(255, 194, 3, 0.10), rgba(255, 194, 3, 0.04));
-  border: 1.5px solid rgba(255, 194, 3, 0.3);
   border-radius: 18px;
   overflow: hidden;
 }
@@ -22,19 +36,11 @@
   padding: 28px;
 }
 
-.band::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 80px;
-  height: 2px;
-  background: linear-gradient(to right, var(--school-bus-yellow), transparent);
-}
-
 .inner {
   position: relative;
   z-index: 1;
+  max-width: 900px;
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   gap: var(--space-3);
@@ -101,7 +107,10 @@
   min-height: 48px;
   padding: 14px 16px;
   border-radius: 12px;
-  border: 1.5px solid rgba(255, 255, 255, 0.12);
+  /* Field boundary, kept on purpose. 0.36 white measures 3.2:1 against this
+     ground (the non-text contrast floor is 3:1); the 0.12 it shipped with was
+     1.4:1 and not perceivable in the default theme. */
+  border: 1.5px solid rgba(255, 255, 255, 0.36);
   background: rgba(0, 0, 0, 0.3);
   color: var(--fg);
   font-family: var(--font-body);
@@ -246,4 +255,13 @@
   color: var(--text-muted);
   margin: 0;
   max-width: 56ch;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .band {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .input {
+  border-color: var(--border-strong);
 }

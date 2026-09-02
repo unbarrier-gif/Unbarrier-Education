@@ -1,7 +1,6 @@
 /* ── Simple variant (default; used by /hello and small pages) ─────── */
 .footer {
   padding: var(--space-8) 0 var(--space-10);
-  border-top: 1px solid var(--border-subtle);
 }
 
 .inner {
@@ -50,9 +49,13 @@
 }
 
 /* ── Full variant (homepage 4-col) ─────────────────────────────────── */
+/* Separated from the page by ground, not by a rule: the footer sits on
+   --bg-alt under whatever section closes the page. --text-faint is used on
+   .bottomLine and --bg-alt is darker than --amethyst, so it stays inside the
+   contrast floor. */
 .fullFooter {
   padding: 3rem clamp(1.5rem, 5vw, 5rem);
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  background: var(--bg-alt);
 }
 
 .fullGrid {
@@ -128,7 +131,6 @@
 .fullBottom {
   max-width: 1200px;
   margin: 2rem auto 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.05);
   padding-top: 1.5rem;
   display: flex;
   justify-content: space-between;
@@ -148,4 +150,17 @@
   align-items: center;
   gap: 16px;
   flex-wrap: wrap;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .footer {
+  border-top: 1px solid var(--border-subtle);
+}
+
+:global(html.contrast-high) .fullFooter {
+  border-top: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .fullBottom {
+  border-top: 1px solid var(--border-subtle);
 }

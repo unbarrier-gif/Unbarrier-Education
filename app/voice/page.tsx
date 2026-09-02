@@ -7,7 +7,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { SevenQuestions } from '@/components/SevenQuestions';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from '@/app/route-page.module.css';
@@ -139,8 +138,6 @@ export default function VoicePage() {
           <CredentialStrip />
         </header>
 
-        <SectionBar color="var(--orchid-mist)" />
-
         {/* Deliberately identical to the block on /access — same component. */}
         <SevenQuestions
           id="seven-questions"
@@ -221,8 +218,6 @@ export default function VoicePage() {
             seven questions, every time.
           </p>
         </section>
-
-        <SectionBar color="var(--orchid-mist)" />
 
         <section className={styles.close} aria-labelledby="available-now">
           <h2 id="available-now" className={styles.closeHeading}>

@@ -9,7 +9,6 @@
   border-radius: var(--radius-pill);
   background: color-mix(in oklab, var(--c) 13%, transparent);
   color: var(--c);
-  border: 1px solid color-mix(in oklab, var(--c) 35%, transparent);
 }
 
 .dot {
@@ -29,7 +28,6 @@
 .solid {
   background: var(--c);
   color: var(--amethyst);
-  border-color: var(--c);
 }
 .solid .dot { background: var(--amethyst); }
 .solid.sm { padding: 5px 11px; }

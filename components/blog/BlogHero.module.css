@@ -46,19 +46,19 @@
   max-width: 640px;
 }
 
+/* The legend was a ruled grid. It is now four tinted tiles: --panel-aqua on
+   the --bg ground, with the blurb on --text-muted (never --text-faint). */
 .legend {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: 2px;
+  gap: var(--space-3);
   margin-top: 3rem;
-  border-top: 1px solid var(--border-default);
-  border-left: 1px solid var(--border-default);
 }
 
 .legendCell {
   padding: 18px 20px;
-  border-right: 1px solid var(--border-default);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--panel-aqua);
+  border-radius: var(--radius-md);
 }
 
 .legendLabel {
@@ -88,4 +88,9 @@
   font-size: 0.78rem;
   line-height: 1.55;
   color: var(--text-muted);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .legendCell {
+  border: 1px solid var(--border-default);
 }

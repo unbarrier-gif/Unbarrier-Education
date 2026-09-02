@@ -4,7 +4,9 @@ import styles from './Section.module.css';
 // The full-bleed section wrapper `decisions & rules` specified and the repo
 // never had. Home ran six identical <section className={styles.section}>, so
 // the only thing marking a section change was a hairline. This gives each
-// section a ground; the hairlines stay.
+// section a ground. Since 2 Sep 2026 the ground is the ONLY thing that marks
+// a section change: drawn edges came off the whole site (see README,
+// "Section grounds and the contrast floor").
 //
 // GROUNDS ARE CONTRAST-BOUND, NOT FREE.
 // --text-faint sits at exactly 4.51:1 on --amethyst, i.e. on the AA floor.

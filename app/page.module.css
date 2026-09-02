@@ -43,15 +43,14 @@
   color: var(--spring-green);
 }
 
-/* The sourced figure directly under the headline. Given a border and a quiet
-   surface so it reads as a citation rather than as more headline. */
+/* The sourced figure directly under the headline. Given a quiet tinted
+   ground so it reads as a citation rather than as more headline. No edge:
+   the ground does the work (drawn edges came off site-wide, 2 Sep 2026). */
 .heroStat {
   margin: var(--space-6) 0 0;
   padding: var(--space-4) var(--space-5);
   max-width: 58ch;
   background: var(--panel-aqua);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--pearl-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -173,8 +172,6 @@
 .card {
   padding: var(--space-5);
   background: var(--panel-aqua);
-  border: 1px solid var(--border-default);
-  border-top: 3px solid var(--pearl-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -221,8 +218,6 @@
   /* --panel-green is measured over --bg-tint, which is the only ground this
      panel ever sits on. Moving this list to another ground means re-measuring. */
   background: var(--panel-green);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--spring-green);
   border-radius: var(--radius-md);
 }
 
@@ -299,4 +294,14 @@
   flex-wrap: wrap;
   gap: var(--space-4);
   margin-top: var(--space-6);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+/* The card outlines come back here. In the default theme the --border-*
+   tokens are decoration and are off; in high contrast they jump to 0.45 and
+   do access work, so the same 1px rule is restored under the toggle. */
+:global(html.contrast-high) .heroStat,
+:global(html.contrast-high) .card,
+:global(html.contrast-high) .option {
+  border: 1px solid var(--border-default);
 }

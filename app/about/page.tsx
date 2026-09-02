@@ -7,7 +7,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from '@/app/route-page.module.css';
 
@@ -151,8 +150,6 @@ export default function AboutPage() {
           </div>
           <CredentialStrip />
         </header>
-
-        <SectionBar color="var(--orchid-mist)" />
 
         <section className={styles.section} aria-labelledby="what-we-do">
           <h2 id="what-we-do" className={styles.sectionHeading}>

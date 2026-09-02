@@ -2,7 +2,6 @@
   max-width: 760px;
   margin: 4rem auto 0;
   padding: 4rem clamp(1.5rem, 5vw, 5rem) 3rem;
-  border-top: 1px solid var(--border-default);
 }
 
 .inner {
@@ -47,4 +46,9 @@
   .inner {
     grid-template-columns: 1fr;
   }
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .footer {
+  border-top: 1px solid var(--border-default);
 }

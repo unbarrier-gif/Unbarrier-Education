@@ -180,11 +180,13 @@
   gap: var(--space-4);
 }
 
+/* Boxed items sit on a tinted ground rather than behind an outline. The
+   ground is --panel-aqua on every route: it is measured over --amethyst, which
+   is the only ground these sections use, and at 8% it reads as a lift, not as
+   the audit strand's colour. Panel copy is --text-muted / --text-subtle only. */
 .option {
   padding: var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--route-accent);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -219,9 +221,7 @@
 
 .card {
   padding: var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-top: 3px solid var(--route-accent);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -264,9 +264,7 @@
 
 .tier {
   padding: var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--route-accent);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -320,8 +318,7 @@
 
 .question {
   padding: var(--space-4) var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -393,4 +390,13 @@
 
 .inlineLink:hover {
   text-decoration-thickness: 2px;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+/* Outlines restored: the --border-* tokens do access work at 0.45. */
+:global(html.contrast-high) .option,
+:global(html.contrast-high) .card,
+:global(html.contrast-high) .tier,
+:global(html.contrast-high) .question {
+  border: 1px solid var(--border-default);
 }
