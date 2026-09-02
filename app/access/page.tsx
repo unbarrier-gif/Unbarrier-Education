@@ -8,6 +8,7 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { Section } from '@/components/Section';
 import { SevenQuestions } from '@/components/SevenQuestions';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import {
@@ -37,6 +38,12 @@ import styles from '@/app/route-page.module.css';
 //
 // "unbarrier.voice" appears in body copy on this page. It stays TEXT — /voice
 // is unlinked and noindex pending legal sign-off. See app/voice/page.tsx.
+//
+// GROUNDS AND PANELS (2 Sep 2026). The sections walk the ladder from the
+// hero, and the close is the 200 well. Panels follow the section's JOB: the
+// gap, the tiers and the proof are evidence (light blue); "over time" is
+// dates (orange). One full-strength block: "the cheaper test", at the end of
+// the proof.
 
 const CANONICAL = 'https://www.unbarrier.me/access';
 
@@ -333,13 +340,16 @@ export default function AccessPage() {
           <ScopeLine />
         </header>
 
-        <section className={styles.section} aria-labelledby="the-gap">
+        <Section measure="route" ground="second" labelledBy="the-gap">
           <h2 id="the-gap" className={styles.sectionHeading}>
             the gap
           </h2>
           <ul className={styles.cards}>
             {THE_GAP.map((card) => (
-              <li key={card.figure} className={styles.card}>
+              <li
+                key={card.figure}
+                className={`${styles.card} ${styles.panelEvidence}`}
+              >
                 <p className={styles.cardFigure}>{card.figure}</p>
                 <p className={styles.cardBody}>{card.body}</p>
                 {card.source && (
@@ -355,16 +365,17 @@ export default function AccessPage() {
             asked can&rsquo;t be answered, funded, or defended to a governing
             body.
           </p>
-        </section>
+        </Section>
 
         {/* The seven questions. Shared component — the same block renders on
             /voice, and it is deliberately identical. */}
         <SevenQuestions
           id="seven-questions"
           heading="what’s missing — the seven questions"
+          ground="deep"
         />
 
-        <section className={styles.section} aria-labelledby="the-method">
+        <Section measure="route" ground="base" labelledBy="the-method">
           <h2 id="the-method" className={styles.sectionEyebrow}>
             the method — the ndte cycle
           </h2>
@@ -380,9 +391,9 @@ export default function AccessPage() {
             of training days. most inclusion work stops at <em>try</em>, because{' '}
             <em>embed</em> is where you find out whether any of it worked.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="how-it-runs">
+        <Section measure="route" ground="second" labelledBy="how-it-runs">
           <h2 id="how-it-runs" className={styles.sectionHeading}>
             how the work runs
           </h2>
@@ -393,14 +404,14 @@ export default function AccessPage() {
             one number for a defined outcome, not an invoice that grows every
             time someone asks a question.
           </p>
-        </section>
+        </Section>
 
         {/* 1 Sep 2026. Sits directly after "how the work runs" because it is
             part of how the work runs, not a widening of who we will sell to.
             The argument is the thesis: a tool can be bought well and set up
             well and still not reach the learner, because one person in the
             chain was never asked. */}
-        <section className={styles.section} aria-labelledby="who-is-in-the-room">
+        <Section measure="route" ground="deep" labelledBy="who-is-in-the-room">
           <h2 id="who-is-in-the-room" className={styles.sectionHeading}>
             who is in the room
           </h2>
@@ -418,15 +429,18 @@ export default function AccessPage() {
             a learner is anyone in a learning capacity. the teaching assistant
             learning a new tool is a learner too.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-a-year-costs">
+        <Section measure="route" ground="base" labelledBy="what-a-year-costs">
           <h2 id="what-a-year-costs" className={styles.sectionHeading}>
             what a year costs
           </h2>
           <ul className={styles.tiers}>
             {TIERS.map((tier) => (
-              <li key={tier.name} className={styles.tier}>
+              <li
+                key={tier.name}
+                className={`${styles.tier} ${styles.panelEvidence}`}
+              >
                 <p className={styles.tierHead}>
                   <span className={styles.tierName}>{tier.name}</span>
                   <span className={styles.tierPrice}>{tier.price}</span>
@@ -436,9 +450,9 @@ export default function AccessPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="standard-terms">
+        <Section measure="route" ground="second" labelledBy="standard-terms">
           <h2 id="standard-terms" className={styles.sectionHeading}>
             standard terms — on every quote
           </h2>
@@ -449,9 +463,9 @@ export default function AccessPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="answered-up-front">
+        <Section measure="route" ground="deep" labelledBy="answered-up-front">
           <h2 id="answered-up-front" className={styles.sectionHeading}>
             your questions, answered up front
           </h2>
@@ -467,15 +481,18 @@ export default function AccessPage() {
               button for a file that does not exist is a 404 wearing a cta, and
               a disabled button still advertises something we cannot supply.
               When the pdf lands, add the button back here. */}
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="over-time">
+        <Section measure="route" ground="base" labelledBy="over-time">
           <h2 id="over-time" className={styles.sectionHeading}>
             what it looks like over time
           </h2>
           <ul className={styles.options}>
             {OVER_TIME.map((stage) => (
-              <li key={stage.lead} className={styles.option}>
+              <li
+                key={stage.lead}
+                className={`${styles.option} ${styles.panelDeadline}`}
+              >
                 <p className={styles.optionBody}>
                   <strong className={styles.strong}>{stage.lead}</strong> —{' '}
                   {stage.body}
@@ -483,9 +500,9 @@ export default function AccessPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="the-proof">
+        <Section measure="route" ground="second" labelledBy="the-proof">
           <h2 id="the-proof" className={styles.sectionEyebrow}>
             the proof — written for an offer that is new
           </h2>
@@ -498,7 +515,10 @@ export default function AccessPage() {
           </p>
           <ul className={styles.options}>
             {PROOF.map((item) => (
-              <li key={item.lead} className={styles.option}>
+              <li
+                key={item.lead}
+                className={`${styles.option} ${styles.panelEvidence}`}
+              >
                 <p className={styles.optionBody}>
                   <strong className={styles.strong}>{item.lead}</strong> —{' '}
                   {item.body}
@@ -507,7 +527,8 @@ export default function AccessPage() {
               </li>
             ))}
           </ul>
-          <p className={styles.body}>
+          {/* The page's one full-strength block: the cheaper test. */}
+          <p className={styles.pull}>
             <strong className={styles.strong}>
               and the thing we would rather you judged us on:
             </strong>{' '}
@@ -515,9 +536,9 @@ export default function AccessPage() {
             and you will know inside a week whether we are any good. that is a
             cheaper test than any case study.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="goodnotes">
+        <Section measure="route" ground="deep" labelledBy="goodnotes">
           <h2 id="goodnotes" className={styles.sectionHeading}>
             the goodnotes proof, in full
           </h2>
@@ -535,9 +556,9 @@ export default function AccessPage() {
               see the goodnotes hub →
             </Button>
           </div>
-        </section>
+        </Section>
 
-        <section className={styles.close} aria-labelledby="close">
+        <Section measure="route" ground="well" space="loose" labelledBy="close">
           <h2 id="close" className={styles.closeHeading}>
             tell us what you&rsquo;re working with. if we can help, we&rsquo;ll
             say how. if we can&rsquo;t, we&rsquo;ll point you to someone who
@@ -548,7 +569,7 @@ export default function AccessPage() {
               {BOOKING_LABEL}
             </Button>
           </div>
-        </section>
+        </Section>
 
         <NewsletterBand route="/access" weight="standard" />
 

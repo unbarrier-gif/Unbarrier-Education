@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next';
-import { Outfit, Comfortaa, Cherry_Bomb_One, Lexend } from 'next/font/google';
+import { Outfit, Comfortaa, Lexend } from 'next/font/google';
 import Script from 'next/script';
 import { ORGANIZATION_SCHEMA } from '@/lib/schema/organization';
 import './globals.css';
@@ -28,12 +28,11 @@ const lexend = Lexend({
   weight: ['300', '400', '500', '600', '700'],
 });
 
-const cherryBomb = Cherry_Bomb_One({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-cherry-bomb',
-  weight: '400',
-});
+// Three faces, and only three. The type is tiered like the colour (see the
+// TYPE FAMILIES block in globals.css): Outfit primary, Lexend secondary,
+// Comfortaa brand. Cherry Bomb One was the original guidelines' tertiary face
+// — illustration visuals only, never a consultancy face — and it came out of
+// this loader with the `.joy` class on 2 Sep 2026. Do not add a fourth.
 
 const SITE_URL = 'https://unbarrier.me';
 
@@ -91,7 +90,7 @@ export default function RootLayout({
   return (
     <html
       lang="en-GB"
-      className={`${outfit.variable} ${comfortaa.variable} ${lexend.variable} ${cherryBomb.variable}`}
+      className={`${outfit.variable} ${comfortaa.variable} ${lexend.variable}`}
     >
       <head>
         {/* eslint-disable-next-line react/no-danger */}

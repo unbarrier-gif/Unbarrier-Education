@@ -7,6 +7,7 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { Section } from '@/components/Section';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from '@/app/route-page.module.css';
 
@@ -29,6 +30,12 @@ import styles from '@/app/route-page.module.css';
 // spring-green is the site's default action colour; borrowing pearl-aqua,
 // princeton-orange or orchid-mist here would imply this page belongs to audit,
 // access or voice.
+//
+// GROUNDS AND PANELS (2 Sep 2026). The sections walk the ladder from the
+// hero; the close is the 200 well. The worries are a person speaking, so
+// they sit on the human panel (dark pink); "what we do" is what happens
+// next, so it sits on the action panel (green). One full-strength block:
+// "we will never recommend you."
 
 const CANONICAL = 'https://www.unbarrier.me/edtech';
 
@@ -154,13 +161,16 @@ export default function EdtechPage() {
           <CredentialStrip />
         </header>
 
-        <section className={styles.section} aria-labelledby="worries">
+        <Section measure="route" ground="second" labelledBy="worries">
           <h2 id="worries" className={styles.sectionHeading}>
             what you are actually worried about
           </h2>
           <ul className={styles.options}>
             {WORRIES.map((worry) => (
-              <li key={worry.lead} className={styles.option}>
+              <li
+                key={worry.lead}
+                className={`${styles.option} ${styles.panelHuman}`}
+              >
                 <p className={styles.optionBody}>
                   <strong className={styles.strong}>{worry.lead}</strong>{' '}
                   {worry.body}
@@ -168,15 +178,18 @@ export default function EdtechPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-we-do">
+        <Section measure="route" ground="deep" labelledBy="what-we-do">
           <h2 id="what-we-do" className={styles.sectionHeading}>
             what we do
           </h2>
           <ul className={styles.options}>
             {WHAT_WE_DO.map((item) => (
-              <li key={item.lead} className={styles.option}>
+              <li
+                key={item.lead}
+                className={`${styles.option} ${styles.panelAction}`}
+              >
                 <p className={styles.optionBody}>
                   <strong className={styles.strong}>{item.lead}</strong> —{' '}
                   {item.body}
@@ -185,13 +198,14 @@ export default function EdtechPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="the-boundary">
+        <Section measure="route" ground="base" labelledBy="the-boundary">
           <h2 id="the-boundary" className={styles.sectionEyebrow}>
             the boundary, and it is the reason to hire us
           </h2>
-          <p className={styles.statement}>we will never recommend you.</p>
+          {/* The page's one full-strength block: the boundary. */}
+          <p className={styles.pull}>we will never recommend you.</p>
           <p className={styles.body}>
             we will not name you inside a document we author for a school. we do
             not take commission on a licence sale. if we help a school write its
@@ -207,9 +221,9 @@ export default function EdtechPage() {
             — and the moment that stops being true, everything we could do for
             you stops being worth anything.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="in-practice">
+        <Section measure="route" ground="second" labelledBy="in-practice">
           <h2 id="in-practice" className={styles.sectionHeading}>
             what it looks like in practice
           </h2>
@@ -220,9 +234,9 @@ export default function EdtechPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="proof">
+        <Section measure="route" ground="deep" labelledBy="proof">
           <h2 id="proof" className={styles.sectionHeading}>
             proof
           </h2>
@@ -239,9 +253,9 @@ export default function EdtechPage() {
               see the goodnotes hub →
             </Button>
           </div>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-it-costs">
+        <Section measure="route" ground="base" labelledBy="what-it-costs">
           <h2 id="what-it-costs" className={styles.sectionHeading}>
             what it costs
           </h2>
@@ -257,9 +271,9 @@ export default function EdtechPage() {
             </strong>
             , and there is no charge for the conversation that gets us there.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.close} aria-labelledby="close">
+        <Section measure="route" ground="well" space="loose" labelledBy="close">
           <h2 id="close" className={styles.closeHeading}>
             tell us what you&rsquo;re working with. if we can help, we&rsquo;ll
             say how. if we can&rsquo;t, we&rsquo;ll point you to someone who
@@ -270,7 +284,7 @@ export default function EdtechPage() {
               {BOOKING_LABEL}
             </Button>
           </div>
-        </section>
+        </Section>
 
         <NewsletterBand route="/edtech" weight="standard" />
 

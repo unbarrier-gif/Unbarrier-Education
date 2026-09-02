@@ -9,6 +9,7 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { Section } from '@/components/Section';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import { PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import {
@@ -27,6 +28,12 @@ import styles from '@/app/route-page.module.css';
 // merged.
 //
 // Copy is verbatim from the approved page drafts (28 Aug 2026).
+//
+// GROUNDS (2 Sep 2026). The hero sits on the page; the sections walk the
+// ladder 400 → 300 → 500 and the close is the 200 well. "try it first" is
+// conditional, so its neighbours are chosen to alternate with it either way.
+// One full-strength block: the price line. The three options sit on the
+// action panel (green) — they are what happens next.
 //
 // THE PRIMARY CTA. The approved copy gives this page a primary cta of "take
 // the free readiness check". The readiness check is branch E and does not
@@ -199,7 +206,7 @@ export default function AuditPage() {
         </header>
 
         {READINESS_CHECK_ENABLED && (
-          <section className={styles.section} aria-labelledby="try-it-first">
+          <Section measure="route" ground="second" labelledBy="try-it-first">
             <h2 id="try-it-first" className={styles.sectionHeading}>
               try it first — the free readiness check
             </h2>
@@ -210,10 +217,10 @@ export default function AuditPage() {
                 </li>
               ))}
             </ul>
-          </section>
+          </Section>
         )}
 
-        <section className={styles.section} aria-labelledby="why-a-day">
+        <Section measure="route" ground="deep" labelledBy="why-a-day">
           <h2 id="why-a-day" className={styles.sectionEyebrow}>
             why a day
           </h2>
@@ -232,9 +239,9 @@ export default function AuditPage() {
             be answered, funded, or defended to a governing body. that is where
             a discovery day starts.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="where-it-sits">
+        <Section measure="route" ground="base" labelledBy="where-it-sits">
           <h2 id="where-it-sits" className={styles.sectionHeading}>
             where a discovery day sits
           </h2>
@@ -245,9 +252,9 @@ export default function AuditPage() {
             until you know what is actually happening, and almost nobody starts
             there.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="what-a-day-is">
+        <Section measure="route" ground="second" labelledBy="what-a-day-is">
           <h2 id="what-a-day-is" className={styles.sectionHeading}>
             what a discovery day is
           </h2>
@@ -258,12 +265,13 @@ export default function AuditPage() {
               </li>
             ))}
           </ul>
-          <p className={styles.priceLine}>
+          {/* The page's one full-strength block: the price, as the commitment. */}
+          <p className={styles.pull}>
             {PRICE_DISCOVERY_DAY}. one day. that is the whole commitment.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="walk-away">
+        <Section measure="route" ground="deep" labelledBy="walk-away">
           <h2 id="walk-away" className={styles.sectionHeading}>
             what you walk away with
           </h2>
@@ -274,15 +282,18 @@ export default function AuditPage() {
               </li>
             ))}
           </ul>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="three-options">
+        <Section measure="route" ground="base" labelledBy="three-options">
           <h2 id="three-options" className={styles.sectionHeading}>
             after the day, three honest options
           </h2>
           <ul className={styles.options}>
             {THREE_OPTIONS.map((option) => (
-              <li key={option.lead} className={styles.option}>
+              <li
+                key={option.lead}
+                className={`${styles.option} ${styles.panelAction}`}
+              >
                 <p className={styles.optionBody}>
                   <strong className={styles.strong}>{option.lead}</strong>{' '}
                   {option.body}
@@ -294,14 +305,14 @@ export default function AuditPage() {
             the first option is real. it is what makes the other two worth
             trusting.
           </p>
-        </section>
+        </Section>
 
         {/* The approved draft carries a reviewer note under this section:
             "the cross-cutting questions live on the faq". The copy points a
             reader there at exactly this moment, so the section ends with a
             contextual link rather than leaving footer reachability to do the
             work on its own. */}
-        <section className={styles.section} aria-labelledby="what-to-expect">
+        <Section measure="route" ground="second" labelledBy="what-to-expect">
           <h2 id="what-to-expect" className={styles.sectionHeading}>
             what to expect
           </h2>
@@ -319,9 +330,9 @@ export default function AuditPage() {
             </Link>
             .
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="who-for">
+        <Section measure="route" ground="deep" labelledBy="who-for">
           <h2 id="who-for" className={styles.sectionHeading}>
             who this is for
           </h2>
@@ -346,9 +357,9 @@ export default function AuditPage() {
             assistant learning a new tool is a learner too. if it only reaches
             the person who bought it, it hasn&rsquo;t reached anyone.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.close} aria-labelledby="close">
+        <Section measure="route" ground="well" space="loose" labelledBy="close">
           <h2 id="close" className={styles.closeHeading}>
             tell us what you&rsquo;re working with. if we can help, we&rsquo;ll
             say how. if we can&rsquo;t, we&rsquo;ll point you to someone who
@@ -374,7 +385,7 @@ export default function AuditPage() {
               {BOOKING_LABEL}
             </Button>
           </div>
-        </section>
+        </Section>
 
         <NewsletterBand route="/audit" weight="standard" />
 

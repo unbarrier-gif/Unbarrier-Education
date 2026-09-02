@@ -1,26 +1,106 @@
 /* ========================================================================
-   Unbarrier Design System — Colors & Type
+   Unbarrier Design System — Colour & Type
    Single source of truth. Imported via app/layout.tsx.
-   Verbatim paste from colors_and_type.css with one change:
-   @font-face blocks removed — fonts loaded via next/font/google in layout.tsx
-   and exposed as the CSS variables --font-outfit / --font-comfortaa /
-   --font-cherry-bomb. Family tokens below reference those.
+   Fonts are loaded via next/font/google in layout.tsx and exposed as the CSS
+   variables --font-outfit / --font-lexend / --font-comfortaa. The family
+   tokens below reference those.
+
+   COLOUR IS TWO TIERS (ruled 2 Sep 2026, restored from the original
+   Unbarrier Me guidelines): three PRIMARIES lead, five SECONDARIES never do,
+   GROUNDS are new world blue only, and PANELS are the one way a secondary
+   gets to be a surface. Not one hex changed in the restore. The code names
+   (--amethyst, --pearl-aqua, …) are the shipped names; the original names sit
+   beside them in the comments. Renaming is Nici's call, not a drive-by.
    ======================================================================== */
 
 :root {
-  /* ── CORE BRAND COLORS ─────────────────────────────────────────────── */
-  --amethyst:          #210a33;   /* page background, structure         */
-  --amethyst-deep:     #150520;   /* deeper pockets, contrast wells     */
-  --antique-white:     #fceddb;   /* warm cream accent, text alt        */
-  --text:              #f0ebe5;   /* primary text on amethyst           */
+  /* ── PRIMARIES — one of these is on every surface, always ──────────── */
+  --spring-green:      #38ff99;   /* techy green · pantone 7479C · ACTION:
+                                     buttons, the focus ring, and the ONE
+                                     full-strength block per page          */
+  --amethyst:          #210a33;   /* new world blue · cmyk 96 100 40 60 ·
+                                     THE PAGE (ground 500). a blue, not a
+                                     purple                                */
+  --antique-white:     #fceddb;   /* light joy · cmyk 0 9 16 0 · print and
+                                     lockups only. NEVER a screen ground   */
+  --text:              #f0ebe5;   /* primary text on new world blue. a text
+                                     tone, not a brand colour              */
 
-  /* Brand accent palette — vibrant, each maps to a service */
-  --spring-green:      #38ff99;   /* primary action, CTA, hero highlight */
-  --pearl-aqua:        #69d9d1;   /* unbarrier.audit — calm, evidence    */
-  --princeton-orange:  #ff8a1c;   /* unbarrier.access — premium, energy  */
-  --orchid-mist:       #db7dcc;   /* unbarrier.voice / Nici — human      */
-  --school-bus-yellow: #ffc203;   /* payoff, community, Loop Breakers    */
-  --pink-mist:         #e3a1b0;   /* supporting soft accent              */
+  /* ── SECONDARIES — never lead a page, never become a ground ────────── */
+  --pearl-aqua:        #69d9d1;   /* light blue · unbarrier.audit · evidence
+                                     and numbers · figures at headline size,
+                                     a panel                               */
+  --orchid-mist:       #db7dcc;   /* dark pink · unbarrier.voice and Nici ·
+                                     anything human · quotes, the portrait,
+                                     a panel                               */
+  --princeton-orange:  #ff8a1c;   /* orange · unbarrier.access · deadlines
+                                     and dates · a date block, a pill, one
+                                     heading word                          */
+  --pink-mist:         #e3a1b0;   /* light pink · dark pink's second voice ·
+                                     icons, secondary links, beside dark
+                                     pink only                             */
+  --school-bus-yellow: #ffc203;   /* yellow · payoff, the free thing · pills
+                                     and labels only                       */
+
+  /* ── GROUNDS — new world blue only ─────────────────────────────────── */
+  /* Shade comes from depth. Colour comes from what sits on top. Every
+     tinted ground is vetoed (2 Sep 2026) — see --bg-tint below, which is
+     the one still shipping. The ladder, as ruled:
+       500 #210a33  the page
+       400 #1b0829  a second room
+       300 #14061f  footers, bands, wells
+       200 #0d0414  the deepest well
+     --text-faint clears AA on all four (measured: 4.5 · 4.6 · 4.6 · 4.7),
+     which is the only reason it is allowed on a ground at all. */
+  --ground-500:        var(--amethyst);
+  --ground-400:        #1b0829;
+  --ground-300:        var(--amethyst-deep);  /* ruled #14061f. The shipped
+                                     #150520 is within one unit per channel
+                                     and is what the footer, the blog and
+                                     the drawer were measured on, so it
+                                     stands as the step rather than carrying
+                                     two near-identical hexes             */
+  --ground-200:        #0d0414;
+  --amethyst-deep:     #150520;   /* the 300 step under its shipped name   */
+
+  /* ── PANELS — the "lifted" move ────────────────────────────────────── */
+  /* A colour goes UP, never down. Two moves are permitted, and only two:
+       1. FULL STRENGTH — the accent as a block or pill with new world blue
+          text on it. Once per page.
+       2. LIFTED — the accent at 10–14% over #210a33, so blue stays dominant.
+     Every panel below is its accent at 10% over --amethyst, flattened to a
+     hex so the value that was measured is the value that renders. Measured
+     with the text tokens (muted 0.65 · subtle 0.57 · faint 0.50):
+       --panel-darkpink   6.29 · 5.15 · 4.32
+       --panel-lightpink  6.30 · 5.16 · 4.29
+       --panel-lightblue  6.30 · 5.15 · 4.31
+       --panel-green      6.26 · 5.16 · 4.32
+       --panel-orange     6.37 · 5.22 · 4.34
+       --panel-yellow     6.29 · 5.15 · 4.33
+     muted and subtle pass on all six. FAINT PASSES ON NONE. Panel copy is
+     --text-muted or --text-subtle, never --text-faint. */
+  --panel-green:       #23233d;   /* action — what happens next            */
+  --panel-lightblue:   #281f43;   /* evidence, numbers, the audit strand   */
+  --panel-darkpink:    #341642;   /* anything human — quotes, Nici, voice  */
+  --panel-orange:      #371731;   /* deadlines, dates, the access strand   */
+  --panel-lightpink:   #341940;   /* beside dark pink only                 */
+  --panel-yellow:      #371c2e;   /* payoff — the free thing               */
+
+  /* Shipped name, kept working. Home, the blog, the readiness check and the
+     route cards all reach for it. It was pearl-aqua at 8% (#271b40); it now
+     resolves to the 10% step so there is one light-blue panel, not two.
+     --panel-green was spring-green 8% over --bg-tint (#1e2937) and is now
+     the ruled 10%-over-amethyst value above. New code uses the six names. */
+  --panel-aqua:        var(--panel-lightblue);
+
+  /* ── BANNED MOVES — a future reader must be able to see these ──────── */
+  /* • No tinted ground. Sections sit on the ladder above, nothing else —
+       not an aqua or orchid "100" step, not a cream, not a light theme.
+     • No darkening a brand colour toward black to make a new one. That is
+       where every brown and olive came from. A colour goes up, never down.
+     • No --text-faint on a panel. It is on the AA floor against the page
+       and under it on every lift.
+     • No lowering a text token to make a colour work. */
 
   /* ── FUNCTIONAL TEXT/BORDER TOKENS ─────────────────────────────────── */
   /* CONTRAST FLOOR — do not lower these.
@@ -44,25 +124,14 @@
   --color-card-bg:  rgba(255, 255, 255, 0.05);   /* 5% white over amethyst — blog cards */
 
   /* ── SEMANTIC ROLES ────────────────────────────────────────────────── */
-  --bg:               var(--amethyst);
-  --bg-alt:           var(--amethyst-deep);
-  /* Third section ground: pearl-aqua 8% over --amethyst-deep, flattened.
-     8% is the CEILING, not a taste call — --text-faint (0.50) measures
-     4.54:1 here and 4.48:1 at 10%, i.e. under the AA floor. Measure any
-     replacement before shipping it. See components/Section.tsx. */
+  --bg:               var(--ground-500);
+  --bg-alt:           var(--ground-300);
+  /* SUPERSEDED — a tinted ground, pearl-aqua 8% over --amethyst-deep. Every
+     tinted ground was vetoed on 2 Sep 2026; this one is still the third
+     ground on home (components/Section.tsx, `tint`), so it stays until home
+     moves onto the ladder. Do not use it anywhere new. It was contrast-bound
+     at 8% (--text-faint 4.54:1) and has no headroom. */
   --bg-tint:          #1c162e;
-
-  /* TINTED PANELS. The design finding was "raise the panels from white 3–5%
-     to a sub-brand colour at 6–12%". 8% is what shipped, and each value is a
-     flat hex of a measured mix, not a live overlay, so the number that was
-     tested is the number that renders.
-       --panel-aqua   pearl-aqua   8% over --amethyst   (subtle 5.30 · muted 6.43)
-       --panel-green  spring-green 8% over --bg-tint    (subtle 5.08 · muted 6.10)
-     NOTE THE ONE RULE THESE CARRY: --text-faint (0.50) is already at 4.51:1
-     on plain amethyst, so it fails on EVERY tinted panel. Panel copy uses
-     --text-muted or --text-subtle. Do not put --text-faint inside one. */
-  --panel-aqua:       #271b40;
-  --panel-green:      #1e2937;
   --fg:               var(--text);
   --fg-muted:         var(--text-muted);
   --action:           var(--spring-green);
@@ -79,11 +148,23 @@
      section heading isn't hidden under the nav after a hash navigation. */
   --nav-height:       90px;
 
-  /* ── TYPE FAMILIES ─────────────────────────────────────────────────── */
+  /* ── TYPE FAMILIES — three tiers, like the colour ──────────────────── */
+  /* Recovered from the original Unbarrier Me guidelines (2 Sep 2026). The
+     original stack was MuseoModerno · Comfortaa · Cherry Bomb One; this
+     stack is its deliberate evolution and stays.
+       primary    Outfit           headings, impact text, large pullouts,
+                                   the 01–07 numerals
+       secondary  Lexend           body copy. Replaced Comfortaa for
+                                   readability on 26 Jul 2026 — deliberate
+       brand      Comfortaa        the wordmark and display only. Never
+                                   body, never numerals
+       tertiary   Cherry Bomb One  illustration visuals only. NOT a
+                                   consultancy face and not loaded: it came
+                                   out of app/layout.tsx with the .joy class
+                                   on 2 Sep 2026. Do not bring it back. */
   --font-heading:     var(--font-outfit), system-ui, -apple-system, sans-serif;
   --font-body:        var(--font-lexend), system-ui, -apple-system, sans-serif;
-  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;    /* logo wordmark + display only */
-  --font-decorative:  var(--font-cherry-bomb), var(--font-outfit), cursive;  /* "bring the joy" only */
+  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;
 
   /* ── TYPE SCALE ────────────────────────────────────────────────────── */
   --fs-display: clamp(2.2rem, 5vw, 3.5rem); /* hero */
@@ -97,6 +178,19 @@
   --fs-eyebrow: 0.72rem;
   --fs-caption: 0.78rem;
 
+  /* READABILITY SPECS — the lowercase rule's two unwritten halves.
+     Original guidelines §2.7, verbatim: "Where possible we keep everything
+     lowercase for ease of legibility. Comfortaa is a dyslexia-friendly font.
+     The larger letter spacing and increased line spacing improve readability
+     for the individual." Lowercase is an ACCESSIBILITY decision, not a style
+     preference, and it carries two specs the system never wrote down:
+     LARGER LETTER SPACING and INCREASED LINE SPACING. On screen they are
+     --lh-body (1.75) on every paragraph, --lh-loose (1.85) where a block
+     wants more, and the 0.01em on the base <p> rule below; the reading
+     preference html[data-spacing='true'] steps them up again (1.95 ·
+     0.045em · 0.12em word spacing). Do not tighten any of them to fit a
+     layout. Heading tracking (--ls-tight) is the one deliberate exception:
+     Outfit at display size needs it, and headings are short. */
   --lh-tight:   1.06;
   --lh-snug:    1.3;
   --lh-body:    1.75;
@@ -157,11 +251,17 @@ html.contrast-high {
   --surface-lift:   rgba(255, 255, 255, 0.12);
   --color-card-bg:  rgba(255, 255, 255, 0.10);
 
-  /* Tinted panels lift with everything else rather than staying tinted. The
-     --bg-tint section ground is left alone: it is contrast-tested, and the
-     high-contrast text tokens above only widen the margin. */
-  --panel-aqua:     rgba(255, 255, 255, 0.10);
-  --panel-green:    rgba(255, 255, 255, 0.10);
+  /* Panels lift with everything else rather than staying tinted. All six,
+     so a panel never carries a strand colour that high contrast cannot see
+     the edge of. --panel-aqua follows --panel-lightblue. The grounds are left
+     alone: they are contrast-tested, and the high-contrast text tokens above
+     only widen the margin. */
+  --panel-green:     rgba(255, 255, 255, 0.10);
+  --panel-lightblue: rgba(255, 255, 255, 0.10);
+  --panel-darkpink:  rgba(255, 255, 255, 0.10);
+  --panel-orange:    rgba(255, 255, 255, 0.10);
+  --panel-lightpink: rgba(255, 255, 255, 0.10);
+  --panel-yellow:    rgba(255, 255, 255, 0.10);
 
   /* Disable ambient blur orbs — they reduce edge contrast on text. */
   --glow-opacity-multiplier: 0;
@@ -228,14 +328,6 @@ p  { font-family: var(--font-body); line-height: var(--lh-body); color: var(--fg
   text-transform: uppercase;
   color: var(--action);
   margin: 0 0 12px;
-}
-
-/* Cherry Bomb — reserved for the "bring the joy" moment */
-.joy {
-  font-family: var(--font-decorative);
-  color: var(--spring-green);
-  line-height: 1.05;
-  font-weight: 400;
 }
 
 /* Focus */
