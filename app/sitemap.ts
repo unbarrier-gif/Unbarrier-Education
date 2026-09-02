@@ -32,6 +32,10 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // notice — being out of the sitemap is part of that, not an oversight.
     // See app/voice/page.tsx before adding it.
     { url: 'https://www.unbarrier.me/goodnotes', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
+    // The sign-up page for notice. Indexed and linkable on purpose — three
+    // rendered QR codes and every sign-up route point here. The opposite of
+    // /voice above.
+    { url: 'https://www.unbarrier.me/notice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({

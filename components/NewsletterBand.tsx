@@ -40,6 +40,15 @@ import styles from './NewsletterBand.module.css';
 // `route` is REQUIRED so no page can quietly ship a signup whose consent
 // record cannot name the page it came from. It is bound to the server action
 // below, server-side — see app/actions.ts.
+//
+// COPY OVERRIDES (added for /notice, 2 Sep 2026). Every copy slot the block
+// renders can be replaced through an optional prop, and every default is the
+// literal that shipped, so the twelve existing routes render byte-identically
+// when no override is passed. /notice is the one sentence-case page on the
+// site and needs the approved sign-up copy in these slots rather than the
+// lowercase site copy. The overrides are PRESENTATION: they never touch the
+// consent checkbox label, which is CONSENT_WORDING and IS the consent record,
+// and they never touch what the server action captures.
 
 const FALLBACK_EMAIL = 'nici@unbarrier.me';
 
@@ -47,23 +56,85 @@ const initialState: FormState = { status: 'idle' };
 
 type Weight = 'standard' | 'full';
 
+type HeadingLevel = 'h1' | 'h2';
+
 type Props = {
   /** The route this block is rendered on, e.g. "/blog" or "/blog/some-slug". */
   route: string;
   /** Presentation only. Never changes what consent is captured. */
   weight?: Weight;
+
+  // ── copy overrides — all optional, all default to the shipped literal ──
+  /** The block heading. Default "notice". */
+  heading?: string;
+  /**
+   * Element for the heading. Default `h2`: on every existing route the block
+   * sits under the page's own h1. A page that is nothing but this block
+   * (/notice) passes `h1` so the page has one.
+   */
+  headingLevel?: HeadingLevel;
+  /** The line under the heading. */
+  sub?: string;
+  /** Accessible name and placeholder of the email field. Default "email address". */
+  emailLabel?: string;
+  /** Submit button. Default "subscribe →". */
+  buttonLabel?: string;
+  /** Submit button while the action is in flight. Default "subscribing…". */
+  buttonPendingLabel?: string;
+  /**
+   * A short line directly under the button. Rendered ONLY when given — the
+   * default block has no such line, so omitting it changes nothing.
+   */
+  note?: string;
+  /** The message shown after a successful submit. Double opt-in: it must not claim the person is subscribed. */
+  successMessage?: string;
+  /**
+   * The sentences of the privacy paragraph, before the privacy-notice link.
+   * The link itself always points at /legal/privacy and cannot be moved.
+   * NOTE: the default sentence is where mechanic 3 above names the controller
+   * in the block. An override replaces that sentence, so a page passing this
+   * is choosing to name the controller elsewhere (on /notice: the footer).
+   */
+  privacy?: string;
+  /** Text of the privacy-notice link. Default "privacy notice". */
+  privacyLinkLabel?: string;
 };
 
-function SubmitButton() {
+// Double opt-in: nobody is subscribed until they click the link in the
+// confirmation email, so the success message must not claim they are.
+const DEFAULT_SUCCESS =
+  'almost there — check your inbox and click the confirmation link. you’re not on the list until you do.';
+
+function SubmitButton({
+  label,
+  pendingLabel,
+}: {
+  label: string;
+  pendingLabel: string;
+}) {
   const { pending } = useFormStatus();
   return (
     <button type="submit" className={styles.button} disabled={pending}>
-      {pending ? 'subscribing…' : 'subscribe →'}
+      {pending ? pendingLabel : label}
     </button>
   );
 }
 
-export function NewsletterBand({ route, weight = 'standard' }: Props) {
+export function NewsletterBand({
+  route,
+  weight = 'standard',
+  heading = 'notice',
+  headingLevel = 'h2',
+  sub,
+  emailLabel = 'email address',
+  buttonLabel = 'subscribe →',
+  buttonPendingLabel = 'subscribing…',
+  note,
+  successMessage = DEFAULT_SUCCESS,
+  privacy,
+  privacyLinkLabel = 'privacy notice',
+}: Props) {
+  const Heading = headingLevel;
   // Bound server-side: the route reaches the action as a bound argument rather
   // than as a form field, so it is not something a submitter types in. That
   // makes consent_source provenance recorded in good faith — nothing stronger.
@@ -106,13 +177,17 @@ export function NewsletterBand({ route, weight = 'standard' }: Props) {
           />
         )}
 
-        <h2 id="newsletter-heading" className={styles.heading}>
-          notice
-        </h2>
+        <Heading id="newsletter-heading" className={styles.heading}>
+          {heading}
+        </Heading>
         <p className={styles.sub}>
-          one email when there is something worth saying. nothing when there
-          isn&rsquo;t. written for people who don&rsquo;t have time to read it
-          twice.
+          {sub ?? (
+            <>
+              one email when there is something worth saying. nothing when
+              there isn&rsquo;t. written for people who don&rsquo;t have time
+              to read it twice.
+            </>
+          )}
         </p>
 
         <form
@@ -123,14 +198,14 @@ export function NewsletterBand({ route, weight = 'standard' }: Props) {
         >
           <div className={styles.fields}>
             <label htmlFor="newsletter-email" className={styles.srOnly}>
-              email address
+              {emailLabel}
             </label>
             <input
               id="newsletter-email"
               type="email"
               name="email"
               required
-              placeholder="email address"
+              placeholder={emailLabel}
               autoComplete="email"
               className={styles.input}
             />
@@ -151,7 +226,10 @@ export function NewsletterBand({ route, weight = 'standard' }: Props) {
             </label>
           </div>
 
-          <SubmitButton />
+          <SubmitButton label={buttonLabel} pendingLabel={buttonPendingLabel} />
+
+          {/* Only /notice passes this. Nothing renders here otherwise. */}
+          {note && <p className={styles.note}>{note}</p>}
 
           {/* honeypot */}
           <label className={styles.honeypot} aria-hidden="true">
@@ -176,11 +254,8 @@ export function NewsletterBand({ route, weight = 'standard' }: Props) {
           role="status"
           aria-live="polite"
         >
-          {/* Double opt-in: nobody is subscribed until they click the link in
-              the confirmation email, so the success message must not claim
-              they are. */}
-          {state.status === 'ok' &&
-            'almost there — check your inbox and click the confirmation link. you’re not on the list until you do.'}
+          {/* See DEFAULT_SUCCESS: an override must keep the same promise. */}
+          {state.status === 'ok' && successMessage}
           {state.status === 'error' && (
             <>
               {state.message}
@@ -200,10 +275,14 @@ export function NewsletterBand({ route, weight = 'standard' }: Props) {
         </p>
 
         <p className={styles.consent}>
-          unbarrier education ltd (company no.&nbsp;16603630) will use your
-          email address only to send you notice. we won&rsquo;t pass it to
-          anyone else, and every email has a one-click unsubscribe.{' '}
-          <Link href="/legal/privacy">privacy notice</Link>
+          {privacy ?? (
+            <>
+              unbarrier education ltd (company no.&nbsp;16603630) will use
+              your email address only to send you notice. we won&rsquo;t pass
+              it to anyone else, and every email has a one-click unsubscribe.
+            </>
+          )}{' '}
+          <Link href="/legal/privacy">{privacyLinkLabel}</Link>
         </p>
       </div>
     </section>
