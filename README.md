@@ -145,6 +145,15 @@ the inlined set; the files in `public/assets/icons/` stay the canonical source.
 - Icon plus text, always. Decorative icons carry `aria-hidden="true"`.
 - Wordmark type is Comfortaa, already outlined to paths — no font load needed.
 
+**Third-party credential marks are the exception, and stay outside all of the
+above.** Apple, Google, Microsoft and Edufuturists marks ship as supplied, in
+the colourway that suits the ground — no `currentColor`, no `class="accent"`,
+no high-contrast drop, no token (decision, 2 Sep 2026). They are served as
+`<img>` from the unmodified files under their suppliers' own filenames
+(`public/assets/Apple_Prof_Learning_Specialist_1ln_wht_061623.svg` and
+`…_blk_…` for the APLS badge; `components/AplsBadge.tsx` picks by ground). Do
+not inline, rename, optimise or recolour them.
+
 The four files in `app/` need no wiring: the App Router picks up `favicon.ico`,
 `icon.png`, `apple-icon.png` and `opengraph-image.png` by filename. **Do not
 add a `<link rel="icon">` tag or a manual `og:image` — either will win over

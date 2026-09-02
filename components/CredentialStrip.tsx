@@ -24,7 +24,10 @@ import styles from './CredentialStrip.module.css';
 //     no text nodes, and NO whitespace text node either side of it, so the
 //     strip's text content stays byte-identical with it in place. It sits
 //     beside the phrase that already names the credential; it adds nothing to
-//     the announced string.
+//     the announced string. It is Apple's mark, served as supplied, and its
+//     colourway is chosen by ground: the strip sits on amethyst on every
+//     route, so it takes the white file. If the strip ever lands on a white
+//     ground, pass ground="white" — never let it inherit.
 //
 // Applied on the home page too (app/page.tsx), since branch D.
 
@@ -41,7 +44,7 @@ export function CredentialStrip() {
       <strong className={styles.accreditation}>
         apple professional learning specialist
       </strong>
-      <AplsBadge />
+      <AplsBadge ground="amethyst" />
       {CREDENTIALS.map((credential) => (
         <span key={credential}>
           <span className={styles.sep}>{' · '}</span>
