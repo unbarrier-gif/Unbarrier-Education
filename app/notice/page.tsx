@@ -39,7 +39,7 @@ const CANONICAL = 'https://www.unbarrier.me/notice';
 const HEADLINE = 'Two minutes. Sunday morning.';
 
 const LEDE =
-  'One thing I’ve read, one thing I noticed in a classroom, and one line you can use in Monday’s SLT meeting. For headteachers, SENCOs, trust inclusion leads, and anyone writing an inclusion strategy this term.';
+  'Something I noticed in a classroom, the number underneath it, and one line you can use in Monday’s SLT meeting. For headteachers, SENCOs, trust inclusion leads, and anyone writing an inclusion strategy this term.';
 
 const BUTTON = 'Send me notice';
 

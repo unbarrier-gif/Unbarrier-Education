@@ -272,9 +272,8 @@ export function ReadinessCheck({ route }: { route: string }) {
                 onChange={(e) => setNeedsEmail((v) => v || e.target.checked)}
               />
               <span>
-                <strong>notice.</strong> one email when there’s something worth
-                saying. nothing when there isn’t. i can unsubscribe from any
-                email.
+                <strong>notice.</strong> one email, sunday 8am, two minutes. i
+                can unsubscribe from any email.
               </span>
             </label>
 

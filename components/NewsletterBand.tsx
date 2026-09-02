@@ -183,9 +183,10 @@ export function NewsletterBand({
         <p className={styles.sub}>
           {sub ?? (
             <>
-              one email when there is something worth saying. nothing when
-              there isn&rsquo;t. written for people who don&rsquo;t have time
-              to read it twice.
+              sunday, 8am. two minutes. something i noticed in a classroom,
+              the number underneath it, and one line you can use in
+              monday&rsquo;s slt meeting. written for people who don&rsquo;t
+              have time to read it twice.
             </>
           )}
         </p>
