@@ -10,10 +10,9 @@
 .fieldset {
   margin: 0;
   padding: var(--space-5);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--pearl-aqua);
+  border: 0;
   border-radius: var(--radius-md);
-  background: var(--surface-raised);
+  background: var(--panel-aqua);
 }
 .legend { display: block; padding: 0; margin: 0 0 var(--space-4); }
 .domain {
@@ -89,10 +88,8 @@
 
 .result {
   padding: var(--space-6);
-  border: 1px solid var(--border-default);
-  border-top: 3px solid var(--spring-green);
   border-radius: var(--radius-md);
-  background: var(--surface-raised);
+  background: var(--panel-aqua);
   display: grid;
   gap: var(--space-5);
 }
@@ -127,10 +124,8 @@
 .thesis {
   display: grid; gap: var(--space-3);
   padding: var(--space-5);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--orchid-mist);
   border-radius: var(--radius-md);
-  background: var(--surface-raised);
+  background: var(--panel-aqua);
   font-family: var(--font-body);
   line-height: var(--lh-body);
   color: var(--text-muted);
@@ -149,7 +144,11 @@
   font-size: 1rem;
   padding: 11px 14px;
   border-radius: var(--radius-md);
-  border: 1px solid var(--border-strong);
+  /* A field boundary, kept on purpose: a select or an email box with no edge
+     on a dark ground is not findable. 0.36 white on --amethyst measures 3.2:1
+     (the non-text contrast floor is 3:1); --border-strong (0.18) was 1.7:1 in
+     the default theme. High contrast swaps the token back in. */
+  border: 1px solid rgba(255, 255, 255, 0.36);
   background: var(--amethyst-deep);
   color: var(--text);
 }
@@ -161,3 +160,15 @@
 
 .error { font-family: var(--font-body); color: var(--princeton-orange); margin: 0; }
 .ok { font-family: var(--font-body); color: var(--spring-green); margin: 0; }
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .fieldset,
+:global(html.contrast-high) .result,
+:global(html.contrast-high) .thesis {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .select,
+:global(html.contrast-high) .email {
+  border-color: var(--border-strong);
+}

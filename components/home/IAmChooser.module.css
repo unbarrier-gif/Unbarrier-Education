@@ -32,9 +32,11 @@
   display: grid;
   gap: var(--space-2);
   padding: var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--spring-green);
+  /* Ground, not outline. --panel-aqua is measured over --amethyst, which is
+     the ground this list sits on. Hover moves to --panel-green: a hue shift
+     rather than a brightness step, because the white lifts (--surface-lift)
+     are too close to the panel tint to be a perceptible hover on their own. */
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
   text-decoration: none;
   min-height: 44px;
@@ -42,9 +44,7 @@
 }
 
 .route:hover {
-  background: var(--surface-lift);
-  border-color: var(--border-strong);
-  border-left-color: var(--spring-green);
+  background: var(--panel-green);
 }
 
 .who {
@@ -72,4 +72,13 @@
 
 .arrow {
   font-style: normal;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .route {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .route:hover {
+  border-color: var(--border-strong);
 }

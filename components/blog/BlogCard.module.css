@@ -2,7 +2,6 @@
   display: flex;
   flex-direction: column;
   background: var(--color-card-bg);
-  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
   overflow: hidden;
   text-decoration: none;
@@ -11,7 +10,6 @@
 }
 
 .card:hover {
-  border-color: var(--border-strong);
   transform: translateY(-2px);
 }
 
@@ -127,4 +125,13 @@
     -webkit-line-clamp: 3;
     font-size: 1rem;
   }
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .card {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .card:hover {
+  border-color: var(--border-strong);
 }

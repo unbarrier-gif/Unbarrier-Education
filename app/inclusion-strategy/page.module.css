@@ -120,9 +120,7 @@
   max-width: 62ch;
   margin: var(--space-5) 0 0;
   padding: var(--space-4) var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--princeton-orange);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -138,9 +136,7 @@
 
 .step {
   padding: var(--space-5);
-  background: var(--surface-raised);
-  border: 1px solid var(--border-default);
-  border-left: 3px solid var(--princeton-orange);
+  background: var(--panel-aqua);
   border-radius: var(--radius-md);
 }
 
@@ -222,4 +218,10 @@
   color: var(--text);
   margin: 0;
   max-width: 26ch;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .funding,
+:global(html.contrast-high) .step {
+  border: 1px solid var(--border-default);
 }

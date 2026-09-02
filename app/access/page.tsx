@@ -8,7 +8,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { SevenQuestions } from '@/components/SevenQuestions';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import {
@@ -332,8 +331,6 @@ export default function AccessPage() {
           <ScopeLine />
         </header>
 
-        <SectionBar color="var(--princeton-orange)" />
-
         <section className={styles.section} aria-labelledby="the-gap">
           <h2 id="the-gap" className={styles.sectionHeading}>
             the gap
@@ -537,8 +534,6 @@ export default function AccessPage() {
             </Button>
           </div>
         </section>
-
-        <SectionBar color="var(--princeton-orange)" />
 
         <section className={styles.close} aria-labelledby="close">
           <h2 id="close" className={styles.closeHeading}>

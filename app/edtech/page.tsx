@@ -7,7 +7,6 @@ import { Footer } from '@/components/Footer';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { SectionBar } from '@/components/SectionBar';
 import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
 import styles from '@/app/route-page.module.css';
 
@@ -155,8 +154,6 @@ export default function EdtechPage() {
           <CredentialStrip />
         </header>
 
-        <SectionBar color="var(--spring-green)" />
-
         <section className={styles.section} aria-labelledby="worries">
           <h2 id="worries" className={styles.sectionHeading}>
             what you are actually worried about
@@ -261,8 +258,6 @@ export default function EdtechPage() {
             , and there is no charge for the conversation that gets us there.
           </p>
         </section>
-
-        <SectionBar color="var(--spring-green)" />
 
         <section className={styles.close} aria-labelledby="close">
           <h2 id="close" className={styles.closeHeading}>

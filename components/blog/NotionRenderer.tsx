@@ -176,9 +176,11 @@ function renderBlock(b: BlockNode): ReactElement | null {
       return <PullQuote>{renderRichText(b.quote.rich_text)}</PullQuote>;
     case 'callout':
       return (
-        <aside className={styles.callout}>
+        // role="note", not <aside>: an <aside> is a complementary landmark, and
+        // one nested inside <main> fails axe's landmark-complementary-is-top-level.
+        <div role="note" className={styles.callout}>
           {renderRichText(b.callout.rich_text)}
-        </aside>
+        </div>
       );
     case 'image': {
       const url =

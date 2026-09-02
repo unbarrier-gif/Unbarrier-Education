@@ -47,8 +47,9 @@
   margin: 0;
 }
 
+/* Sections are marked by spacing, not by a rule. The table row rules further
+   down stay: rows in a real data table are structure. */
 .section {
-  border-top: 1px solid var(--border-default);
   padding: var(--space-6) 0 var(--space-3);
 }
 
@@ -160,4 +161,9 @@
 
 .backLink:hover {
   opacity: 0.88;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .section {
+  border-top: 1px solid var(--border-default);
 }

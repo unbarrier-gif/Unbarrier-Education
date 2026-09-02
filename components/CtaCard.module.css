@@ -5,18 +5,14 @@
   gap: 14px;
   padding: 14px 18px;
   border-radius: 14px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 3px solid var(--accent);
+  background: var(--panel-aqua);
   text-decoration: none;
   color: var(--fg);
   transition: background 200ms ease, border-color 200ms ease;
 }
 
 .card:hover {
-  background: rgba(var(--accent-rgb), 0.05);
-  border-color: rgba(var(--accent-rgb), 0.44);
-  border-left-color: var(--accent);
+  background: rgba(var(--accent-rgb), 0.12);
 }
 
 .thumb {
@@ -32,7 +28,6 @@
     rgba(var(--accent-rgb), 0.4),
     rgba(var(--accent-rgb), 0.1)
   );
-  border: 1px solid rgba(var(--accent-rgb), 0.35);
   /* The tilt is the brand's — floating, slightly off-square. */
   transform: rotate(-3deg);
   transition: transform 200ms ease;
@@ -99,4 +94,13 @@
   color: var(--text-muted);
   line-height: var(--lh-snug);
   padding-left: calc(10px + 1ch);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .card {
+  border: 1px solid var(--border-default);
+}
+
+:global(html.contrast-high) .card:hover {
+  border-color: var(--border-strong);
 }

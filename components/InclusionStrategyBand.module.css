@@ -1,18 +1,16 @@
 /* TEMPORARY — retires with lib/inclusion-strategy-promo.ts. */
 
+/* A full-bleed band separated from its neighbours by ground alone: it sits
+   on --bg-alt between two --bg sections on the home page. */
 .band {
   position: relative;
   padding: clamp(2rem, 5vw, 3rem) var(--space-5);
-  background: var(--surface-raised);
-  border-top: 1px solid var(--border-default);
-  border-bottom: 1px solid var(--border-default);
+  background: var(--bg-alt);
 }
 
 .inner {
   max-width: 820px;
   margin: 0 auto;
-  border-left: 3px solid var(--princeton-orange);
-  padding-left: var(--space-5);
 }
 
 .eyebrow {
@@ -68,4 +66,10 @@
   outline: 2px solid var(--focus-ring);
   outline-offset: 3px;
   border-radius: var(--radius-sm);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .band {
+  border-top: 1px solid var(--border-default);
+  border-bottom: 1px solid var(--border-default);
 }

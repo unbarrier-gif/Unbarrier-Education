@@ -170,8 +170,23 @@ The lockup carries the question only; the full line goes in the footer.
 `components/Section.tsx` is the full-bleed section wrapper. Home used to run
 six identical `<section className={styles.section}>`, so a hairline was the
 only thing marking a section change. Three grounds now alternate: `base`
-(`--bg`), `deep` (`--bg-alt`) and `tint` (`--bg-tint`). **The hairlines stay** —
-lines were never the fault; lines doing the sectioning job alone were.
+(`--bg`), `deep` (`--bg-alt`) and `tint` (`--bg-tint`).
+
+**Drawn edges are off, site-wide (2 Sep 2026).** This supersedes the 31 Aug
+"keep the hairlines" finding. Sections are separated by ground, never by a
+line: the `SectionBar` component is gone, and the 1px card outlines, the 3px
+accent bars and the divider rules came off every card, panel and band. A card
+that lost its outline sits on one of the shipped grounds instead
+(`--bg-alt`, `--bg-tint`, `--panel-aqua`, `--panel-green`).
+
+What keeps an edge, on purpose: every `:focus-visible` outline; form-control
+boundaries (text inputs, selects, the consent checkbox, the contrast toggle,
+the reading controls, filter chips and secondary buttons); the row rules in
+the `/legal` data tables; and **high contrast**. The `--border-*` tokens jump
+from 0.08 to 0.45 inside `html.contrast-high`, where they do access work, so
+every removed 1px rule is restored under that selector in the same module
+(`:global(html.contrast-high) .card { border: … }`). Removing a border from
+the default theme without re-adding it there is a regression.
 
 **Grounds are contrast-bound, not free.** `--text-faint` (alpha 0.50) measures
 4.51:1 on `--amethyst` — exactly the WCAG AA floor — so any ground lighter than

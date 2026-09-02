@@ -9,7 +9,6 @@
     rgba(56, 255, 153, 0.16),
     rgba(105, 217, 209, 0.05)
   );
-  border: 1px solid rgba(56, 255, 153, 0.35);
 }
 
 .label {
@@ -49,7 +48,6 @@
   padding: 12px 14px;
   border-radius: 12px;
   background: rgba(33, 10, 51, 0.55);
-  border: 1px solid rgba(56, 255, 153, 0.22);
   text-decoration: none;
   color: var(--fg);
   font-family: var(--font-body);
@@ -60,7 +58,6 @@
 
 .row:hover {
   background: rgba(33, 10, 51, 0.8);
-  border-color: rgba(56, 255, 153, 0.5);
 }
 
 .row:focus-visible {
@@ -84,4 +81,10 @@
 
 .rowText {
   line-height: var(--lh-snug);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .block,
+:global(html.contrast-high) .row {
+  border: 1px solid var(--border-default);
 }

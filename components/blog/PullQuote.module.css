@@ -1,7 +1,8 @@
+/* No rule down the left: the quote is set big, bold and in the accent
+   colour, and the indent plus the whitespace around it are what mark it. */
 .quote {
   margin: 3rem 0;
   padding: 2rem 0 2rem 2rem;
-  border-left: 4px solid var(--c);
   position: relative;
 }
 
