@@ -13,8 +13,7 @@ The site at **[unbarrier.me](https://unbarrier.me)**. Phase 1 ships a single pag
 
 - Next.js 14, App Router, TypeScript strict
 - CSS Modules + design tokens (no Tailwind)
-- `next/font/google` for **Outfit** (headings and the 01–07 numerals), **Comfortaa** (the wordmark and display only — never body, never numerals) and **Lexend** (body, `--fs-body` 1.05rem). Lexend has been the body face since the 26 Jul 2026 typography correction; it was missing from this list until 31 Aug.
-  - Cherry Bomb One is also still loaded, for the `.joy` class and nothing else. "in our world we bring the joy" was separated from the consultancy brand on 31 Aug 2026 and is in no current brand rule — the font load and the `.joy` class should come out with it.
+- `next/font/google` for the three type tiers — **Outfit**, **Lexend**, **Comfortaa** — see "Type tiers and the lowercase rule" below. Nothing else is loaded.
 - Resend for transactional email
 - MailerLite REST API (direct fetch, no SDK)
 - Plausible analytics
@@ -165,12 +164,70 @@ way — a PNG in the segment, plus an `opengraph-image.alt.txt` beside it.
 Tagline: **designed for difference. did it reach the child?**
 The lockup carries the question only; the full line goes in the footer.
 
+## Type tiers and the lowercase rule
+
+Three faces, tiered like the colour. Recovered from the original Unbarrier Me
+guidelines on 2 Sep 2026: the original stack was MuseoModerno · Comfortaa ·
+Cherry Bomb One, and the current stack is a deliberate evolution of it.
+
+| tier | face | job |
+|---|---|---|
+| primary | **Outfit** | headings, impact text, large pullouts, the 01–07 numerals |
+| secondary | **Lexend** | body copy (`--fs-body` 1.05rem). Replaced Comfortaa for readability on 26 Jul 2026 — deliberate |
+| brand | **Comfortaa** | the wordmark and display only. Never body, never numerals |
+| tertiary | Cherry Bomb One | illustration visuals only. **Not a consultancy face and not loaded** — removed from `app/layout.tsx` with the `.joy` class on 2 Sep 2026 |
+
+**Lowercase is an accessibility decision, not a style.** Section 2.7 of the
+original guidelines, verbatim:
+
+> "Where possible we keep everything lowercase for ease of legibility.
+> Comfortaa is a dyslexia-friendly font. The larger letter spacing and
+> increased line spacing improve readability for the individual."
+
+That line carries two specs the system had never written down, both
+readability decisions rather than taste: **larger letter spacing** and
+**increased line spacing**. In the tokens they are `--lh-body` 1.75 on every
+paragraph, `--lh-loose` 1.85, `letter-spacing: 0.01em` on the base `p`, and
+the reading preference `data-spacing` stepping to 1.95 / 0.045em / 0.12em
+word spacing. Do not tighten any of them to fit a layout. Casing by channel
+is still the rule (the website lowercase; emails and LinkedIn sentence case)
+— see decisions & rules in Notion.
+
+## Colour: two tiers, the ground ladder, the panels
+
+Ruled 2 Sep 2026 and restored from the original guidelines; the token block
+in `app/globals.css` is the source and carries the measurements. In short:
+
+- **Primaries** lead and one is on every surface: techy green `--spring-green`
+  (action), new world blue `--amethyst` (the page — a blue, not a purple),
+  light joy `--antique-white` (print and lockups, never a screen ground).
+- **Secondaries** never lead a page and never become a ground: light blue
+  `--pearl-aqua` (evidence, numbers), dark pink `--orchid-mist` (anything
+  human), orange `--princeton-orange` (dates, deadlines), light pink
+  `--pink-mist` (beside dark pink only), yellow `--school-bus-yellow` (pills
+  and labels only).
+- **Grounds are new world blue only**: `--ground-500` the page ·
+  `--ground-400` · `--ground-300` (footers, bands) · `--ground-200` (the
+  deepest well). Every tinted ground is vetoed; `--bg-tint` is superseded
+  and survives only as home's third ground until home moves onto the ladder.
+- **A colour goes up, never down.** Two moves: *full strength* (the accent as
+  a block or pill with new world blue text — once per page, `.pull` on the
+  route pages) and *lifted* (the accent at 10% over the page: the six
+  `--panel-*` tokens). Darkening a brand colour toward black is banned.
+- The code names are the shipped names. Renaming `--amethyst` to
+  `--new-world-blue` touches every file and is Nici's call.
+
 ## Section grounds and the contrast floor
 
 `components/Section.tsx` is the full-bleed section wrapper. Home used to run
 six identical `<section className={styles.section}>`, so a hairline was the
-only thing marking a section change. Three grounds now alternate: `base`
-(`--bg`), `deep` (`--bg-alt`) and `tint` (`--bg-tint`).
+only thing marking a section change. The wrapper carries the ground ladder:
+`base` (500), `second` (400), `deep` (300), `well` (200), plus the superseded
+`tint` that home still uses. The five route pages (`/audit`, `/access`,
+`/about`, `/faq`, `/edtech`) walk 400 → 300 → 500 from the hero and close on
+the 200 well; boxed items sit on the panel that matches the section's job
+(evidence light blue · human dark pink · dates orange · what-happens-next
+green), and each page carries exactly one full-strength block.
 
 **Drawn edges are off, site-wide (2 Sep 2026).** This supersedes the 31 Aug
 "keep the hairlines" finding. Sections are separated by ground, never by a
@@ -194,10 +251,12 @@ amethyst pushes it under. Measured over `--amethyst-deep` with pearl-aqua:
 6% → 4.58 · **8% → 4.54** · 10% → 4.48 (fails). `--bg-tint` is the 8% mix,
 flattened to a hex so the value that was tested is the value that ships.
 
-The same limit governs the tinted panels (`--panel-aqua`, `--panel-green`):
-`--text-faint` fails on all of them, so panel copy uses `--text-muted` or
-`--text-subtle` only. Measure any new ground or panel before shipping it. Do
-not lower a text token to make one fit.
+The same limit governs the six panels (`--panel-green`, `--panel-lightblue`,
+`--panel-darkpink`, `--panel-orange`, `--panel-lightpink`, `--panel-yellow`;
+`--panel-aqua` is the shipped alias of light blue): muted and subtle pass on
+all six and `--text-faint` fails on every one, so panel copy uses
+`--text-muted` or `--text-subtle` only. Measure any new ground or panel
+before shipping it. Do not lower a text token to make one fit.
 
 ## Branch / PR model
 

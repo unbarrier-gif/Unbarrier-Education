@@ -148,11 +148,23 @@
      section heading isn't hidden under the nav after a hash navigation. */
   --nav-height:       90px;
 
-  /* ── TYPE FAMILIES ─────────────────────────────────────────────────── */
+  /* ── TYPE FAMILIES — three tiers, like the colour ──────────────────── */
+  /* Recovered from the original Unbarrier Me guidelines (2 Sep 2026). The
+     original stack was MuseoModerno · Comfortaa · Cherry Bomb One; this
+     stack is its deliberate evolution and stays.
+       primary    Outfit           headings, impact text, large pullouts,
+                                   the 01–07 numerals
+       secondary  Lexend           body copy. Replaced Comfortaa for
+                                   readability on 26 Jul 2026 — deliberate
+       brand      Comfortaa        the wordmark and display only. Never
+                                   body, never numerals
+       tertiary   Cherry Bomb One  illustration visuals only. NOT a
+                                   consultancy face and not loaded: it came
+                                   out of app/layout.tsx with the .joy class
+                                   on 2 Sep 2026. Do not bring it back. */
   --font-heading:     var(--font-outfit), system-ui, -apple-system, sans-serif;
   --font-body:        var(--font-lexend), system-ui, -apple-system, sans-serif;
-  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;    /* logo wordmark + display only */
-  --font-decorative:  var(--font-cherry-bomb), var(--font-outfit), cursive;  /* "bring the joy" only */
+  --font-brand:       var(--font-comfortaa), system-ui, sans-serif;
 
   /* ── TYPE SCALE ────────────────────────────────────────────────────── */
   --fs-display: clamp(2.2rem, 5vw, 3.5rem); /* hero */
@@ -166,6 +178,19 @@
   --fs-eyebrow: 0.72rem;
   --fs-caption: 0.78rem;
 
+  /* READABILITY SPECS — the lowercase rule's two unwritten halves.
+     Original guidelines §2.7, verbatim: "Where possible we keep everything
+     lowercase for ease of legibility. Comfortaa is a dyslexia-friendly font.
+     The larger letter spacing and increased line spacing improve readability
+     for the individual." Lowercase is an ACCESSIBILITY decision, not a style
+     preference, and it carries two specs the system never wrote down:
+     LARGER LETTER SPACING and INCREASED LINE SPACING. On screen they are
+     --lh-body (1.75) on every paragraph, --lh-loose (1.85) where a block
+     wants more, and the 0.01em on the base <p> rule below; the reading
+     preference html[data-spacing='true'] steps them up again (1.95 ·
+     0.045em · 0.12em word spacing). Do not tighten any of them to fit a
+     layout. Heading tracking (--ls-tight) is the one deliberate exception:
+     Outfit at display size needs it, and headings are short. */
   --lh-tight:   1.06;
   --lh-snug:    1.3;
   --lh-body:    1.75;
@@ -303,14 +328,6 @@ p  { font-family: var(--font-body); line-height: var(--lh-body); color: var(--fg
   text-transform: uppercase;
   color: var(--action);
   margin: 0 0 12px;
-}
-
-/* Cherry Bomb — reserved for the "bring the joy" moment */
-.joy {
-  font-family: var(--font-decorative);
-  color: var(--spring-green);
-  line-height: 1.05;
-  font-weight: 400;
 }
 
 /* Focus */
