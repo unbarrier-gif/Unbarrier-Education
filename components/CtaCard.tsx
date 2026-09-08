@@ -1,6 +1,6 @@
 'use client';
 
-import type { CSSProperties } from 'react';
+import { useState, type CSSProperties } from 'react';
 import Image from 'next/image';
 import styles from './CtaCard.module.css';
 
@@ -17,7 +17,18 @@ type Props = {
   card: CardKey | (string & {});
   title: string;
   meta: string;
-  href: string;
+  /**
+   * Optional third line under the blurb — where and when, for a dated session
+   * card. Same muted token as `meta`; it is a line of context, not a call to
+   * action. Omit it and nothing about the card changes.
+   */
+  detail?: string;
+  /**
+   * Destination. Omit it and the card renders as a plain panel with no link and
+   * no arrow — for a card whose destination does not exist yet. /hello must
+   * never carry a dead href, so "no link" beats "a link that 404s".
+   */
+  href?: string;
   external?: boolean;
   /** Colour override — Notion-driven cards pass their own accent. */
   accent?: string;
@@ -81,6 +92,7 @@ export function CtaCard({
   card,
   title,
   meta,
+  detail,
   href,
   external = true,
   accent,
@@ -88,6 +100,11 @@ export function CtaCard({
   image,
   initial,
 }: Props) {
+  // A thumbnail that fails to load (file not shipped yet, a moved Notion asset,
+  // a typo in the URL) drops to the tinted initial tile instead of leaving a
+  // broken-image glyph in front of a room. Same fallback as no image at all.
+  const [imageBroken, setImageBroken] = useState(false);
+
   function handleClick() {
     if (
       typeof window !== 'undefined' &&
@@ -106,19 +123,18 @@ export function CtaCard({
     '--accent-rgb': accentRgb ?? ACCENT_RGB[card as CardKey] ?? '56, 255, 153',
   } as CSSProperties;
 
-  return (
-    <a
-      href={href}
-      onClick={handleClick}
-      className={styles.card}
-      data-card={card}
-      style={style}
-      {...externalProps}
-    >
+  const inner = (
+    <>
       {/* Decorative: the title next to it already names the destination. */}
       <span className={styles.thumb} aria-hidden="true">
-        {canOptimise(image) ? (
-          <Image src={image!} alt="" width={56} height={56} />
+        {canOptimise(image) && !imageBroken ? (
+          <Image
+            src={image!}
+            alt=""
+            width={56}
+            height={56}
+            onError={() => setImageBroken(true)}
+          />
         ) : (
           <span className={styles.initial}>
             {initial ?? title.trim().charAt(0).toUpperCase()}
@@ -128,13 +144,41 @@ export function CtaCard({
 
       <span className={styles.body}>
         <span className={styles.title}>
-          <span className={styles.arrow} aria-hidden="true">
-            &rarr;
-          </span>
+          {href && (
+            <span className={styles.arrow} aria-hidden="true">
+              &rarr;
+            </span>
+          )}
           {title}
         </span>
         <span className={styles.meta}>{meta}</span>
+        {detail && <span className={styles.detail}>{detail}</span>}
       </span>
+    </>
+  );
+
+  if (!href) {
+    return (
+      <div
+        className={`${styles.card} ${styles.static}`}
+        data-card={card}
+        style={style}
+      >
+        {inner}
+      </div>
+    );
+  }
+
+  return (
+    <a
+      href={href}
+      onClick={handleClick}
+      className={styles.card}
+      data-card={card}
+      style={style}
+      {...externalProps}
+    >
+      {inner}
     </a>
   );
 }

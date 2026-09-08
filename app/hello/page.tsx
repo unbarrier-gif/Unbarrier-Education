@@ -82,6 +82,36 @@ export default async function HelloPage() {
           <TodayBlock heading={todayHeading} links={todayGroup.links} />
         )}
 
+        {/* SESSIONS — the dated, pinned card. Static and in the repo, not in
+            Notion: it is one card with a fixed date, and it has to sit above
+            "for schools" on the day itself, which is exactly when Notion is
+            least trusted (rule 3 above). The label reuses the same eyebrow as
+            every other group heading; the card is the same CtaCard with its
+            optional `detail` line. There is no destination yet, so the card
+            carries no href and renders as a panel — a dead link on /hello is
+            the one failure this page cannot have. When the session has a page
+            or a booking link, add `href` here and nothing else changes. */}
+        <section className={styles.cards} aria-labelledby="group-sessions">
+          <h2 id="group-sessions" className={styles.eyebrow}>
+            sessions
+          </h2>
+          <div className={styles.list}>
+            <CtaCard
+              card="inclusion_beyond_send"
+              title="Inclusion Beyond SEND"
+              meta="Prompting for inclusion — getting more out of the AI you already have."
+              detail="University of Surrey, Guildford · Thursday 17 September 2026"
+              accent="var(--spring-green)"
+              accentRgb="56, 255, 153"
+              // Nici is adding the artwork. Until the file lands the tile
+              // shows the tinted initial; when it lands at this path it shows
+              // the image. A different extension means changing this one string.
+              image="/assets/inclusion-beyond-send.webp"
+              initial="I"
+            />
+          </div>
+        </section>
+
         {cardGroups.map((group) => {
           const id = `group-${group.group.replace(/[^a-z0-9]+/gi, '-')}`;
           return (

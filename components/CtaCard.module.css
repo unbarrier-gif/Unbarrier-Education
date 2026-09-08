@@ -55,7 +55,8 @@
 
 @media (prefers-reduced-motion: reduce) {
   .thumb,
-  .card:hover .thumb {
+  .card:hover .thumb,
+  .static:hover .thumb {
     transform: none;
     transition: none;
   }
@@ -94,6 +95,38 @@
   color: var(--text-muted);
   line-height: var(--lh-snug);
   padding-left: calc(10px + 1ch);
+}
+
+/* The optional third line — where and when, on a dated session card. Same
+   token as .meta: --text-muted (0.65) is the contrast floor on this page and
+   nothing on a card goes below it. The size difference is what separates it
+   from the blurb; colour does not. */
+.detail {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  letter-spacing: 0.01em;
+  padding-left: calc(10px + 1ch);
+}
+
+/* No destination yet: a panel, not a link. No arrow, so the text lines up
+   flush; no hover shift, so nothing promises a click it cannot deliver. */
+.static {
+  cursor: default;
+}
+
+.static:hover {
+  background: var(--panel-aqua);
+}
+
+.static:hover .thumb {
+  transform: rotate(-3deg);
+}
+
+.static .meta,
+.static .detail {
+  padding-left: 0;
 }
 
 /* ── high contrast ────────────────────────────────────────────────── */
