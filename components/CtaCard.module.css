@@ -11,7 +11,9 @@
   transition: background 200ms ease, border-color 200ms ease;
 }
 
-.card:hover {
+/* Hover belongs to links only. A .static card (no href) keeps the rest
+   state, so nothing promises a click it cannot deliver. */
+.card:not(.static):hover {
   background: rgba(var(--accent-rgb), 0.12);
 }
 
@@ -33,7 +35,7 @@
   transition: transform 200ms ease;
 }
 
-.card:hover .thumb {
+.card:not(.static):hover .thumb {
   transform: rotate(0deg) scale(1.04);
 }
 
@@ -55,8 +57,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .thumb,
-  .card:hover .thumb,
-  .static:hover .thumb {
+  .card:not(.static):hover .thumb {
     transform: none;
     transition: none;
   }
@@ -111,17 +112,9 @@
 }
 
 /* No destination yet: a panel, not a link. No arrow, so the text lines up
-   flush; no hover shift, so nothing promises a click it cannot deliver. */
+   flush; no hover rules, so nothing promises a click it cannot deliver. */
 .static {
   cursor: default;
-}
-
-.static:hover {
-  background: var(--panel-aqua);
-}
-
-.static:hover .thumb {
-  transform: rotate(-3deg);
 }
 
 .static .meta,
