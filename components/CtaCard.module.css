@@ -127,6 +127,6 @@
   border: 1px solid var(--border-default);
 }
 
-:global(html.contrast-high) .card:hover {
+:global(html.contrast-high) .card:not(.static):hover {
   border-color: var(--border-strong);
 }
