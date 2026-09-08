@@ -11,7 +11,9 @@
   transition: background 200ms ease, border-color 200ms ease;
 }
 
-.card:hover {
+/* Hover belongs to links only. A .static card (no href) keeps the rest
+   state, so nothing promises a click it cannot deliver. */
+.card:not(.static):hover {
   background: rgba(var(--accent-rgb), 0.12);
 }
 
@@ -33,7 +35,7 @@
   transition: transform 200ms ease;
 }
 
-.card:hover .thumb {
+.card:not(.static):hover .thumb {
   transform: rotate(0deg) scale(1.04);
 }
 
@@ -55,7 +57,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .thumb,
-  .card:hover .thumb {
+  .card:not(.static):hover .thumb {
     transform: none;
     transition: none;
   }
@@ -94,6 +96,30 @@
   color: var(--text-muted);
   line-height: var(--lh-snug);
   padding-left: calc(10px + 1ch);
+}
+
+/* The optional third line — where and when, on a dated session card. Same
+   token as .meta: --text-muted (0.65) is the contrast floor on this page and
+   nothing on a card goes below it. The size difference is what separates it
+   from the blurb; colour does not. */
+.detail {
+  font-family: var(--font-body);
+  font-size: 0.76rem;
+  color: var(--text-muted);
+  line-height: var(--lh-snug);
+  letter-spacing: 0.01em;
+  padding-left: calc(10px + 1ch);
+}
+
+/* No destination yet: a panel, not a link. No arrow, so the text lines up
+   flush; no hover rules, so nothing promises a click it cannot deliver. */
+.static {
+  cursor: default;
+}
+
+.static .meta,
+.static .detail {
+  padding-left: 0;
 }
 
 /* ── high contrast ────────────────────────────────────────────────── */

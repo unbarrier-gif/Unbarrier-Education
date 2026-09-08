@@ -76,7 +76,9 @@ app/
   page.tsx                redirects to /hello
   not-found.tsx           on-brand 404
   hello/
-    page.tsx              the page
+    page.tsx              the page. Notion-driven card groups, plus one static
+                          "sessions" block above them for the next dated event
+    fallback.ts           committed cards that render when Notion cannot answer
     page.module.css
     actions.ts            server actions (newsletter + say-hi)
   legal/
