@@ -27,7 +27,8 @@ import styles from './page.module.css';
 // presentation only: the MailerLite submit, the server-side consent_source
 // and the unticked consent checkbox are exactly what they were in September.
 // The checkbox label is NOT overridden: it is CONSENT_WORDING and it IS the
-// consent record (its casing was corrected in the record itself, 10 Sep).
+// consent record. It stays lowercase on this sentence-case page because the
+// constant is shared by every route that renders the block (see lib/consent.ts).
 //
 // SENTENCE CASE — THE ONE EXCEPTION ON THE SITE. Every other page is
 // lowercase. This one serves the notice audience (heads, SENCOs, trust leads),
