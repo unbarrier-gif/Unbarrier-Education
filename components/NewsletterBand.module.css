@@ -37,15 +37,16 @@
 }
 
 /* The sign-up card on /notice (design pass, 10 Sep 2026). The block is the
-   card: a gradient surface from the lifted dark-pink step down to new world
-   blue, a hairline border, the site's large shadow with the green glow, and
-   a 4px top bar from spring green to pearl aqua. .band's overflow:hidden
-   clips the bar to the radius. The mockup's gradient top (#2c1145) has no
-   token; --panel-darkpink (#341642, orchid-mist 10% over amethyst) is the
-   nearest ruled lift and is what renders. The border is --text at 14%. */
+   card: a gradient surface from --amethyst-card (#2c1145, new world blue
+   lifted toward violet — the card surface on the audit and access journey
+   one-pagers) down to new world blue, a hairline border, the site's large
+   shadow with the green glow, and a 4px top bar from spring green to pearl
+   aqua. .band's overflow:hidden clips the bar to the radius. No orchid on
+   the card surface: orchid is the note rail below and the readiness panel.
+   The border is --text at 14%. */
 .card {
   padding: clamp(20px, 4vw, 32px);
-  background: linear-gradient(160deg, var(--panel-darkpink), var(--amethyst));
+  background: linear-gradient(160deg, var(--amethyst-card), var(--amethyst));
   border: 1.5px solid color-mix(in srgb, var(--text) 14%, transparent);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-lg), var(--glow-green);

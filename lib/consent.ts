@@ -13,8 +13,13 @@
 // Never back-fill, never bulk-update the field in MailerLite. If the wording
 // changes materially, the honest options are to leave existing records alone
 // (they remain accurate for their date) or to re-seek consent.
+//
+// 10 sep 2026 — casing corrected to sentence case for the notice audience.
+// wording unchanged. (Previously 'yes, send me notice. i can unsubscribe from
+// any email.' — records written before this date carry that string and stay
+// as they are.) The record is not versioned in code; its history is git.
 export const CONSENT_WORDING =
-  'yes, send me notice. i can unsubscribe from any email.';
+  'Yes, send me notice. I can unsubscribe from any email.';
 
 // Which form the consent came from. Written to `consent_source` so a record
 // can be traced back to the surface that collected it — the spec's rule that

@@ -61,6 +61,74 @@
   gap: clamp(3.5rem, 8vw, 6rem);
 }
 
+/* ── 0 · masthead ──────────────────────────────────────────────────── */
+
+/* Live text in Comfortaa, the brand face. No background: it takes the
+   ground and the washes behind it. It spans both hero columns; on the
+   two-column layout the hero's row gap is 0 and this margin is the space
+   below it, on the stacked layout the row gap does that job instead. */
+.masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: none;
+  margin-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .masthead {
+    margin-bottom: var(--space-8);
+  }
+}
+
+.mark {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0;
+}
+
+.dot {
+  color: var(--spring-green);
+}
+
+.line {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  letter-spacing: 0.1em;
+  color: var(--orchid-mist);
+  margin: 10px 0 0;
+}
+
+.home {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home:hover {
+  color: var(--text);
+}
+
+@media (max-width: 560px) {
+  .masthead {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
 /* ── 1 · hero ──────────────────────────────────────────────────────── */
 
 .hero {
@@ -73,7 +141,8 @@
 @media (min-width: 900px) {
   .hero {
     grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
-    gap: clamp(2.5rem, 5vw, 4rem);
+    column-gap: clamp(2.5rem, 5vw, 4rem);
+    row-gap: 0;
   }
 }
 
@@ -384,7 +453,13 @@
 /* ── high contrast ────────────────────────────────────────────────────
    The washes are already off (--glow-opacity-multiplier is 0). The panel
    background follows the panel tokens in globals.css; the orchid border
-   goes to the strong border so the panel keeps a perceivable edge. */
+   goes to the strong border so the panel keeps a perceivable edge. The
+   masthead's green full stop drops to the text colour, like the icons'
+   accent path. */
 :global(html.contrast-high) .readiness {
   border-color: var(--border-strong);
+}
+
+:global(html.contrast-high) .dot {
+  color: inherit;
 }

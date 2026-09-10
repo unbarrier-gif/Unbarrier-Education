@@ -24,10 +24,10 @@ import styles from './page.module.css';
 //
 // THE FORM DID NOT MOVE. The sign-up card IS the subscribe block that
 // already shipped (#71–#73), rendered at its `card` weight. Weight is
-// presentation only: the MailerLite submit, the server-side consent_source,
-// the unticked consent checkbox and its CONSENT_WORDING label are exactly
-// what they were in September. The checkbox label is NOT overridden: it is
-// CONSENT_WORDING and it IS the consent record.
+// presentation only: the MailerLite submit, the server-side consent_source
+// and the unticked consent checkbox are exactly what they were in September.
+// The checkbox label is NOT overridden: it is CONSENT_WORDING and it IS the
+// consent record (its casing was corrected in the record itself, 10 Sep).
 //
 // SENTENCE CASE — THE ONE EXCEPTION ON THE SITE. Every other page is
 // lowercase. This one serves the notice audience (heads, SENCOs, trust leads),
@@ -44,6 +44,17 @@ import styles from './page.module.css';
 // Not new writing, not up for revision here.
 
 const CANONICAL = 'https://www.unbarrier.me/notice';
+
+// ── 0 · masthead ────────────────────────────────────────────────────────
+// Live text, never an image. Two paragraphs and a link, not headings: the
+// page's h1 is the hero headline below. "inclusion, evidenced" is Nici's
+// line, lowercase and punctuated as she wrote it.
+
+const MASTHEAD_MARK = 'notice';
+
+const MASTHEAD_LINE = 'inclusion, evidenced';
+
+const MASTHEAD_HOME = 'unbarrier.me';
 
 // ── 1 · hero ────────────────────────────────────────────────────────────
 
@@ -169,6 +180,21 @@ export default function NoticePage() {
         <div className={styles.inner}>
           {/* ── hero: copy left, the sign-up card right ─────────────── */}
           <section className={styles.hero} aria-labelledby="notice-heading">
+            {/* The green full stop is its own span so high contrast can drop
+                it — the same rule as the icons' .accent path. */}
+            <header className={styles.masthead}>
+              <div>
+                <p className={styles.mark}>
+                  {MASTHEAD_MARK}
+                  <span className={styles.dot}>.</span>
+                </p>
+                <p className={styles.line}>{MASTHEAD_LINE}</p>
+              </div>
+              <Link className={styles.home} href="/">
+                {MASTHEAD_HOME}
+              </Link>
+            </header>
+
             <div className={styles.heroCopy}>
               <p className={styles.eyebrow}>{EYEBROW}</p>
               <h1 id="notice-heading" className={styles.headline}>
