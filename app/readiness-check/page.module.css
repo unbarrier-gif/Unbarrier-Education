@@ -14,3 +14,9 @@
 .section { position: relative; max-width: 820px; margin: 0 auto; padding: clamp(2.5rem, 6vw, 4rem) var(--space-5); }
 .sectionHeading { font-family: var(--font-heading); font-weight: 800; font-size: clamp(1.5rem, 3.2vw, 2.05rem); line-height: 1.15; letter-spacing: var(--ls-tight); color: var(--text); margin: 0 0 var(--space-4); max-width: 26ch; }
 .body { font-family: var(--font-body); font-size: var(--fs-body-lg); line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0 0 var(--space-6); }
+
+/* The plain text pointer at the newsletter. A line and a link, not a form:
+   the route collects no address. Underlined, not colour-only. */
+.noticeLine { font-family: var(--font-body); font-size: var(--fs-body-lg); line-height: var(--lh-body); color: var(--text-muted); max-width: 62ch; margin: 0; }
+.noticeLink { color: var(--pearl-aqua); text-decoration: underline; text-underline-offset: 3px; }
+.noticeLink:hover { text-decoration-thickness: 2px; }

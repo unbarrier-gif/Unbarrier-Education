@@ -1,10 +1,10 @@
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
-import { NewsletterBand } from '@/components/NewsletterBand';
 import { ReadinessCheck } from '@/components/readiness-check/ReadinessCheck';
 import { READINESS_QUESTION_COUNT } from '@/lib/readiness-check/questions';
 import styles from './page.module.css';
@@ -13,6 +13,12 @@ import styles from './page.module.css';
 // the free readiness check". The promise there is the one constraint on this
 // whole page: "five minutes, and you see something useful BEFORE any sign-up
 // wall". There is no wall in this route, deferred or otherwise.
+//
+// NO EMAIL CAPTURE ON THIS ROUTE (10 Sep 2026). The subscribe block and the
+// follow-up form's opt-in both came off: the opt-in showed one consent wording
+// and wrote another to MailerLite. Removed pending a rebuild. The newsletter
+// is pointed at with a plain text link to /notice — no form, no checkbox, no
+// second wording to get wrong.
 
 const CANONICAL = '/readiness-check';
 
@@ -77,7 +83,15 @@ export default function ReadinessCheckPage() {
           <ReadinessCheck route={CANONICAL} />
         </section>
 
-        <NewsletterBand route={CANONICAL} weight="standard" />
+        <section className={styles.section} aria-label="the newsletter">
+          <p className={styles.noticeLine}>
+            the sunday newsletter, notice, has its own page:{' '}
+            <Link href="/notice" className={styles.noticeLink}>
+              unbarrier.me/notice
+            </Link>
+          </p>
+        </section>
+
         <Footer variant="full" />
       </main>
     </>
