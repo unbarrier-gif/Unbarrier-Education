@@ -1,7 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Footer } from '@/components/Footer';
-import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import styles from './page.module.css';
@@ -15,31 +14,58 @@ import styles from './page.module.css';
 // https://www.unbarrier.me/notice. That is why this is a route and not a
 // redirect.
 //
-// A ROUTE, NOT A DESIGN. No new components, no new tokens, no second form. It
-// composes the subscribe block that already shipped (#71–#73) and passes the
-// approved copy through the block's optional copy props. The consent checkbox
-// label is NOT overridden: it is CONSENT_WORDING and it IS the consent record.
+// THE DESIGN PASS (10 Sep 2026). The page went from one block and one line to
+// the approved layout: a two-column hero (copy left, the sign-up card right),
+// "what's in it", "who it's for", and the readiness-check panel. Everything
+// on the page is still tokens from app/globals.css. The atmosphere (three
+// radial washes over --amethyst-deep) is scoped to this page's CSS module and
+// is NOT a tinted section ground — sections sit on the ladder, the washes sit
+// under all of them.
+//
+// THE FORM DID NOT MOVE. The sign-up card IS the subscribe block that
+// already shipped (#71–#73), rendered at its `card` weight. Weight is
+// presentation only: the MailerLite submit, the server-side consent_source,
+// the unticked consent checkbox and its CONSENT_WORDING label are exactly
+// what they were in September. The checkbox label is NOT overridden: it is
+// CONSENT_WORDING and it IS the consent record.
 //
 // SENTENCE CASE — THE ONE EXCEPTION ON THE SITE. Every other page is
 // lowercase. This one serves the notice audience (heads, SENCOs, trust leads),
 // and the audience rule beats the channel rule. Brand names stay lowercase:
-// unbarrier, notice, loopbreakers. It will look wrong next to the rest of the
-// site. It is correct. Do not "fix" it.
+// unbarrier, notice. It will look wrong next to the rest of the site. It is
+// correct. Do not "fix" it.
 //
 // ONE CALL TO ACTION. The page has exactly one button, and it is subscribe.
-// The standing thesis line under the block is a TEXT link to
-// /readiness-check — not a Button, not a ctaRow — so the page never carries
-// two competing asks.
+// The readiness check is a TEXT link in a panel — not a Button, not a
+// ctaRow — so the page never carries two competing asks.
 //
-// Copy is verbatim from `the sign-up copy pack — notice`, section 7, and the
-// branch G spec (1 Sep 2026). Not new writing, not up for revision here.
+// Copy is verbatim from `/notice — copy sheet` (newsletter projects
+// database), which lists every slot of the approved design in page order.
+// Not new writing, not up for revision here.
 
 const CANONICAL = 'https://www.unbarrier.me/notice';
+
+// ── 1 · hero ────────────────────────────────────────────────────────────
+
+const EYEBROW = 'The newsletter';
 
 const HEADLINE = 'Two minutes. Sunday morning.';
 
 const LEDE =
-  'Something I noticed in a classroom, the number underneath it, and one line you can use in Monday’s SLT meeting. For headteachers, SENCOs, trust inclusion leads, and anyone writing an inclusion strategy this term.';
+  'Something I noticed in a classroom, the number underneath it, and one line you can use in Monday’s SLT meeting.';
+
+const META = ['Two minutes to read', 'Sunday morning', 'One-click unsubscribe'];
+
+// ── 2 · the sign-up card ────────────────────────────────────────────────
+
+const CARD_HEADING = 'Send me notice';
+
+const CARD_SUB =
+  'For headteachers, SENCOs, trust inclusion leads, and anyone writing an inclusion strategy this term.';
+
+const EMAIL_LABEL = 'Email address';
+
+const EMAIL_PLACEHOLDER = 'you@school.org.uk';
 
 const BUTTON = 'Send me notice';
 
@@ -54,14 +80,71 @@ const UNDER_THE_BUTTON =
 const PRIVACY =
   'Your address is used for notice and nothing else, ever. One-click unsubscribe on every email. It’s sent by unbarrier education ltd (company no. 16603630).';
 
+// ── 3 · what's in it ────────────────────────────────────────────────────
+
+const PARTS_HEADING = 'What’s in it';
+
+const PARTS_NOTE = 'Three parts. Same three every week.';
+
+// The rail and numeral colours are the brief's: 01 pearl-aqua, 02
+// school-bus-yellow, 03 spring-green. Set as modifier classes, not inline
+// styles, so high contrast can reach them.
+const PARTS = [
+  {
+    num: '01',
+    label: 'The noticing',
+    line: 'Something I noticed in a classroom.',
+    tone: styles.partAqua,
+  },
+  {
+    num: '02',
+    label: 'The number',
+    line: 'The number underneath it.',
+    tone: styles.partYellow,
+  },
+  {
+    num: '03',
+    label: 'The line for Monday',
+    line: 'One line you can use in Monday’s SLT meeting.',
+    tone: styles.partGreen,
+  },
+];
+
+// ── 4 · who it's for ────────────────────────────────────────────────────
+
+const WHO_HEADING = 'Who it’s for';
+
+const WHO_NOTE =
+  'Written for the person who has to put the inclusion strategy in front of governors, not for a mailing list.';
+
+const WHO_ROWS = [
+  'Headteachers',
+  'SENCOs',
+  'Trust inclusion leads',
+  'Anyone writing an inclusion strategy this term',
+];
+
+// ── 5 · the readiness check ─────────────────────────────────────────────
+
+const READINESS_HEADING = 'Before you subscribe to anything';
+
+const READINESS_BODY =
+  'The readiness check is free and anonymous. Every result added makes the answer less of a guess.';
+
+const READINESS_LINK = 'Take the readiness check →';
+
+// The share description predates the design pass and is unchanged: it is
+// the hero lede and the card sub as the one sentence they used to be.
+const DESCRIPTION = `${LEDE} ${CARD_SUB}`;
+
 export const metadata: Metadata = {
   title: `notice · ${HEADLINE}`,
-  description: LEDE,
+  description: DESCRIPTION,
   alternates: { canonical: CANONICAL },
   // Indexed and in the sitemap — the opposite of /voice. No robots block here.
   openGraph: {
     title: `notice · ${HEADLINE}`,
-    description: LEDE,
+    description: DESCRIPTION,
     url: CANONICAL,
     type: 'website',
     images: [
@@ -83,45 +166,105 @@ export default function NoticePage() {
     <>
       <Nav />
       <main className={styles.main}>
-        <div className={styles.bandWrap}>
-          <Glow
-            color="var(--school-bus-yellow)"
-            top="-80px"
-            right="-100px"
-            size={420}
-            opacity={0.08}
-            blur={160}
-          />
-          {/* consent_source is composed from `route` server-side —
-              "subscribe block · /notice" — see lib/consent.ts. The bind sits
-              in a client component, so that is provenance recorded in good
-              faith, not tamper-proof evidence. */}
-          <NewsletterBand
-            route="/notice"
-            weight="full"
-            headingLevel="h1"
-            heading={HEADLINE}
-            sub={LEDE}
-            emailLabel="Email address"
-            buttonLabel={BUTTON}
-            buttonPendingLabel="Sending…"
-            note={UNDER_THE_BUTTON}
-            privacy={PRIVACY}
-            privacyLinkLabel="Privacy notice"
-          />
-        </div>
+        <div className={styles.inner}>
+          {/* ── hero: copy left, the sign-up card right ─────────────── */}
+          <section className={styles.hero} aria-labelledby="notice-heading">
+            <div className={styles.heroCopy}>
+              <p className={styles.eyebrow}>{EYEBROW}</p>
+              <h1 id="notice-heading" className={styles.headline}>
+                {HEADLINE}
+              </h1>
+              <p className={styles.lede}>{LEDE}</p>
+              <ul className={styles.meta} role="list">
+                {META.map((item) => (
+                  <li key={item} className={styles.metaPill}>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
 
-        {/* The standing thesis line. A line, not a second button: the page's
-            one call to action is the subscribe button above. The same line
-            ships in the footer of every issue of notice. */}
-        <p className={styles.thesis}>
-          The{' '}
-          <Link href="/readiness-check" className={styles.thesisLink}>
-            readiness check
-          </Link>{' '}
-          is free and anonymous. Every result added makes the answer less of a
-          guess.
-        </p>
+            {/* consent_source is composed from `route` server-side —
+                "subscribe block · /notice" — see lib/consent.ts. The bind sits
+                in a client component, so that is provenance recorded in good
+                faith, not tamper-proof evidence. */}
+            <div className={styles.signup}>
+              <NewsletterBand
+                route="/notice"
+                weight="card"
+                headingLevel="h2"
+                heading={CARD_HEADING}
+                sub={CARD_SUB}
+                emailLabel={EMAIL_LABEL}
+                emailPlaceholder={EMAIL_PLACEHOLDER}
+                buttonLabel={BUTTON}
+                buttonPendingLabel="Sending…"
+                note={UNDER_THE_BUTTON}
+                privacy={PRIVACY}
+                privacyLinkLabel="Privacy notice"
+              />
+            </div>
+          </section>
+
+          {/* ── what's in it ───────────────────────────────────────── */}
+          <section className={styles.section} aria-labelledby="parts-heading">
+            <div className={styles.sectionHead}>
+              <h2 id="parts-heading" className={styles.sectionHeading}>
+                {PARTS_HEADING}
+              </h2>
+              <p className={styles.sectionNote}>{PARTS_NOTE}</p>
+            </div>
+            <ol className={styles.parts} role="list">
+              {PARTS.map((part) => (
+                <li key={part.num} className={`${styles.part} ${part.tone}`}>
+                  {/* The list already numbers the items for assistive tech;
+                      the drawn numeral is decoration on top of that. */}
+                  <span className={styles.partNum} aria-hidden="true">
+                    {part.num}
+                  </span>
+                  <div className={styles.partBody}>
+                    <h3 className={styles.partLabel}>{part.label}</h3>
+                    <p className={styles.partLine}>{part.line}</p>
+                  </div>
+                </li>
+              ))}
+            </ol>
+          </section>
+
+          {/* ── who it's for ───────────────────────────────────────── */}
+          <section className={styles.who} aria-labelledby="who-heading">
+            <div className={styles.sectionHead}>
+              <h2 id="who-heading" className={styles.sectionHeading}>
+                {WHO_HEADING}
+              </h2>
+              <p className={styles.sectionNote}>{WHO_NOTE}</p>
+            </div>
+            <ul className={styles.rows} role="list">
+              {WHO_ROWS.map((row) => (
+                <li key={row} className={styles.row}>
+                  {row}
+                </li>
+              ))}
+            </ul>
+          </section>
+
+          {/* ── the readiness check ────────────────────────────────────
+              A panel with a text link, not a second button: the page's one
+              call to action is the subscribe button in the card. The same
+              line ships in the footer of every issue of notice. */}
+          <section
+            className={styles.readiness}
+            aria-labelledby="readiness-heading"
+          >
+            <h2 id="readiness-heading" className={styles.readinessHeading}>
+              {READINESS_HEADING}
+            </h2>
+            <p className={styles.readinessBody}>{READINESS_BODY}</p>
+            <Link href="/readiness-check" className={styles.readinessLink}>
+              {READINESS_LINK}
+            </Link>
+          </section>
+        </div>
       </main>
 
       <Footer variant="full" />

@@ -36,6 +36,31 @@
   padding: 28px;
 }
 
+/* The sign-up card on /notice (design pass, 10 Sep 2026). The block is the
+   card: a gradient surface from the lifted dark-pink step down to new world
+   blue, a hairline border, the site's large shadow with the green glow, and
+   a 4px top bar from spring green to pearl aqua. .band's overflow:hidden
+   clips the bar to the radius. The mockup's gradient top (#2c1145) has no
+   token; --panel-darkpink (#341642, orchid-mist 10% over amethyst) is the
+   nearest ruled lift and is what renders. The border is --text at 14%. */
+.card {
+  padding: clamp(20px, 4vw, 32px);
+  background: linear-gradient(160deg, var(--panel-darkpink), var(--amethyst));
+  border: 1.5px solid color-mix(in srgb, var(--text) 14%, transparent);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg), var(--glow-green);
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--spring-green), var(--pearl-aqua));
+}
+
 .inner {
   position: relative;
   z-index: 1;
@@ -257,9 +282,24 @@
   max-width: 56ch;
 }
 
+/* The honest note in the card gets a 3px orchid-mist left rail (anything
+   human is orchid). A card device, not a divider. Other weights are
+   unchanged. */
+.card .note {
+  border-left: 3px solid var(--orchid-mist);
+  padding-left: var(--space-3);
+}
+
 /* ── high contrast ────────────────────────────────────────────────── */
 :global(html.contrast-high) .band {
   border: 1px solid var(--border-default);
+}
+
+/* The card keeps its own edge weight and loses the glow, the same way the
+   ambient orbs go: a glow softens the edge high contrast is there to show. */
+:global(html.contrast-high) .card {
+  border: 1.5px solid var(--border-strong);
+  box-shadow: var(--shadow-lg);
 }
 
 :global(html.contrast-high) .input {
