@@ -36,6 +36,11 @@ import styles from './NewsletterBand.module.css';
 //   * `standard` — the default, for offer pages. No banner: that asset is a
 //                  /hello-era graphic and it would outweigh the page's own
 //                  call to action on a page that is selling something.
+//   * `card`     — /notice only (design pass, 10 Sep 2026). The block is
+//                  the sign-up card in the hero: its own gradient surface,
+//                  border, top bar and shadow, and the note under the button
+//                  gets an orchid-mist left rail. No banner. Still the same
+//                  block: the surface changed, nothing it captures did.
 //
 // `route` is REQUIRED so no page can quietly ship a signup whose consent
 // record cannot name the page it came from. It is bound to the server action
@@ -54,7 +59,7 @@ const FALLBACK_EMAIL = 'nici@unbarrier.me';
 
 const initialState: FormState = { status: 'idle' };
 
-type Weight = 'standard' | 'full';
+type Weight = 'standard' | 'full' | 'card';
 
 type HeadingLevel = 'h1' | 'h2';
 
@@ -75,8 +80,13 @@ type Props = {
   headingLevel?: HeadingLevel;
   /** The line under the heading. */
   sub?: string;
-  /** Accessible name and placeholder of the email field. Default "email address". */
+  /** Accessible name of the email field, and its placeholder unless
+   *  `emailPlaceholder` is given. Default "email address". */
   emailLabel?: string;
+  /** Placeholder of the email field when it should differ from the label
+   *  (/notice shows an example address). Presentation only: the accessible
+   *  name is still `emailLabel`. Default: `emailLabel`. */
+  emailPlaceholder?: string;
   /** Submit button. Default "subscribe →". */
   buttonLabel?: string;
   /** Submit button while the action is in flight. Default "subscribing…". */
@@ -127,6 +137,7 @@ export function NewsletterBand({
   headingLevel = 'h2',
   sub,
   emailLabel = 'email address',
+  emailPlaceholder,
   buttonLabel = 'subscribe →',
   buttonPendingLabel = 'subscribing…',
   note,
@@ -160,7 +171,13 @@ export function NewsletterBand({
 
   return (
     <section
-      className={`${styles.band} ${weight === 'full' ? styles.full : styles.standard}`}
+      className={`${styles.band} ${
+        weight === 'full'
+          ? styles.full
+          : weight === 'card'
+            ? styles.card
+            : styles.standard
+      }`}
       aria-labelledby="newsletter-heading"
     >
       <div className={styles.inner}>
@@ -206,7 +223,7 @@ export function NewsletterBand({
               type="email"
               name="email"
               required
-              placeholder={emailLabel}
+              placeholder={emailPlaceholder ?? emailLabel}
               autoComplete="email"
               className={styles.input}
             />

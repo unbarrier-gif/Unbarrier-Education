@@ -13,6 +13,13 @@
 // Never back-fill, never bulk-update the field in MailerLite. If the wording
 // changes materially, the honest options are to leave existing records alone
 // (they remain accurate for their date) or to re-seek consent.
+//
+// 10 sep 2026 — a sentence-case version of this line ('Yes, send me notice. I
+// can unsubscribe from any email.') was applied for the notice audience and
+// reverted the same day: the constant is shared across every route that
+// renders the subscribe block, so it capitalised the label on thirteen
+// lowercase pages. The string below is the original, unchanged. The record is
+// not versioned in code; its history is git.
 export const CONSENT_WORDING =
   'yes, send me notice. i can unsubscribe from any email.';
 

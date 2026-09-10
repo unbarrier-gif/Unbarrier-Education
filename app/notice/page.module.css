@@ -1,41 +1,465 @@
-/* /notice — one block and one line. Same measure and rhythm as /hello, whose
-   `full`-weight subscribe block this page is built around. Everything below
-   is tokens from app/globals.css. No new colours, no new grounds. */
+/* /notice — the design pass (10 Sep 2026). A two-column hero with the
+   sign-up card on the right, then "what's in it", "who it's for", and the
+   readiness-check panel. Everything below is tokens from app/globals.css:
+   no new colour values. Where the mockup carried a raw value it is expressed
+   as a token, or a token at an alpha via color-mix, never a fresh hex.
 
+   NO SECTION DIVIDERS. The 2 Sep no-lines rule holds: sections are separated
+   by air. The card border, the card top bar and the coloured left rails are
+   card devices, not section dividers, and are intended.
+
+   TEXT TOKENS. Nothing on this page uses --text-faint. The page ground
+   carries washes and the cards and panel are lifted, so --text-muted is the
+   floor everywhere here. */
+
+/* ── the ground, and the washes on it ─────────────────────────────────
+   Three soft radial washes over the 300 step of the ladder. Page-scoped:
+   this is not a tinted ground (the ground is --amethyst-deep) and it is not
+   in globals.css. High contrast drops the washes the same way it drops the
+   ambient orbs: through --glow-opacity-multiplier, which it sets to 0. */
 .main {
-  max-width: 720px;
+  position: relative;
+  isolation: isolate;
+  background: var(--amethyst-deep);
+  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5)
+    clamp(3rem, 7vw, 5rem);
+}
+
+.main::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  opacity: var(--glow-opacity-multiplier);
+  background:
+    radial-gradient(
+      ellipse 55% 45% at 90% 0%,
+      color-mix(in srgb, var(--pearl-aqua) 15%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 45% 40% at 0% 12%,
+      color-mix(in srgb, var(--spring-green) 7%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 100% 100%,
+      color-mix(in srgb, var(--orchid-mist) 7%, transparent),
+      transparent 70%
+    );
+}
+
+/* One measure for the whole page. Wider than the 720px the route shipped
+   with because the hero is now two columns; the section copy inside it is
+   capped in ch so the reading measure does not grow with the column. */
+.inner {
+  max-width: 1080px;
   margin: 0 auto;
-  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+  display: flex;
+  flex-direction: column;
+  gap: clamp(3.5rem, 8vw, 6rem);
+}
+
+/* ── 0 · masthead ──────────────────────────────────────────────────── */
+
+/* Live text in Comfortaa, the brand face. No background: it takes the
+   ground and the washes behind it. It spans both hero columns; on the
+   two-column layout the hero's row gap is 0 and this margin is the space
+   below it, on the stacked layout the row gap does that job instead. */
+.masthead {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 24px;
+  flex-wrap: wrap;
+  background: none;
+  margin-bottom: 0;
+}
+
+@media (min-width: 900px) {
+  .masthead {
+    margin-bottom: var(--space-8);
+  }
+}
+
+.mark {
+  font-family: var(--font-brand);
+  font-weight: 700;
+  font-size: clamp(2.6rem, 7vw, 4rem);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  margin: 0;
+}
+
+.dot {
+  color: var(--spring-green);
+}
+
+.line {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: clamp(0.9rem, 1.6vw, 1.05rem);
+  letter-spacing: 0.1em;
+  color: var(--orchid-mist);
+  margin: 10px 0 0;
+}
+
+.home {
+  font-family: var(--font-brand);
+  font-weight: 400;
+  font-size: 0.85rem;
+  letter-spacing: 0.16em;
+  color: var(--text-muted);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.home:hover {
+  color: var(--text);
+}
+
+@media (max-width: 560px) {
+  .masthead {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+}
+
+/* ── 1 · hero ──────────────────────────────────────────────────────── */
+
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-8);
+  align-items: center;
+}
+
+@media (min-width: 900px) {
+  .hero {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+    column-gap: clamp(2.5rem, 5vw, 4rem);
+    row-gap: 0;
+  }
+}
+
+.heroCopy {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-4);
+}
+
+/* The eyebrow pill. Outlined in pearl-aqua rather than filled: the one
+   full-strength block on the page is the button in the card. */
+.eyebrow {
+  display: inline-block;
+  padding: 6px 14px;
+  border: 1.5px solid var(--pearl-aqua);
+  border-radius: var(--radius-pill);
+  color: var(--pearl-aqua);
+  font-family: var(--font-heading);
+  font-size: var(--fs-eyebrow);
+  font-weight: 700;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.headline {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-display);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+  max-width: 14ch;
+}
+
+.lede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 44ch;
+}
+
+.meta {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin: var(--space-2) 0 0;
+  padding: 0;
+}
+
+.metaPill {
+  display: inline-block;
+  padding: 6px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface-raised);
+  color: var(--text-muted);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: 1.4;
+}
+
+/* The card itself is the subscribe block at its `card` weight — see
+   components/NewsletterBand.module.css. This wrapper only places it. */
+.signup {
+  min-width: 0;
+}
+
+/* ── section furniture, shared by 3 and 4 ───────────────────────────── */
+
+.sectionHead {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+}
+
+.sectionNote {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 40ch;
+}
+
+/* ── 3 · what's in it ──────────────────────────────────────────────── */
+
+.section {
   display: flex;
   flex-direction: column;
   gap: var(--space-6);
 }
 
-.bandWrap {
+.parts {
+  list-style: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+  margin: 0;
+  padding: 0;
+}
+
+@media (min-width: 760px) {
+  .parts {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+/* Each card carries its strand colour as --rail: the left rail and the
+   numeral's fill are the same token, set once. */
+.part {
   position: relative;
   overflow: hidden;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-4);
+  padding: var(--space-5) var(--space-5) var(--space-5) calc(var(--space-5) + 4px);
+  background: var(--surface-raised);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-lg);
 }
 
-/* ── the standing thesis line ─────────────────────────────────────────
-   Body text on the page ground (--bg), so --text-muted is well inside the
-   contrast floor. The link is underlined, not colour-only (WCAG 1.4.1). */
-.thesis {
+.part::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 4px;
+  background: var(--rail);
+}
+
+.partAqua {
+  --rail: var(--pearl-aqua);
+}
+
+.partYellow {
+  --rail: var(--school-bus-yellow);
+}
+
+.partGreen {
+  --rail: var(--spring-green);
+}
+
+/* The numeral: Outfit, like the 01–07 numerals everywhere else on the
+   site. New world blue on the strand colour, the same pairing as the
+   button. */
+.partNum {
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--rail);
+  color: var(--text-inverse);
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+  line-height: 1;
+}
+
+.partBody {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.partLabel {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-normal);
+  color: var(--text);
+  margin: 0;
+}
+
+.partLine {
   font-family: var(--font-body);
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   color: var(--text-muted);
-  max-width: 58ch;
   margin: 0;
-  padding: 0 var(--space-2);
 }
 
-.thesisLink {
-  color: var(--pearl-aqua);
+/* ── 4 · who it's for ──────────────────────────────────────────────── */
+
+.who {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-6);
+  align-items: start;
+}
+
+@media (min-width: 900px) {
+  .who {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.4fr);
+    gap: clamp(2.5rem, 5vw, 4rem);
+  }
+}
+
+.rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+/* A hairline between rows, not under the last one. These are row
+   separators inside one list, not section dividers. */
+.row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) 0;
+  border-bottom: 1px solid var(--border-default);
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-snug);
+  color: var(--text);
+}
+
+.row:last-child {
+  border-bottom: 0;
+}
+
+.row::before {
+  content: '';
+  flex: 0 0 auto;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pearl-aqua);
+}
+
+/* ── 5 · the readiness check ───────────────────────────────────────── */
+
+/* The orchid-mist panel: the ruled lifted step (--panel-darkpink is
+   orchid-mist at 10% over new world blue) with an orchid border. Panel
+   copy is --text-muted, never --text-faint. */
+.readiness {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  padding: clamp(1.5rem, 4vw, 2.5rem);
+  background: var(--panel-darkpink);
+  border: 1px solid color-mix(in srgb, var(--orchid-mist) 35%, transparent);
+  border-radius: var(--radius-lg);
+}
+
+.readinessHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0;
+}
+
+.readinessBody {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+  max-width: 58ch;
+}
+
+/* A TEXT LINK, never a button. Underlined, not colour-only (WCAG 1.4.1).
+   The focus ring is the global outline; nothing here draws a border. */
+.readinessLink {
+  display: inline-block;
+  padding: var(--space-1) 0;
+  color: var(--orchid-mist);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-body);
   text-decoration: underline;
-  text-underline-offset: 3px;
+  text-underline-offset: 4px;
 }
 
-.thesisLink:hover {
+.readinessLink:hover {
   text-decoration-thickness: 2px;
+}
+
+/* ── high contrast ────────────────────────────────────────────────────
+   The washes are already off (--glow-opacity-multiplier is 0). The panel
+   background follows the panel tokens in globals.css; the orchid border
+   goes to the strong border so the panel keeps a perceivable edge. The
+   masthead's green full stop drops to the text colour, like the icons'
+   accent path. */
+:global(html.contrast-high) .readiness {
+  border-color: var(--border-strong);
+}
+
+:global(html.contrast-high) .dot {
+  color: inherit;
 }
