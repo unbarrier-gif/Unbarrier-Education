@@ -52,7 +52,6 @@ export function ReadinessCheck({ route }: { route: string }) {
   const [scores, setScores] = useState<Record<string, ScoreValue>>({});
   const [shown, setShown] = useState(false);
   const [wantsResearch, setWantsResearch] = useState(false);
-  const [needsEmail, setNeedsEmail] = useState(false);
   const resultRef = useRef<HTMLDivElement>(null);
 
   const action = finishAction.bind(null, route);
@@ -187,27 +186,15 @@ export function ReadinessCheck({ route }: { route: string }) {
               <input id="rc-website" name="website" tabIndex={-1} autoComplete="off" />
             </p>
 
-            <h2 className={styles.followHeading}>three things you can do with it. all optional.</h2>
+            {/* ONE OFFER, NO ADDRESS. "send this to me" and the notice opt-in
+                came off on 10 Sep 2026 — the opt-in showed one consent wording
+                and stored another. Removed pending a rebuild, not hidden. The
+                newsletter is linked from the page as plain text instead. */}
+            <h2 className={styles.followHeading}>one thing you can do with it. optional.</h2>
             <p className={styles.followLede}>
-              your result is above and it stays there whatever you tick. none of
-              these is a condition of it.
+              your result is above and it stays there whether you tick this or
+              not. it is not a condition of it.
             </p>
-
-            <label className={styles.check} htmlFor="rc-send">
-              <input
-                type="checkbox"
-                id="rc-send"
-                name="sendResult"
-                value="yes"
-                className={styles.box}
-                onChange={(e) => setNeedsEmail(e.target.checked)}
-              />
-              <span>
-                <strong>send this to me.</strong> so you can forward it to
-                whoever holds the budget. we use your address for that one email
-                and don’t keep it.
-              </span>
-            </label>
 
             <label className={styles.check} htmlFor="rc-research">
               <input
@@ -262,40 +249,6 @@ export function ReadinessCheck({ route }: { route: string }) {
               </div>
             )}
 
-            <label className={styles.check} htmlFor="rc-newsletter">
-              <input
-                type="checkbox"
-                id="rc-newsletter"
-                name="newsletter"
-                value="yes"
-                className={styles.box}
-                onChange={(e) => setNeedsEmail((v) => v || e.target.checked)}
-              />
-              <span>
-                <strong>notice.</strong> one email, sunday 8am, two minutes. i
-                can unsubscribe from any email.
-              </span>
-            </label>
-
-            <div className={styles.emailRow}>
-              <label htmlFor="rc-email" className={styles.emailLabel}>
-                email address{' '}
-                <span className={styles.emailHint}>
-                  {needsEmail
-                    ? '— needed for the boxes you ticked'
-                    : '— only if you tick one of the two that need it'}
-                </span>
-              </label>
-              <input
-                type="email"
-                id="rc-email"
-                name="email"
-                className={styles.email}
-                autoComplete="email"
-                inputMode="email"
-              />
-            </div>
-
             <Submit />
 
             {state.status === 'error' && (
@@ -303,13 +256,9 @@ export function ReadinessCheck({ route }: { route: string }) {
             )}
             {state.status === 'ok' && (
               <p className={styles.ok} role="status">
-                {[
-                  state.sent && 'result sent',
-                  state.contributed && 'answers added to the picture',
-                  state.subscribed && 'notice: check your inbox to confirm',
-                ]
-                  .filter(Boolean)
-                  .join(' · ') || 'nothing to do — and your result is still above.'}
+                {state.contributed
+                  ? 'answers added to the picture.'
+                  : 'nothing to do — and your result is still above.'}
               </p>
             )}
           </form>
