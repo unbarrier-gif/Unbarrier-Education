@@ -20,6 +20,9 @@
       "@/lib/readiness-check": [
         "./lib/readiness-check.ts"
       ],
+      "react-dom": [
+        "./.design-sync/shims/react-dom.ts"
+      ],
       "@/*": [
         "./*"
       ]
