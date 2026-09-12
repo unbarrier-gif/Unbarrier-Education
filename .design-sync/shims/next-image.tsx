@@ -5,9 +5,22 @@
 // resolve against the live site, since nothing serves public/ here. The
 // site's own components are untouched.
 
+import aplsWhite from '../../public/assets/Apple_Prof_Learning_Specialist_1ln_wht_061623.svg';
+import aplsBlack from '../../public/assets/Apple_Prof_Learning_Specialist_1ln_blk_061623.svg';
+
 const SITE_ORIGIN = 'https://www.unbarrier.me';
 
+// The two files a component references by fixed path (AplsBadge). They ship
+// inside the bundle byte-for-byte as data URLs, so a design never depends on
+// the network for Apple's mark; everything else under public/ loads from the
+// live site.
+const BUNDLED: Record<string, string> = {
+  '/assets/Apple_Prof_Learning_Specialist_1ln_wht_061623.svg': aplsWhite as unknown as string,
+  '/assets/Apple_Prof_Learning_Specialist_1ln_blk_061623.svg': aplsBlack as unknown as string,
+};
+
 function resolveSrc(src: string): string {
+  if (BUNDLED[src]) return BUNDLED[src];
   return src.startsWith('/') && !src.startsWith('//') ? `${SITE_ORIGIN}${src}` : src;
 }
 import { forwardRef, type CSSProperties, type ImgHTMLAttributes } from 'react';
