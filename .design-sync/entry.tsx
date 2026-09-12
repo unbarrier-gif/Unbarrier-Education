@@ -36,16 +36,16 @@ export function PageGround({ children }: { children: ReactNode }) {
     <div
       data-page-ground=""
       style={{
-        position: 'relative',
         background: 'var(--bg)',
         color: 'var(--fg)',
         fontFamily: 'var(--font-body)',
         minHeight: '100%',
       }}
     >
-      {/* Paints the ground behind the host's own page padding as well, so a
-          preview card never shows a white frame around a dark surface. */}
-      <div aria-hidden="true" style={{ position: 'fixed', inset: 0, background: 'var(--bg)', zIndex: -1 }} />
+      {/* The host page's own body is painted too, so a preview card never
+          shows a white frame around a dark surface. Same rule globals.css
+          applies to the site's body. */}
+      <style>{'body{background:var(--bg)}'}</style>
       {children}
     </div>
   );

@@ -95,9 +95,6 @@
     "AdminLoginForm": {
       "cardMode": "column"
     },
-    "ResponseManager": {
-      "cardMode": "column"
-    },
     "RadarChart": {
       "cardMode": "column"
     },
@@ -118,6 +115,13 @@
     },
     "StrandLockup": {
       "cardMode": "column"
+    },
+    "AplsBadge": {
+      "cardMode": "column"
+    },
+    "Wordmark": {
+      "cardMode": "column"
     }
-  }
+  },
+  "readmeHeader": ".design-sync/conventions.md"
 }
