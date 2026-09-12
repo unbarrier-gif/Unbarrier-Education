@@ -1,0 +1,27 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "outDir": ".cache/dts",
+    "rootDir": "..",
+    "incremental": false,
+    "plugins": []
+  },
+  "include": [
+    "./css-modules.d.ts",
+    "../components/**/*.tsx",
+    "../components/**/*.ts",
+    "../lib/**/*.ts",
+    "../app/actions.ts",
+    "../app/isp-audit/layout.tsx",
+    "../app/readiness-check/actions.ts",
+    "./entry.tsx",
+    "./shims/**/*.ts",
+    "./shims/**/*.tsx"
+  ],
+  "exclude": [
+    "../node_modules"
+  ]
+}

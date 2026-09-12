@@ -1,0 +1,26 @@
+# design-sync notes — unbarrier-education
+
+Repo-specific facts for the next sync. The site is a Next.js 14 app (App Router, CSS Modules + tokens), not a component library: no dist/, no build, no Storybook. Everything below exists to make the converter treat `components/` as the package.
+
+## How the build is wired
+- **No JS dist, on purpose.** `config.entry` points at `.design-sync/no-dist`, a path that does not exist, so the converter walks up to the repo's package.json for `PKG_DIR` and synthesizes its entry from `components/` (`srcDir`). The two `[NO_DIST]` lines on every build are expected.
+- **The type tree is generated**: `buildCmd` = `node .design-sync/build-dts.mjs` runs the repo's tsc (`tsconfig.dts.json`, declaration-only) into the gitignored `.design-sync/.cache/dts/`, rewrites `@/…` aliases to relative paths, moves the `.design-sync/` output to `design-sync/` (the converter's glob skips dot-directories), and writes the `index.d.ts` barrel. `package.json` `types` points at that barrel — TypeScript and Next ignore the field for an app; it exists only for the converter. Run `buildCmd` before every converter build; it is fast (~5s).
+- **Host adapters** (`.design-sync/shims/`, mapped in `.design-sync/tsconfig.json` `paths`, which the converter's alias plugin reads; exact keys are listed BEFORE the `@/*` wildcard because the plugin takes the first match): `next/link` → plain anchor; `next/image` → plain `<img>` (`/…` sources prefixed with https://www.unbarrier.me); `next/navigation` → inert router/usePathname; `@/app/actions` and `@/app/readiness-check/actions` → inert server actions resolving to the success state. Without these, Next's client runtime references `process.env.__NEXT_*` (not defined in the bundle) and the server-action files pull `next/headers`, Resend and MailerLite into the browser bundle. `@/lib/readiness-check` is pinned explicitly because `lib/readiness-check.ts` sits beside `lib/readiness-check/` and the alias plugin resolved the directory first.
+- **`.design-sync/entry.tsx`** (extraEntries) imports `app/globals.css` (tokens + type defaults; the site loads it from `app/layout.tsx`) and `shims/font-vars.css` (`--font-outfit/--font-lexend/--font-comfortaa`, which next/font normally defines), re-exports the default-export components under `components/isp-audit/` and `app/isp-audit/layout.tsx` (as `IspAuditLayout`, pinned via componentSrcMap), and defines `PageGround`, the preview/page ground provider (`cfg.provider`; excluded from the component list).
+- **Fonts** are self-hosted latin variable subsets of Outfit, Lexend, Comfortaa (Google Fonts, OFL) in `.design-sync/fonts/`, wired via `extraFonts`.
+- **`dtsPropsFor`** hand-writes the props bodies for the nine components whose props are cross-file types the extractor cannot flatten (Post, QuestionSet, AuditResponse, HelloLink, DomainScore, BlockNode, ScoreValue). If `lib/notion.ts` Post, `lib/isp-audit/types.ts`, `lib/isp-audit/summary.ts` DomainScore or `lib/hello-links.ts` HelloLink change shape, update these strings.
+- `guidelinesGlob: []` — `docs/` holds setup/handover notes (env var names, Vercel steps), not design guidance; they must not be uploaded.
+- The card override list (`overrides`) puts fixed-position chrome (Nav, MobileNavDrawer) in single mode and every full-bleed band/form/table in column mode.
+
+## Known render warns (triaged, expected)
+- `[EXPORT_COLLISION] ./.design-sync/entry.tsx exports N name(s) the main package also exports` — false positive: the synthesized entry's `export *` does not carry default exports, so the runtime binding for AuditForm etc. is the entry's, which is the intended one (validate confirms 45 fn exports on `window.Unbarrier`).
+- `[TOKENS_MISSING] --ia-*` (first build only, before IspAuditLayout was added; now "1 missing, below threshold") — the isp-audit tokens are class-scoped on the route layout, not `:root`.
+- Preview cards for `AplsBadge`/`CredentialStrip` show a broken image when the capture machine has no network: the badge is Apple's SVG served from unbarrier.me by design (never inlined, never recoloured).
+
+## Re-sync risks (what can go stale silently)
+- `dtsPropsFor` strings duplicate five lib types (see above) — they rot if those types change; the emitted `.d.ts` will not warn.
+- The host adapters mirror Next 14.2's `next/link`, `next/image`, `next/navigation` and the two action modules' exported names. A new server-action module imported by a component needs a new shim + `paths` entry, or the bundle pulls server code.
+- `InclusionStrategyBand` and the nav's inclusion-strategy item are date-gated (`lib/inclusion-strategy-promo.ts`, retire after 31 Dec 2026): their previews render empty after that date; retire the previews with the promotion.
+- Fonts are pinned Google Fonts file versions; the site itself loads them through next/font. If the brand faces change, replace the woff2 files and `fonts.css`.
+- Build assumptions: node 22, esbuild + ts-morph installed in `.ds-sync/`, playwright 1.56.0 (chromium build 1194) for validate/capture. `/opt/pw-browsers` here; elsewhere `npx playwright install chromium` or set `DS_CHROMIUM_PATH`.
+- `Section` `ground="tint"` is superseded on the site (home only) and the preview does not show it on purpose.

@@ -2,6 +2,7 @@
   "name": "unbarrier-education",
   "version": "0.1.0",
   "private": true,
+  "types": ".design-sync/.cache/dts/index.d.ts",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

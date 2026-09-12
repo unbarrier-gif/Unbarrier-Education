@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "baseUrl": "..",
+    "paths": {
+      "@/app/actions": [
+        "./.design-sync/shims/app-actions.ts"
+      ],
+      "@/app/readiness-check/actions": [
+        "./.design-sync/shims/readiness-actions.ts"
+      ],
+      "next/link": [
+        "./.design-sync/shims/next-link.tsx"
+      ],
+      "next/image": [
+        "./.design-sync/shims/next-image.tsx"
+      ],
+      "next/navigation": [
+        "./.design-sync/shims/next-navigation.ts"
+      ],
+      "@/lib/readiness-check": [
+        "./lib/readiness-check.ts"
+      ],
+      "@/*": [
+        "./*"
+      ]
+    }
+  }
+}

@@ -1,0 +1,8 @@
+/* In the site, next/font/google defines these three variables on <html>
+   (app/layout.tsx). Outside Next.js the families come from fonts/fonts.css,
+   so the variables are defined here with the same family names. */
+:root {
+  --font-outfit: 'Outfit';
+  --font-lexend: 'Lexend';
+  --font-comfortaa: 'Comfortaa';
+}

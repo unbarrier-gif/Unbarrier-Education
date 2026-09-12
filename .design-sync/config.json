@@ -1,0 +1,123 @@
+{
+  "pkg": "unbarrier-education",
+  "globalName": "Unbarrier",
+  "shape": "package",
+  "buildCmd": "node .design-sync/build-dts.mjs",
+  "entry": ".design-sync/no-dist",
+  "srcDir": "components",
+  "tsconfig": ".design-sync/tsconfig.json",
+  "extraEntries": [
+    "./.design-sync/entry.tsx"
+  ],
+  "extraFonts": [
+    ".design-sync/fonts/fonts.css"
+  ],
+  "provider": {
+    "component": "PageGround"
+  },
+  "componentSrcMap": {
+    "PageGround": null,
+    "IspAuditLayout": "app/isp-audit/layout.tsx"
+  },
+  "guidelinesGlob": [],
+  "overrides": {
+    "Nav": {
+      "cardMode": "single",
+      "viewport": "1200x220"
+    },
+    "MobileNavDrawer": {
+      "cardMode": "single",
+      "viewport": "420x760"
+    },
+    "Footer": {
+      "cardMode": "column"
+    },
+    "Section": {
+      "cardMode": "column"
+    },
+    "BlogHero": {
+      "cardMode": "column"
+    },
+    "BlogIndex": {
+      "cardMode": "column"
+    },
+    "PostHero": {
+      "cardMode": "column"
+    },
+    "PostFooter": {
+      "cardMode": "column"
+    },
+    "PreviewBanner": {
+      "cardMode": "column"
+    },
+    "NotionRenderer": {
+      "cardMode": "column"
+    },
+    "IAmChooser": {
+      "cardMode": "column"
+    },
+    "SevenQuestions": {
+      "cardMode": "column"
+    },
+    "NewsletterBand": {
+      "cardMode": "column"
+    },
+    "InclusionStrategyBand": {
+      "cardMode": "column"
+    },
+    "SayHiForm": {
+      "cardMode": "column"
+    },
+    "TodayBlock": {
+      "cardMode": "column"
+    },
+    "CredentialStrip": {
+      "cardMode": "column"
+    },
+    "ScopeLine": {
+      "cardMode": "column"
+    },
+    "IspAuditLayout": {
+      "cardMode": "column"
+    },
+    "IspAuditShell": {
+      "cardMode": "column"
+    },
+    "AuditForm": {
+      "cardMode": "column"
+    },
+    "Heatmap": {
+      "cardMode": "column"
+    },
+    "ReadinessCheck": {
+      "cardMode": "column"
+    },
+    "AdminLoginForm": {
+      "cardMode": "column"
+    },
+    "ResponseManager": {
+      "cardMode": "column"
+    },
+    "RadarChart": {
+      "cardMode": "column"
+    },
+    "CatalogueChips": {
+      "cardMode": "column"
+    },
+    "PlatformSelect": {
+      "cardMode": "column"
+    },
+    "ScaleSelector": {
+      "cardMode": "column"
+    },
+    "DownloadResultsButton": {
+      "cardMode": "column"
+    },
+    "StraplineLockup": {
+      "cardMode": "column"
+    },
+    "StrandLockup": {
+      "cardMode": "column"
+    }
+  }
+}

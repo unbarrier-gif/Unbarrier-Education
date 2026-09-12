@@ -1,0 +1,25 @@
+/* The three brand faces, self-hosted for the design build. Variable-weight
+   latin subsets from Google Fonts (SIL Open Font License). In the site these
+   load through next/font/google in app/layout.tsx; here they ship with the
+   bundle so every design renders in the real faces. */
+@font-face {
+  font-family: 'Outfit';
+  font-style: normal;
+  font-weight: 100 900;
+  font-display: swap;
+  src: url(./outfit-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Lexend';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(./lexend-latin.woff2) format('woff2');
+}
+@font-face {
+  font-family: 'Comfortaa';
+  font-style: normal;
+  font-weight: 300 700;
+  font-display: swap;
+  src: url(./comfortaa-latin.woff2) format('woff2');
+}
