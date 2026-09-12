@@ -2,6 +2,18 @@
 
 Repo-specific facts for the next sync. The site is a Next.js 14 app (App Router, CSS Modules + tokens), not a component library: no dist/, no build, no Storybook. Everything below exists to make the converter treat `components/` as the package.
 
+## How to run a sync on any machine
+```sh
+npm ci                                   # the repo's own install (node 22)
+S=<design-sync skill dir>                # the /design-sync skill's base directory
+mkdir -p .ds-sync && cp -r "$S"/package-build.mjs "$S"/package-validate.mjs "$S"/package-capture.mjs "$S"/resync.mjs "$S"/lib "$S"/storybook .ds-sync/
+echo '{"name":"ds-sync-deps","private":true}' > .ds-sync/package.json
+(cd .ds-sync && npm i esbuild ts-morph @types/react playwright@1.56.0)   # playwright pinned to the cached chromium build here; elsewhere any playwright + `npx playwright install chromium`
+node .design-sync/build-dts.mjs          # cfg.buildCmd: the component API (.d.ts) tree
+node .ds-sync/resync.mjs --config .design-sync/config.json --node-modules ./node_modules --out ./ds-bundle [--remote .design-sync/.cache/remote-sync.json]
+```
+The driver builds, diffs, validates and captures; open `ds-bundle/.review.html` (serve `ds-bundle/`) to eyeball every card. Upload per the skill's §5 (`DesignSync`), which needs `/design-login` in an interactive session — the first sync (12 Sep 2026) was built and verified in a headless session that could not authorise, so the project has never been uploaded and `projectId` is still unset. On the first interactive run: create the project, record `projectId` here, run the driver without `--remote`, and upload everything.
+
 ## How the build is wired
 - **No JS dist, on purpose.** `config.entry` points at `.design-sync/no-dist`, a path that does not exist, so the converter walks up to the repo's package.json for `PKG_DIR` and synthesizes its entry from `components/` (`srcDir`). The two `[NO_DIST]` lines on every build are expected.
 - **The type tree is generated**: `buildCmd` = `node .design-sync/build-dts.mjs` runs the repo's tsc (`tsconfig.dts.json`, declaration-only) into the gitignored `.design-sync/.cache/dts/`, rewrites `@/…` aliases to relative paths, moves the `.design-sync/` output to `design-sync/` (the converter's glob skips dot-directories), and writes the `index.d.ts` barrel. `package.json` `types` points at that barrel — TypeScript and Next ignore the field for an app; it exists only for the converter. Run `buildCmd` before every converter build; it is fast (~5s).
