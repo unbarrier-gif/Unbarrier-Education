@@ -73,7 +73,7 @@ All env vars live in Vercel's project settings. Mirror the structure in `.env.ex
 app/
   layout.tsx              fonts (next/font), Plausible, root metadata
   globals.css             design tokens (verbatim from colors_and_type.css)
-  page.tsx                redirects to /hello
+  page.tsx                the home page (rebuilt 13 Sep 2026, see below)
   not-found.tsx           on-brand 404
   hello/
     page.tsx              the page. Notion-driven card groups, plus one static
@@ -268,6 +268,45 @@ The same limit governs the six panels (`--panel-green`, `--panel-lightblue`,
 all six and `--text-faint` fails on every one, so panel copy uses
 `--text-muted` or `--text-subtle` only. Measure any new ground or panel
 before shipping it. Do not lower a text token to make one fit.
+
+## The staged rebuild (13 Sep 2026)
+
+Five routes were recreated from the design handover `design_handoff_unbarrier_site`
+(the `.dc.html` prototypes, one screen per route). The prototypes are design
+references, not code: every screen was rebuilt with the library components and
+the tokens in `app/globals.css`. Block ids from the prototypes (`b0`…`b6`,
+`a0`…`a3`, `c0`…`c8`, `v0`…`v7`, `e0`…`e3`, `rc0`…`rc4`) are kept as ids on the
+wrappers so a question can name a block.
+
+| stage | route(s) | strand | what it is |
+|---|---|---|---|
+| 1 | `/` | spring green | `app/page.tsx` — hero → credential band → thesis → the i-am chooser → the seven questions → free resources → close |
+| 2 | `/audit`, `/readiness-check` | pearl aqua | `/audit` is a pointer to the check, never an embed. The check is rebuilt around `lib/readiness-check/result.ts`: a seventh "i don't know" option reported as a finding, band words only (reaching · patchy · not reaching), "start here", copy-as-text. Scoring is the engine's, 1:1. |
+| 3 | `/access` | princeton orange | tiers from `lib/pricing.ts`; the trust tier and the retainer sit behind flags |
+| 4 | `/voice` | orchid mist | legal hold on the instrument: no delivered/tool split, no cohorts. Closes on "we agree how you will know it worked, and when we will check." Still noindex and out of the nav until `voicePublic`. |
+| 5 | `/hello`, `/hello/admin`, `/hello/sign-out` | spring green | public page shows the three live resources (`lib/hello-shelf.ts`) and the today block from Notion. Signed in (the ISP dashboard passcode, `/api/isp-audit/login`) Nici edits today's heading and order; both write back to the Notion "hello links" table. |
+
+**Flags.** Every open decision from the handover is a flag in `lib/site-flags.ts`,
+never a hard-coded pick. Off and *not built* until decided in Notion:
+`emailStep`, `shareCode` (readiness check), `voicePublic`, `handsMoveOnHello`.
+`showFigures` (the £900m / 276,890 cards on /access) ships **off** because the
+handover's binding rules say never to cite either figure.
+
+**Booking.** `BOOKING_URL` is `/book` — the 307 in `next.config.js` to the live
+calendar. No button links the calendar url directly.
+
+**The seven questions.** `components/SevenQuestions.tsx` carries the 1 Sep 2026
+set (provision · access · design · capability · belonging · trust · evidence),
+synced to the voice baseline paper. Home, /access and /voice render the same
+component; nothing hand-builds the list.
+
+**Printable documents.** `docs/print/*.html` are the standalone sources
+(sentence case, white paper) and `public/*.pdf` the rendered pdfs at stable
+urls — `lib/documents.ts` names them. `scripts/build-pdfs.sh` re-renders with
+headless Chromium (no npm dependency); the brand faces are self-hosted in
+`docs/print/fonts/` because the render has to work offline.
+`docs/print/transform.py` is the one-off that turned a `.dc.html` prototype
+into a source, kept so a re-issued prototype can be converted the same way.
 
 ## Branch / PR model
 
