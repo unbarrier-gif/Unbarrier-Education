@@ -553,11 +553,34 @@
   margin: 0;
 }
 
-.numLead {
+/* A numbered step as a row: the numeral on a filled circle, then the text
+   (a1 on /audit). The circle is decorative; the lead phrase carries the
+   route accent. */
+.stepRow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.stepNum {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--route-accent);
+  color: var(--amethyst);
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 800;
+  font-size: var(--fs-small);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepLead {
   color: var(--route-accent);
-  margin-right: var(--space-3);
+  font-weight: 700;
 }
 
 .small {

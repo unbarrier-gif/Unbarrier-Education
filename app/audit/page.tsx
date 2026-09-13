@@ -23,7 +23,7 @@ import styles from '@/app/route-page.module.css';
 // isAudit, a0–a3). The block ids stay on the wrappers.
 //
 //   a0  hero (pearl-aqua glow) · eyebrow · h1 · lede · primary + ghost
-//   a1  what actually happens (second)  · three numbered lines · three paper cards
+//   a1  what actually happens (second)  · three numbered steps · three paper cards
 //   a2  the pointer block (deep)        · what the check is — explain, don't sell
 //   a3  close (well, loose)             · readiness check primary + book ghost
 //
@@ -75,10 +75,21 @@ export const metadata: Metadata = {
   },
 };
 
-const WHAT_HAPPENS: string[] = [
-  'one day on site. lessons, not meetings. we sit where the learner sits.',
-  'the seven questions, asked of the child, the ta, the teacher, the it lead and the person who signed the order. all five, or it isn’t an audit.',
-  'a written baseline inside two weeks — what reached the child, what didn’t, and the three things to change before you spend anything else.',
+// The three steps in a1. The lead phrase is bold pearl aqua; the numeral sits
+// on a filled circle and is decorative — order is carried by the text.
+const WHAT_HAPPENS: { lead: string; body: string }[] = [
+  {
+    lead: 'one day on site.',
+    body: 'lessons, not meetings. we sit where the learner sits.',
+  },
+  {
+    lead: 'the seven questions,',
+    body: 'asked of the child, the ta, the teacher, the it lead and the person who signed the order. all five, or it isn’t an audit.',
+  },
+  {
+    lead: 'a written baseline inside two weeks',
+    body: '— what reached the child, what didn’t, and the three things to change before you spend anything else.',
+  },
 ];
 
 const SERVICE_SCHEMA = {
@@ -155,12 +166,15 @@ export default function AuditPage() {
             what actually happens, and what it costs you.
           </h2>
           <ol className={styles.numbered}>
-            {WHAT_HAPPENS.map((line, i) => (
-              <li key={line} className={styles.numberedItem}>
-                <strong className={styles.numLead}>
+            {WHAT_HAPPENS.map((step, i) => (
+              <li key={step.lead} className={`${styles.numberedItem} ${styles.stepRow}`}>
+                <span className={styles.stepNum} aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
-                </strong>
-                {line}
+                </span>
+                <span>
+                  <strong className={styles.stepLead}>{step.lead}</strong>{' '}
+                  {step.body}
+                </span>
               </li>
             ))}
           </ol>
