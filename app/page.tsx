@@ -206,14 +206,15 @@ export default function HomePage() {
         {/* b6 — close · subscribe · footer */}
         <div id="b6">
           <Section ground="well" space="loose" labelledBy="closing">
+            {/* Heading and lede: Nici, 13 Sep 2026 — the close leads with the
+                check (the primary) and offers the call second (the ghost). */}
             <h2 id="closing" className={styles.closeHeading}>
-              forty-five minutes. no deck, no pitch, no pipeline.
+              five minutes. nine questions. one honest answer.
             </h2>
             <p className={styles.closeBody}>
-              bring one thing you bought and aren&rsquo;t sure about.
-              you&rsquo;ll leave knowing where to look first. if we&rsquo;re
-              not the right people for it, we&rsquo;ll tell you on the call
-              rather than after the invoice.
+              find out whether what you bought is reaching learners. if
+              you&rsquo;d rather talk it through first, forty-five minutes, no
+              deck, no pitch.
             </p>
             <div className={styles.ctaRow}>
               <Button href={READINESS_CHECK_HREF} color="var(--spring-green)">
