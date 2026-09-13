@@ -191,6 +191,9 @@ export default function AuditPage() {
             <h2 id="a-closing" className={styles.closeHeading}>
               start with five minutes. the day comes after.
             </h2>
+            <p className={styles.closeLine}>
+              the discovery day is {PRICE_DISCOVERY_DAY}. one day, no lock-in.
+            </p>
             <div className={styles.ctaRow}>
               <Button href={READINESS_CHECK_HREF} color="var(--pearl-aqua)">
                 {READINESS_CHECK_LABEL}
