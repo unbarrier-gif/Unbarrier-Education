@@ -44,10 +44,10 @@ import styles from '@/app/route-page.module.css';
 // PRICES LIVE IN lib/pricing.ts, not inline. One cta per page: book a
 // discovery call. The close's ghost points down the ladder to /audit.
 //
-// THE FIGURES (c2). The prototype carries £900m and 276,890 behind
-// showFigures. The handover's binding rules say never cite either, so the flag
-// ships OFF here — see lib/site-flags.ts. The third card ("not asked") has no
-// figure and is the one that survives without them.
+// THE FIGURE RULE (13 Sep 2026, lib/site-flags.ts): £500 is the only live
+// figure on the site. So showFigures is OFF (no £900m, no 276,890) and pricing
+// is 'in conversation' (no tier prices) until Nici flips them. The "not asked"
+// card carries no figure and is the one that survives.
 
 const CANONICAL = 'https://www.unbarrier.me/access';
 
@@ -194,24 +194,29 @@ const SERVICE_SCHEMA = {
     '@type': 'EducationalAudience',
     educationalRole: 'Schools and multi-academy trusts',
   },
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'advisory',
-      price: '2250',
-      priceCurrency: 'GBP',
-      url: CANONICAL,
-      availability: 'https://schema.org/InStock',
-    },
-    {
-      '@type': 'Offer',
-      name: 'partner · single school',
-      price: '6000',
-      priceCurrency: 'GBP',
-      url: CANONICAL,
-      availability: 'https://schema.org/InStock',
-    },
-  ],
+  // Priced offers only when the page publishes its tiers (the figure rule).
+  ...(SITE_FLAGS.pricing !== 'in conversation'
+    ? {
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'advisory',
+            price: '2250',
+            priceCurrency: 'GBP',
+            url: CANONICAL,
+            availability: 'https://schema.org/InStock',
+          },
+          {
+            '@type': 'Offer',
+            name: 'partner · single school',
+            price: '6000',
+            priceCurrency: 'GBP',
+            url: CANONICAL,
+            availability: 'https://schema.org/InStock',
+          },
+        ],
+      }
+    : {}),
 };
 
 function TierCard({ tier }: { tier: Tier }) {

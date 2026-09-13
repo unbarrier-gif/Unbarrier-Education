@@ -8,6 +8,7 @@ import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { Section, type SectionGround } from '@/components/Section';
 import { PRICE_ACCESS_ADVISORY, PRICE_DISCOVERY_DAY } from '@/lib/pricing';
+import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from '@/app/route-page.module.css';
 
 // /faq — a standalone route with its own url, not a shared component and not
@@ -136,7 +137,11 @@ const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
           // "in full" deleted (Nici, 29 Aug 2026) — after the trust-tier
           // hold on /access it was no longer true. The matching line on
           // /access had the same deletion.
-          `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published on the access page.`,
+          // The figure rule (lib/site-flags.ts): the entry price shows only
+          // when /access publishes its tiers.
+          SITE_FLAGS.pricing === 'in conversation'
+            ? 'a partnership year is quoted as one number for the year and invoiced by term. the shape of it is on the access page.'
+            : `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published on the access page.`,
           'everything else is quoted as a package: one number for a defined outcome, not a stack of day invoices.',
           '50% on order, 50% at the midpoint.',
           'we don’t do free scoping. the discovery day is the scoping, and it is priced honestly rather than given away and recovered somewhere you can’t see.',
