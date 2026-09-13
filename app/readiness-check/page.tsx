@@ -1,42 +1,35 @@
+import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import Link from 'next/link';
-import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { ReadinessCheck } from '@/components/readiness-check/ReadinessCheck';
-import { READINESS_QUESTION_COUNT } from '@/lib/readiness-check/questions';
 import styles from './page.module.css';
 
-// Copy from the approved page drafts (28 Aug 2026), /audit → "try it first —
-// the free readiness check". The promise there is the one constraint on this
-// whole page: "five minutes, and you see something useful BEFORE any sign-up
-// wall". There is no wall in this route, deferred or otherwise.
+// /readiness-check — its own route, its own nav and footer (Nav active="audit":
+// the check is the audit strand's free rung). Stage 2 of the 13 Sep 2026
+// rebuild, from Readiness Check.dc.html. The hero is rc0; everything after it
+// is the ReadinessCheck component (rc1–rc4).
 //
-// NO EMAIL CAPTURE ON THIS ROUTE (10 Sep 2026). The subscribe block and the
-// follow-up form's opt-in both came off: the opt-in showed one consent wording
-// and wrote another to MailerLite. Removed pending a rebuild. The newsletter
-// is pointed at with a plain text link to /notice — no form, no checkbox, no
-// second wording to get wrong.
+// No newsletter band on this page (handover, 13 Sep). No credential strip:
+// the prototype goes hero → questions.
 
 const CANONICAL = '/readiness-check';
 
 export const metadata: Metadata = {
   title: 'the free readiness check · unbarrier',
   description:
-    'nine questions, five minutes, and a result on screen straight away. an honest snapshot of where access is reaching learners in your setting, and where it isn’t.',
+    'nine questions, five minutes, no email needed. one person’s read on one day of where access is reaching learners in your setting, and where it isn’t — with the one place to start.',
   alternates: { canonical: CANONICAL },
   openGraph: {
     title: 'the free readiness check · unbarrier',
     description:
-      'nine questions, five minutes, and a result on screen straight away. no sign-up wall.',
+      'nine questions, five minutes, no email needed. three words per question, and the one to start with.',
     url: CANONICAL,
     type: 'website',
     images: [
       {
-        // A segment that exports its own `openGraph` does not inherit the
-        // file-based card — openGraph is replaced per segment, not merged.
         url: '/opengraph-image.png',
         width: 1200,
         height: 630,
@@ -49,48 +42,32 @@ export const metadata: Metadata = {
 export default function ReadinessCheckPage() {
   return (
     <>
-      <Nav />
-      <main className={styles.main}>
-        <Glow color="var(--pearl-aqua)" left="-120px" top="4%" size={620} opacity={0.09} />
+      <Nav active="audit" />
+      <main
+        className={styles.main}
+        style={{ '--route-accent': 'var(--pearl-aqua)' } as CSSProperties}
+      >
+        {/* rc0 — hero */}
+        <div id="rc0" className={styles.hero}>
+          <Glow color="var(--pearl-aqua)" left="-8%" top="0%" size={540} opacity={0.1} />
+          <header className={styles.heroInner}>
+            <Eyebrow color="var(--pearl-aqua)">
+              the readiness check · free · five minutes · no email needed
+            </Eyebrow>
+            <h1 className={styles.heading}>
+              you can see what isn&rsquo;t working.{' '}
+              <span className={styles.accent}>you don&rsquo;t hold the budget.</span>{' '}
+              start here.
+            </h1>
+            <p className={styles.lede}>
+              this is not a finding about your school. it is one person&rsquo;s
+              read on one day, and we would rather say that than let you carry
+              it into a meeting as though it were.
+            </p>
+          </header>
+        </div>
 
-        <header className={styles.hero}>
-          <Eyebrow color="var(--pearl-aqua)">free · no sign-up</Eyebrow>
-          <h1 className={styles.heading}>
-            the readiness check.
-          </h1>
-          <p className={styles.lede}>
-            {READINESS_QUESTION_COUNT} questions, about five minutes, and your
-            result appears on this page as soon as you ask for it. there is
-            nothing to sign up to and nothing to pay.
-          </p>
-          <ul className={styles.promises}>
-            <li>an honest snapshot of where access is reaching learners, and where it isn’t.</li>
-            <li>something you can forward upwards — so the person who spots the need can put it in front of the person who holds the budget.</li>
-            <li>the same seven questions every piece of our work runs on.</li>
-          </ul>
-          <CredentialStrip />
-        </header>
-
-        <section className={styles.section} aria-labelledby="the-check">
-          <h2 id="the-check" className={styles.sectionHeading}>
-            rate each one as it actually is, not as it should be.
-          </h2>
-          <p className={styles.body}>
-            answer for a setting you know well. if a question doesn’t apply, or
-            you genuinely can’t say, leave it — a skipped question is left out
-            of the result rather than counted as a nought.
-          </p>
-          <ReadinessCheck route={CANONICAL} />
-        </section>
-
-        <section className={styles.section} aria-label="the newsletter">
-          <p className={styles.noticeLine}>
-            the sunday newsletter, notice, has its own page:{' '}
-            <Link href="/notice" className={styles.noticeLink}>
-              unbarrier.me/notice
-            </Link>
-          </p>
-        </section>
+        <ReadinessCheck route={CANONICAL} />
 
         <Footer variant="full" />
       </main>

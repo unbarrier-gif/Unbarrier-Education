@@ -1,0 +1,6 @@
+/* Self-hosted for pdf rendering (SIL Open Font License) — latin subsets from
+   Google Fonts, fetched 13 Sep 2026. Lexend and Outfit are variable fonts, so
+   one file each covers every weight the documents use. */
+@font-face { font-family: 'Comfortaa'; font-style: normal; font-weight: 700; src: url(comfortaa-700.woff2) format('woff2'); }
+@font-face { font-family: 'Lexend'; font-style: normal; font-weight: 100 900; src: url(lexend.woff2) format('woff2'); }
+@font-face { font-family: 'Outfit'; font-style: normal; font-weight: 100 900; src: url(outfit.woff2) format('woff2'); }
