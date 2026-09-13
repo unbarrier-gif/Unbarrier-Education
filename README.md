@@ -303,7 +303,10 @@ calendar. No button links the calendar url directly.
 **The seven questions.** `components/SevenQuestions.tsx` carries the 1 Sep 2026
 set (provision · access · design · capability · belonging · trust · evidence),
 synced to the voice baseline paper. Home, /access and /voice render the same
-component; nothing hand-builds the list.
+component; nothing hand-builds the list. On /access and /voice a `CtaCard`
+(`seven_questions_paper`, in the evidence strand's pearl aqua on /access and
+orchid mist on /voice) sits straight under the block and routes out to the
+one-pager at `/the-takeaway.html`; home's block stays bare on purpose.
 
 **Printable documents.** `docs/print/*.html` are the standalone sources
 (sentence case, white paper) and `public/*.pdf` the rendered pdfs at stable

@@ -4,6 +4,7 @@ import { existsSync } from 'node:fs';
 import { join } from 'node:path';
 import Image from 'next/image';
 import { Button } from '@/components/Button';
+import { CtaCard } from '@/components/CtaCard';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
@@ -22,9 +23,9 @@ import voice from './page.module.css';
 // internal review panel and is never public). The block ids stay on the
 // wrappers.
 //
-//   v0  hero (orchid glow) · primary /book · ghost scrolls to the seven questions
+//   v0  hero (orchid glow) · primary /book · ghost → the seven-questions one-pager
 //   v1  the layer under the work (ground-400)
-//   v2  the seven questions (second) — the library component, 1 Sep set
+//   v2  the seven questions (second) — the library component, 1 Sep set · the one-pager card under it
 //   v4  what a baseline is (base)
 //   v4b what you get back (second) — three cards; report images when present
 //   v5  two purposes, two consents (base)
@@ -196,8 +197,10 @@ export default function VoicePage() {
               <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
                 {BOOKING_LABEL}
               </Button>
-              <Button href="#v2" variant="ghost">
-                the seven questions →
+              {/* The one-pager is a static file in public/, so it goes out
+                  as a plain <a>, never through next/link. */}
+              <Button href="/the-takeaway.html" variant="ghost" external>
+                the seven questions, on one page →
               </Button>
             </div>
           </header>
@@ -236,6 +239,25 @@ export default function VoicePage() {
             intro="asked from the learner's side. pick any moment in a lesson, and ask all seven of it. that is the whole method. it needs no software, and it is the part with the most value in it."
             ground="second"
           />
+          {/* The route out of the block: the seven questions on one page.
+              Same ground, pulled up under the list (.paperCardUnder). */}
+          <Section measure="route" ground="second" labelledBy="seven-q-paper">
+            <div className={styles.paperCardUnder}>
+              <Eyebrow color="var(--orchid-mist)">
+                <span id="seven-q-paper">take the seven questions with you</span>
+              </Eyebrow>
+              <CtaCard
+                card="seven_questions_paper"
+                title="the seven questions"
+                meta="the instrument, on one page. take it into your next planning meeting."
+                detail="a4 · one side · free, no email"
+                href="/the-takeaway.html"
+                external
+                accent="var(--orchid-mist)"
+                accentRgb="219, 125, 204"
+              />
+            </div>
+          </Section>
         </div>
 
         {/* v4 — what a baseline is */}
