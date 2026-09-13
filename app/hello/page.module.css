@@ -1,141 +1,132 @@
-/* /hello — phone first. Someone is using this one-handed, standing up, in a
-   room, on bad wifi. Every rule here is in service of that. */
+/* /hello — the stage page (13 Sep 2026). Someone is using this one-handed,
+   standing up, in a room, on bad wifi. The today block sits directly under a
+   short hero so the thing Nici just named is the first thing on a phone.
+   Tokens only; the ground ladder separates the sections. */
 
 .main {
-  max-width: 720px;
+  min-height: 100vh;
+  background: var(--bg);
+  position: relative;
+  overflow: hidden;
+}
+
+.main section {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* ── e0 hero ──────────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  padding: calc(var(--nav-height) + var(--space-10)) clamp(20px, 5vw, 64px)
+    var(--space-8);
+  overflow: hidden;
+}
+
+.heroInner {
+  position: relative;
+  max-width: 820px;
   margin: 0 auto;
-  /* Tight top padding: the first link has to be above the fold on a 320px-wide
-     phone, so the space between the nav and the intro is the minimum that
-     still reads as a gap. */
-  padding: calc(var(--nav-height) + var(--space-4)) var(--space-5) 0;
   display: flex;
   flex-direction: column;
-  gap: clamp(2rem, 5vw, 3.5rem);
+  gap: var(--space-5);
 }
 
-/* ── intro — two lines, not a hero ────────────────────────────────── */
-
-.intro {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-.headline {
+.heading {
   font-family: var(--font-heading);
   font-weight: 800;
-  /* Deliberately smaller than every other h1 on the site. This is a link hub;
-     the headline's job is to orient someone in two seconds and then get out of
-     the way of the links. */
-  font-size: clamp(1.4rem, 4.2vw, 1.9rem);
-  line-height: 1.18;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--text);
   margin: 0;
-  max-width: 24ch;
+  max-width: 16ch;
 }
 
-.introLine {
+.lede {
   font-family: var(--font-body);
-  font-size: var(--fs-body);
+  font-size: var(--fs-body-lg);
   line-height: var(--lh-body);
-  color: var(--text-muted);
+  color: var(--fg-muted);
+  max-width: 50ch;
   margin: 0;
-  max-width: 46ch;
 }
 
-/* ── card groups ──────────────────────────────────────────────────── */
+/* ── e1 today ─────────────────────────────────────────────────────── */
+
+.today {
+  padding: 0 clamp(20px, 5vw, 64px) var(--space-10);
+}
+
+.todayInner {
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+/* ── e2 / e2b the shelves ─────────────────────────────────────────── */
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-3) 0 var(--space-2);
+  max-width: 22ch;
+}
+
+.sectionLine {
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 50ch;
+  margin: 0 0 var(--space-5);
+}
 
 .cards {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-4);
-  scroll-margin-top: var(--nav-height);
+  display: grid;
+  gap: var(--space-3);
+  max-width: 620px;
 }
 
-.eyebrow {
+.cardWithPill {
+  display: grid;
+  gap: var(--space-2);
+}
+
+/* The reading-time pill: yellow, labels only, new world blue text. */
+.pill {
+  justify-self: start;
+  background: var(--school-bus-yellow);
+  color: var(--amethyst);
   font-family: var(--font-heading);
-  font-size: var(--fs-eyebrow);
   font-weight: 700;
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--school-bus-yellow);
-  margin: 0;
+  font-size: var(--fs-caption);
+  line-height: 1;
+  padding: 6px 10px;
+  border-radius: var(--radius-pill);
 }
 
-/* 12px between adjacent tap targets. WCAG 2.5.8 lets a target under the
-   minimum pass if it is surrounded by enough space; the cards clear 44px on
-   their own, and this keeps a thumb from catching the neighbour. */
-.list {
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-3);
-}
-
-/* ── bands ────────────────────────────────────────────────────────── */
-
-.bandWrap {
-  position: relative;
-  overflow: hidden;
-  border-radius: 18px;
-}
-
-/* ── close — the one call to action ───────────────────────────────── */
-
-.close {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--space-3);
-  scroll-margin-top: var(--nav-height);
-}
+/* ── e3 close ─────────────────────────────────────────────────────── */
 
 .closeHeading {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: clamp(1.25rem, 3.4vw, 1.6rem);
+  font-size: clamp(1.4rem, 3vw, 1.95rem);
   line-height: 1.2;
   letter-spacing: var(--ls-tight);
   color: var(--text);
-  margin: 0;
-  max-width: 24ch;
+  margin: 0 0 var(--space-5);
+  max-width: 22ch;
 }
 
-.closeLine {
-  font-family: var(--font-body);
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
-  color: var(--text-muted);
-  margin: 0 0 var(--space-2);
-  max-width: 46ch;
-}
-
-/* ── data note ────────────────────────────────────────────────────── */
-
-.dataNote {
-  font-family: var(--font-body);
-  font-size: var(--fs-small);
-  color: var(--text-muted);
-  line-height: 1.6;
-  max-width: 600px;
+.ctaRow {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-  padding-bottom: var(--space-8);
+  flex-wrap: wrap;
+  gap: var(--space-4);
 }
 
-.dataNote p {
-  margin: 0;
-}
-
-.dataNote a {
-  color: var(--text-muted);
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  transition: color 150ms ease;
-}
-
-.dataNote a:hover,
-.dataNote a:focus-visible {
-  color: var(--spring-green);
+.bandWrap {
+  padding: var(--space-10) 0 var(--space-8);
 }

@@ -228,3 +228,65 @@ export function groupLinks(
     links: links.filter((l) => l.group === group),
   })).filter((g) => g.links.length > 0);
 }
+
+// ── the signed-in screen writes back ─────────────────────────────────────
+//
+// /hello/admin edits today's heading and today's order. The source of truth
+// stays the Notion table: the heading is the Meta of the first today row (the
+// same field the public page reads), and the order is the Order number. Both
+// are plain page updates on rows that already exist; the screen never creates
+// or deletes a row — that stays in Notion.
+
+export type TodayRow = { id: string; title: string; meta: string; order: number };
+
+/** The today rows, in display order, or null when Notion isn't wired. */
+export async function getTodayRows(): Promise<TodayRow[] | null> {
+  const links = await getHelloLinks();
+  if (!links) return null;
+  return links
+    .filter((l) => isTodayGroup(l.group))
+    .map((l) => ({ id: l.id, title: l.title, meta: l.meta, order: l.order }));
+}
+
+/** Where "edit today's links in notion" goes. */
+export const HELLO_NOTION_URL = DATABASE_ID
+  ? `https://www.notion.so/${DATABASE_ID.replace(/-/g, '')}`
+  : 'https://www.notion.so';
+
+/** Writes the heading onto the first today row's Meta. False if it can't. */
+export async function setTodayHeading(heading: string): Promise<boolean> {
+  if (!notion) return false;
+  const rows = await getTodayRows();
+  const first = rows?.[0];
+  if (!first) return false;
+  try {
+    await notion.pages.update({
+      page_id: first.id,
+      properties: {
+        Meta: { rich_text: [{ type: 'text', text: { content: heading.slice(0, 200) } }] },
+      },
+    });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/** Writes Order = 1..n onto the today rows in the order given. */
+export async function setTodayOrder(ids: string[]): Promise<boolean> {
+  if (!notion) return false;
+  const rows = await getTodayRows();
+  if (!rows) return false;
+  const known = new Set(rows.map((r) => r.id));
+  if (ids.length !== rows.length || !ids.every((id) => known.has(id))) return false;
+  try {
+    await Promise.all(
+      ids.map((id, i) =>
+        notion.pages.update({ page_id: id, properties: { Order: { number: i + 1 } } }),
+      ),
+    );
+    return true;
+  } catch {
+    return false;
+  }
+}

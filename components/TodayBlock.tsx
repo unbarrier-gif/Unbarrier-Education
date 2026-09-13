@@ -30,7 +30,7 @@ export function TodayBlock({ heading, links }: Props) {
 
   return (
     <section className={styles.block} aria-labelledby="today-heading">
-      <p className={styles.label}>Your stuff from today</p>
+      <p className={styles.label}>your stuff from today</p>
       <h2 id="today-heading" className={styles.heading}>
         {heading}
       </h2>
