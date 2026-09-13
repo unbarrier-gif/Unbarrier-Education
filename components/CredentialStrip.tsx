@@ -1,48 +1,19 @@
+import Image from 'next/image';
 import { AplsBadge } from './AplsBadge';
+import { ScopeLine } from './ScopeLine';
 import styles from './CredentialStrip.module.css';
 
-// The credential strip. Sits directly under the hero on every service and
-// information page. APLS is the main route to market and it was previously
-// buried mid-sentence in the lede on every page — this pulls it out.
+// The credential strip — under the hero, on every route.
 //
-// COPY IS EXACT (two-line layout, 2 Sep 2026). Two lines, with a gap between
-// them:
+// Two variants:
+//   `line`     the two-line strip that has run under the hero since 28 Aug.
+//   `portrait` the b1 / c1 block from the 13 Sep design handover: nici's
+//              portrait, the APLS badge, the byline, one line of credentials,
+//              and the scope line under all of it. It sits on --ground-400 as
+//              its own band, full bleed, 900px measure.
 //
-//   led by nici foote — [APLS badge]
-//   apple professional learning specialist · 26 years in classrooms ·
-//   send specialist · dyslexic, dyscalculic and adhd educator
-//
-// Nothing on either line is emphasised. "apple professional learning
-// specialist" is the first item of the credential list, in the same weight
-// and colour as the rest of it.
-//
-// SEMANTICS — this is a strip of credentials, not a heading and not a list of
-// links, and it must not read as either:
-//   * two <p>s (the byline, then the credentials), never an <h*>. A heading
-//     here would inject a phantom level into every page's outline, directly
-//     under the h1, on eight routes.
-//   * no <ul>/<li>. A screen reader announcing "list, four items" in front of
-//     a byline is wrong, and it would do it on every page.
-//   * no links. Nothing here is a destination.
-//   * the "·" separators are real text, with real spaces around them, and are
-//     NOT aria-hidden. Hiding them would leave a screen reader running the
-//     four credentials together into one unpunctuated sentence. As written,
-//     each line's text content is byte-identical to the approved line, so a
-//     screen reader and a sighted reader get exactly the same thing.
-//   * the APLS badge (components/AplsBadge.tsx) is decorative — aria-hidden,
-//     no text nodes, and NO whitespace text node either side of it, so the
-//     byline's text content stays byte-identical with it in place. It sits at
-//     the end of the byline, immediately after the em-dash, and the line below
-//     already names the credential; it adds nothing to the announced string.
-//     The gap between the em-dash and the badge is the badge's own margin,
-//     never a space character. It is Apple's mark, served as supplied, and its
-//     colourway is chosen by ground: the strip sits on amethyst on every
-//     route, so it takes the white file. If the strip ever lands on a white
-//     ground, pass ground="white" — never let it inherit.
-//   * the gap between the two lines is a margin on the second <p>, from a
-//     spacing token. Not an empty paragraph, not a <br>, not a pixel value.
-//
-// Applied on the home page too (app/page.tsx), since branch D.
+// APLS stays attached to nici's name (individual accreditation), and the badge
+// is Apple's mark served as supplied — see AplsBadge.tsx.
 
 const CREDENTIALS = [
   'apple professional learning specialist',
@@ -51,7 +22,45 @@ const CREDENTIALS = [
   'dyslexic, dyscalculic and adhd educator',
 ];
 
-export function CredentialStrip() {
+/** The portrait variant's single credentials line — the handover's wording. */
+const PORTRAIT_LINE =
+  'dyslexic, dyscalculic and adhd educator · 26 years in classrooms · digital inclusion specialist';
+
+type Props = {
+  variant?: 'line' | 'portrait';
+  /** Block id, so the section can be named in a question back ("b1"). */
+  id?: string;
+};
+
+export function CredentialStrip({ variant = 'line', id }: Props) {
+  if (variant === 'portrait') {
+    return (
+      <div id={id} className={styles.band}>
+        <div className={styles.bandInner}>
+          <div className={styles.person}>
+            {/* Decorative — the byline beside it names her. */}
+            <Image
+              src="/assets/nici-avatar.png"
+              alt=""
+              aria-hidden="true"
+              width={132}
+              height={132}
+              className={styles.portrait}
+            />
+            <div className={styles.personText}>
+              <p className={styles.badgeRow}>
+                <AplsBadge ground="amethyst" />
+              </p>
+              <p className={styles.name}>led by nici foote</p>
+              <p className={styles.line}>{PORTRAIT_LINE}</p>
+            </div>
+          </div>
+          <ScopeLine />
+        </div>
+      </div>
+    );
+  }
+
   const [first, ...rest] = CREDENTIALS;
   return (
     <div className={styles.strip}>

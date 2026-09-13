@@ -1,338 +1,146 @@
 /* ========================================================================
-   The home page.
-   Same token vocabulary and rhythm as app/route-page.module.css (the six
-   routes from #68), but its own file: home has a wider measure, a hero stat
-   block and an evidence-card grid the route pages don't need, and the route
-   pages carry a per-page --route-accent that home doesn't.
+   The home page — stage 1 of the 13 Sep 2026 rebuild (Site.dc.html, b0–b6).
+   Same token vocabulary as app/route-page.module.css; its own file because
+   home reads at the 900px measure and has the hero and card row the route
+   pages don't. Every value is a token. No drawn edges: the ground ladder
+   separates the sections (b1 ground-400 · b2 deep · b3 base · b4 second ·
+   b5 deep · b6 well).
    ======================================================================== */
 
 .main {
   min-height: 100vh;
   background: var(--bg);
-  padding-top: 0;
   position: relative;
   overflow: hidden;
 }
 
-.main section {
+.main section,
+.anchor {
   scroll-margin-top: var(--nav-height);
 }
 
-/* ── hero ─────────────────────────────────────────────────────────── */
+/* ── b0 hero ──────────────────────────────────────────────────────── */
 
 .hero {
   position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: calc(var(--nav-height) + var(--space-8)) var(--space-5) var(--space-10);
+  padding: calc(var(--nav-height) + var(--space-10)) clamp(20px, 5vw, 64px)
+    var(--space-10);
+  overflow: hidden;
 }
 
-/* Hero type (resized 2 Sep 2026). --fs-display is the hero's token and this
-   is its only consumer, so the size lives on the token in globals.css, not
-   here. Line-height and letter-spacing are the same tight tokens every other
-   heading uses, so the hero tracks them rather than carrying its own values. */
+.heroInner {
+  position: relative;
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* The `site` hero size — the handover's design exploration ships this one. */
 .headline {
   font-family: var(--font-heading);
   font-weight: 800;
-  font-size: var(--fs-display);
+  font-size: var(--fs-h1);
   line-height: var(--lh-tight);
   letter-spacing: var(--ls-tight);
   color: var(--text);
   margin: 0;
-  max-width: 20ch;
-}
-
-/* Colour-only accent — the heading face never changes mid-heading. */
-.accent {
-  color: var(--spring-green);
-}
-
-/* The sourced figure directly under the headline. Given a quiet tinted
-   ground so it reads as a citation rather than as more headline. No edge:
-   the ground does the work (drawn edges came off site-wide, 2 Sep 2026). */
-.heroStat {
-  margin: var(--space-6) 0 0;
-  padding: var(--space-4) var(--space-5);
-  max-width: 58ch;
-  background: var(--panel-aqua);
-  border-radius: var(--radius-md);
-}
-
-.heroStatLine {
-  font-family: var(--font-body);
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-body);
-  color: var(--text);
-  margin: 0;
-}
-
-.heroStatFigure {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  color: var(--pearl-aqua);
-}
-
-.heroStatSource {
-  font-family: var(--font-body);
-  font-size: var(--fs-caption);
-  line-height: 1.6;
-  color: var(--text-subtle);
-  font-style: italic;
-  margin: var(--space-3) 0 0;
+  max-width: 16ch;
 }
 
 .lede {
   font-family: var(--font-body);
   font-size: var(--fs-body-lg);
   line-height: var(--lh-body);
-  color: var(--text);
-  max-width: 58ch;
-  margin: var(--space-5) 0 0;
-}
-
-/* ── sections ─────────────────────────────────────────────────────── */
-/* The old `.section` rule lived here and was applied six times, identically,
-   which is why every section on this page sat on the same ground. It has
-   moved into components/Section.module.css, where the measure travels with a
-   ground. The classes below are the CONTENT of a section, not its frame. */
-
-.sectionHeading {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
-  line-height: 1.15;
-  letter-spacing: var(--ls-tight);
-  color: var(--text);
-  margin: 0 0 var(--space-5);
-  max-width: 26ch;
-}
-
-/* The ndte statement and its display-size cycle glyph. The row keeps the
-   icon on the text colour so the glyph strokes read as currentColor and only
-   its .accent path stays spring green. */
-.statementRow {
-  display: flex;
-  align-items: flex-start;
-  gap: var(--space-4);
-  color: var(--text);
-  margin: 0 0 var(--space-5);
-}
-
-.statementRow .statement {
-  margin-bottom: 0;
-}
-
-/* A line sized as a statement rather than a heading. */
-.statement {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(1.5rem, 3.2vw, 2.05rem);
-  line-height: 1.15;
-  letter-spacing: var(--ls-tight);
-  color: var(--text);
-  margin: 0 0 var(--space-5);
-  max-width: 26ch;
-}
-
-.body {
-  font-family: var(--font-body);
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-body);
-  color: var(--text-muted);
-  max-width: 62ch;
-  margin: 0 0 var(--space-4);
-}
-
-.body:last-child {
-  margin-bottom: 0;
-}
-
-.strong {
-  color: var(--text);
-  font-weight: 700;
-}
-
-.aside {
-  font-family: var(--font-body);
-  font-size: 0.95rem;
-  line-height: var(--lh-body);
-  color: var(--text-subtle);
-  font-style: italic;
-  margin: var(--space-3) 0 0;
-  max-width: 60ch;
-}
-
-/* ── evidence cards ───────────────────────────────────────────────── */
-
-.cards {
-  list-style: none;
-  margin: 0 0 var(--space-5);
-  padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--space-4);
-}
-
-.card {
-  padding: var(--space-5);
-  background: var(--panel-aqua);
-  border-radius: var(--radius-md);
-}
-
-.cardFigure {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(1.5rem, 3.4vw, 2.1rem);
-  line-height: var(--lh-tight);
-  letter-spacing: var(--ls-tight);
-  color: var(--pearl-aqua);
-  margin: 0 0 var(--space-3);
-}
-
-.cardBody {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: var(--lh-body);
-  color: var(--text-muted);
+  color: var(--fg-muted);
+  max-width: 54ch;
   margin: 0;
-}
-
-.cardSource {
-  font-family: var(--font-body);
-  font-size: var(--fs-caption);
-  line-height: 1.6;
-  color: var(--text-subtle);
-  font-style: italic;
-  margin: 0;
-  max-width: 62ch;
-}
-
-/* ── boxed steps ──────────────────────────────────────────────────── */
-
-.options {
-  list-style: none;
-  margin: var(--space-5) 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-4);
-}
-
-.option {
-  padding: var(--space-5);
-  /* --panel-green is the ruled 10% lift over --amethyst (2 Sep 2026). Text
-     contrast is measured against the panel itself, so it holds on any ground
-     in the ladder — including the superseded --bg-tint this list still sits on. */
-  background: var(--panel-green);
-  border-radius: var(--radius-md);
-}
-
-/* The step name with its glyph. Icon plus text, always. */
-.optionLead {
-  display: flex;
-  align-items: center;
-  gap: var(--space-3);
-  color: var(--text);
-  margin: 0 0 var(--space-3);
-}
-
-.optionBody {
-  font-family: var(--font-body);
-  font-size: 1rem;
-  line-height: var(--lh-body);
-  color: var(--text-muted);
-  margin: 0;
-}
-
-/* ── bulleted lists ───────────────────────────────────────────────── */
-
-.list {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-  display: grid;
-  gap: var(--space-3);
-  max-width: 62ch;
-}
-
-.listItem {
-  position: relative;
-  font-family: var(--font-body);
-  font-size: var(--fs-body-lg);
-  line-height: var(--lh-body);
-  color: var(--text-muted);
-  padding-left: var(--space-5);
-}
-
-.listItem::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 0.72em;
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--spring-green);
-}
-
-/* ── close ────────────────────────────────────────────────────────── */
-
-.close {
-  position: relative;
-  max-width: 900px;
-  margin: 0 auto;
-  padding: clamp(3rem, 7vw, 5rem) var(--space-5);
-}
-
-.closeHeading {
-  font-family: var(--font-heading);
-  font-weight: 800;
-  font-size: clamp(1.4rem, 3vw, 1.95rem);
-  line-height: 1.2;
-  letter-spacing: var(--ls-tight);
-  color: var(--text);
-  margin: 0;
-  max-width: 30ch;
 }
 
 .ctaRow {
   display: flex;
   flex-wrap: wrap;
   gap: var(--space-4);
+  margin-top: var(--space-2);
+}
+
+/* ── sections ─────────────────────────────────────────────────────── */
+
+.sectionHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: 0 0 var(--space-5);
+  max-width: 20ch;
+}
+
+.body {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 58ch;
+  margin: 0 0 var(--space-6);
+}
+
+/* b2 — the four ndte words, icon plus text, in a row that wraps. */
+.iconRow {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.iconItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--text);
+}
+
+/* b5 — the three cards, stacked, at the card measure. */
+.cards {
+  display: grid;
+  gap: var(--space-3);
+  max-width: 620px;
+}
+
+.cardsMore {
   margin-top: var(--space-6);
 }
 
-/* The watermark — the mark, once, large and faint, on the close section's
-   ground. It sits to the RIGHT of the heading and the CTA row, never behind
-   them: at 1280 the widest text in this section ends at ~900px from the left
-   edge of the viewport and the mark starts at ~920px, so the ground under every
-   glyph is plain --bg and the measured text contrast is unchanged (see the
-   PR report for the before/after numbers). Below 960px there is no ground to
-   the right of the text, so the mark is off rather than under copy. Decorative
-   and aria-hidden; pointer-events off so it never intercepts a click. */
-.watermark {
-  position: absolute;
-  top: 50%;
-  right: -130px;
-  width: 300px;
-  height: auto;
-  transform: translateY(-50%);
+/* ── b6 close ─────────────────────────────────────────────────────── */
+
+.closeHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h2);
+  line-height: var(--lh-tight);
+  letter-spacing: var(--ls-tight);
   color: var(--text);
-  opacity: 0.05;
-  pointer-events: none;
+  margin: 0 0 var(--space-5);
+  max-width: 20ch;
 }
 
-@media (max-width: 959px) {
-  .watermark {
-    display: none;
-  }
+.closeBody {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 54ch;
+  margin: 0 0 var(--space-6);
 }
 
-/* ── high contrast ────────────────────────────────────────────────── */
-/* The card outlines come back here. In the default theme the --border-*
-   tokens are decoration and are off; in high contrast they jump to 0.45 and
-   do access work, so the same 1px rule is restored under the toggle. */
-:global(html.contrast-high) .heroStat,
-:global(html.contrast-high) .card,
-:global(html.contrast-high) .option {
-  border: 1px solid var(--border-default);
+/* The subscribe block's air, between the well and the footer. */
+.bandWrap {
+  padding: var(--space-10) 0 var(--space-8);
 }

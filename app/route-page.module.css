@@ -463,3 +463,281 @@
 :global(html.contrast-high) .question {
   border: 1px solid var(--border-default);
 }
+
+/* The 01–07 numeral in front of each question term (13 Sep 2026). Outfit,
+   like every numeral on the site; muted so the term stays the thing read. */
+.questionNumber {
+  font-family: var(--font-heading);
+  font-weight: 900;
+  font-size: 0.85em;
+  letter-spacing: 0.08em;
+  color: var(--text-subtle);
+}
+
+/* The one-line gloss under each question. Italic, quieter, its own line. */
+.questionNote {
+  display: block;
+  margin-top: var(--space-2);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+}
+
+/* ── the 13 Sep 2026 rebuild — shared by /audit, /access, /voice, /hello ── */
+
+/* The hero as its own band: full-bleed, the glow clipped to it, the column
+   at the route measure. Replaces .hero on the rebuilt routes. */
+.heroBand {
+  position: relative;
+  padding: calc(var(--nav-height) + var(--space-10)) clamp(20px, 5vw, 64px)
+    var(--space-10);
+  overflow: hidden;
+}
+
+.heroInner {
+  position: relative;
+  max-width: 820px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+.heroInner .heading {
+  margin: 0;
+  max-width: 18ch;
+  font-size: var(--fs-h1);
+  line-height: var(--lh-tight);
+}
+
+.heroInner .ctaRow {
+  margin-top: var(--space-2);
+}
+
+/* The rebuilt lede is muted, one size up. */
+.ledeMuted {
+  font-family: var(--font-body);
+  font-size: var(--fs-body-lg);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 56ch;
+  margin: 0;
+}
+
+.ledeQuiet {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 56ch;
+  margin: 0;
+}
+
+/* A numbered list of plain lines — the numeral in the heading face and the
+   route accent, the line in body. */
+.numbered {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: var(--space-5);
+  max-width: 640px;
+}
+
+.numberedItem {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+  margin: 0;
+}
+
+.numLead {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--route-accent);
+  margin-right: var(--space-3);
+}
+
+.small {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 58ch;
+  margin: var(--space-5) 0 0;
+}
+
+.spaceAbove {
+  margin-top: var(--space-8);
+}
+
+.spaceBelow {
+  margin-bottom: var(--space-6);
+}
+
+/* A run of terms, each on a lightblue panel (c6 "over time"). */
+.stages {
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--space-4);
+  max-width: 820px;
+}
+
+.stage {
+  padding: var(--space-4) var(--space-5);
+  background: var(--panel-lightblue);
+  border-radius: var(--radius-md);
+}
+
+.stageTerm {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--route-accent);
+  margin: 0 0 var(--space-2);
+}
+
+.stageBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+/* A grid of cards, three-up when there is room (c2, c5b). */
+.cardGrid {
+  list-style: none;
+  margin: var(--space-6) 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.cardGrid:last-child {
+  margin-bottom: 0;
+}
+
+/* A big numeral at the top of a card (c5b). */
+.cardNumeral {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h3);
+  line-height: 1;
+  color: var(--route-accent);
+  margin: 0 0 var(--space-2);
+}
+
+.cardTitle {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-h4);
+  letter-spacing: var(--ls-normal);
+  color: var(--text);
+  margin: 0 0 var(--space-3);
+}
+
+/* An h3 inside a section, with the rhythm the prototype gives it. */
+.subHeading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  color: var(--text);
+  margin: var(--space-8) 0 var(--space-4);
+  max-width: 24ch;
+}
+
+.subHeading.loose {
+  margin-top: var(--space-10);
+}
+
+.subHeading.accent {
+  color: var(--route-accent);
+  margin: 0 0 var(--space-3);
+}
+
+/* A plain bulleted list, browser bullets, at the body measure. */
+.plainList {
+  margin: 0;
+  padding: 0 0 0 1.2em;
+  max-width: 58ch;
+  color: var(--fg-muted);
+  display: grid;
+  gap: var(--space-2);
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+}
+
+.plainList.spaceBelow {
+  margin-bottom: var(--space-8);
+}
+
+/* A lead in the heading face at the front of a body line (c7). */
+.leadIn {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--route-accent);
+  margin-right: var(--space-2);
+}
+
+.mutedText {
+  color: var(--fg-muted);
+}
+
+.bodyText {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+  max-width: 58ch;
+  margin: 0;
+}
+
+/* The subscribe block's air, between the well and the footer. */
+.bandWrap {
+  padding: var(--space-10) 0 var(--space-8);
+}
+
+/* The icon-plus-word row for the ndte cycle (c4, b2). */
+.iconRow {
+  list-style: none;
+  margin: 0 0 var(--space-6);
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-6);
+  align-items: center;
+}
+
+.iconItem {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--text);
+}
+
+/* The line under a closing heading. */
+.closeLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 54ch;
+  margin: var(--space-5) 0 0;
+}
+
+.anchor {
+  scroll-margin-top: var(--nav-height);
+}
+
+/* .pull directly after the icon row — the row carries its own gap. */
+.iconRow + .pull {
+  margin-top: 0;
+}
