@@ -44,10 +44,11 @@ import styles from '@/app/route-page.module.css';
 // PRICES LIVE IN lib/pricing.ts, not inline. One cta per page: book a
 // discovery call. The close's ghost points down the ladder to /audit.
 //
-// THE FIGURE RULE (13 Sep 2026, lib/site-flags.ts): £500 is the only live
-// figure on the site. So showFigures is OFF (no £900m, no 276,890) and pricing
-// is 'in conversation' (no tier prices) until Nici flips them. The "not asked"
-// card carries no figure and is the one that survives.
+// THE /ACCESS OVERRIDE (13 Sep 2026, lib/site-flags.ts): the figure rule
+// (£500 the only live figure) is lifted for this route. showFigures is ON
+// (£900m · 276,890 · not asked, with sources) and pricing is 'two tiers'
+// (advisory · partner, in full). Still held: the trust tier ('all tiers')
+// and the retainer card (retainerPublic). Both stay flags, not deletions.
 
 const CANONICAL = 'https://www.unbarrier.me/access';
 

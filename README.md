@@ -289,11 +289,13 @@ wrappers so a question can name a block.
 **Flags.** Every open decision from the handover is a flag in `lib/site-flags.ts`,
 never a hard-coded pick. Off and *not built* until decided in Notion:
 `emailStep`, `shareCode` (readiness check), `voicePublic`, `handsMoveOnHello`.
-**The figure rule (13 Sep 2026, binding):** the only shared live figure on the
-site is £500, the discovery day. No other statistic or price appears on a
-public route; every other figure sits behind a flag that is off — `showFigures`
-(the £900m / 276,890 cards) and `pricing: 'in conversation'` (the /access tiers
-and the /faq entry price).
+**The figure rule (13 Sep 2026):** the only shared live figure on the site is
+£500, the discovery day. Every other statistic or price sits behind a flag.
+**Override, same day:** the handover published `/access` as built, so
+`showFigures` (the £900m / 276,890 cards) is on and `pricing` is `'two tiers'`
+(advisory · partner, in full). Still held: the trust tier (`'all tiers'`) and
+the retainer (`retainerPublic`). The override is scoped to `/access` — the /faq
+entry price has its own flag, `faqQuotesEntryPrice`, off until ruled.
 
 **Booking.** `BOOKING_URL` is `/book` — the 307 in `next.config.js` to the live
 calendar. No button links the calendar url directly.
