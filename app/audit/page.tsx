@@ -6,9 +6,11 @@ import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Section } from '@/components/Section';
 import { BOOKING_URL } from '@/lib/booking';
 import { DISCOVERY_DAY_PDF } from '@/lib/documents';
+import { PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import { READINESS_CHECK_HREF, READINESS_CHECK_LABEL } from '@/lib/readiness-check';
 import styles from '@/app/route-page.module.css';
 
@@ -27,11 +29,12 @@ import styles from '@/app/route-page.module.css';
 // The discovery day is the paid "notice" step inside unbarrier.audit; there is
 // no separate route. The explainer the page links is the printable A4 doc,
 // served as a pdf at a stable url (public/discovery-day.pdf). The £500 day
-// price is the decided price for this route (schema below); the partnership
-// proposal's £1k is a separate document and does not touch this page.
+// price is the decided price for this route — the one live figure on the site
+// (lib/site-flags.ts) — visible in a3 and in the structured data below.
 //
-// One cta per page: the readiness check. No newsletter band here — the
-// prototype closes on the buttons and the footer.
+// One cta per page + the subscribe block: the readiness check, then the
+// newsletter band between the close and the footer (Nici, 13 Sep 2026 — the
+// prototype left the band off this page by mistake).
 
 const CANONICAL = 'https://www.unbarrier.me/audit';
 
@@ -197,6 +200,13 @@ export default function AuditPage() {
               </Button>
             </div>
           </Section>
+          <div className={styles.bandWrap}>
+            <NewsletterBand
+              route="/audit"
+              weight="standard"
+              sub="one email when there is something worth saying. nothing when there isn’t. written for people who don’t have time to read it twice."
+            />
+          </div>
           <Footer variant="full" />
         </div>
       </main>
