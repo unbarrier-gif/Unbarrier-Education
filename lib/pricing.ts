@@ -31,3 +31,10 @@ export const PRICE_ACCESS_PARTNER_TERM = '£2,000';
 // it came off. When the hold lifts, add it here with a dated comment saying who
 // lifted it.
 export const TRUST_TIER_SCOPING = 'scoped per trust — talk to us';
+
+/** unbarrier.access — trust partner. Shown only when SITE_FLAGS.pricing is
+ *  'all tiers' (the trust tier is named, not offered, by default). */
+export const PRICE_ACCESS_TRUST = '£18,000';
+export const PRICE_ACCESS_TRUST_TERM = '£6,000';
+export const PRICE_ACCESS_TRUST_SCHOOLS = 'up to six schools';
+export const PRICE_ACCESS_TRUST_EXTRA_SCHOOL = '£2,000';
