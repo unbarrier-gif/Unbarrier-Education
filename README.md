@@ -115,6 +115,10 @@ public/assets/
                           Outlook will not render it. MailerLite uses these.
   nici-portrait.png       transparent, black and white, 1466 × 2000
   nici-avatar.png         400 × 400, spring-green ground kept
+  voice/                  report-01…03.png, the three sample report pages on
+                          /voice "what you get back". 1600 × 1200, sample data,
+                          not a real school. The page hides a frame whose file
+                          is missing.
   illustrations/          Phase 2 art. `hero-bring-the-joy.png` and the
                           bring-the-joy wordmarks are retired artwork — the
                           joy line was separated from the consultancy brand
