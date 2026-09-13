@@ -18,4 +18,6 @@ render() {
   echo "wrote public/$2"
 }
 render discovery-day.html discovery-day.pdf
+render discovery-day-send.html discovery-day-send.pdf
+render discovery-day-planner.html discovery-day-planner.pdf
 render voice-baseline.html voice-baseline.pdf

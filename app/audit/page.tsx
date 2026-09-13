@@ -1,7 +1,7 @@
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Button } from '@/components/Button';
+import { CtaCard } from '@/components/CtaCard';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
@@ -9,7 +9,11 @@ import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
 import { Section } from '@/components/Section';
 import { BOOKING_URL } from '@/lib/booking';
-import { DISCOVERY_DAY_PDF } from '@/lib/documents';
+import {
+  DISCOVERY_DAY_PDF,
+  DISCOVERY_DAY_PLANNER_PDF,
+  DISCOVERY_DAY_SEND_PDF,
+} from '@/lib/documents';
 import { PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import { READINESS_CHECK_HREF, READINESS_CHECK_LABEL } from '@/lib/readiness-check';
 import styles from '@/app/route-page.module.css';
@@ -19,18 +23,27 @@ import styles from '@/app/route-page.module.css';
 // isAudit, a0–a3). The block ids stay on the wrappers.
 //
 //   a0  hero (pearl-aqua glow) · eyebrow · h1 · lede · primary + ghost
-//   a1  what actually happens (second)  · three numbered lines · the pdf link
-//   a2  the pointer block (deep)        · what the check asks → /readiness-check
+//   a1  what actually happens (second)  · three numbered steps · three paper cards
+//   a2  the pointer block (deep)        · what the check is — explain, don't sell
 //   a3  close (well, loose)             · readiness check primary + book ghost
 //
 // The embedded readiness-check engine came OFF this page on 13 Sep — a2 is a
 // pointer, not the check. Do not re-embed it.
 //
 // The discovery day is the paid "notice" step inside unbarrier.audit; there is
-// no separate route. The explainer the page links is the printable A4 doc,
-// served as a pdf at a stable url (public/discovery-day.pdf). The £500 day
-// price is the decided price for this route — the one live figure on the site
-// (lib/site-flags.ts) — visible in a3 and in the structured data below.
+// no separate route. The three papers a1 links (the explainer for mainstream,
+// the same for SEND settings, and the planner for the person hosting us) are
+// printable A4 docs served as pdfs at stable urls (lib/documents.ts). The
+// cards are CtaCards in pearl aqua — the audit strand colour, not the locked
+// accent ladder — and their `card` values are the Plausible event labels.
+// The £500 day price is the decided price for this route — the one live
+// figure on the site (lib/site-flags.ts) — visible in a3 and in the
+// structured data below.
+//
+// 13 Sep 2026, second pass (handoff "paper cards + readiness section
+// rewrite"): the buried pdf link became the three cards; a2 explains the
+// check instead of selling it and carries no cta of its own; a3 picks up the
+// thread and carries the one cta.
 //
 // One cta per page + the subscribe block: the readiness check, then the
 // newsletter band between the close and the footer (Nici, 13 Sep 2026 — the
@@ -62,10 +75,21 @@ export const metadata: Metadata = {
   },
 };
 
-const WHAT_HAPPENS: string[] = [
-  'one day on site. lessons, not meetings. we sit where the learner sits.',
-  'the seven questions, asked of the child, the ta, the teacher, the it lead and the person who signed the order. all five, or it isn’t an audit.',
-  'a written baseline inside two weeks — what reached the child, what didn’t, and the three things to change before you spend anything else.',
+// The three steps in a1. The lead phrase is bold pearl aqua; the numeral sits
+// on a filled circle and is decorative — order is carried by the text.
+const WHAT_HAPPENS: { lead: string; body: string }[] = [
+  {
+    lead: 'one day on site.',
+    body: 'lessons, not meetings. we sit where the learner sits.',
+  },
+  {
+    lead: 'the seven questions,',
+    body: 'asked of the child, the ta, the teacher, the it lead and the person who signed the order. all five, or it isn’t an audit.',
+  },
+  {
+    lead: 'a written baseline inside two weeks',
+    body: '— what reached the child, what didn’t, and the three things to change before you spend anything else.',
+  },
 ];
 
 const SERVICE_SCHEMA = {
@@ -142,12 +166,15 @@ export default function AuditPage() {
             what actually happens, and what it costs you.
           </h2>
           <ol className={styles.numbered}>
-            {WHAT_HAPPENS.map((line, i) => (
-              <li key={line} className={styles.numberedItem}>
-                <strong className={styles.numLead}>
+            {WHAT_HAPPENS.map((step, i) => (
+              <li key={step.lead} className={`${styles.numberedItem} ${styles.stepRow}`}>
+                <span className={styles.stepNum} aria-hidden="true">
                   {String(i + 1).padStart(2, '0')}
-                </strong>
-                {line}
+                </span>
+                <span>
+                  <strong className={styles.stepLead}>{step.lead}</strong>{' '}
+                  {step.body}
+                </span>
               </li>
             ))}
           </ol>
@@ -155,33 +182,61 @@ export default function AuditPage() {
             the cost to you: one day of access, and the discomfort of hearing
             it. most of what we find was free to fix.
           </p>
-          <p className={`${styles.body} ${styles.spaceAbove}`}>
-            want it on paper for a leadership meeting?{' '}
-            <a href={DISCOVERY_DAY_PDF} className={styles.inlineLink}>
-              the discovery day, what it is and why
-            </a>{' '}
-            &mdash; two sides, sourced, no price on it.
-          </p>
+          <div className={styles.paperCards}>
+            <Eyebrow color="var(--pearl-aqua)">on paper, for the leadership meeting</Eyebrow>
+            <CtaCard
+              card="discovery_day_paper"
+              title="the discovery day — what it is and why"
+              meta="two sides, sourced, no price on it. print it and take it in."
+              detail="a4 · two sides · mainstream setting"
+              href={DISCOVERY_DAY_PDF}
+              external={false}
+              accent="var(--pearl-aqua)"
+              accentRgb="105, 217, 209"
+              initial="¶"
+            />
+            <CtaCard
+              card="discovery_day_paper_send"
+              title="the discovery day — for SEND settings"
+              meta="the same two sides, written for special schools and specialist provision."
+              detail="a4 · two sides · SEND setting"
+              href={DISCOVERY_DAY_SEND_PDF}
+              external={false}
+              accent="var(--pearl-aqua)"
+              accentRgb="105, 217, 209"
+              initial="¶"
+            />
+            <CtaCard
+              card="discovery_day_planner"
+              title="planning your day"
+              meta="what to have ready, who we need to see, and how the day runs hour by hour."
+              detail="a4 · one side · for the person hosting us"
+              href={DISCOVERY_DAY_PLANNER_PDF}
+              external={false}
+              accent="var(--pearl-aqua)"
+              accentRgb="105, 217, 209"
+              initial="→"
+            />
+          </div>
         </Section>
 
-        {/* a2 — the pointer block. A pointer, not the check. */}
+        {/* a2 — the pointer block. A pointer, not the check, and no cta of its
+            own: it explains the smaller version, and a3 carries the button. */}
         <Section id="a2" measure="route" ground="deep" labelledBy="rc-heading">
           <Eyebrow color="var(--pearl-aqua)">free · five minutes · no email needed</Eyebrow>
           <h2 id="rc-heading" className={styles.sectionHeading}>
-            not sure the day is worth having? check first.
+            not sure the day is worth having? there&rsquo;s a smaller version.
           </h2>
-          <p className={styles.body}>
-            the readiness check asks the same seven questions of one person, in
-            five minutes, about one thing you already bought. it scores nothing
-            about you and everything about the chain, and it hands you a result
-            you can forward upwards.
+          <p className={`${styles.body} ${styles.bodyNarrow}`}>
+            the readiness check is the same seven questions, asked of one
+            person, about one thing you already bought. it scores nothing about
+            you and everything about the chain.
           </p>
-          <p className={styles.body}>
-            no email needed. no number at the end &mdash; three words per
-            question, and the one to start with.{' '}
-            <Link href={READINESS_CHECK_HREF} className={styles.inlineLink}>
-              take the readiness check
-            </Link>
+          <p className={`${styles.body} ${styles.bodyNarrow}`}>
+            no number at the end &mdash; three words per question, and the one
+            to start with. a result you can forward upwards. if it comes back
+            clean, you don&rsquo;t need the day. if it doesn&rsquo;t,
+            you&rsquo;ll know which day to book.
           </p>
         </Section>
 
@@ -189,8 +244,13 @@ export default function AuditPage() {
         <div id="a3">
           <Section measure="route" ground="well" space="loose" labelledBy="a-closing">
             <h2 id="a-closing" className={styles.closeHeading}>
-              start with five minutes. the day comes after.
+              so start with the five minutes. the day comes after, if
+              it&rsquo;s needed.
             </h2>
+            <p className={styles.closeLede}>
+              free, no email, and nothing to sit through. if you already know
+              the answer, skip it and book the day.
+            </p>
             <p className={styles.closeLine}>
               the discovery day is {PRICE_DISCOVERY_DAY}. one day, no lock-in.
             </p>

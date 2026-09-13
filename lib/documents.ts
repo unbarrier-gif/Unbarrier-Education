@@ -7,5 +7,11 @@
 /** The discovery day — what it is and why (mainstream). Linked from /audit. */
 export const DISCOVERY_DAY_PDF = '/discovery-day.pdf';
 
+/** The discovery day — what it is and why, written for SEND settings. Linked from /audit. */
+export const DISCOVERY_DAY_SEND_PDF = '/discovery-day-send.pdf';
+
+/** Planning your discovery day — for the person hosting us. Linked from /audit. */
+export const DISCOVERY_DAY_PLANNER_PDF = '/discovery-day-planner.pdf';
+
 /** The voice baseline — the three-page client-facing paper. */
 export const VOICE_BASELINE_PDF = '/voice-baseline.pdf';

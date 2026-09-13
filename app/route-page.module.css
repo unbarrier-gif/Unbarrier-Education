@@ -553,11 +553,34 @@
   margin: 0;
 }
 
-.numLead {
+/* A numbered step as a row: the numeral on a filled circle, then the text
+   (a1 on /audit). The circle is decorative; the lead phrase carries the
+   route accent. */
+.stepRow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+
+.stepNum {
+  flex: 0 0 auto;
+  width: 32px;
+  height: 32px;
+  margin-top: 2px;
+  border-radius: var(--radius-pill);
+  background: var(--route-accent);
+  color: var(--amethyst);
   font-family: var(--font-heading);
-  font-weight: 700;
+  font-weight: 800;
+  font-size: var(--fs-small);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepLead {
   color: var(--route-accent);
-  margin-right: var(--space-3);
+  font-weight: 700;
 }
 
 .small {
@@ -575,6 +598,19 @@
 
 .spaceBelow {
   margin-bottom: var(--space-6);
+}
+
+/* Body copy held to the prototype's 56ch (the a2 explainer on /audit). */
+.bodyNarrow {
+  max-width: 56ch;
+}
+
+/* The paper cards under a1 on /audit: an eyebrow and three CtaCards, stacked. */
+.paperCards {
+  margin-top: var(--space-8);
+  max-width: 620px;
+  display: grid;
+  gap: var(--space-3);
 }
 
 /* A run of terms, each on a lightblue panel (c6 "over time"). */
@@ -721,6 +757,16 @@
   font-family: var(--font-body);
   font-size: var(--fs-small);
   color: var(--text);
+}
+
+/* The lede under a closing heading, above the price line and the buttons. */
+.closeLede {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 54ch;
+  margin: var(--space-5) 0 0;
 }
 
 /* The line under a closing heading. */
