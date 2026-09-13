@@ -138,10 +138,12 @@ const FAQ: Array<{ id: string; question: string; answer: Block[] }> = [
           // hold on /access it was no longer true. The matching line on
           // /access had the same deletion.
           // The figure rule (lib/site-flags.ts): the entry price shows only
-          // when /access publishes its tiers.
-          SITE_FLAGS.pricing === 'in conversation'
-            ? 'a partnership year is quoted as one number for the year and invoiced by term. the shape of it is on the access page.'
-            : `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published on the access page.`,
+          // when /access publishes its tiers AND faqQuotesEntryPrice is on.
+          // The 13 Sep 2026 override is scoped to /access, so the second
+          // flag is off until ruled.
+          SITE_FLAGS.pricing !== 'in conversation' && SITE_FLAGS.faqQuotesEntryPrice
+            ? `a partnership year starts at ${PRICE_ACCESS_ADVISORY}. the tiers are published on the access page.`
+            : 'a partnership year is quoted as one number for the year and invoiced by term. the tiers are on the access page.',
           'everything else is quoted as a package: one number for a defined outcome, not a stack of day invoices.',
           '50% on order, 50% at the midpoint.',
           'we don’t do free scoping. the discovery day is the scoping, and it is priced honestly rather than given away and recovered somewhere you can’t see.',

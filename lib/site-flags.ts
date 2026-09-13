@@ -1,13 +1,20 @@
 // Site-wide tweak flags — the open decisions from the 13 Sep 2026 design
 // handover, each one a flag or a content field rather than a hard-coded pick.
 //
-// THE FIGURE RULE (binding, Nici, 13 Sep 2026). The only shared live figure
-// on the site is £500 — the discovery day (lib/pricing.ts PRICE_DISCOVERY_DAY).
-// No other number appears on a public route: no £900m, no 276,890, no other
-// price. Anywhere a second figure exists, it goes behind a flag that is OFF.
-// That is why `showFigures` is off and `pricing` is 'in conversation'. A
-// count is not a figure ("nine questions", "26 years") and a payment term is
-// not a price ("50% on order"); a statistic or a price is.
+// THE FIGURE RULE (Nici, 13 Sep 2026). The only shared live figure on the
+// site is £500 — the discovery day (lib/pricing.ts PRICE_DISCOVERY_DAY). No
+// other statistic or price appears on a public route unless a flag below
+// says so. A count is not a figure ("nine questions", "26 years") and a
+// payment term is not a price ("50% on order"); a statistic or a price is.
+//
+// THE /ACCESS OVERRIDE (handover "publish as built", 13 Sep 2026). The rule
+// is lifted for /access only: the three figures in "the gap" (£900m ·
+// 276,890 · not asked) and the two price tiers (advisory · partner) are
+// public, so `showFigures` is on and `pricing` is 'two tiers'. Still held:
+// the trust tier (from £18,000) and the retainer card — `pricing` stays off
+// 'all tiers' and `retainerPublic` stays off. /faq keeps following the rule
+// on its own flag (`faqQuotesEntryPrice`), so the override does not leak to
+// a second route by accident.
 //
 // Every default below is the default the handover set, except where the
 // figure rule overrides it. Nici decides the rest
@@ -21,18 +28,24 @@ export const SITE_FLAGS = {
   showGhostCta: true,
 
   // ── /access ───────────────────────────────────────────────────────────
-  /** The three figures in "the gap" (c2). OFF by the figure rule — £900m and
-   *  276,890 never appear on a public route. */
-  showFigures: false,
+  /** The three figures in "the gap" (c2): £900m · 276,890 · not asked, with
+   *  their source lines. ON by the /access override (13 Sep 2026). */
+  showFigures: true,
   /**
-   * Which price tiers c5 shows (and whether /faq quotes the entry price).
-   *   'two tiers'       advisory + partner
-   *   'all tiers'       adds the trust tier
+   * Which price tiers c5 shows.
+   *   'two tiers'       advisory + partner — the /access override (13 Sep 2026)
+   *   'all tiers'       adds the trust tier (from £18,000) — still held
    *   'in conversation' hides every price — the figure rule's default
    */
-  pricing: 'in conversation' as 'two tiers' | 'all tiers' | 'in conversation',
+  pricing: 'two tiers' as 'two tiers' | 'all tiers' | 'in conversation',
   /** The retainer card + paragraph in c5b. Proposal-only until sold once. */
   retainerPublic: false,
+
+  // ── /faq ──────────────────────────────────────────────────────────────
+  /** Whether "what does it cost?" quotes the advisory price. The /access
+   *  override is scoped to /access, so this stays OFF until ruled; it can
+   *  only ever show a price /access already publishes. */
+  faqQuotesEntryPrice: false,
 
   // ── /inclusion-strategy (parked) ──────────────────────────────────────
   /** Names principle 7, never declares eligibility. Default on. */

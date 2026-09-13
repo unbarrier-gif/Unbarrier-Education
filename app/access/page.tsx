@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { Button } from '@/components/Button';
+import { CtaCard } from '@/components/CtaCard';
 import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
@@ -33,7 +34,7 @@ import styles from '@/app/route-page.module.css';
 //   c0  hero (orange glow) · primary /book · ghost scrolls to #c5
 //   c1  credential band (portrait variant, ground-400)
 //   c2  the gap (deep)          · three figures behind SITE_FLAGS.showFigures
-//   c3  the seven questions     · the library component, 1 Sep set
+//   c3  the seven questions     · the library component, 1 Sep set · the one-pager card under it
 //   c4  the method (second)     · notice → design → try → embed · the one .pull
 //   c5  what a year costs (deep)· tiers behind SITE_FLAGS.pricing · on every quote
 //   c5b partnership with unbarrier (second) · retainer behind SITE_FLAGS.retainerPublic
@@ -44,10 +45,11 @@ import styles from '@/app/route-page.module.css';
 // PRICES LIVE IN lib/pricing.ts, not inline. One cta per page: book a
 // discovery call. The close's ghost points down the ladder to /audit.
 //
-// THE FIGURE RULE (13 Sep 2026, lib/site-flags.ts): £500 is the only live
-// figure on the site. So showFigures is OFF (no £900m, no 276,890) and pricing
-// is 'in conversation' (no tier prices) until Nici flips them. The "not asked"
-// card carries no figure and is the one that survives.
+// THE /ACCESS OVERRIDE (13 Sep 2026, lib/site-flags.ts): the figure rule
+// (£500 the only live figure) is lifted for this route. showFigures is ON
+// (£900m · 276,890 · not asked, with sources) and pricing is 'two tiers'
+// (advisory · partner, in full). Still held: the trust tier ('all tiers')
+// and the retainer card (retainerPublic). Both stay flags, not deletions.
 
 const CANONICAL = 'https://www.unbarrier.me/access';
 
@@ -314,6 +316,26 @@ export default function AccessPage() {
             intro="this is unbarrier.voice, the measurement layer under everything we do. pick any moment in a lesson, and ask all seven of it."
             ground="base"
           />
+          {/* The route out of the block: the seven questions on one page.
+              Pearl aqua on purpose — the questions belong to the evidence
+              strand, not this page's orange. Same card as /voice v2. */}
+          <Section measure="route" ground="base" labelledBy="seven-q-paper">
+            <div className={styles.paperCardUnder}>
+              <Eyebrow color="var(--pearl-aqua)">
+                <span id="seven-q-paper">take the seven questions with you</span>
+              </Eyebrow>
+              <CtaCard
+                card="seven_questions_paper"
+                title="the seven questions"
+                meta="the instrument, on one page. take it into your next planning meeting."
+                detail="a4 · one side · free, no email"
+                href="/the-takeaway.html"
+                external
+                accent="var(--pearl-aqua)"
+                accentRgb="105, 217, 209"
+              />
+            </div>
+          </Section>
         </div>
 
         {/* c4 — the method */}

@@ -613,6 +613,17 @@
   gap: var(--space-3);
 }
 
+/* The take-away card straight under the SevenQuestions block, in its own
+   Section on the same ground (handoff "seven questions — route to the
+   one-pager", 13 Sep 2026). The negative margin cancels the second Section's
+   top padding so the card reads as part of the block above, not a new one. */
+.paperCardUnder {
+  margin-top: calc(var(--space-10) * -1);
+  max-width: 620px;
+  display: grid;
+  gap: var(--space-3);
+}
+
 /* A run of terms, each on a lightblue panel (c6 "over time"). */
 .stages {
   margin: 0;
