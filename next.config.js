@@ -90,6 +90,15 @@ const nextConfig = {
         destination: '/loop-breakers',
         statusCode: 301,
       },
+      // Stable, printable booking link for QR codes and PDFs. If the
+      // calendar URL ever changes, only this destination needs updating —
+      // nothing needs reprinting. 307 (temporary) on purpose so browsers
+      // and crawlers don't cache the current calendar URL.
+      {
+        source: '/book',
+        destination: 'https://calendar.app.google/tvA6HCSh9idXXJDB6',
+        statusCode: 307,
+      },
     ];
   },
   // Clean, emailable URL for the GoodNotes one-pager — the file lives as
