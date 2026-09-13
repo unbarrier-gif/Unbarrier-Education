@@ -1,80 +1,132 @@
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
+import { existsSync } from 'node:fs';
+import { join } from 'node:path';
+import Image from 'next/image';
 import { Button } from '@/components/Button';
-import { CredentialStrip } from '@/components/CredentialStrip';
 import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
-import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
+import { NewsletterBand } from '@/components/NewsletterBand';
+import { Section } from '@/components/Section';
 import { SevenQuestions } from '@/components/SevenQuestions';
-import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
+import { BOOKING_LABEL, BOOKING_URL } from '@/lib/booking';
+import { READINESS_CHECK_HREF } from '@/lib/readiness-check';
+import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from '@/app/route-page.module.css';
+import voice from './page.module.css';
 
-// ⛔ /voice — BUILT, NOT PUBLISHED.
+// /voice — unbarrier.voice, the measurement layer. Stage 4 of the 13 Sep 2026
+// rebuild, from Voice.dc.html with showPlan=false (the plan block is an
+// internal review panel and is never public). The block ids stay on the
+// wrappers.
 //
-// Legal has not signed off the retention period or the two-purpose privacy
-// notice. Unlinked and noindex is not a nice-to-have, it is the condition of
-// this route existing at all. All of the following are load-bearing and must
-// stay true until legal signs off:
+//   v0  hero (orchid glow) · primary /book · ghost scrolls to the seven questions
+//   v1  the layer under the work (ground-400)
+//   v2  the seven questions (second) — the library component, 1 Sep set
+//   v4  what a baseline is (base)
+//   v4b what you get back (second) — three cards; report images when present
+//   v5  two purposes, two consents (base)
+//   v7  close (well, loose) · newsletter band · footer
 //
-//   * noindex, nofollow in the metadata below.
-//   * NOT in the nav (components/Nav.tsx), NOT in the footer
-//     (components/Footer.tsx), NOT in the sitemap (app/sitemap.ts).
-//   * NO link to it from any other page. /access and /edtech both mention
-//     "unbarrier.voice" in body copy — those mentions are TEXT and must not
-//     become links. components/Services.tsx on the home page used to link here
-//     and no longer does.
+// LEGAL HOLD ON THE INSTRUMENT (handover, 13 Sep 2026, binding): do not sell
+// it. The prototype's v3 ("delivered / the tool" split) and v6 ("founding
+// cohorts") are NOT built. The page closes on "we agree how you will know it
+// worked, and when we will check."
 //
-// WHEN LEGAL SIGNS OFF, four things come back together: the robots block
-// below, the nav entry, the footer entry, and the sitemap entry. Grep
-// "/voice" before assuming you have found them all.
+// "the child" in the h1 is deliberate and the only place on this page it
+// appears — the instrument's founding claim. Everything below says learners.
 //
-// The hero line keeps "the child" rather than "learners". It is one of the two
-// deliberate exceptions to the site-wide vocabulary rule — the instrument's
-// founding claim, and it is what makes the line land. Everything else on this
-// page says learners.
+// The route stays noindex and out of the nav until SITE_FLAGS.voicePublic.
 
 const CANONICAL = 'https://www.unbarrier.me/voice';
 
 export const metadata: Metadata = {
   title: 'unbarrier.voice — the audit that starts with the child',
   description:
-    'unbarrier.voice measures the one thing readiness tools skip: whether the technology, the access and the communication actually reach the learner they were bought for.',
+    'every readiness tool scores the organisation. unbarrier.voice measures the one thing they skip: whether the technology, the access and the communication actually reach the learner they were bought for.',
   alternates: { canonical: CANONICAL },
-  // ⛔ DO NOT REMOVE without legal sign-off on the retention period and the
-  // two-purpose privacy notice. See the header comment above.
-  robots: {
-    index: false,
-    follow: false,
-    googleBot: { index: false, follow: false },
+  robots: SITE_FLAGS.voicePublic
+    ? undefined
+    : { index: false, follow: false, googleBot: { index: false, follow: false } },
+  openGraph: {
+    title: 'unbarrier.voice — the audit that starts with the child and works backwards.',
+    description:
+      'device-agnostic. built on the learner’s own experience. the measurement layer under everything we do.',
+    url: CANONICAL,
+    type: 'website',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'unbarrier — designed for difference. did it reach the child?',
+      },
+    ],
   },
 };
 
-const TWO_WAYS: Array<{ lead: string; body: string; aside: string }> = [
+const LAYER: Array<{ dot: string; name: string; body: React.ReactNode }> = [
   {
-    lead: 'delivered',
-    body: 'nici in the room. an apple professional learning specialist watching what a survey cannot see: the workaround a learner has invented, the setting nobody turned on, the moment an adult steps in three seconds too early. learner data captured alongside it.',
-    aside:
-      'very few people can put an accessibility specialist in your classrooms for a day. that is where the value sits.',
+    dot: 'var(--pearl-aqua)',
+    name: 'unbarrier.audit',
+    body: 'a discovery day uses it to find the gaps.',
   },
   {
-    lead: 'the tool',
-    body: 'self-serve. your own staff and learners complete it, and the picture builds itself. scalable across a trust, and it runs without anyone from unbarrier in the building.',
-    aside: 'the backbone.',
+    dot: 'var(--princeton-orange)',
+    name: 'unbarrier.access',
+    body: 'a partnership year uses it to prove the movement between the start and the end.',
+  },
+  {
+    dot: 'var(--orchid-mist)',
+    name: 'unbarrier.voice',
+    body: (
+      <>
+        same seven questions, every time. it makes <em>notice</em> and{' '}
+        <em>embed</em> into measurements rather than impressions.
+      </>
+    ),
   },
 ];
 
-const WHAT_YOU_GET_BACK: string[] = [
-  'a one-page picture of where access is reaching learners, and where it isn’t.',
-  'the gaps named, in language a governor understands, so the spend can be defended and the next step funded.',
-  'a baseline you can measure again later, so “impact” stops being a word and becomes a number you can stand behind.',
+// Three report pages. When a real anonymised page lands at the path, it
+// renders; until then the card carries the numeral alone. The report images
+// have been outstanding since 5 Aug — they are Nici's, not the developer's.
+const WHAT_YOU_GET_BACK = [
+  {
+    n: '01',
+    title: 'a one-page picture',
+    body: 'where access is reaching learners, and where it isn’t.',
+    image: '/assets/voice/report-01.png',
+  },
+  {
+    n: '02',
+    title: 'the gaps, named',
+    body: 'in language a governor understands, so the spend can be defended and the next step funded.',
+    image: '/assets/voice/report-02.png',
+  },
+  {
+    n: '03',
+    title: 'a number you can measure again',
+    body: 'a baseline to return to, so “impact” becomes a number you can stand behind.',
+    image: '/assets/voice/report-03.png',
+  },
 ];
 
-const TWO_CONSENTS: string[] = [
-  'your result is yours. the school’s own picture, for the school.',
-  'separately, and only if you opt in, an anonymised layer builds sector-level insight into what is reaching learners and what isn’t, across settings.',
-  'these are two different things, so they take two different consents. bundling them would make neither one valid.',
+const CONSENTS = [
+  {
+    lead: 'your result is yours',
+    body: 'the school’s own picture, for the school.',
+  },
+  {
+    lead: 'separately, and only if you opt in',
+    body: 'an anonymised layer builds sector-level insight into what is reaching learners and what isn’t, across settings.',
+  },
+  {
+    lead: 'two different things',
+    body: 'so they take two different consents. bundling them would make neither one valid.',
+  },
 ];
 
 const SERVICE_SCHEMA = {
@@ -84,7 +136,7 @@ const SERVICE_SCHEMA = {
   serviceType:
     'Learner-side accessibility measurement instrument for schools and trusts',
   description:
-    'a device-agnostic instrument that measures whether the technology, the access and the communication in a setting actually reach the learner they were bought for, built on the learner’s own experience. available delivered, in classrooms, with a self-serve tool in development.',
+    'a device-agnostic instrument that measures whether the technology, the access and the communication in a setting actually reach the learner they were bought for, built on the learner’s own experience. the measurement layer a discovery day and a partnership year both run on.',
   url: CANONICAL,
   provider: {
     '@type': 'Organization',
@@ -98,7 +150,17 @@ const SERVICE_SCHEMA = {
   },
 };
 
+function reportImageExists(src: string): boolean {
+  try {
+    return existsSync(join(process.cwd(), 'public', src));
+  } catch {
+    return false;
+  }
+}
+
 export default function VoicePage() {
+  const anyReport = WHAT_YOU_GET_BACK.some((c) => reportImageExists(c.image));
+
   return (
     <>
       <script
@@ -106,157 +168,185 @@ export default function VoicePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
       />
 
-      <Nav />
+      <Nav active={SITE_FLAGS.voicePublic ? 'voice' : undefined} />
 
       <main
         className={styles.main}
         style={{ '--route-accent': 'var(--orchid-mist)' } as CSSProperties}
       >
-        <Glow color="var(--orchid-mist)" left="-120px" top="4%" size={620} opacity={0.1} />
-        <Glow color="var(--spring-green)" right="-100px" top="46%" size={460} opacity={0.07} />
+        {/* v0 — hero */}
+        <div id="v0" className={styles.heroBand}>
+          <Glow color="var(--orchid-mist)" left="-8%" top="0%" size={540} opacity={0.12} />
+          <header className={styles.heroInner}>
+            <Eyebrow color="var(--orchid-mist)">unbarrier.voice</Eyebrow>
+            <h1 className={styles.heading}>
+              the audit that starts with the child and works backwards.
+            </h1>
+            <p className={styles.ledeMuted}>
+              every readiness tool scores the organisation. unbarrier.voice
+              measures the one thing they skip: whether the technology, the
+              access and the communication actually reach the learner they were
+              bought for.
+            </p>
+            <p className={styles.ledeQuiet}>
+              device-agnostic. built on the learner&rsquo;s own experience. it
+              is the measurement layer under everything we do.
+            </p>
+            <div className={styles.ctaRow}>
+              <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
+                {BOOKING_LABEL}
+              </Button>
+              <Button href="#v2" variant="ghost">
+                the seven questions →
+              </Button>
+            </div>
+          </header>
+        </div>
 
-        <header className={styles.hero}>
-          <Eyebrow color="var(--orchid-mist)">unbarrier.voice</Eyebrow>
-          {/* "the child", not "learners" — deliberate, and the only place on
-              this page it appears. The instrument's founding claim. */}
-          <h1 className={styles.heading}>
-            the audit that starts with the child and{' '}
-            <span className={styles.accent}>works backwards.</span>
-          </h1>
-          <p className={styles.lede}>
-            every readiness tool scores the organisation. unbarrier.voice
-            measures the one thing they skip: whether the technology, the access
-            and the communication actually reach the learner they were bought
-            for. device-agnostic. built on the learner&rsquo;s own experience.
-            it is the measurement layer under everything unbarrier does.
-          </p>
-          <div className={styles.ctaRow}>
-            <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
-              {BOOKING_LABEL}
-            </Button>
-          </div>
-          <CredentialStrip />
-        </header>
-
-        {/* Deliberately identical to the block on /access — same component. */}
-        <SevenQuestions
-          id="seven-questions"
-          heading="seven questions, asked from the learner’s side"
-        />
-
-        <section className={styles.section} aria-labelledby="two-ways">
-          <h2 id="two-ways" className={styles.sectionHeading}>
-            two ways to run it
-          </h2>
-          <ul className={styles.options}>
-            {TWO_WAYS.map((way) => (
-              <li key={way.lead} className={styles.option}>
-                <p className={styles.optionBody}>
-                  <strong className={styles.strong}>{way.lead}</strong> —{' '}
-                  {way.body}
+        {/* v1 — the layer under the work */}
+        <div id="v1" className={voice.layer}>
+          <div className={voice.layerInner}>
+            <p className={voice.layerStatement}>
+              one pathway, not three products. voice is the layer the other two
+              run on.
+            </p>
+            <div className={voice.layerList}>
+              {LAYER.map((item) => (
+                <p key={item.name} className={voice.layerItem}>
+                  <span
+                    className={voice.dot}
+                    style={{ background: item.dot }}
+                    aria-hidden="true"
+                  />
+                  <span>
+                    <strong className={styles.strong}>{item.name}</strong> &mdash;{' '}
+                    {item.body}
+                  </span>
                 </p>
-                <p className={styles.aside}>{way.aside}</p>
-              </li>
-            ))}
-          </ul>
-          <p className={styles.body}>
-            most schools use both: the tool for breadth, a delivered visit for
-            depth.
-          </p>
-        </section>
+              ))}
+            </div>
+          </div>
+        </div>
 
-        <section className={styles.section} aria-labelledby="what-you-get">
-          <h2 id="what-you-get" className={styles.sectionHeading}>
+        {/* v2 — the seven questions. Identical to /access c3: the same component. */}
+        <div id="v2" className={styles.anchor}>
+          <SevenQuestions
+            id="seven-q"
+            heading="what it asks — the seven questions"
+            intro="asked from the learner's side. pick any moment in a lesson, and ask all seven of it. that is the whole method. it needs no software, and it is the part with the most value in it."
+            ground="second"
+          />
+        </div>
+
+        {/* v4 — what a baseline is */}
+        <Section id="v4" measure="route" ground="base" labelledBy="baseline">
+          <h2 id="baseline" className={styles.sectionHeading}>
+            what a baseline is
+          </h2>
+          <div className={voice.twoCol}>
+            <div>
+              <p className={voice.strongLine}>
+                where you are now, scored against the seven questions. a
+                starting number, not a verdict.
+              </p>
+              <p className={styles.body}>
+                it is a baseline you can measure again later, so
+                &ldquo;impact&rdquo; stops being a word and becomes a number you
+                can stand behind.
+              </p>
+            </div>
+            <p className={styles.body}>
+              in the cycle every piece of our work runs on &mdash; notice →
+              design → try → embed &mdash; voice is what makes notice and embed
+              into measurements rather than impressions. it is the same
+              instrument at both ends, which is the only reason the difference
+              between them means anything.
+            </p>
+          </div>
+        </Section>
+
+        {/* v4b — what you get back */}
+        <Section id="v4b" measure="route" ground="second" labelledBy="back">
+          <Eyebrow color="var(--orchid-mist)">after the baseline</Eyebrow>
+          <h2 id="back" className={styles.sectionHeading}>
             what you get back
           </h2>
-          <ul className={styles.list}>
-            {WHAT_YOU_GET_BACK.map((line) => (
-              <li key={line} className={styles.listItem}>
-                {line}
+          <ol className={voice.reports}>
+            {WHAT_YOU_GET_BACK.map((card) => (
+              <li key={card.n} className={voice.reportCard}>
+                {reportImageExists(card.image) && (
+                  <div className={voice.reportImage}>
+                    <Image
+                      src={card.image}
+                      alt={card.title}
+                      width={800}
+                      height={600}
+                      className={voice.reportImg}
+                    />
+                  </div>
+                )}
+                <p className={voice.reportNumeral}>{card.n}</p>
+                <p className={voice.reportTitle}>{card.title}</p>
+                <p className={styles.cardBody}>{card.body}</p>
               </li>
             ))}
-          </ul>
-          {/* Three image slots are still outstanding: the one-page report, the
-              exported pdf, and the across-schools admin view. Nothing is
-              rendered for them — an empty frame or a placeholder image would
-              be a promise we cannot currently keep on the one page whose whole
-              argument is not performing certainty. */}
-        </section>
+          </ol>
+          {anyReport && (
+            <p className={styles.cardSource}>
+              report pages shown are illustrative &mdash; sample data, not a real
+              school.
+            </p>
+          )}
+        </Section>
 
-        <section className={styles.section} aria-labelledby="two-consents">
-          <h2 id="two-consents" className={styles.sectionHeading}>
+        {/* v5 — two purposes, two consents */}
+        <Section id="v5" measure="route" ground="base" labelledBy="consents">
+          <h2 id="consents" className={styles.sectionHeading}>
             two purposes, two consents. never bundled.
           </h2>
-          <ul className={styles.list}>
-            {TWO_CONSENTS.map((line) => (
-              <li key={line} className={styles.listItem}>
-                {line}
-              </li>
+          <div className={voice.consents}>
+            {CONSENTS.map((c) => (
+              <div key={c.lead} className={voice.consent}>
+                <p className={voice.consentLead}>{c.lead}</p>
+                <p className={styles.cardBody}>{c.body}</p>
+              </div>
             ))}
-          </ul>
-          <p className={styles.body}>
+          </div>
+          <p className={`${styles.body} ${styles.spaceAbove}`}>
             that isn&rsquo;t a legal footnote. it is the whole point of an
             instrument built to be trusted.
           </p>
-        </section>
+        </Section>
 
-        <section className={styles.section} aria-labelledby="the-layer">
-          <h2 id="the-layer" className={styles.sectionHeading}>
-            the layer under the work
-          </h2>
-          <p className={styles.body}>
-            in the ndte cycle — notice → design → try → embed — voice is what
-            makes <strong className={styles.strong}>notice</strong> and{' '}
-            <strong className={styles.strong}>embed</strong> into measurements
-            rather than impressions. it is the same instrument at both ends,
-            which is the only reason the difference between them means anything.
-          </p>
-          <p className={styles.body}>
-            unbarrier.voice is what unbarrier.audit and unbarrier.access both
-            run on. a discovery day uses it to find the gaps. a partnership year
-            uses it to prove the movement between the start and the end. same
-            seven questions, every time.
-          </p>
-        </section>
-
-        <section className={styles.close} aria-labelledby="available-now">
-          <h2 id="available-now" className={styles.closeHeading}>
-            delivered is available now. the tool is being built with the first
-            schools who want it.
-          </h2>
-          <p className={styles.lede}>
-            <strong className={styles.strong}>
-              you can have the delivered version today.
-            </strong>{' '}
-            nici in your classrooms, observing what a survey cannot see, with
-            learner data captured alongside it. that needs no software and it is
-            the part with the most value in it.
-          </p>
-          <p className={styles.lede}>
-            <strong className={styles.strong}>
-              the self-serve tool is being built with its first schools, not for
-              them.
-            </strong>{' '}
-            we are looking for three founding cohorts. research runs this autumn
-            and feeds directly into what the instrument asks and how it reports
-            — so the schools who join now shape it around a real setting rather
-            than an imagined one.
-          </p>
-          <p className={styles.lede}>
-            if that is you, tell us about your setting and we&rsquo;ll keep you
-            in the loop as it takes shape. no date promised, and nothing to pay.
-          </p>
-          <div className={styles.ctaRow}>
-            <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
-              {BOOKING_LABEL}
-            </Button>
+        {/* v7 — close · subscribe · footer */}
+        <div id="v7">
+          <Section measure="route" ground="well" space="loose" labelledBy="v-closing">
+            <h2 id="v-closing" className={styles.closeHeading}>
+              we agree how you will know it worked, and when we will check.
+            </h2>
+            <p className={styles.closeLine}>
+              that movement is your evidence. tell us what you&rsquo;re working
+              with. if we can help, we&rsquo;ll say how. if we can&rsquo;t,
+              we&rsquo;ll point you to someone who can.
+            </p>
+            <div className={styles.ctaRow}>
+              <Button href={BOOKING_URL} color="var(--orchid-mist)" external>
+                {BOOKING_LABEL}
+              </Button>
+              <Button href={READINESS_CHECK_HREF} variant="ghost">
+                not there yet? → take the free readiness check
+              </Button>
+            </div>
+          </Section>
+          <div className={styles.bandWrap}>
+            <NewsletterBand
+              route="/voice"
+              weight="standard"
+              sub="one email when there is something worth saying. nothing when there isn’t. written for people who don’t have time to read it twice."
+            />
           </div>
-        </section>
-
-        <NewsletterBand route="/voice" weight="standard" />
-
-
-        <Footer variant="full" />
+          <Footer variant="full" />
+        </div>
       </main>
     </>
   );

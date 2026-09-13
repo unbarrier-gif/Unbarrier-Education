@@ -1,86 +1,105 @@
 import { Section, type SectionGround } from '@/components/Section';
 import styles from '@/app/route-page.module.css';
 
-// The seven questions. Rendered on /access and on /voice, and the two are
-// deliberately identical — this is the instrument, and two copies would drift
-// within a term. One component, both pages.
+// The seven questions — unbarrier.voice, the measurement layer.
 //
-// Copy exact (approved drafts, 28 Aug 2026). The heading differs between the
-// two pages, so it arrives as a prop; the questions themselves never do.
+// THE 1 SEP 2026 SET. provision · access · design · capability · belonging ·
+// trust · evidence. The earlier seven (access · communication · independence ·
+// participation · staff capability · consistency · evidence) are superseded
+// and must not come back: only "access" survives by name.
 //
-// The section takes its colour from --route-accent, set on <main> by each
-// page, so it renders in princeton-orange on /access and orchid-mist on
-// /voice without either page overriding anything.
+// This data is the site's single copy. /access (c3), /voice (v2) and home (b4)
+// all render this component; the voice baseline pdf carries the same seven in
+// sentence case. Voice = seven QUESTIONS. "domains" belongs only to the six
+// domains of inclusion.
 //
-// VOCABULARY (Nici, 29 Aug 2026): these are seven QUESTIONS. Never "domains".
-// "Domains" belongs to the six domains of inclusion, a separate framework —
-// and the ISP Learning & Device Compass on /isp-audit has seven domains of its
-// own, which are also not these. Three frameworks, one word; this one owns
-// "questions".
-//
-// Marked up as a <dl>: seven terms, each with its question. That is what this
-// is, and it gives a screen reader the pairing for free — a flat list of <li>s
-// would read the name and its question as one run-on string.
+// "the child" appears four times below, on purpose — the instrument's founding
+// line is "the audit that starts with the child". Everywhere else on the site
+// says learners.
 
-export const SEVEN_QUESTIONS: Array<{ term: string; question: string }> = [
+export type SevenQuestion = {
+  term: string;
+  question: string;
+  /** The one-line gloss under the question. */
+  note: string;
+};
+
+export const SEVEN_QUESTIONS: SevenQuestion[] = [
+  {
+    term: 'provision',
+    question:
+      'is there a device, a tool, a connection at all — and is it in the room, charged and working when the lesson starts?',
+    note: 'does the thing exist for this child, or only on the inventory?',
+  },
   {
     term: 'access',
     question:
-      'can this learner get in at all — to the lesson, the device, the text, the room — without an adult beside them?',
+      'can the child get into it without an adult beside them — the settings, the login, the support features?',
+    note: 'does it work for them, not just work?',
   },
   {
-    term: 'communication',
-    question: 'can they say what they need, in whatever way they say it?',
-  },
-  {
-    term: 'independence',
+    term: 'design',
     question:
-      'how much is the learner doing themselves — on paper, on screen, by symbol, sign or speech — and how much needs an adult’s hand?',
+      'was the material built with more than one way in, before anyone had to ask for an adjustment?',
+    note: 'universal design, and the only lever left where the law cannot reach.',
   },
   {
-    term: 'participation',
+    term: 'capability',
     question:
-      'are they doing the same work as the room, or a parallel version of it?',
+      'can the adults set it up on a tuesday, and does it hold across teachers, subjects and buildings when the champion is away?',
+    note: 'is this practice, or is it one person?',
   },
   {
-    term: 'staff capability',
+    term: 'belonging',
     question:
-      'not confidence, but whether the adult can actually set it up on a tuesday.',
+      'does the child want to be there, take part without being asked, and get back in when something goes wrong?',
+    note: 'access without belonging is attendance.',
   },
   {
-    term: 'consistency',
+    term: 'trust',
     question:
-      'does it hold across teachers, subjects and settings, or only where the champion is?',
+      'do the child, the family and the staff believe it will work when it matters — and believe their data is safe?',
+    note: 'a tool that fails twice in front of a class is never opened again, whatever the audit says.',
   },
   {
     term: 'evidence',
     question:
-      'could you show a parent, or a governor, what changed — without using the word “engagement”?',
+      'can you show a parent, a governor or an inspector what actually changed, without reaching for the word “engagement”?',
+    note: 'if it cannot be shown, it cannot be funded, defended, or done again.',
   },
 ];
 
 type Props = {
-  /** The section heading. Differs between /access and /voice. */
+  /** The section heading. Differs between /access, /voice and home. */
   heading: string;
   /** Anchor id, used for aria-labelledby. */
   id: string;
+  /** One paragraph under the heading. Optional. */
+  intro?: string;
   /** Where this lands in the page's ground ladder. Default: the page. */
   ground?: SectionGround;
 };
 
-export function SevenQuestions({ heading, id, ground = 'base' }: Props) {
-  // The questions sit on the evidence panel (light blue): they are the
-  // instrument, whichever strand's page they appear on.
+export function SevenQuestions({ heading, id, intro, ground = 'base' }: Props) {
   return (
     <Section measure="route" ground={ground} labelledBy={id}>
       <h2 id={id} className={styles.sectionHeading}>
         {heading}
       </h2>
+      {intro && <p className={styles.body}>{intro}</p>}
       <dl className={styles.questions}>
-        {SEVEN_QUESTIONS.map(({ term, question }) => (
+        {SEVEN_QUESTIONS.map(({ term, question, note }, i) => (
           <div key={term} className={styles.question}>
-            <dt className={styles.questionTerm}>{term}</dt>
-            <dd className={styles.questionBody}>{question}</dd>
+            <dt className={styles.questionTerm}>
+              <span className={styles.questionNumber} aria-hidden="true">
+                {String(i + 1).padStart(2, '0')}
+              </span>{' '}
+              {term}
+            </dt>
+            <dd className={styles.questionBody}>
+              {question}
+              <span className={styles.questionNote}>{note}</span>
+            </dd>
           </div>
         ))}
       </dl>

@@ -1,15 +1,11 @@
-// The single booking surface for the whole site.
+// Every booking button on the site links /book — never the calendar url
+// directly (decided 13 Sep 2026). /book is a 307 in next.config.js to the
+// live Google Calendar appointment schedule, so the calendar can change
+// without a single button, pdf or printed QR code needing to change with it.
 //
-// TidyCal was retired as the booking surface on 21 Aug 2026. Google Calendar
-// replaced it, and /inclusion-strategy (#67) was the first page to use the new
-// link — as a hardcoded string. Lifted here so there is exactly one place to
-// change it the next time the tool changes.
-//
-// STANDING RULE: every "book a discovery call" button on every page uses this
-// constant. A button that says "book" must open a booking page, not an email
-// client — the label says book, the action has to match. mailto: is fine for a
-// genuine "email us"; it is never fine behind a button that says book.
-export const BOOKING_URL = 'https://calendar.app.google/WEZqBDRFhPFzsqUw5';
+// Rendered as a plain <a>, not a next/link, because the destination is a
+// redirect to another origin: pass `external` to <Button>.
+export const BOOKING_URL = '/book';
 
 /** The approved label. Kept next to the URL so the two never drift apart. */
 export const BOOKING_LABEL = 'book a discovery call →';

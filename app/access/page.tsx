@@ -1,69 +1,71 @@
 import type { CSSProperties } from 'react';
 import type { Metadata } from 'next';
+import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { CredentialStrip } from '@/components/CredentialStrip';
-import { ScopeLine } from '@/components/ScopeLine';
-import { StrandLockup } from '@/components/Lockup';
+import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
-import { NewsletterBand } from '@/components/NewsletterBand';
 import { Glow } from '@/components/Glow';
+import { Icon, type IconName } from '@/components/Icon';
 import { Nav } from '@/components/Nav';
+import { NewsletterBand } from '@/components/NewsletterBand';
 import { Section } from '@/components/Section';
 import { SevenQuestions } from '@/components/SevenQuestions';
-import { BOOKING_URL, BOOKING_LABEL } from '@/lib/booking';
+import { BOOKING_LABEL, BOOKING_URL } from '@/lib/booking';
 import {
   PRICE_ACCESS_ADVISORY,
   PRICE_ACCESS_ADVISORY_TERM,
   PRICE_ACCESS_PARTNER,
   PRICE_ACCESS_PARTNER_TERM,
+  PRICE_ACCESS_TRUST,
+  PRICE_ACCESS_TRUST_EXTRA_SCHOOL,
+  PRICE_ACCESS_TRUST_SCHOOLS,
+  PRICE_ACCESS_TRUST_TERM,
   PRICE_DISCOVERY_DAY,
-  TRUST_TIER_SCOPING,
 } from '@/lib/pricing';
+import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from '@/app/route-page.module.css';
 
-// /access — unbarrier.access, the partnership year. Replaces the May 2026
-// holding page (five observations, the module menu, the INSET-day builder and
-// the APLS bench, all now removed) with the approved copy.
+// /access — unbarrier.access, the partnership year. Stage 3 of the 13 Sep
+// 2026 rebuild, recreated block for block from the design handover
+// (Site.dc.html → isAccess, c0–c8). The block ids stay on the wrappers.
 //
-// Copy verbatim from the approved page drafts (28 Aug 2026), with three
-// rulings applied — each one recorded at its call site below:
-//   1. the trust tier is named but not priced (THE_TIERS)
-//   2. the "276,890" card is replaced (THE_GAP — it cited a figure that is not
-//      in the report it credited)
-//   3. the "£900m" card is removed entirely (see THE_GAP)
+//   c0  hero (orange glow) · primary /book · ghost scrolls to #c5
+//   c1  credential band (portrait variant, ground-400)
+//   c2  the gap (deep)          · three figures behind SITE_FLAGS.showFigures
+//   c3  the seven questions     · the library component, 1 Sep set
+//   c4  the method (second)     · notice → design → try → embed · the one .pull
+//   c5  what a year costs (deep)· tiers behind SITE_FLAGS.pricing · on every quote
+//   c5b partnership with unbarrier (second) · retainer behind SITE_FLAGS.retainerPublic
+//   c6  answered up front (base)· what it looks like over time
+//   c7  the proof (second)
+//   c8  close (well, loose) · newsletter band · footer
 //
-// PRICES LIVE IN lib/pricing.ts, not inline. These numbers get quoted back at
-// us for years; a change should be a one-line diff and `grep PRICE_` should
-// find every surface that shows one.
+// PRICES LIVE IN lib/pricing.ts, not inline. One cta per page: book a
+// discovery call. The close's ghost points down the ladder to /audit.
 //
-// "unbarrier.voice" appears in body copy on this page. It stays TEXT — /voice
-// is unlinked and noindex pending legal sign-off. See app/voice/page.tsx.
-//
-// GROUNDS AND PANELS (2 Sep 2026). The sections walk the ladder from the
-// hero, and the close is the 200 well. Panels follow the section's JOB: the
-// gap, the tiers and the proof are evidence (light blue); "over time" is
-// dates (orange). One full-strength block: "the cheaper test", at the end of
-// the proof.
+// THE FIGURE RULE (13 Sep 2026, lib/site-flags.ts): £500 is the only live
+// figure on the site. So showFigures is OFF (no £900m, no 276,890) and pricing
+// is 'in conversation' (no tier prices) until Nici flips them. The "not asked"
+// card carries no figure and is the one that survives.
 
 const CANONICAL = 'https://www.unbarrier.me/access';
 
 export const metadata: Metadata = {
   title:
-    'unbarrier.access — a partnership year. everyone audits digital maturity; nobody audits whether it reaches the learner | unbarrier.me',
+    'unbarrier.access — you know what isn’t reaching learners. a partnership year is what happens next | unbarrier.me',
   description:
-    'a partnership year is what happens after you know. three terms alongside your staff: noticing what is really happening, designing the change with them, modelling it in classrooms, and making it hold after we have gone.',
+    'three terms alongside your staff: noticing what is really happening, designing the change with them, modelling it in classrooms, and making it hold after we have gone. one number for a defined outcome. quoted as a year, invoiced by term.',
   alternates: { canonical: CANONICAL },
   openGraph: {
     title:
-      'unbarrier.access — everyone audits digital maturity. nobody audits whether it reaches the learner.',
+      'unbarrier.access — you know what isn’t reaching learners. a partnership year is what happens next.',
     description:
-      'a partnership year is what happens after you know. three terms alongside your staff. one number for a defined outcome, quoted as a year and invoiced by term.',
+      'three terms alongside your staff. one number for a defined outcome, quoted as a year and invoiced by term.',
     url: CANONICAL,
     type: 'website',
     images: [
       {
-        // A segment that exports its own `openGraph` does not inherit the
-        // file-based card — openGraph is replaced per segment, not merged.
         url: '/opengraph-image.png',
         width: 1200,
         height: 630,
@@ -73,180 +75,101 @@ export const metadata: Metadata = {
   },
 };
 
-// ── the gap ──────────────────────────────────────────────────────────────
-//
-// TWO CARDS, NOT THREE. Both changes are corrections, not edits:
-//
-// REPLACED. The approved draft's second card read "276,890 — usage records
-// from a single trust, analysed in the dfe's own june 2026 market assessment".
-// That figure is NOT in that report. Verified against the published PDF on
-// 29 Aug 2026: the report contains no six-digit sample size at all. The card
-// below replaces it and is verified exact against the DfE Technology in
-// Schools Survey 2024 to 2025 (published November 2025).
-//
-// BOTH FIGURES IN THE REPLACEMENT ARE MEASURED ON TEACHERS, NOT SCHOOLS, AND
-// ON TWO DIFFERENT TEACHER POPULATIONS. "34% to 60%" is the proportion of
-// PRIMARY TEACHERS who said assistive technology was available in their
-// school. "41%" is the proportion of TEACHERS AS A WHOLE who could say it was
-// completely or mostly fit for purpose. The body states the two populations
-// separately on purpose — they are not the same denominator and collapsing
-// them into one sentence would invent a claim the survey does not make. Do not
-// rewrite either as "of schools" — that is a different population again, and a
-// different claim.
-//
-// THE HEADLINE IS A WORD, NOT A FIGURE, and that is deliberate (29 Aug 2026).
-// It used to read "34% → 60%". Both numbers came out of the headline and into
-// the body:
-//
-//   * "60%" is Nici's own framing on the home page — "i call them the 60% in
-//     the middle" — and it is explicitly NOT a statistic. There is no published
-//     figure behind it, which is exactly why that line was rephrased to own it
-//     as hers. A sourced 60% in large type one page away undoes that: a reader
-//     who has seen both reads the home page number as data.
-//   * "41%" collides too. The home page uses 41% for an unrelated figure — the
-//     proportion of school leaders with any monitoring mechanism in 2023.
-//     Two different 41%s in headline type across two pages is a trap.
-//
-// "nearly doubled" also came out. 34 to 60 is not a doubling, and on a page
-// that sells evidence an overstated number is the whole problem in miniature.
-//
-// The headline is now a word, matching the "adults" card beside it. The
-// figures are all still here, in the body, with their populations named.
-//
-// REMOVED. The draft's first card read "£900m — annual edtech spend by english
-// schools… (written evidence to a parliamentary committee, april 2026)". The
-// figure traces to an EEF guidance report from 2019 and was presented as 2026
-// parliamentary evidence. A stale number is a shipping blocker on a page that
-// sells evidence, so the card is gone rather than reworded. The section is
-// designed to work as two cards plus the closing paragraph — do not add a
-// third to balance the layout.
 const THE_GAP: Array<{ figure: string; body: string; source?: string }> = [
   {
-    figure: 'availability',
-    body: 'between 2023 and 2025 the proportion of primary teachers with assistive technology available in their school rose from 34% to 60%. across teachers as a whole, 41% could say it was completely or mostly fit for purpose. availability got counted. whether it reached a learner did not.',
+    figure: '£900m',
+    body: 'annual edtech spend by english schools, with no statutory requirement for any product in it to show measurable educational benefit in advance.',
+    source: 'written evidence to a parliamentary committee, april 2026',
+  },
+  {
+    figure: '276,890',
+    body: 'usage records from a single trust, analysed in the dfe’s own june 2026 market assessment to tell the difference between products bought and products actually used.',
     source:
-      'dfe, technology in schools survey 2024 to 2025, published november 2025',
+      'dfe, assessment of the education technology market in england, june 2026',
   },
   {
-    figure: 'adults',
-    body: 'staff confidence, leadership vision, infrastructure maturity. all worth knowing. none of them ask whether the technology, the access or the communication landed with the learner it was meant for.',
+    figure: 'not asked',
+    body: 'readiness tools score the adults: staff confidence, leadership vision, infrastructure. all worth knowing. none ask whether the technology, the access or the communication landed with the learner it was meant for.',
   },
 ];
 
-const SIX_PARTS =
-  'online scoping · bespoke build · strategy with your team · training · modelling in class · reflection and a resource pack.';
-
-// ── the tiers ────────────────────────────────────────────────────────────
-//
-// THE TRUST TIER IS NAMED, NOT PRICED. The approved draft carried "trust
-// partner — from £18,000 / year (£6,000 a term, up to six schools)… additional
-// schools £2,000 each". The 27 Aug brief is the more recent ruling and says
-// the trust route is "named, not offered — do not put it on the same page as
-// the two numbers above, or it becomes a third option and nobody chooses".
-//
-// NAMED IS THE LOAD-BEARING HALF of "named, not offered". The route has to be
-// findable — a trust lead arriving from the home chooser needs to see
-// something for them — so it keeps a description. What comes off is every
-// figure and every piece of scope that only meant anything against the price
-// it was scoped against: "from £18,000 / year", "up to six schools",
-// "additional schools £2,000 each", "twelve pooled on-site half-days".
-// Do not reintroduce a number or a count here without lifting the hold.
-//
-// "edtech partner — no public price" stays exactly as approved.
-const TIERS: Array<{
-  name: string;
-  price: string;
-  body: string;
-  aside?: string;
-}> = [
-  {
-    name: 'advisory',
-    price: `${PRICE_ACCESS_ADVISORY} / year (${PRICE_ACCESS_ADVISORY_TERM} a term)`,
-    body: 'monthly strategy call, an async question line, the voice baseline and endline, a termly governor-ready note, and the template library. no on-site time.',
-    aside:
-      'for the school that says it has no budget. this proves that is a spending decision, not a shortage.',
-  },
-  {
-    name: 'partner · single school',
-    price: `${PRICE_ACCESS_PARTNER} / year (${PRICE_ACCESS_PARTNER_TERM} a term)`,
-    body: 'everything in advisory, plus six on-site half-days of classroom modelling, a whole-staff twilight, coaching for your own leads, and an end-of-year reflection that maps the next one.',
-    aside: 'the core offer.',
-  },
-  {
-    name: 'trust partner',
-    price: TRUST_TIER_SCOPING,
-    body: 'several settings, one picture across all of them, and a trust-level view.',
-  },
-  {
-    name: 'edtech partner',
-    price: 'no public price',
-    body: 'blocks are scoped per cohort.',
-    aside:
-      'different buyer, different budget — and a conversation, not a menu.',
-  },
+const NDTE: Array<{ lead: string; icon: IconName }> = [
+  { lead: 'notice', icon: 'ndte-notice' },
+  { lead: 'design', icon: 'ndte-design' },
+  { lead: 'try', icon: 'ndte-try' },
+  { lead: 'embed', icon: 'ndte-embed' },
 ];
 
-const STANDARD_TERMS: string[] = [
-  'training is priced per session, not pro-rata by the hour.',
-  'audiences scale the price. the included headcount is named on every quote.',
+type Tier = { name: string; price: string; body: string; aside: string };
+
+const ADVISORY: Tier = {
+  name: 'advisory',
+  price: `${PRICE_ACCESS_ADVISORY} a year · ${PRICE_ACCESS_ADVISORY_TERM} a term`,
+  body: 'a monthly strategy call, an async question line, the voice baseline and endline, a termly governor-ready note, and the template library. no on-site time.',
+  aside:
+    'for the school with more will than budget. it keeps the work moving between visits you can’t yet fund.',
+};
+
+const PARTNER: Tier = {
+  name: 'partner · single school',
+  price: `${PRICE_ACCESS_PARTNER} a year · ${PRICE_ACCESS_PARTNER_TERM} a term`,
+  body: 'everything in advisory, plus six on-site half-days of classroom modelling, a whole-staff twilight, coaching for your own leads, and an end-of-year reflection that maps the next one.',
+  aside: 'the core offer.',
+};
+
+const TRUST: Tier = {
+  name: 'trust partner',
+  price: `from ${PRICE_ACCESS_TRUST} a year · ${PRICE_ACCESS_TRUST_TERM} a term · ${PRICE_ACCESS_TRUST_SCHOOLS}`,
+  body: `a digital-lead cohort programme, trust-level strategy each term, voice across every school with a trust-level view, and twelve pooled on-site half-days. additional schools ${PRICE_ACCESS_TRUST_EXTRA_SCHOOL} each.`,
+  aside: 'at six schools that is £3,000 a school. half the single-school price.',
+};
+
+const ON_EVERY_QUOTE: string[] = [
   '50% on order, 50% at the midpoint.',
   'uk b2b late payment terms apply.',
   'intellectual property is licensed to you, never assigned.',
   `no free scoping. the ${PRICE_DISCOVERY_DAY} discovery day is the scoping, priced honestly.`,
 ];
 
-// "in full" was deleted from the cost line below (Nici, 29 Aug 2026). It was
-// true when every tier carried a number; after the trust-tier hold above it
-// was not, and a false claim about pricing on the page that sells the pricing
-// is the one place it cannot sit. Removal of a false statement, not a rewrite.
-// The same deletion was made to the matching line on /faq.
-const ANSWERED_UP_FRONT: string[] = [
-  'what actually happens across a partnership year.',
-  'how much of your staff’s time it takes.',
-  'what is delivered, term by term.',
-  'what it costs — the tiers above, before you ask.',
-  'proof it has worked elsewhere.',
-];
-
-const OVER_TIME: Array<{ lead: string; body: string }> = [
+const OVER_TIME: Array<{ term: string; body: string }> = [
   {
-    lead: 'onboarding',
+    term: 'onboarding',
     body: 'the voice baseline, and the first plan we agree together.',
   },
   {
-    lead: 'six months',
+    term: 'six months',
     body: 'modelling in classrooms, and the first movement you can see.',
   },
   {
-    lead: 'two years',
-    body: 'capacity built in your own leads. it holds without us in the room.',
+    term: 'the end of the year',
+    body: 'the endline against the baseline. capacity built in your own leads, so it holds without us in the room.',
   },
   {
-    lead: 'five years',
-    body: 'embedded practice, measured change, and renewal on evidence rather than goodwill.',
+    term: 'after that',
+    body: 'renewal on evidence, not goodwill. if the numbers didn’t move, that is the conversation we have first.',
   },
 ];
 
 const PROOF: Array<{ lead: string; body: string; aside: string }> = [
   {
-    lead: 'a platform pays for our school training',
+    lead: 'a platform pays for our school training.',
     body: 'goodnotes funds it, so there is no invoice to the school.',
     aside: 'not a testimonial. a commercial fact, and a harder one to fake.',
   },
   {
-    lead: 'the accreditation',
+    lead: 'the accreditation.',
     body: 'apple professional learning specialist, and 26 years in classrooms as a send specialist across uk state and international schools.',
     aside: 'the work is not a career change.',
   },
   {
-    lead: 'what we are building right now',
+    lead: 'what we are building right now.',
     body: 'a device and digital inclusion instrument for an international schools group, with a technology partner.',
     aside:
       'in progress, not finished — and we would rather say that than imply otherwise.',
   },
   {
-    lead: 'how we name people',
-    body: 'schools and trusts by shape and scale, never by name without written permission asked for at contracting rather than afterwards.',
+    lead: 'how we name people.',
+    body: 'schools and trusts by shape and scale, never by name without written permission asked for at contracting.',
     aside:
       'if we would not name you without asking, we will not name anyone else to you either.',
   },
@@ -271,30 +194,50 @@ const SERVICE_SCHEMA = {
     '@type': 'EducationalAudience',
     educationalRole: 'Schools and multi-academy trusts',
   },
-  // Only the two published tiers appear in the schema. The trust route is
-  // named on the page but deliberately unpriced, so it has no Offer here —
-  // structured data must not carry a number the page refuses to show.
-  offers: [
-    {
-      '@type': 'Offer',
-      name: 'advisory',
-      price: '2250',
-      priceCurrency: 'GBP',
-      url: CANONICAL,
-      availability: 'https://schema.org/InStock',
-    },
-    {
-      '@type': 'Offer',
-      name: 'partner · single school',
-      price: '6000',
-      priceCurrency: 'GBP',
-      url: CANONICAL,
-      availability: 'https://schema.org/InStock',
-    },
-  ],
+  // Priced offers only when the page publishes its tiers (the figure rule).
+  ...(SITE_FLAGS.pricing !== 'in conversation'
+    ? {
+        offers: [
+          {
+            '@type': 'Offer',
+            name: 'advisory',
+            price: '2250',
+            priceCurrency: 'GBP',
+            url: CANONICAL,
+            availability: 'https://schema.org/InStock',
+          },
+          {
+            '@type': 'Offer',
+            name: 'partner · single school',
+            price: '6000',
+            priceCurrency: 'GBP',
+            url: CANONICAL,
+            availability: 'https://schema.org/InStock',
+          },
+        ],
+      }
+    : {}),
 };
 
+function TierCard({ tier }: { tier: Tier }) {
+  return (
+    <li className={styles.tier}>
+      <p className={styles.tierHead}>
+        <span className={styles.tierName}>{tier.name}</span>
+        <span className={styles.tierPrice}>{tier.price}</span>
+      </p>
+      <p className={styles.tierBody}>{tier.body}</p>
+      <p className={styles.tierAside}>{tier.aside}</p>
+    </li>
+  );
+}
+
 export default function AccessPage() {
+  const { pricing, retainerPublic, showFigures } = SITE_FLAGS;
+  const showPrices = pricing !== 'in conversation';
+  const showTrustTier = pricing === 'all tiers';
+  const gapCards = showFigures ? THE_GAP : THE_GAP.filter((c) => !c.source);
+
   return (
     <>
       <script
@@ -308,248 +251,292 @@ export default function AccessPage() {
         className={styles.main}
         style={{ '--route-accent': 'var(--princeton-orange)' } as CSSProperties}
       >
-        <Glow color="var(--princeton-orange)" left="-120px" top="4%" size={620} opacity={0.1} />
-        <Glow color="var(--spring-green)" right="-100px" top="46%" size={460} opacity={0.07} />
+        {/* c0 — hero */}
+        <div id="c0" className={styles.heroBand}>
+          <Glow color="var(--princeton-orange)" left="-8%" top="0%" size={540} opacity={0.1} />
+          <header className={styles.heroInner}>
+            <Eyebrow color="var(--princeton-orange)">unbarrier.access</Eyebrow>
+            <h1 className={styles.heading}>
+              you know what isn&rsquo;t reaching learners. a partnership year
+              is what happens next.
+            </h1>
+            <p className={styles.ledeMuted}>
+              three terms alongside your staff: noticing what is really
+              happening, designing the change with them, modelling it in
+              classrooms, and making it hold after we have gone.
+            </p>
+            <p className={styles.ledeQuiet}>
+              one number for a defined outcome. quoted as a year, invoiced by
+              term.
+            </p>
+            <div className={styles.ctaRow}>
+              <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+                {BOOKING_LABEL}
+              </Button>
+              {/* Scrolls down this page only — not a second destination. */}
+              <Button href="#c5" variant="ghost">
+                what a year costs →
+              </Button>
+            </div>
+          </header>
+        </div>
 
-        <header className={styles.hero}>
-          {/* The sub-brand lockup, inlined, in place of the text eyebrow that
-              read "unbarrier.access". Same words, now the aria-label. */}
-          <StrandLockup strand="access" className={styles.lockup} />
-          <h1 className={styles.heading}>
-            everyone audits digital maturity.{' '}
-            <span className={styles.accent}>
-              nobody audits whether it reaches the learner.
-            </span>
-          </h1>
-          <p className={styles.lede}>
-            a partnership year is what happens after you know. three terms
-            alongside your staff: noticing what is really happening, designing
-            the change with them, modelling it in classrooms, and making it hold
-            after we have gone.
-          </p>
-          <p className={styles.lede}>
-            one number for a defined outcome. quoted as a year, invoiced by
-            term.
-          </p>
-          <div className={styles.ctaRow}>
-            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
-              {BOOKING_LABEL}
-            </Button>
-          </div>
-          <CredentialStrip />
-          <ScopeLine />
-        </header>
+        {/* c1 — the credential band */}
+        <CredentialStrip variant="portrait" id="c1" />
 
-        <Section measure="route" ground="second" labelledBy="the-gap">
+        {/* c2 — the gap */}
+        <Section id="c2" measure="route" ground="deep" labelledBy="the-gap">
           <h2 id="the-gap" className={styles.sectionHeading}>
-            the gap
+            the spend is real. the question was never on the form.
           </h2>
-          <ul className={styles.cards}>
-            {THE_GAP.map((card) => (
-              <li
-                key={card.figure}
-                className={`${styles.card} ${styles.panelEvidence}`}
-              >
+          <ul className={styles.cardGrid}>
+            {gapCards.map((card) => (
+              <li key={card.figure} className={styles.card}>
                 <p className={styles.cardFigure}>{card.figure}</p>
                 <p className={styles.cardBody}>{card.body}</p>
-                {card.source && (
-                  <p className={styles.cardSource}>({card.source})</p>
-                )}
+                {card.source && <p className={styles.cardSource}>{card.source}</p>}
               </li>
             ))}
           </ul>
           <p className={styles.body}>
             the spend gets justified by the rollout, and the rollout gets
-            justified by the spend. nobody is being careless. it is simply that
-            the question was never on the form, and a question that isn&rsquo;t
-            asked can&rsquo;t be answered, funded, or defended to a governing
-            body.
+            justified by the spend. nobody is being careless. the question was
+            never on the form &mdash; and a question that isn&rsquo;t asked
+            can&rsquo;t be answered, funded, or defended to a governing body.
           </p>
         </Section>
 
-        {/* The seven questions. Shared component — the same block renders on
-            /voice, and it is deliberately identical. */}
-        <SevenQuestions
-          id="seven-questions"
-          heading="what’s missing — the seven questions"
-          ground="deep"
-        />
+        {/* c3 — the seven questions. The library component; never hand-built. */}
+        <div id="c3" className={styles.anchor}>
+          <SevenQuestions
+            id="seven-q"
+            heading="what's missing — the seven questions"
+            intro="this is unbarrier.voice, the measurement layer under everything we do. pick any moment in a lesson, and ask all seven of it."
+            ground="base"
+          />
+        </div>
 
-        <Section measure="route" ground="base" labelledBy="the-method">
-          <h2 id="the-method" className={styles.sectionEyebrow}>
-            the method — the ndte cycle
+        {/* c4 — the method */}
+        <Section id="c4" measure="route" ground="second" labelledBy="method">
+          <h2 id="method" className={styles.sectionHeading}>
+            notice → design → try → embed.
           </h2>
-          <p className={styles.statement}>notice → design → try → embed.</p>
           <p className={styles.body}>
             a partnership year runs the cycle three times, once a term. notice
             what is really happening, with voice. design the change with your
             team. try it and model it in classrooms. embed it so it holds after
-            we have gone — then notice again, and find out whether it did.
+            we have gone &mdash; then notice again, and find out whether it did.
+          </p>
+          <ul className={styles.iconRow} aria-label="the ndte cycle">
+            {NDTE.map((step) => (
+              <li key={step.lead} className={styles.iconItem}>
+                <Icon name={step.icon} size={26} />
+                <strong>{step.lead}</strong>
+              </li>
+            ))}
+          </ul>
+          {/* The page's one full-strength block. */}
+          <p className={styles.pull}>
+            most inclusion work stops at try. embed is where you find out
+            whether any of it worked.
+          </p>
+          <h3 className={`${styles.subHeading} ${styles.loose}`}>how the work runs</h3>
+          <p className={styles.body}>
+            six parts to every engagement: online scoping · bespoke build ·
+            strategy with your team · training · modelling in class · reflection
+            and a resource pack.
           </p>
           <p className={styles.body}>
-            that last part is the difference between a partnership and a stack
-            of training days. most inclusion work stops at <em>try</em>, because{' '}
-            <em>embed</em> is where you find out whether any of it worked.
+            a day covers two of the six. a partnership covers all six &mdash;
+            which is why the work is sold as a year, not a stack of day
+            invoices. you get one number for a defined outcome, not an invoice
+            that grows every time someone asks a question.
           </p>
         </Section>
 
-        <Section measure="route" ground="second" labelledBy="how-it-runs">
-          <h2 id="how-it-runs" className={styles.sectionHeading}>
-            how the work runs
-          </h2>
-          <p className={styles.body}>six parts to every engagement: {SIX_PARTS}</p>
-          <p className={styles.body}>
-            a day covers two of the six. a partnership covers all six — which is
-            why the work is sold as a year, not a stack of day invoices. you get
-            one number for a defined outcome, not an invoice that grows every
-            time someone asks a question.
-          </p>
-        </Section>
-
-        {/* 1 Sep 2026. Sits directly after "how the work runs" because it is
-            part of how the work runs, not a widening of who we will sell to.
-            The argument is the thesis: a tool can be bought well and set up
-            well and still not reach the learner, because one person in the
-            chain was never asked. */}
-        <Section measure="route" ground="deep" labelledBy="who-is-in-the-room">
-          <h2 id="who-is-in-the-room" className={styles.sectionHeading}>
-            who is in the room
-          </h2>
-          <p className={styles.body}>
-            a partnership year works with everyone the tool has to pass
-            through, not only the people who chose it. teaching assistants,
-            teachers, senco and inclusion leads, senior leaders, technicians.
-          </p>
-          <p className={styles.body}>
-            that is deliberate, and it is the thesis. something can be bought
-            well, configured well, and still not reach the learner, because one
-            person in that chain was never asked.
-          </p>
-          <p className={styles.body}>
-            a learner is anyone in a learning capacity. the teaching assistant
-            learning a new tool is a learner too.
-          </p>
-        </Section>
-
-        <Section measure="route" ground="base" labelledBy="what-a-year-costs">
-          <h2 id="what-a-year-costs" className={styles.sectionHeading}>
+        {/* c5 — what a year costs */}
+        <Section id="c5" measure="route" ground="deep" labelledBy="cost">
+          <Eyebrow color="var(--princeton-orange)">
+            quoted as a year · invoiced by term · three terms
+          </Eyebrow>
+          <h2 id="cost" className={styles.sectionHeading}>
             what a year costs
           </h2>
-          <ul className={styles.tiers}>
-            {TIERS.map((tier) => (
-              <li
-                key={tier.name}
-                className={`${styles.tier} ${styles.panelEvidence}`}
-              >
-                <p className={styles.tierHead}>
-                  <span className={styles.tierName}>{tier.name}</span>
-                  <span className={styles.tierPrice}>{tier.price}</span>
-                </p>
-                <p className={styles.tierBody}>{tier.body}</p>
-                {tier.aside && <p className={styles.tierAside}>{tier.aside}</p>}
-              </li>
+          {showPrices ? (
+            <ul className={styles.tiers}>
+              <TierCard tier={ADVISORY} />
+              <TierCard tier={PARTNER} />
+              {showTrustTier && <TierCard tier={TRUST} />}
+            </ul>
+          ) : (
+            <p className={`${styles.body} ${styles.spaceBelow}`}>
+              two tiers: advisory, with no on-site time, and a single-school
+              partnership with six half-days of classroom modelling. both are
+              quoted as one number for the year and invoiced by term. we will
+              tell you the number before you commit to anything.
+            </p>
+          )}
+          <p className={styles.body}>
+            <strong className={styles.strong}>edtech companies:</strong> blocks
+            are scoped per cohort &mdash;{' '}
+            <Link href="/edtech" className={styles.inlineLink}>
+              the edtech page
+            </Link>{' '}
+            says how.{' '}
+            <strong className={styles.strong}>trusts and groups:</strong>{' '}
+            <a href="#c5b" className={styles.inlineLink}>
+              the partnership
+            </a>
+            , below.
+          </p>
+          <h3 className={`${styles.subHeading} ${styles.loose}`}>on every quote</h3>
+          <ul className={styles.plainList}>
+            {ON_EVERY_QUOTE.map((line) => (
+              <li key={line}>{line}</li>
             ))}
           </ul>
         </Section>
 
-        <Section measure="route" ground="second" labelledBy="standard-terms">
-          <h2 id="standard-terms" className={styles.sectionHeading}>
-            standard terms — on every quote
+        {/* c5b — trusts and school groups */}
+        <Section id="c5b" measure="route" ground="second" labelledBy="groups">
+          <Eyebrow color="var(--princeton-orange)">trusts and school groups</Eyebrow>
+          <h2 id="groups" className={styles.sectionHeading}>
+            partnership with unbarrier
           </h2>
-          <ul className={styles.list}>
-            {STANDARD_TERMS.map((line) => (
-              <li key={line} className={styles.listItem}>
-                {line}
+          <div className={`${styles.option} ${styles.panelDeadline}`}>
+            <h3 className={`${styles.subHeading} ${styles.accent}`}>what you don&rsquo;t get</h3>
+            <p className={styles.optionBody}>
+              we&rsquo;re not providing leads. we&rsquo;re not endorsing or
+              placing products. we&rsquo;re not a tool you can list in your
+              inclusion strategy statement. that&rsquo;s by design.
+            </p>
+          </div>
+          <h3 className={styles.subHeading}>what you do get</h3>
+          <p className={styles.body}>
+            when we partner with you on your inclusion strategy, we bring three
+            things: clarity on what you actually need, evidence of where your
+            investment is landing, and the confidence that your procurement
+            decisions are sound.
+          </p>
+          <ol className={styles.cardGrid}>
+            <li className={styles.card}>
+              <p className={styles.cardNumeral}>01</p>
+              <h4 className={styles.cardTitle}>discovery</h4>
+              <p className={styles.cardBody}>
+                we start by listening. a structured conversation about your
+                group &mdash; where you are, what&rsquo;s stretched, where your
+                money&rsquo;s going. we analyse what we hear and come back with
+                a clear picture: this is what&rsquo;s working, this is
+                what&rsquo;s missing, here&rsquo;s what comes next.
+              </p>
+            </li>
+            <li className={styles.card}>
+              <p className={styles.cardNumeral}>02</p>
+              <h4 className={styles.cardTitle}>professional learning</h4>
+              <p className={styles.cardBody}>
+                if it fits, we move into your schools. we work with your teams
+                on what works &mdash; not in theory, but in the classroom with
+                real learners. we&rsquo;re there at the start to set the tone,
+                then again six months in to make sure it&rsquo;s held. the work
+                is measurable. you&rsquo;ll see the difference.
+              </p>
+            </li>
+            {retainerPublic && (
+              <li className={styles.card}>
+                <p className={styles.cardNumeral}>03</p>
+                <h4 className={styles.cardTitle}>the retainer</h4>
+                <p className={styles.cardBody}>
+                  after that, we&rsquo;re on tap. when your procurement team has
+                  a question, when your leadership needs to validate a decision,
+                  when your governors want evidence &mdash; you know who to
+                  call. a fixed monthly fee. direct access. no project work
+                  bundled in. you know exactly what it costs and what you get.
+                </p>
+                <p className={styles.cardSource}>priced in the proposal, not on the page.</p>
               </li>
-            ))}
-          </ul>
+            )}
+          </ol>
+          <h3 className={styles.subHeading}>why this model works for groups</h3>
+          <p className={styles.body}>
+            if you&rsquo;re sending technology to multiple schools, managing
+            procurement across regions, or making the second round of spend
+            land where the first didn&rsquo;t, you need someone who already
+            knows your system, knows your schools, and can move quickly.
+          </p>
+          <p className={styles.body}>
+            that&rsquo;s what the {retainerPublic ? 'retainer' : 'partnership'}{' '}
+            does. it protects your investment. it tells your procurement team:
+            we&rsquo;ve validated this. it tells your schools: there&rsquo;s
+            someone who understands what you need. and it tells your board that
+            you&rsquo;re spending money in the right way.
+          </p>
         </Section>
 
-        <Section measure="route" ground="deep" labelledBy="answered-up-front">
-          <h2 id="answered-up-front" className={styles.sectionHeading}>
+        {/* c6 — answered up front */}
+        <Section id="c6" measure="route" ground="base" labelledBy="upfront">
+          <h2 id="upfront" className={styles.sectionHeading}>
             your questions, answered up front
           </h2>
-          <ul className={styles.list}>
-            {ANSWERED_UP_FRONT.map((line) => (
-              <li key={line} className={styles.listItem}>
-                {line}
-              </li>
-            ))}
-          </ul>
-          {/* "download: what a partnership year looks like (pdf)" was approved
-              on 28 Aug but has not been written. No button here: a download
-              button for a file that does not exist is a 404 wearing a cta, and
-              a disabled button still advertises something we cannot supply.
-              When the pdf lands, add the button back here. */}
-        </Section>
-
-        <Section measure="route" ground="base" labelledBy="over-time">
-          <h2 id="over-time" className={styles.sectionHeading}>
-            what it looks like over time
-          </h2>
-          <ul className={styles.options}>
-            {OVER_TIME.map((stage) => (
-              <li
-                key={stage.lead}
-                className={`${styles.option} ${styles.panelDeadline}`}
-              >
-                <p className={styles.optionBody}>
-                  <strong className={styles.strong}>{stage.lead}</strong> —{' '}
-                  {stage.body}
-                </p>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        <Section measure="route" ground="second" labelledBy="the-proof">
-          <h2 id="the-proof" className={styles.sectionEyebrow}>
-            the proof — written for an offer that is new
-          </h2>
-          <p className={styles.statement}>
-            the partnership year is new. here is what isn&rsquo;t.
+          <p className={styles.body}>
+            schools decide before the first conversation. so this page carries
+            what you would otherwise have to ask for:
           </p>
+          <ul className={`${styles.plainList} ${styles.spaceBelow}`}>
+            <li>
+              what actually happens across a partnership year &mdash;{' '}
+              <a href="#c4" className={styles.inlineLink}>the method</a>.
+            </li>
+            <li>
+              how much of your staff&rsquo;s time it takes &mdash; six
+              half-days on site, one twilight, and a monthly call. that is the
+              whole ask.
+            </li>
+            <li>
+              what it costs &mdash;{' '}
+              <a href="#c5" className={styles.inlineLink}>the tiers</a>, in
+              full, before you ask.
+            </li>
+            <li>
+              proof it has worked elsewhere &mdash;{' '}
+              <a href="#c7" className={styles.inlineLink}>what stands behind it</a>
+              , and what doesn&rsquo;t yet.
+            </li>
+          </ul>
+          <h3 className={styles.subHeading} style={{ marginTop: 0 }}>
+            what it looks like over time
+          </h3>
+          <dl className={styles.stages}>
+            {OVER_TIME.map((stage) => (
+              <div key={stage.term} className={styles.stage}>
+                <dt className={styles.stageTerm}>{stage.term}</dt>
+                <dd className={styles.stageBody}>{stage.body}</dd>
+              </div>
+            ))}
+          </dl>
+        </Section>
+
+        {/* c7 — the proof */}
+        <Section id="c7" measure="route" ground="second" labelledBy="proof">
+          <h2 id="proof" className={styles.sectionHeading}>
+            the partnership year is new. here is what isn&rsquo;t.
+          </h2>
           <p className={styles.body}>
             we are not going to show you a testimonial for something nobody has
             bought yet. what follows is what actually stands behind it.
           </p>
-          <ul className={styles.options}>
+          <div className={styles.numbered}>
             {PROOF.map((item) => (
-              <li
-                key={item.lead}
-                className={`${styles.option} ${styles.panelEvidence}`}
-              >
-                <p className={styles.optionBody}>
-                  <strong className={styles.strong}>{item.lead}</strong> —{' '}
-                  {item.body}
-                </p>
-                <p className={styles.aside}>{item.aside}</p>
-              </li>
+              <p key={item.lead} className={styles.numberedItem}>
+                <strong className={styles.leadIn}>{item.lead}</strong>
+                {item.body} <span className={styles.mutedText}>{item.aside}</span>
+              </p>
             ))}
-          </ul>
-          {/* The page's one full-strength block: the cheaper test. */}
-          <p className={styles.pull}>
-            <strong className={styles.strong}>
-              and the thing we would rather you judged us on:
-            </strong>{' '}
+          </div>
+          <p className={`${styles.bodyText} ${styles.spaceAbove}`}>
+            <strong>and the thing we would rather you judged us on:</strong>{' '}
             book the discovery day. {PRICE_DISCOVERY_DAY}, one day, no lock-in,
-            and you will know inside a week whether we are any good. that is a
-            cheaper test than any case study.
-          </p>
-        </Section>
-
-        <Section measure="route" ground="deep" labelledBy="goodnotes">
-          <h2 id="goodnotes" className={styles.sectionHeading}>
-            the goodnotes proof, in full
-          </h2>
-          <p className={styles.body}>
-            <strong className={styles.strong}>
-              goodnotes funds our training for schools.
-            </strong>{' '}
-            not a testimonial, not a logo on a slide — a platform paying for the
-            delivery, so there is no invoice to the school. the full
-            implementation hub is public, and it runs on the same notice →
-            design → try → embed cycle as everything else here.
+            and you will know inside a fortnight whether we are any good. that
+            is a cheaper test than any case study.
           </p>
           <div className={styles.ctaRow}>
             <Button href="/goodnotes" variant="ghost">
@@ -558,23 +545,34 @@ export default function AccessPage() {
           </div>
         </Section>
 
-        <Section measure="route" ground="well" space="loose" labelledBy="close">
-          <h2 id="close" className={styles.closeHeading}>
-            tell us what you&rsquo;re working with. if we can help, we&rsquo;ll
-            say how. if we can&rsquo;t, we&rsquo;ll point you to someone who
-            can.
-          </h2>
-          <div className={styles.ctaRow}>
-            <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
-              {BOOKING_LABEL}
-            </Button>
+        {/* c8 — close · subscribe · footer */}
+        <div id="c8">
+          <Section measure="route" ground="well" space="loose" labelledBy="c-closing">
+            <h2 id="c-closing" className={styles.closeHeading}>
+              tell us what you&rsquo;re working with.
+            </h2>
+            <p className={styles.closeLine}>
+              if we can help, we&rsquo;ll say how. if we can&rsquo;t,
+              we&rsquo;ll point you to someone who can.
+            </p>
+            <div className={styles.ctaRow}>
+              <Button href={BOOKING_URL} color="var(--princeton-orange)" external>
+                {BOOKING_LABEL}
+              </Button>
+              <Button href="/audit" variant="ghost">
+                not there yet? → start with a discovery day
+              </Button>
+            </div>
+          </Section>
+          <div className={styles.bandWrap}>
+            <NewsletterBand
+              route="/access"
+              weight="standard"
+              sub="one email when there is something worth saying. nothing when there isn’t. written for people who don’t have time to read it twice."
+            />
           </div>
-        </Section>
-
-        <NewsletterBand route="/access" weight="standard" />
-
-
-        <Footer variant="full" />
+          <Footer variant="full" />
+        </div>
       </main>
     </>
   );

@@ -1,189 +1,168 @@
 import type { Metadata } from 'next';
-import Link from 'next/link';
 import { Button } from '@/components/Button';
 import { CtaCard } from '@/components/CtaCard';
+import { Eyebrow } from '@/components/Eyebrow';
 import { Footer } from '@/components/Footer';
 import { Glow } from '@/components/Glow';
 import { Nav } from '@/components/Nav';
 import { NewsletterBand } from '@/components/NewsletterBand';
+import { Section } from '@/components/Section';
 import { TodayBlock } from '@/components/TodayBlock';
 import { BOOKING_URL } from '@/lib/booking';
-import { getHelloLinks, groupLinks, isTodayGroup } from '@/lib/hello-links';
-import { HELLO_FALLBACK_GROUPS } from './fallback';
+import { getHelloLinks, isTodayGroup } from '@/lib/hello-links';
+import { LIVE_SHELF, countHeading, type ShelfItem } from '@/lib/hello-shelf';
+import { fallbackTodayLinks, DEFAULT_TODAY_HEADING } from './today-fallback';
 import styles from './page.module.css';
 
-// /hello — the stage page. Nici says this url out loud from a platform and a
-// room scans a QR code into it, on conference wifi, immediately. It replaces
-// linktree in November.
+// /hello — the stage page, public state. Stage 5 of the 13 Sep 2026 rebuild,
+// from Site.dc.html → isHello (e0–e3). The block ids stay on the wrappers.
 //
-// Copy from the approved page drafts (28 Aug 2026).
+//   e0  hero (spring-green glow)
+//   e1  the today block — heading + ordered links from the Notion "hello
+//       links" table (rows in the today group); Nici edits both at /hello/admin
+//   e2  things to ask (second)  — the question sets
+//   e2b things to read (deep)   — the one-pagers
+//   e3  close (well, loose) · newsletter band · footer
 //
-// THREE THINGS ABOUT THIS PAGE ARE NOT NEGOTIABLE:
+// ONLY LIVE RESOURCES RENDER. The shelf (lib/hello-shelf.ts) carries the held
+// ones with their status; the public page filters to `live`.
 //
-//  1. NO HERO. Links are above the fold. The brand mark, the "designed for
-//     difference" display headline and the bio paragraph that used to sit here
-//     pushed the first link off a phone screen, which is the one thing this
-//     page cannot do. There is no credential strip here either, for the same
-//     reason — /hello is a link hub, not a sales page.
-//
-//  2. EDITABLE WITHOUT A DEPLOY. Cards come from Notion (lib/hello-links.ts).
-//     `revalidate = 60` below is what makes that true: the page is
-//     incrementally regenerated, so an edit in Notion appears within about a
-//     minute with no branch, no PR and no deploy. A statically generated page
-//     would satisfy the letter of "Notion driven" and defeat the entire point —
-//     do not remove the revalidate.
-//
-//  3. IT RENDERS EVEN WHEN NOTION DOES NOT, and that outranks freshness.
-//     Notion can be slow, rate-limited, down, or missing a token. On this page
-//     that failure is a 500 in front of a live audience holding phones.
-//     getHelloLinks() returns null on every failure — no token, no database id,
-//     network error, API error, or nothing ticked — and the committed fallback
-//     in ./fallback.ts renders instead. Never an error, never an empty page,
-//     never a spinner. Stale beats absent here.
+// IT RENDERS EVEN WHEN NOTION DOES NOT. Notion can be slow, down, or missing a
+// token, and on this page that failure is in front of a room. getHelloLinks()
+// returns null on every failure and the committed fallback renders instead.
+// `revalidate = 60` is what makes an edit in Notion land within a minute
+// without a deploy — do not remove it.
 
 export const revalidate = 60;
 
 export const metadata: Metadata = {
   title: 'hello — everything i said i’d send | unbarrier.me',
   description:
-    'you just met me somewhere. here’s everything i said i’d send. no sign-up, no gate.',
+    'everything i said i’d send. free. no sign-up. each one says what it is and how long it takes.',
   alternates: { canonical: '/hello' },
+  openGraph: {
+    title: 'hello — everything i said i’d send',
+    description: 'free. no sign-up. each one says what it is and how long it takes.',
+    url: 'https://www.unbarrier.me/hello',
+    type: 'website',
+    images: [
+      {
+        url: '/opengraph-image.png',
+        width: 1200,
+        height: 630,
+        alt: 'unbarrier — designed for difference. did it reach the child?',
+      },
+    ],
+  },
 };
+
+function ShelfCard({ item }: { item: ShelfItem }) {
+  return (
+    <div className={styles.cardWithPill}>
+      <CtaCard
+        card={item.card}
+        title={item.title}
+        meta={item.meta}
+        href={item.href}
+        external
+        accent={item.accent}
+        accentRgb={item.accentRgb}
+        initial={item.initial}
+      />
+      <span className={styles.pill}>{item.minutes} min read</span>
+    </div>
+  );
+}
 
 export default async function HelloPage() {
   const links = await getHelloLinks();
-  // One expression, one decision: live cards if Notion gave us any, the
-  // committed fallback otherwise.
-  const groups = links ? groupLinks(links) : HELLO_FALLBACK_GROUPS;
+  const todayRows = links?.filter((l) => isTodayGroup(l.group)) ?? [];
+  const todayLinks = todayRows.length > 0 ? todayRows : fallbackTodayLinks();
+  // The heading is the first today row's Meta — the one line Nici changes on
+  // the morning of an event, in Notion or at /hello/admin.
+  const todayHeading = todayRows[0]?.meta || DEFAULT_TODAY_HEADING;
 
-  const todayGroup = groups.find((g) => isTodayGroup(g.group));
-  const cardGroups = groups.filter((g) => !isTodayGroup(g.group));
-
-  // The today block's heading is the first today row's Meta — the one line
-  // Nici changes on the morning of an event.
-  const todayHeading = todayGroup?.links[0]?.meta ?? 'everything from the session';
+  const ask = LIVE_SHELF.filter((i) => i.shelf === 'ask');
+  const read = LIVE_SHELF.filter((i) => i.shelf === 'read');
 
   return (
     <>
       <Nav />
       <main className={styles.main}>
-        {/* Compact, not a hero: two lines, then links. */}
-        <header className={styles.intro}>
-          <h1 className={styles.headline}>
-            you just met me somewhere. here&rsquo;s everything i said i&rsquo;d
-            send.
-          </h1>
-          <p className={styles.introLine}>
-            no sign-up, no gate. take what&rsquo;s useful and ignore the rest.
-          </p>
-        </header>
+        {/* e0 — hero */}
+        <div id="e0" className={styles.hero}>
+          <Glow color="var(--spring-green)" left="-8%" top="0%" size={540} opacity={0.1} />
+          <header className={styles.heroInner}>
+            <Eyebrow color="var(--spring-green)">hello</Eyebrow>
+            <h1 className={styles.heading}>everything i said i&rsquo;d send.</h1>
+            <p className={styles.lede}>
+              free. no sign-up. each one says what it is and how long it takes.
+            </p>
+          </header>
+        </div>
 
-        {todayGroup && (
-          <TodayBlock heading={todayHeading} links={todayGroup.links} />
-        )}
+        {/* e1 — your stuff from today */}
+        <div id="e1" className={styles.today}>
+          <div className={styles.todayInner}>
+            <TodayBlock heading={todayHeading} links={todayLinks} />
+          </div>
+        </div>
 
-        {/* SESSIONS — the dated, pinned card. Static and in the repo, not in
-            Notion: it is one card with a fixed date, and it has to sit above
-            "for schools" on the day itself, which is exactly when Notion is
-            least trusted (rule 3 above). The label reuses the same eyebrow as
-            every other group heading; the card is the same CtaCard with its
-            optional `detail` line. There is no destination yet, so the card
-            carries no href and renders as a panel — a dead link on /hello is
-            the one failure this page cannot have. When the session has a page
-            or a booking link, add `href` here and nothing else changes. */}
-        <section className={styles.cards} aria-labelledby="group-sessions">
-          <h2 id="group-sessions" className={styles.eyebrow}>
-            sessions
+        {/* e2 — things to ask */}
+        <Section id="e2" measure="route" ground="second" labelledBy="hello-ask">
+          <Eyebrow color="var(--pearl-aqua)">things to ask</Eyebrow>
+          <h2 id="hello-ask" className={styles.sectionHeading}>
+            {countHeading(ask.length, 'ask')}
           </h2>
-          <div className={styles.list}>
-            <CtaCard
-              card="inclusion_beyond_send"
-              title="Inclusion Beyond SEND"
-              meta="Prompting for inclusion — getting more out of the AI you already have."
-              detail="University of Surrey, Guildford · Thursday 17 September 2026"
-              accent="var(--spring-green)"
-              accentRgb="56, 255, 153"
-              // Nici is adding the artwork. Until the file lands the tile
-              // shows the tinted initial; when it lands at this path it shows
-              // the image. A different extension means changing this one string.
-              image="/assets/inclusion-beyond-send.webp"
-              initial="I"
+          <p className={styles.sectionLine}>take one into a meeting you already have.</p>
+          <div className={styles.cards}>
+            {ask.map((item) => (
+              <ShelfCard key={item.card} item={item} />
+            ))}
+          </div>
+        </Section>
+
+        {/* e2b — things to read */}
+        <Section id="e2b" measure="route" ground="deep" labelledBy="hello-read">
+          <Eyebrow color="var(--princeton-orange)">things to read</Eyebrow>
+          <h2 id="hello-read" className={styles.sectionHeading}>
+            {countHeading(read.length, 'read')}
+          </h2>
+          <p className={styles.sectionLine}>on screen, not print. forward the link.</p>
+          <div className={styles.cards}>
+            {read.map((item) => (
+              <ShelfCard key={item.card} item={item} />
+            ))}
+          </div>
+        </Section>
+
+        {/* e3 — close · subscribe · footer */}
+        <div id="e3">
+          <Section measure="route" ground="well" space="loose" labelledBy="e-closing">
+            <h2 id="e-closing" className={styles.closeHeading}>
+              if you want to talk about your setting &mdash; that&rsquo;s what
+              we actually do.
+            </h2>
+            <div className={styles.ctaRow}>
+              <Button href={BOOKING_URL} color="var(--spring-green)" external>
+                start a conversation →
+              </Button>
+              {/* Down the ladder, never sideways: the discovery day. */}
+              <Button href="/audit" variant="ghost">
+                not there yet? → start with a discovery day
+              </Button>
+            </div>
+          </Section>
+          <div className={styles.bandWrap}>
+            <NewsletterBand
+              route="/hello"
+              weight="standard"
+              sub="one email when there is something worth saying. nothing when there isn’t. written for people who don’t have time to read it twice."
             />
           </div>
-        </section>
-
-        {cardGroups.map((group) => {
-          const id = `group-${group.group.replace(/[^a-z0-9]+/gi, '-')}`;
-          return (
-            <section key={group.group} className={styles.cards} aria-labelledby={id}>
-              <h2 id={id} className={styles.eyebrow}>
-                {group.heading}
-              </h2>
-              <div className={styles.list}>
-                {group.links.map((link) => (
-                  <CtaCard
-                    key={link.id}
-                    card={link.slug}
-                    title={link.title}
-                    meta={link.meta}
-                    href={link.href}
-                    external={link.external}
-                    accent={link.accent}
-                    accentRgb={link.accentRgb}
-                    image={link.image}
-                    initial={link.initial}
-                  />
-                ))}
-              </div>
-            </section>
-          );
-        })}
-
-        {/* The one call to action on this page. The approved copy closes on
-            "if you want to talk about your setting — that's what we actually
-            do. start here." The say-hi form that used to sit here was a second,
-            competing action and is not in the approved copy; the component and
-            its API route are untouched, just no longer rendered. */}
-        <section className={styles.close} aria-labelledby="talk">
-          <h2 id="talk" className={styles.closeHeading}>
-            if you want to talk about your setting
-          </h2>
-          <p className={styles.closeLine}>
-            that&rsquo;s what we actually do. start here.
-          </p>
-          <Button href={BOOKING_URL} color="var(--spring-green)" external>
-            book a discovery call →
-          </Button>
-        </section>
-
-        <section className={styles.dataNote} aria-label="how we handle your data">
-          <p>a note on what happens with your data:</p>
-          <p>
-            if you book a discovery call or sign up to the newsletter, your
-            details are handled per our{' '}
-            <Link href="/legal/privacy">privacy notice</Link>. you can
-            unsubscribe, ask what we hold, or ask us to delete it any time — just
-            email <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
-          </p>
-        </section>
-        {/* "notice" — the approved copy's newsletter line. Below the close CTA,
-            per the spec: subscribe is never above the primary ask. `full`
-            weight — this is a resource page. */}
-        <section className={styles.bandWrap}>
-          <Glow
-            color="var(--school-bus-yellow)"
-            top="-80px"
-            right="-100px"
-            size={420}
-            opacity={0.08}
-            blur={160}
-          />
-          <NewsletterBand route="/hello" weight="full" />
-        </section>
-
+          <Footer variant="full" />
+        </div>
       </main>
-
-      <Footer variant="full" />
     </>
   );
 }
