@@ -109,7 +109,7 @@ route accent for this page: `--orchid-mist` (voice / anything human). ground lad
 - `<ReadingControls scopeId="post-body" />` above the first paragraph — mandatory
 - `<PostHero>`, `<PostMeta>`, `<NotionRenderer>`, `<PostFooter>` from the design system
 - `Excerpt` → `<meta name="description">`
-- the £900m figure appears in "a menu nobody feels allowed to order from". the site-wide never-cite rule does not apply to this post — accepted exception, nici 14 sep 2026. leave the post as written.
+- the £900m figure appears in "a menu nobody feels allowed to order from". £900m came off the never-cite list on 14 sep 2026 (nici); leave the post as written.
 
 ## tokens used
 all from `globals.css`: `--bg` `--ground-400` `--ground-300` `--fg` `--fg-muted` `--text-subtle` `--text-faint` `--amethyst` `--orchid-mist` `--spring-green` `--princeton-orange` `--pearl-aqua` `--school-bus-yellow` · `--font-heading` `--font-body` · `--fs-h4` `--fs-body` `--fs-body-lg` `--fs-small` `--fs-caption` · `--space-2/3/4/5/6/8/10` · `--radius-md` `--radius-pill` · `--nav-height`. no hex values anywhere.
