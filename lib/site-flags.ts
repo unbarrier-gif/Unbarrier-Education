@@ -66,9 +66,9 @@ export const SITE_FLAGS = {
   // ── /voice ────────────────────────────────────────────────────────────
   /** The internal review panel on the /voice prototype. Never public. */
   showPlan: false,
-  /** OPEN. Puts `voice` in the nav (after access, orchid dot) and lets the
-   *  route be indexed. Off until the legal hold on the instrument lifts. */
-  voicePublic: false,
+  // `voicePublic` is GONE (14 Sep 2026): the legal hold on the instrument
+  // was lifted for good, so /voice is public — nav, footer, sitemap, indexed.
+  // Do not bring the flag back; a lifted hold is not an open decision.
 
   // ── /kit ──────────────────────────────────────────────────────────────
   /** OPEN. Puts /kit in the sitemap and lets it be indexed. Off until the

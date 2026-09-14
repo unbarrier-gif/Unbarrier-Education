@@ -393,8 +393,9 @@ a {
    after it takes the strand's colour, selected by data-strand on the group
    that wraps those letters. Canonical mapping (the token comments above):
    audit = pearl-aqua, access = princeton-orange. voice (orchid-mist) and hub
-   (school-bus-yellow) are not inlined — /voice is on legal hold and /hub has
-   no route — so they have no rule here yet; add one when they do. */
+   (school-bus-yellow) are not inlined — no page renders the voice lockup yet
+   and /hub has no route — so they have no rule here yet; add one when they
+   do. */
 [data-strand='audit'] .accent[stroke='none'] {
   fill: var(--pearl-aqua);
 }
