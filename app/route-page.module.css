@@ -335,6 +335,13 @@
   max-width: 62ch;
 }
 
+/* As an <ol> (the steps on /inclusion-strategy d3) the numerals are in the
+   rows themselves, so the browser's come off. */
+ol.questions {
+  list-style: none;
+  padding: 0;
+}
+
 .question {
   padding: var(--space-4) var(--space-5);
   background: var(--panel-lightblue);

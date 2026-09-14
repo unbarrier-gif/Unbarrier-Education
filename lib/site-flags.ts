@@ -23,8 +23,11 @@
 // the flag exists so the code has a place to hang it, and it stays off.
 
 export const SITE_FLAGS = {
-  // ── home ──────────────────────────────────────────────────────────────
-  /** The hero's ghost button (scrolls to the seven questions). Default on. */
+  // ── home · /inclusion-strategy ────────────────────────────────────────
+  /** The secondary ghost: on home the hero's (scrolls to the seven
+   *  questions); on /inclusion-strategy the close's ("check your readiness
+   *  first" — the sideways route, Nici's yes/no pending in Notion, "wobble
+   *  2"). Default on, as the handover set it. */
   showGhostCta: true,
 
   // ── /access ───────────────────────────────────────────────────────────
@@ -63,9 +66,22 @@ export const SITE_FLAGS = {
   // ── /voice ────────────────────────────────────────────────────────────
   /** The internal review panel on the /voice prototype. Never public. */
   showPlan: false,
-  /** OPEN. Puts `voice` in the nav (after access, orchid dot) and lets the
-   *  route be indexed. Off until the legal hold on the instrument lifts. */
-  voicePublic: false,
+  // `voicePublic` is GONE (14 Sep 2026): the legal hold on the instrument
+  // was lifted for good, so /voice is public — nav, footer, sitemap, indexed.
+  // Do not bring the flag back; a lifted hold is not an open decision.
+
+  // ── /kit ──────────────────────────────────────────────────────────────
+  /** OPEN. Puts /kit in the sitemap and lets it be indexed. Off until the
+   *  privacy notice (v1.1) names the guides and the /accessibility statement
+   *  exists — both are go-live conditions in the kit spec. The route is
+   *  built and reachable meanwhile, noindex, like /voice. */
+  kitPublic: false,
+  /** What an unsponsored contents row says. The spec's default is nothing. */
+  kitUnpaidRowText: 'blank' as 'blank' | 'open to a sponsor',
+  /** Review only: shows the paid sponsor state on principle 7 with an empty
+   *  logo slot, so the row can be seen before a sponsor exists. Never on in
+   *  production — a sponsor line with no sponsor behind it is a false claim. */
+  kitDemoSponsorRow: false,
 
   // ── /hello ────────────────────────────────────────────────────────────
   /** "why your hands move" on the /hello shelf. Held for the blog. */

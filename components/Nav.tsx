@@ -7,16 +7,15 @@ import { ContrastToggle } from './ContrastToggle';
 import { MobileNavDrawer } from './MobileNavDrawer';
 import { Wordmark } from './Wordmark';
 import { isInclusionStrategyPromoActive } from '@/lib/inclusion-strategy-promo';
-import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './Nav.module.css';
 
 // The audit item pointed at `/#services`, an anchor on the home page, because
 // /audit did not exist and returned 404. It exists now, so the nav points at
 // the route rather than scrolling someone to a card about it.
 //
-// /voice is in LINKS below but gated on SITE_FLAGS.voicePublic (off): it
-// stays absent from the nav until the legal hold on the instrument lifts —
-// see app/voice/page.tsx and lib/site-flags.ts.
+// /voice sits after access with the orchid dot. It was gated behind a flag
+// while the instrument was on legal hold; the hold was lifted for good on
+// 14 Sep 2026 and the gate came out with it.
 // /faq is reachable from the footer rather than here; six items is what fits.
 //
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
@@ -28,8 +27,6 @@ const LINKS = [
   // dot colours; edtech is a route, not a strand, so it has no dot.
   { key: 'audit', label: 'audit', href: '/audit', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
-  // voice sits after access with the orchid dot, gated below on
-  // SITE_FLAGS.voicePublic — off until the legal hold on the instrument lifts.
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
   // TEMPORARY until 31 Dec 2026 — gated below on
   // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.
@@ -51,7 +48,6 @@ type LinkKey = (typeof LINKS)[number]['key'];
 // filter together in January — grep INCLUSION_STRATEGY_PROMO_RETIRE_AFTER.
 const VISIBLE_LINKS = LINKS.filter((link) => {
   if (link.key === 'inclusion-strategy') return isInclusionStrategyPromoActive();
-  if (link.key === 'voice') return SITE_FLAGS.voicePublic;
   return true;
 });
 

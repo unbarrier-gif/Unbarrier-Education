@@ -19,7 +19,8 @@ import {
 // result email sent at 14:07:31, and the pair is no longer anonymous.
 //
 // That is what makes these rows non-personal data, which is what lets them be
-// collected now rather than behind the /voice legal hold. THE MOMENT AN
+// collected with no retention period and no privacy-notice section of their
+// own. THE MOMENT AN
 // IDENTIFIER IS ADDED HERE, THAT REASONING COLLAPSES and this becomes a
 // dataset that needs a retention period, a privacy-notice section and a
 // lawful basis. If that is wanted, it is a different table and a different

@@ -32,7 +32,7 @@ import styles from '@/app/route-page.module.css';
 // (Site.dc.html → isAccess, c0–c8). The block ids stay on the wrappers.
 //
 //   c0  hero (orange glow) · primary /book · ghost scrolls to #c5
-//   c1  credential band (portrait variant, ground-400)
+//   c1  the scope band (scope variant, ground-400) — no identity block
 //   c2  the gap (deep)          · three figures behind SITE_FLAGS.showFigures
 //   c3  the seven questions     · the library component, 1 Sep set · the one-pager card under it
 //   c4  the method (second)     · notice → design → try → embed · the one .pull
@@ -283,8 +283,9 @@ export default function AccessPage() {
           </header>
         </div>
 
-        {/* c1 — the credential band */}
-        <CredentialStrip variant="portrait" id="c1" />
+        {/* c1 — the scope band. The identity block (portrait, badge, byline)
+            lives on home and /about only — handover rule, 13 Sep 2026. */}
+        <CredentialStrip variant="scope" id="c1" />
 
         {/* c2 — the gap */}
         <Section id="c2" measure="route" ground="deep" labelledBy="the-gap">

@@ -15,10 +15,9 @@ type Props = {
 // is /audit (singular, not the /audits the old note guessed at) and it now
 // exists, so the link is back in the Services group below.
 //
-// ⛔ `unbarrier.voice` REMOVED and must stay removed until legal signs off the
-// retention period and the two-purpose privacy notice. The footer is global,
-// so one entry here linked the unpublished route from every page on the site.
-// See app/voice/page.tsx.
+// `unbarrier.voice` is back in Services (14 Sep 2026): the legal hold on the
+// instrument was lifted for good, so the route is public — see
+// app/voice/page.tsx.
 // 28 Aug 2026: `unbarrier.loop-breakers` removed from Services — the strand
 // is retired and /loop-breakers is now a holding page. The route stays live
 // and indexable so existing bookmarks don't 404; it just isn't advertised
@@ -29,6 +28,7 @@ const FOOTER_LINK_GROUPS = [
     links: [
       { label: 'unbarrier.audit', href: '/audit' },
       { label: 'unbarrier.access', href: '/access' },
+      { label: 'unbarrier.voice', href: '/voice' },
       { label: 'For EdTech companies', href: '/edtech' },
       { label: 'Notes from Nici (blog)', href: '/blog' },
     ],
