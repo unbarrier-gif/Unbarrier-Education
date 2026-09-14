@@ -3,10 +3,16 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { ShapeTag } from './ShapeTag';
 import { SHAPES } from '@/lib/blog-shapes';
+import { cardLine, formatPostDate } from '@/lib/blog-format';
 import type { Post } from '@/lib/notion';
 import styles from './BlogCard.module.css';
 
-type Variant = 'standard' | 'hero';
+// `compact` is what /blog uses since the 14 Sep 2026 redesign: tag ·
+// title-link · one line · meta. No media, no excerpt, no "read →" — the
+// title is the link. One read per card is deliberate: two reads for one
+// decision is the thing dyslexic readers give up on. `standard` and `hero`
+// are the older media cards, kept for anywhere else that wants a picture.
+type Variant = 'standard' | 'hero' | 'compact';
 
 type Props = {
   post: Post;
@@ -14,6 +20,8 @@ type Props = {
 };
 
 export function BlogCard({ post, variant = 'standard' }: Props) {
+  if (variant === 'compact') return <CompactCard post={post} />;
+
   const isHero = variant === 'hero';
   const shapeColor = SHAPES[post.shape].color;
   return (
@@ -48,24 +56,37 @@ export function BlogCard({ post, variant = 'standard' }: Props) {
         </div>
         <h2 className={styles.title}>{post.title}</h2>
         <div className={styles.metadata}>
-          {post.date && <span>{formatDate(post.date)}</span>}
+          {post.date && <span>{formatPostDate(post.date)}</span>}
           {post.readingMin != null && (
             <span>· {post.readingMin} min read</span>
           )}
         </div>
         {post.excerpt && <p className={styles.excerpt}>{post.excerpt}</p>}
-        <span className={styles.cta}>Read →</span>
+        <span className={styles.cta}>read →</span>
       </div>
     </Link>
   );
 }
 
-function formatDate(iso: string): string {
-  const d = new Date(iso);
-  if (Number.isNaN(d.getTime())) return iso;
-  return d.toLocaleDateString('en-GB', {
-    day: 'numeric',
-    month: 'short',
-    year: 'numeric',
-  });
+function CompactCard({ post }: { post: Post }) {
+  const line = cardLine(post);
+  // Reading time first, then the date: "5 min · 21 Aug 2026".
+  const meta = [
+    post.readingMin != null ? `${post.readingMin} min` : null,
+    post.date ? formatPostDate(post.date) : null,
+  ]
+    .filter(Boolean)
+    .join(' · ');
+  return (
+    <article className={styles.compact}>
+      <ShapeTag shape={post.shape} size="sm" solid />
+      <h3 className={styles.compactTitle}>
+        <Link href={`/blog/${post.slug}`} className={styles.titleLink}>
+          {post.title}
+        </Link>
+      </h3>
+      {line && <p className={styles.compactLine}>{line}</p>}
+      {meta && <p className={styles.compactMeta}>{meta}</p>}
+    </article>
+  );
 }

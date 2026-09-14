@@ -4,3 +4,36 @@
   background: var(--bg);
   overflow-x: hidden;
 }
+
+/* ── j0a · reading controls band ─────────────────────────────────────── */
+.controls {
+  background: var(--ground-400);
+  padding: var(--space-5) clamp(20px, 5vw, 64px);
+}
+
+.controlsInner {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* ── j3 · close ──────────────────────────────────────────────────────── */
+.closeHeading {
+  margin: 0 0 var(--space-5);
+  max-width: 22ch;
+}
+
+.closeLede {
+  margin: 0 0 var(--space-6);
+  max-width: 54ch;
+  color: var(--fg-muted);
+}
+
+.ctaRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-4);
+}
+
+.newsletter {
+  padding: var(--space-10) 0 var(--space-8);
+}

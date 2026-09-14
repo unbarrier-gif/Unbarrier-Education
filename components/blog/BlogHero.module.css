@@ -1,96 +1,30 @@
+/* Tokens only. The page's own h1 and p rules do the type; this file only
+   places things. Clears the fixed nav, then the hero's own air. */
 .hero {
   position: relative;
   overflow: hidden;
-  padding: clamp(7rem, 10vw, 10rem) clamp(1.5rem, 5vw, 5rem) 3rem;
+  padding: calc(var(--nav-height) + var(--space-10)) clamp(20px, 5vw, 64px)
+    var(--space-10);
 }
 
 .inner {
   position: relative;
   z-index: 1;
-  max-width: 1160px;
+  max-width: 900px;
   margin: 0 auto;
-}
-
-.eyebrow {
-  font-family: var(--font-heading);
-  font-size: var(--fs-eyebrow);
-  font-weight: 700;
-  letter-spacing: var(--ls-eyebrow);
-  text-transform: uppercase;
-  color: var(--spring-green);
-  margin: 0 0 18px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
 }
 
 .heading {
-  font-family: var(--font-heading);
-  font-size: clamp(2.4rem, 6vw, 4.2rem);
-  font-weight: 800;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  color: var(--text);
-  margin: 0 0 24px;
-  max-width: 900px;
-}
-
-.headingMuted {
-  color: var(--text-muted);
-  font-weight: 700;
+  margin: 0;
+  max-width: 18ch;
 }
 
 .lede {
-  font-family: var(--font-body);
-  font-size: clamp(0.95rem, 1.5vw, 1.125rem);
-  line-height: 1.7;
-  color: var(--text-muted);
-  margin: 0 0 2.5rem;
-  max-width: 640px;
-}
-
-/* The legend was a ruled grid. It is now four tinted tiles: --panel-aqua on
-   the --bg ground, with the blurb on --text-muted (never --text-faint). */
-.legend {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
-  gap: var(--space-3);
-  margin-top: 3rem;
-}
-
-.legendCell {
-  padding: 18px 20px;
-  background: var(--panel-aqua);
-  border-radius: var(--radius-md);
-}
-
-.legendLabel {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 8px;
-  font-family: var(--font-heading);
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--c);
-}
-
-.legendDot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  background: var(--c);
-  flex: 0 0 auto;
-}
-
-.legendBlurb {
   margin: 0;
-  font-family: var(--font-body);
-  font-size: 0.78rem;
-  line-height: 1.55;
-  color: var(--text-muted);
-}
-
-/* ── high contrast ────────────────────────────────────────────────── */
-:global(html.contrast-high) .legendCell {
-  border: 1px solid var(--border-default);
+  max-width: 54ch;
+  font-size: var(--fs-body-lg);
+  color: var(--fg-muted);
 }

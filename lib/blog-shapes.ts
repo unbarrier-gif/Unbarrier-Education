@@ -1,7 +1,10 @@
 // Five "shapes" the blog uses to label posts. Each is a category, but
 // also a tone signal for the reader. Ported verbatim from the inbound
 // design at _inbound/blog/BlogPrimitives.jsx — colours map to CSS
-// variables defined in app/globals.css.
+// variables defined in app/globals.css. Names are lowercase: the website
+// rule (README, "Type tiers and the lowercase rule") applies to the tag and
+// the filter chips as much as to any other copy, so the casing lives here,
+// not in a text-transform.
 
 export type Shape =
   | 'out-loud'
@@ -18,29 +21,29 @@ export type ShapeMeta = {
 
 export const SHAPES: Record<Shape, ShapeMeta> = {
   'out-loud': {
-    name: 'Out loud',
+    name: 'out loud',
     color: 'var(--spring-green)',
-    blurb: 'Short. Said out loud first, typed second.',
+    blurb: 'short. said out loud first, typed second.',
   },
   'reality-check': {
-    name: 'Reality check',
+    name: 'reality check',
     color: 'var(--princeton-orange)',
-    blurb: 'A belief about SEND or inclusion, examined properly.',
+    blurb: 'a belief about send or inclusion, examined properly.',
   },
   honestly: {
-    name: 'Honestly',
+    name: 'honestly',
     color: 'var(--orchid-mist)',
-    blurb: 'The slower, truer ones. Allowed to be emotional.',
+    blurb: 'the slower, truer ones. allowed to be emotional.',
   },
   stories: {
-    name: 'Stories',
+    name: 'stories',
     color: 'var(--pearl-aqua)',
-    blurb: 'Lived experience from people who get it.',
+    blurb: 'lived experience from people who get it.',
   },
   invitations: {
-    name: 'Invitations',
+    name: 'invitations',
     color: 'var(--school-bus-yellow)',
-    blurb: 'A door, gently opened. You’re welcome inside.',
+    blurb: 'a door, gently opened. you’re welcome inside.',
   },
 };
 

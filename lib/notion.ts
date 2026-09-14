@@ -20,9 +20,20 @@
 //   Date         (date)
 //   Reading min  (number)
 //   Status       (select)            "Draft" | "Published"
-//   Featured     (checkbox)
+//   Featured     (checkbox)         kept for social; the index no longer pins it
 //   Cover        (files & media, optional)
 //   Cover Alt    (rich_text, optional)   alt text for the Cover image
+//
+// Added 14 Sep 2026 for the /blog redesign (design_handoff_blog_page/README.md):
+//   Show on unbarrier (checkbox)   must be ticked to appear anywhere on this
+//                                  site — lets loop breakers / coaching posts
+//                                  stay in the database but off unbarrier.me
+//   Pull line      (rich_text)     the one line under a title on the index;
+//                                  empty → first sentence of Excerpt
+//   Mentioned      (checkbox)      pins the post into "the ones people bring
+//                                  up" band on /blog (max 3)
+//   Feedback quote (rich_text)     what a real person said about the post
+//   Feedback from  (rich_text)     role + setting, no names
 
 import {
   Client,
@@ -53,6 +64,16 @@ export type Post = {
   date: string | null;
   readingMin: number | null;
   featured: boolean;
+  /** "Show on unbarrier" checkbox. False keeps a post off this site entirely. */
+  showOnUnbarrier: boolean;
+  /** One line quoted from inside the post, for the index card. Empty if unset. */
+  pullLine: string;
+  /** "Mentioned" checkbox — pins the post into the index's feedback band. */
+  mentioned: boolean;
+  /** What a real person said about the post. Empty if unset. */
+  feedbackQuote: string;
+  /** Who said it: role + setting, no names. Empty if unset. */
+  feedbackFrom: string;
   coverUrl: string | null;
   /** Alt text for the Cover image, sourced from the "Cover Alt" rich_text property. Empty string if unset. */
   coverAlt: string;
@@ -106,10 +127,24 @@ const fetchAllPosts = cache(async (): Promise<Post[]> => {
   }
 });
 
+// The site's view of the database: Published AND "Show on unbarrier"
+// ticked, newest first. Both the index and the post page read this, so
+// an unticked post is off the site, not just off the list.
 export const getAllPublishedPosts = cache(async (): Promise<Post[]> => {
   const all = await fetchAllPosts();
-  return all.filter((p) => p.status === 'Published');
+  return all.filter((p) => p.status === 'Published' && p.showOnUnbarrier);
 });
+
+/**
+ * The posts pinned into "the ones people bring up" on /blog: Mentioned
+ * ticked and a feedback quote present, at most three. Order follows the
+ * database sort (newest first).
+ */
+export function pickMentioned(posts: Post[], max = 3): Post[] {
+  return posts
+    .filter((p) => p.mentioned && p.feedbackQuote.trim() !== '')
+    .slice(0, max);
+}
 
 export const getPostBySlug = cache(
   async (slug: string): Promise<Post | null> => {
@@ -185,6 +220,11 @@ function pageToPost(p: PageObjectResponse): Post | null {
     date: getDateStart(props.Date),
     readingMin: getNumber(props['Reading min']),
     featured: getCheckbox(props.Featured),
+    showOnUnbarrier: getCheckbox(props['Show on unbarrier']),
+    pullLine: pickPlainText(getRichText(props['Pull line'])),
+    mentioned: getCheckbox(props.Mentioned),
+    feedbackQuote: pickPlainText(getRichText(props['Feedback quote'])),
+    feedbackFrom: pickPlainText(getRichText(props['Feedback from'])),
     coverUrl: getCoverUrl(p),
     coverAlt: pickPlainText(getRichText(props['Cover Alt'])),
     status: getSelectOrStatusName(props.Status) ?? '',

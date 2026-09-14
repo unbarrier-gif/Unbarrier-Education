@@ -1,91 +1,85 @@
-.section {
-  max-width: 1160px;
-  margin: 0 auto;
-  padding: 0 clamp(1.5rem, 5vw, 5rem) clamp(5rem, 10vw, 8rem);
+/* Tokens only. Sits inside <Section ground="base">, which owns the measure
+   and the vertical air; this file lays out what is inside it. */
+
+.heading {
+  margin: 0 0 var(--space-5);
+  max-width: 22ch;
 }
+
+/* ── chips ───────────────────────────────────────────────────────────── */
 
 .chips {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  padding-top: 2rem;
+  gap: var(--space-2);
+  margin: 0 0 var(--space-6);
 }
 
+/* A filled pill, 44px tall, no border: rest = ground-300 (a ground, not an
+   outline), pressed = the page's text colour with amethyst on it, so the
+   "on" state is the strongest thing in the row and never colour alone. */
 .chip {
   display: inline-flex;
   align-items: center;
-  gap: 8px;
-  font-family: var(--font-heading);
-  font-size: 13px;
-  font-weight: 600;
-  letter-spacing: 0.04em;
-  padding: 9px 16px;
+  gap: var(--space-2);
+  min-height: 44px;
+  padding: 0 var(--space-4);
+  border: 0;
   border-radius: var(--radius-pill);
-  background: transparent;
-  color: var(--text-muted);
-  border: 1px solid var(--border-default);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
   cursor: pointer;
-  transition: border-color 150ms ease, background 150ms ease, color 150ms ease;
-}
-
-.chip:hover {
-  border-color: var(--c);
+  background: var(--ground-300);
+  color: var(--fg);
 }
 
 .chipActive {
-  background: var(--c);
+  background: var(--fg);
   color: var(--amethyst);
-  border-color: var(--c);
-  font-weight: 700;
 }
 
 .chipDot {
-  width: 6px;
-  height: 6px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
   background: var(--c);
   flex: 0 0 auto;
 }
 
-.chipActive .chipDot {
-  background: var(--amethyst);
-}
-
 .chipCount {
-  font-size: 11px;
-  font-weight: 600;
-  opacity: 0.55;
-}
-
-.chipActive .chipCount {
   opacity: 0.7;
 }
 
-.heroSlot {
-  margin-top: 2rem;
+/* ── result line ─────────────────────────────────────────────────────── */
+
+.result {
+  margin: 0 0 var(--space-4);
+  font-size: var(--fs-small);
+  color: var(--text-subtle);
 }
 
-.heroSlot + .grid {
-  margin-top: 24px;
-}
+/* ── cards ───────────────────────────────────────────────────────────── */
 
 .grid {
-  margin-top: 2rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 24px;
-  align-items: start;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--space-4);
 }
 
-@media (min-width: 768px) {
-  .grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
+/* Let the card fill the cell so the meta line's margin-top:auto sits every
+   card's foot on the same line across a row. */
+.item {
+  display: flex;
 }
 
-.empty {
-  margin: 4rem 0;
-  text-align: center;
-  font-family: var(--font-body);
-  color: var(--text-muted);
+.more {
+  margin-top: var(--space-6);
+}
+
+/* ── high contrast ───────────────────────────────────────────────────── */
+:global(html.contrast-high) .chip {
+  border: 1px solid var(--border-default);
 }
