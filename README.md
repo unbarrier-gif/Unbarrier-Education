@@ -283,12 +283,13 @@ wrappers so a question can name a block.
 | 1 | `/` | spring green | `app/page.tsx` — hero → credential band → thesis → the i-am chooser → the seven questions → free resources → close |
 | 2 | `/audit`, `/readiness-check` | pearl aqua | `/audit` is a pointer to the check, never an embed. The check is rebuilt around `lib/readiness-check/result.ts`: a seventh "i don't know" option reported as a finding, band words only (reaching · patchy · not reaching), "start here", copy-as-text. Scoring is the engine's, 1:1. |
 | 3 | `/access` | princeton orange | tiers from `lib/pricing.ts`; the trust tier and the retainer sit behind flags |
-| 4 | `/voice` | orchid mist | legal hold on the instrument: no delivered/tool split, no cohorts. Closes on "we agree how you will know it worked, and when we will check." Still noindex and out of the nav until `voicePublic`. |
+| 4 | `/voice` | orchid mist | legal hold on the instrument: no delivered/tool split, no cohorts. Closes on "we agree how you will know it worked, and when we will check." Public since 14 Sep 2026 (`voicePublic` on): in the nav, the footer and the sitemap, and indexable. |
 | 5 | `/hello`, `/hello/admin`, `/hello/sign-out` | spring green | public page shows the three live resources (`lib/hello-shelf.ts`) and the today block from Notion. Signed in (the ISP dashboard passcode, `/api/isp-audit/login`) Nici edits today's heading and order; both write back to the Notion "hello links" table. |
 
 **Flags.** Every open decision from the handover is a flag in `lib/site-flags.ts`,
 never a hard-coded pick. Off and *not built* until decided in Notion:
-`emailStep`, `shareCode` (readiness check), `voicePublic`, `handsMoveOnHello`.
+`emailStep`, `shareCode` (readiness check), `handsMoveOnHello`. `voicePublic`
+was decided on 14 Sep 2026 and is on.
 **The figure rule (13 Sep 2026):** the only shared live figure on the site is
 £500, the discovery day. Every other statistic or price sits behind a flag.
 **Override, same day:** the handover published `/access` as built, so

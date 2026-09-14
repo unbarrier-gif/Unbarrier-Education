@@ -27,14 +27,14 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: 'https://www.unbarrier.me/edtech', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://www.unbarrier.me/about', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://www.unbarrier.me/faq', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    // ⛔ /voice IS DELIBERATELY ABSENT. It is noindex, nofollow and unlinked
-    // until legal signs off the retention period and the two-purpose privacy
-    // notice — being out of the sitemap is part of that, not an oversight.
-    // See app/voice/page.tsx before adding it.
+    // /voice was held out of the sitemap (and noindex, and unlinked) until
+    // legal signed off the retention period and the two-purpose privacy
+    // notice. Signed off 14 Sep 2026 — it is indexable now, gated on
+    // SITE_FLAGS.voicePublic like the nav and the page's robots tag.
+    { url: 'https://www.unbarrier.me/voice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://www.unbarrier.me/goodnotes', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     // The sign-up page for notice. Indexed and linkable on purpose — three
-    // rendered QR codes and every sign-up route point here. The opposite of
-    // /voice above.
+    // rendered QR codes and every sign-up route point here.
     { url: 'https://www.unbarrier.me/notice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
   ];
 

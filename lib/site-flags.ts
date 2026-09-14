@@ -63,9 +63,10 @@ export const SITE_FLAGS = {
   // ── /voice ────────────────────────────────────────────────────────────
   /** The internal review panel on the /voice prototype. Never public. */
   showPlan: false,
-  /** OPEN. Puts `voice` in the nav (after access, orchid dot) and lets the
-   *  route be indexed. Off until the legal hold on the instrument lifts. */
-  voicePublic: false,
+  /** Puts `voice` in the nav (after access, orchid dot) and lets the route
+   *  be indexed. ON — the legal hold on the instrument lifted 14 Sep 2026
+   *  (Nici: retention period and the two-purpose privacy notice signed off). */
+  voicePublic: true,
 
   // ── /hello ────────────────────────────────────────────────────────────
   /** "why your hands move" on the /hello shelf. Held for the blog. */

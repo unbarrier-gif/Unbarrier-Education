@@ -14,9 +14,10 @@ import styles from './Nav.module.css';
 // /audit did not exist and returned 404. It exists now, so the nav points at
 // the route rather than scrolling someone to a card about it.
 //
-// /voice is in LINKS below but gated on SITE_FLAGS.voicePublic (off): it
-// stays absent from the nav until the legal hold on the instrument lifts —
-// see app/voice/page.tsx and lib/site-flags.ts.
+// /voice is in LINKS below, gated on SITE_FLAGS.voicePublic. The flag is ON
+// since 14 Sep 2026 (legal hold lifted); it stays a flag so the route can be
+// pulled from the nav in one line if it ever needs to be — see
+// lib/site-flags.ts.
 // /faq is reachable from the footer rather than here; six items is what fits.
 //
 // `dot` marks the sub-brand links — each renders a 6px coloured dot via
@@ -29,7 +30,7 @@ const LINKS = [
   { key: 'audit', label: 'audit', href: '/audit', dot: 'var(--pearl-aqua)' },
   { key: 'access', label: 'access', href: '/access', dot: 'var(--princeton-orange)' },
   // voice sits after access with the orchid dot, gated below on
-  // SITE_FLAGS.voicePublic — off until the legal hold on the instrument lifts.
+  // SITE_FLAGS.voicePublic (on since 14 Sep 2026).
   { key: 'voice', label: 'voice', href: '/voice', dot: 'var(--orchid-mist)' },
   // TEMPORARY until 31 Dec 2026 — gated below on
   // isInclusionStrategyPromoActive(). See lib/inclusion-strategy-promo.ts.

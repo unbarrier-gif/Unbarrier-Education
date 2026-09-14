@@ -39,7 +39,9 @@ import voice from './page.module.css';
 // "the child" in the h1 is deliberate and the only place on this page it
 // appears — the instrument's founding claim. Everything below says learners.
 //
-// The route stays noindex and out of the nav until SITE_FLAGS.voicePublic.
+// The route is indexed and in the nav while SITE_FLAGS.voicePublic is on
+// (legal hold on publishing the route lifted 14 Sep 2026). The hold on
+// SELLING the instrument above is separate and still stands.
 
 const CANONICAL = 'https://www.unbarrier.me/voice';
 
