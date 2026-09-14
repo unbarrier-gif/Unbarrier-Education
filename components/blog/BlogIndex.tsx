@@ -2,19 +2,42 @@
 
 import type { CSSProperties } from 'react';
 import { useMemo, useState } from 'react';
+import { Button } from '@/components/Button';
 import { BlogCard } from './BlogCard';
 import { SHAPE_KEYS, SHAPES, type Shape } from '@/lib/blog-shapes';
 import type { Post } from '@/lib/notion';
 import styles from './BlogIndex.module.css';
 
+// The /blog index (design_handoff_blog_page, block j2). Chips filter by
+// shape; "everything" shows the `limit` newest with an explicit "show all"
+// behind them, a shape shows every post in it. State is local — chips are
+// the source of truth; no url state. The result line is the one live
+// region on the page: don't add a second.
+//
+// Accessibility decisions carried from the handoff: every target ≥ 44px;
+// titles are real, visibly underlined links; one line of copy per card;
+// reading time before date; nothing behind an image.
+
 type Filter = 'all' | Shape;
 
 type Props = {
+  /** Newest first, already filtered to what the site shows. */
   posts: Post[];
+  /** How many to show on "everything" before "show all". Default 6. */
+  limit?: number;
+  heading?: string;
+  /** id of the h2 — the surrounding <Section labelledBy> points at it. */
+  headingId?: string;
 };
 
-export function BlogIndex({ posts }: Props) {
-  const [active, setActive] = useState<Filter>('all');
+export function BlogIndex({
+  posts,
+  limit = 6,
+  heading = 'pick a shape. or read the newest.',
+  headingId = 'everything',
+}: Props) {
+  const [shape, setShape] = useState<Filter>('all');
+  const [expanded, setExpanded] = useState(false);
 
   const counts = useMemo(() => {
     const c: Partial<Record<Shape, number>> = {};
@@ -22,31 +45,40 @@ export function BlogIndex({ posts }: Props) {
     return c;
   }, [posts]);
 
-  const visible =
-    active === 'all' ? posts : posts.filter((p) => p.shape === active);
+  const filtered =
+    shape === 'all' ? posts : posts.filter((p) => p.shape === shape);
+  const showMore = shape === 'all' && !expanded && filtered.length > limit;
+  const visible = showMore ? filtered.slice(0, limit) : filtered;
 
-  // Featured hero only shows on the unfiltered "Everything" view. `posts`
-  // is already date-desc from notion.ts, so the first match is the most
-  // recent featured post.
-  const featured = useMemo(() => {
-    if (active !== 'all') return null;
-    return posts.find((p) => p.featured && p.date) ?? null;
-  }, [posts, active]);
+  const resultLine =
+    posts.length === 0
+      ? 'first notes coming soon. check back shortly.'
+      : filtered.length === 0
+        ? 'nothing in this shape yet. one’s on the way.'
+        : shape === 'all'
+          ? showMore
+            ? `the ${limit} newest of ${posts.length}`
+            : `all ${posts.length}, newest first`
+          : `${filtered.length} in ${SHAPES[shape].name}`;
 
-  const rest = featured
-    ? visible.filter((p) => p.id !== featured.id)
-    : visible;
+  const pick = (next: Filter) => {
+    setShape(next);
+    setExpanded(false);
+  };
 
   return (
-    <section className={styles.section}>
-      <div className={styles.chips} role="toolbar" aria-label="Filter by shape">
+    <>
+      <h2 id={headingId} className={styles.heading}>
+        {heading}
+      </h2>
+
+      <div className={styles.chips} role="toolbar" aria-label="filter by shape">
         <Chip
-          label="Everything"
-          color="var(--text)"
+          label="everything"
+          color="var(--fg)"
           count={posts.length}
-          active={active === 'all'}
-          showDot={false}
-          onClick={() => setActive('all')}
+          active={shape === 'all'}
+          onClick={() => pick('all')}
         />
         {SHAPE_KEYS.map((key) => (
           <Chip
@@ -54,35 +86,34 @@ export function BlogIndex({ posts }: Props) {
             label={SHAPES[key].name}
             color={SHAPES[key].color}
             count={counts[key] ?? 0}
-            active={active === key}
-            onClick={() => setActive(key)}
+            active={shape === key}
+            onClick={() => pick(key)}
           />
         ))}
       </div>
 
-      {visible.length === 0 ? (
-        <p className={styles.empty}>
-          {posts.length === 0
-            ? 'First notes coming soon. Check back shortly.'
-            : 'Nothing in this shape yet. One’s on the way.'}
-        </p>
-      ) : (
-        <>
-          {featured && (
-            <div className={styles.heroSlot}>
-              <BlogCard post={featured} variant="hero" />
-            </div>
-          )}
-          {rest.length > 0 && (
-            <div className={styles.grid}>
-              {rest.map((p) => (
-                <BlogCard key={p.slug} post={p} />
-              ))}
-            </div>
-          )}
-        </>
+      <p aria-live="polite" className={styles.result}>
+        {resultLine}
+      </p>
+
+      {visible.length > 0 && (
+        <ul className={styles.grid}>
+          {visible.map((p) => (
+            <li key={p.slug} className={styles.item}>
+              <BlogCard post={p} variant="compact" />
+            </li>
+          ))}
+        </ul>
       )}
-    </section>
+
+      {showMore && (
+        <div className={styles.more}>
+          <Button variant="ghost" onClick={() => setExpanded(true)}>
+            show all {posts.length} →
+          </Button>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -91,18 +122,10 @@ type ChipProps = {
   color: string;
   count: number;
   active: boolean;
-  showDot?: boolean;
   onClick: () => void;
 };
 
-function Chip({
-  label,
-  color,
-  count,
-  active,
-  showDot = true,
-  onClick,
-}: ChipProps) {
+function Chip({ label, color, count, active, onClick }: ChipProps) {
   return (
     <button
       type="button"
@@ -111,7 +134,7 @@ function Chip({
       style={{ '--c': color } as CSSProperties}
       aria-pressed={active}
     >
-      {showDot && <span className={styles.chipDot} aria-hidden="true" />}
+      <span className={styles.chipDot} aria-hidden="true" />
       <span>{label}</span>
       <span className={styles.chipCount}>{count}</span>
     </button>

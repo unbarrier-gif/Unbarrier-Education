@@ -92,8 +92,46 @@
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--spring-green);
+}
+
+/* ── COMPACT (the /blog index card) ─────────────────────────────────── */
+/* Every value is a token; the card is a lifted ground, not an outline. */
+.compact {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: var(--space-3);
+  width: 100%;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--ground-400);
+}
+
+.compactTitle {
+  margin: 0;
+  font-size: var(--fs-h4);
+}
+
+/* The title is the link, and it looks like one: visibly underlined, the
+   underline a shade quieter than the text so the offset is the affordance. */
+.titleLink {
+  color: var(--fg);
+  text-decoration: underline;
+  text-decoration-color: var(--text-faint);
+  text-underline-offset: 4px;
+}
+
+.compactLine {
+  margin: 0;
+  font-size: var(--fs-small);
+  color: var(--fg-muted);
+}
+
+.compactMeta {
+  margin: auto 0 0;
+  font-size: var(--fs-caption);
+  color: var(--text-subtle);
 }
 
 /* ── HERO (featured) ─────────────────────────────────────────────────── */
@@ -128,7 +166,8 @@
 }
 
 /* ── high contrast ────────────────────────────────────────────────── */
-:global(html.contrast-high) .card {
+:global(html.contrast-high) .card,
+:global(html.contrast-high) .compact {
   border: 1px solid var(--border-default);
 }
 

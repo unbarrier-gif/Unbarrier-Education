@@ -4,8 +4,9 @@
   gap: 7px;
   font-family: var(--font-heading);
   font-weight: 700;
+  /* lowercase, like every label on the website (README, "Type tiers and the
+     lowercase rule"). The wide tracking stays: it is the readability spec. */
   letter-spacing: 0.12em;
-  text-transform: uppercase;
   border-radius: var(--radius-pill);
   background: color-mix(in oklab, var(--c) 13%, transparent);
   color: var(--c);
