@@ -1,0 +1,72 @@
+/* ========================================================================
+   /ndte — the short, sendable explainer (stage 6 of the 13 Sep 2026
+   rebuild, Site.dc.html g0–g3). Everything shared comes from
+   app/route-page.module.css; this file carries only what that sheet does
+   not have: the four-word h1 with its arrows, and the four step cards.
+   Every value is a token. No drawn edges.
+   ======================================================================== */
+
+/* The arrows between the four words. Spring green because they are the
+   action colour — the words either side stay --text. Decorative: the h1
+   reads "notice → design → try → embed" to a screen reader as punctuation. */
+.arrow {
+  color: var(--spring-green);
+}
+
+/* g1 — the four steps, two-up when there is room. Each card carries its
+   icon, the word, the line, and the italic aside. Panel copy is
+   --text-muted / --text-subtle only (see README, the contrast floor). */
+.steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: var(--space-4);
+}
+
+.step {
+  padding: var(--space-5);
+  background: var(--panel-lightblue);
+  border-radius: var(--radius-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.stepWord {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.15rem;
+  line-height: var(--lh-snug);
+  color: var(--text);
+  margin: 0;
+}
+
+.stepBody {
+  font-family: var(--font-body);
+  font-size: 1rem;
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.stepAside {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  font-style: italic;
+  margin: 0;
+}
+
+/* The page's one full-strength block sits under the grid with the
+   prototype's air above it. */
+.steps + .pullAfter {
+  margin-top: var(--space-8);
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .step {
+  border: 1px solid var(--border-default);
+}

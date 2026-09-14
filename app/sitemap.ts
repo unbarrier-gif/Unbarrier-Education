@@ -25,6 +25,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // in the home chooser, so it is a landing page in its own right.
     { url: 'https://www.unbarrier.me/readiness-check', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: 'https://www.unbarrier.me/edtech', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    // The sendable explainer of how the work runs (stage 6, 13 Sep 2026).
+    { url: 'https://www.unbarrier.me/ndte', lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: 'https://www.unbarrier.me/about', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://www.unbarrier.me/faq', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     // ⛔ /voice IS DELIBERATELY ABSENT. It is noindex, nofollow and unlinked

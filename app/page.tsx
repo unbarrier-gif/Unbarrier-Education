@@ -18,21 +18,32 @@ import { READINESS_CHECK_HREF, READINESS_CHECK_LABEL } from '@/lib/readiness-che
 import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './page.module.css';
 
-// The home page — stage 1 of the 13 Sep 2026 rebuild. Recreated block for
-// block from the design handover (Site.dc.html → isHome, b0–b6). The block ids
-// are kept on the wrappers so a question back to Nici can name a block.
+// The home page — stage 1 of the 13 Sep 2026 rebuild, reordered in stage 6
+// (the "home reorder", Nici's messaging query, 13 Sep 2026). Recreated block
+// for block from the design handover (Site.dc.html → isHome, b0–b6). The block
+// ids are kept on the wrappers so a question back to Nici can name a block.
 //
 //   b0  hero            spring-green glow · eyebrow · h1 · lede · primary + ghost
 //   b1  credential band  portrait · APLS badge · byline · scope line (ground-400)
-//   b1a inclusion-strategy band (temporary, gated on the 31 Dec date)
-//   b2  the thesis      (deep)   + the four ndte icons
 //   b3  the i-am chooser (base)
+//   b1a inclusion-strategy band (temporary, gated on the 31 Dec date) — now
+//       framed as the dated route, after the chooser
+//   b2  the ndte strip  (deep)   — one line, the four icons, ghost → /ndte
 //   b4  the seven questions (second) — the library component, 1 Sep set
 //   b5  free, and yours (deep)   — three CtaCards, ghost to /hello
 //   b6  close (well, loose) · newsletter band · footer
 //
+// CUT IN THE REORDER: the b2 h2 "nobody audits whether the tech reached the
+// child." and its paragraph — they duplicated the hero lede. To revert,
+// restore <Section ground="deep" labelledBy="thesis"> above the chooser (the
+// copy is in git, commit fe50c5d). b2 is now the one-line strip.
+//
 // One cta per page: the readiness check. The hero ghost only scrolls down
-// this page. The close's ghost points to /book, per the handover.
+// this page. The close is Nici's (13 Sep 2026): the check first, the call
+// second — the prototype's older close was not carried over.
+//
+// b5's ghost goes to /hello, not the prototype's /resources: the site plan's
+// settled decision is that the free resources live on /hello (public).
 //
 // The strand accent is spring green; b4 borrows pearl aqua because the seven
 // questions are the audit strand's evidence block wherever they appear.
@@ -129,39 +140,39 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* b1 — the credential band */}
+        {/* b1 — the credential band. The identity block lives here and on
+            /about only; every other route carries the scope variant. */}
         <CredentialStrip variant="portrait" id="b1" />
+
+        {/* b3 — where to start */}
+        <div id="b3">
+          <IAmChooser />
+        </div>
 
         {/* b1a — TEMPORARY until 31 Dec 2026, see lib/inclusion-strategy-promo.ts */}
         <div id="b1a">
           <InclusionStrategyBand />
         </div>
 
-        {/* b2 — the thesis */}
-        <Section id="b2" ground="deep" labelledBy="thesis">
-          <h2 id="thesis" className={styles.sectionHeading}>
-            nobody audits whether the tech reached the child.
-          </h2>
-          <p className={styles.body}>
-            not the supplier &mdash; they sold it. not the it lead &mdash; they
-            installed it, and it works. not ofsted &mdash; they don&rsquo;t
-            look. so nobody checks, for years, and the gap ends up written down
-            as the child&rsquo;s problem instead of the purchase&rsquo;s.
-          </p>
-          <ul className={styles.iconRow} aria-label="the ndte cycle">
-            {NDTE.map((step) => (
-              <li key={step.lead} className={styles.iconItem}>
-                {/* Icon plus text — the word carries the meaning. */}
-                <Icon name={step.icon} size={26} />
-                <strong>{step.lead}</strong>
-              </li>
-            ))}
-          </ul>
-        </Section>
-
-        {/* b3 — where to start */}
-        <div id="b3">
-          <IAmChooser />
+        {/* b2 — the ndte strip: however you come in, it runs the same way. */}
+        <div id="b2" className={styles.strip}>
+          <div className={styles.stripInner}>
+            <p className={styles.stripLine}>
+              however you come in, it runs the same way.
+            </p>
+            <ul className={styles.iconRow} aria-label="the ndte cycle">
+              {NDTE.map((step) => (
+                <li key={step.lead} className={styles.iconItem}>
+                  {/* Icon plus text — the word carries the meaning. */}
+                  <Icon name={step.icon} size={26} />
+                  <strong>{step.lead}</strong>
+                </li>
+              ))}
+            </ul>
+            <Button href="/ndte" variant="ghost">
+              how the work runs →
+            </Button>
+          </div>
         </div>
 
         {/* b4 — the seven questions. The audit strand's evidence block, so
