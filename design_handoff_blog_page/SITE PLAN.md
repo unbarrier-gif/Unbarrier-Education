@@ -1,0 +1,45 @@
+# unbarrier.me rebuild — master plan (13 sep 2026)
+
+one file: `Site.dc.html`, one screen per route behind `<sc-if>`. one chat per page. every chat: read this file + `HANDOVER — inclusion-strategy page.md` (routing/pattern), then the notion pack.
+
+## decisions (settled)
+- discovery = `/audit`. the discovery day is the paid "notice" step inside unbarrier.audit. no separate route.
+- resources live on `/hello` (public). cards + links managed in notion → website → hello links. resources are routes or standalone html files.
+- voice = seven *questions*. "domains" only for the six domains of inclusion.
+- leave-behinds are documents, not screens: two A4 docs, white paper, no price, sentence case (consultancy proposal register). canonical: notion "discovery day leave-behind — canonical copy + rules (3 sep 2026)".
+
+## done
+- home · audit · access · inclusion-strategy (needs nici's review)
+- `Discovery Day - what it is and why -mainstream-.dc.html` — doc 1, imported from nici's build. changed: fonts now from design system; booking url written beside where the qr goes (open thread closed); qr off by default until `uploads/qr-discovery.png` exists.
+- `Discovery Day — planning your day.dc.html` — doc 2, rebuilt as a printable dc from the html. copy unchanged. open thread carried: the 35% monitoring block is mainstream-framed.
+- `/audit` links doc 1.
+- `/ndte` (step 2, 13 sep) — g0–g3 in Site.dc.html. copy: four-step descriptions from the approved home "how the work runs" block; hero line and closing from /access c4. no dedicated /ndte draft in the pack — the "one pathway" section (g2) is assembled, not approved. one cta (book) + footer, no newsletter band.
+- `Discovery Day - what it is and why -SEND settings-.dc.html` — doc 1 SEND version (step 1, 13 sep). five blocks swapped per canonical; deadline block dropped (mainstream-only duty); sources footer updated. TA argument written from the canonical summary row, not verbatim — needs nici's read.
+- `Voice Baseline.dc.html` (step 4, 13 sep) — two A4 pages, doc-page, white paper, sentence case. copy from /voice approved draft + /access (Site.dc.html); seven questions = 1 sep set copied 1:1 from the design system's SevenQuestions data, sentence-cased. legal hold respected: no "delivered / the tool" split, no self-serve tool, no founding cohorts; closes on "we agree how you will know it worked, and when we will check". consents block behind `showConsents` tweak (default on) pending legal sign-off. the 16 unapproved wording choices listed in chat 13 sep were all approved by nici 13 sep — this doc's copy is now canonical for voice on paper (incl. "the child" ×4 in the seven questions data, and the "where it sits" / "how a baseline is taken" recuts).
+
+- `/kit` (13 sep) — k0–k8 in Site.dc.html, from the notion "kit landing page — spec + copy draft" (5 sep) + the 8 sep amendment pass. copy applied near-verbatim; changes: "i" → "we" in the paddy-rule sentence (site rule); scope line given its own block ("who this is for"); contents rows built with the three sponsor states (paid = "free because of" + logo slot, unpaid = blank or "open to a sponsor" via tweak `unpaidRowText`, principle 1 = "unbarrier's own. this one is never sponsored."); a disclosure sentence added under the contents block — not in the spec, nici to approve or cut. form once after contents (spec said twice; nici 13 sep: one cta per page — foot form removed, close ghost points back up to #k4), same fields, hidden `source` from `?from=`, consent unticked, error summary + per-field text errors, inline confirmation with focus move. no newsletter band (the consent box is the notice route). no mailerlite call — build-time. close = book (orange) + ghost → /inclusion-strategy. tweak `sponsorRows` shows the paid state on principle 7 for review. open: privacy notice v1.1 + /accessibility statement must exist before go-live; author lines and the "what a discovery day is" ghost label are mine.
+
+- **partnership offer** (13 sep) — paddy's framework. `Partnership Proposal.dc.html` (two A4 sides, sentence case, prices in behind `showPrices`, `discoveryPrice` default £500 (ruled 13 sep — the only live figure), `retainerPrice` default £1,000 — paddy's, unvalidated). `/access` c5b: groups block lowercased; retainer card + retainer paragraph behind `retainerPublic` (default off — proposal-only until sold once). copy changes vs paddy: "students"→"learners" · "here's how we work" cut · "mistakes from phase one"→"the second round of spend land where the first didn't" · "can't do it with one-off consultancy" recut positive. plan + five rulings: `PLAN - partnership offer.md` §5. closed 13 sep (decision record · approved website copy): /audit stays £500. paddy's £1k item is not the discovery day — renamed "group scoping" in the proposal doc.
+
+- **home reorder** (13 sep, nici's messaging query) — hero → nici/scope → i am a… chooser (b3) → inclusion strategy band (b1a, now framed as the dated route) → ndte strip (b2) → seven questions → free → close. **cut:** the b2 "nobody audits whether the tech reached the child" h2 + paragraph (duplicated the hero lede) — revert = restore Section ground="deep" labelledBy="thesis" above the chooser. b2 is now a one-line strip ("however you come in, it runs the same way" + four icons + ghost → /ndte).
+
+## sequence (approved 13 sep)
+1. ~~done~~ **doc 1 — SEND settings version.** duplicate the mainstream dc; swap the five version-specific blocks per the canonical page (side 2 opener, deliverable 02 tail, "why it comes first", TA argument, stat rail 60/39/46/£8.6m in that order).
+2. ~~done~~ **ndte** — `/ndte` short sendable explainer. reuse the notice → design → try → embed block from `/access` c4 and the `ndte-*` icons (`Unbarrier.Icon` names `ndte-notice|design|try|embed`). one screen, one cta.
+3. ~~done~~ **7 questions** — fix `SevenQuestions` data in the design system to the 1 sep set (provision · access · design · capability · belonging · trust · evidence). then swap the hand-built dl on `/access` c3 for the component. do before voice.
+4. ~~done~~ **voice + baseline one-pager** — `Voice Baseline.dc.html`, doc-page, printable. client-facing. ⚠ legal hold: do not sell the instrument; use the "we agree how you will know it worked" wording.
+5. **hello** — redesign: login screen for nici (a design mock for the claude code handover — no real auth; use `Unbarrier.AdminLoginForm` as the base, resolve to the signed-in state on submit) + an easy-read title system. free-resources home using `CtaCard` / `TodayBlock`; resource list from notion hello links. content for each resource: ask before inventing.
+6. **blog** — separate `Blog.dc.html`. redesign card/hero/index with 3–4 real posts. bring the feedback people give — the layout leads with what they mention.
+7. design-system sync once pages settle.
+8. ~~done~~ **readiness check** — `Readiness Check.dc.html` (standalone, own nav/footer) + mounted in Site.dc.html as `/readiness-check` (`embedded`). engine scoring copied 1:1 (mean×20, bands 65/50) under learner words reaching · patchy · not reaching; "i don't know" as seventh option, reported as a finding; start-here read per dimension; copy-as-text for forwarding upwards; three separate consents, none required. `emailStep` tweak OFF until /legal/privacy names the result email. share code held. plan + decisions: `PLAN - readiness check.md`, decisions log 13 sep. cta fix 1 applied: home + /audit hero → /readiness-check; /audit a2 embed swapped for a pointer block; /audit close = readiness check primary + book ghost. wording of the nine questions copied from the bundle, not signed off as final.
+
+## booking link
+- printed docs carry `unbarrier.me/book` (all three docs, `bookingUrl` tweak; calendar link kept as fallback option). nici is putting the `/book` → calendar redirect live 13 sep. website buttons now link `/book` (Site.dc.html, all 8 ctas). the design-system `BOOKING_URL` constant still holds the calendar url — update at next design-system sync (step 7).
+
+## rules that travel with every page
+nici's identity block (photo · apls badge · led by nici foote · bio · scope line) appears once on home (b1) and once on /about (h1). every other page carries the ScopeLine + one line "led by nici foote · about →". the footer carries the company line. applied 13 sep: /access c1 and /inclusion-strategy d1 stripped; /about stubbed (h0–h2, copy not written — nici's).
+
+lowercase on the website (sentence case on the paper docs) · "we" · "learners" · never imply a school was careless · no client named · no day rate · one cta per page + subscribe · no live week-count · deadline is the dfe's, not ours · every figure with source + year · never cite: joyce & showers 5/95, £900m, 276,890, "sustained beats one-off".
+
+## copy-advice pattern
+apply approved copy; where it breaks a rule or contradicts another page, change it and list every change with the reason so nici can revert. open decisions go behind tweak props, not picked for her.

@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/styles.css">
+<script src="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:#210a33;color:#f0ebe5}
+body{font-family:var(--font-body)}
+a{color:var(--spring-green)}
+a:hover{color:var(--pearl-aqua)}
+/* site rule: lowercase. the blog components ship title case ("Out Loud", "Read →", "Everything") — fix in the design system at sync (step 7); until then, cased here. */
+[class*="BlogCard_cta"],[class*="ShapeTag_tag"],[class*="BlogIndex_chip"],[class*="BlogIndex_empty"]{text-transform:lowercase}
+/* hand-built index below: the design-system BlogIndex/BlogCard always render a media tile + excerpt + cta; the redesign is tag · title · one line · time. add a compact variant at design-system sync. */
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg)">
+  <x-import component-from-global-scope="Unbarrier.Nav" hint-size="100%,90px"></x-import>
+
+  <main style="--route-accent:var(--orchid-mist)" data-screen-label="blog">
+    <div id="j0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+      <x-import component-from-global-scope="Unbarrier.Glow" color="var(--orchid-mist)" left="-8%" top="2%" size="{{ 560 }}" opacity="{{ 0.09 }}" hint-size="0,0"></x-import>
+      <x-import component-from-global-scope="Unbarrier.Glow" color="var(--spring-green)" right="-12%" top="-16%" size="{{ 520 }}" opacity="{{ 0.07 }}" hint-size="0,0"></x-import>
+      <div style="position:relative;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">unbarrier.blog</x-import>
+        <h1 style="margin:0;max-width:18ch">said out loud, then typed down.</h1>
+        <p style="margin:0;max-width:54ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">you bought it. nobody checked it reached the child. these are the notes from finding out why — short ones, honest ones, full arguments, and stories from people who get it.</p>
+      </div>
+    </div>
+
+    <div id="j0a" style="background:var(--ground-400);padding:var(--space-5) clamp(20px,5vw,64px)">
+      <div style="max-width:900px;margin:0 auto">
+        <x-import component-from-global-scope="Unbarrier.ReadingControls" scope-id="blog-main" hint-size="100%,56px"></x-import>
+      </div>
+    </div>
+
+    <div id="blog-main">
+
+    <sc-if value="{{ leadWithMentioned }}" hint-placeholder-val="{{ true }}">
+      <div id="j1" style="background:var(--ground-400);padding:var(--space-8) clamp(20px,5vw,64px)">
+        <div style="max-width:1100px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)">
+          <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">start here</x-import>
+            <h2 style="margin:0;max-width:22ch">the ones people bring up.</h2>
+            <p style="margin:0;max-width:54ch;color:var(--fg-muted)">not the newest. the ones that come back to us in emails, on calls, and in the corridor after a discovery day — with what people said about them.</p>
+            <sc-if value="{{ showDraftNote }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;font-size:var(--fs-small);color:var(--princeton-orange)">draft — the 22 posts are real (notion, published). the three feedback quotes below are still placeholders until nici supplies real ones.</p>
+            </sc-if>
+          </div>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-5)">
+            <sc-for list="{{ mentioned }}" as="m" hint-placeholder-count="3">
+              <article style="display:flex;flex-direction:column;gap:var(--space-4);padding:var(--space-5);border-radius:var(--radius-md);background:var(--ground-300)">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3);align-items:flex-start">
+                  <x-import component-from-global-scope="Unbarrier.ShapeTag" shape="{{ m.shape }}" size="sm" solid="{{ true }}" hint-size="auto,24px"></x-import>
+                  <h3 style="margin:0;font-size:var(--fs-h4)"><a href="{{ m.href }}" style="color:var(--fg);text-decoration:underline;text-decoration-color:var(--text-faint);text-underline-offset:4px">{{ m.title }}</a></h3>
+                  <p style="margin:0;font-size:var(--fs-small);color:var(--text-subtle)">{{ m.meta }}</p>
+                </div>
+                <div style="margin:calc(var(--space-6) * -1) 0">
+                  <x-import component-from-global-scope="Unbarrier.PullQuote" color="{{ m.color }}" cite="{{ m.cite }}" hint-size="100%,120px">{{ m.quote }}</x-import>
+                </div>
+                <a href="{{ m.href }}" aria-label="{{ m.readLabel }}" style="font-family:var(--font-heading);font-weight:800;color:var(--orchid-mist)">read →</a>
+              </article>
+            </sc-for>
+          </div>
+        </div>
+      </div>
+    </sc-if>
+
+    <div id="j2">
+      <x-import component-from-global-scope="Unbarrier.Section" ground="base" labelledBy="everything" hint-size="100%,900px">
+        <h2 id="everything" style="margin:0 0 var(--space-5);max-width:22ch">pick a shape. or read the newest.</h2>
+        <div role="toolbar" aria-label="filter by shape" style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin:0 0 var(--space-6)">
+          <sc-for list="{{ chips }}" as="c" hint-placeholder-count="6">
+            <button type="button" aria-pressed="{{ c.active }}" onClick="{{ c.onClick }}" style="display:inline-flex;align-items:center;gap:var(--space-2);min-height:44px;padding:0 var(--space-4);border:0;border-radius:var(--radius-pill);font-family:var(--font-body);font-size:var(--fs-small);cursor:pointer;background:{{ c.bg }};color:{{ c.fg }}">
+              <span aria-hidden="true" style="width:10px;height:10px;border-radius:50%;background:{{ c.dot }}"></span>
+              <span>{{ c.label }}</span>
+              <span style="opacity:.7">{{ c.count }}</span>
+            </button>
+          </sc-for>
+        </div>
+        <p aria-live="polite" style="margin:0 0 var(--space-4);font-size:var(--fs-small);color:var(--text-subtle)">{{ resultLine }}</p>
+        <ul style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:var(--space-4)">
+          <sc-for list="{{ visible }}" as="p" hint-placeholder-count="6">
+            <li style="display:flex;flex-direction:column;align-items:flex-start;gap:var(--space-3);padding:var(--space-5);border-radius:var(--radius-md);background:var(--ground-400)">
+              <x-import component-from-global-scope="Unbarrier.ShapeTag" shape="{{ p.shape }}" size="sm" solid="{{ true }}" hint-size="auto,24px"></x-import>
+              <h3 style="margin:0;font-size:var(--fs-h4)"><a href="{{ p.href }}" style="color:var(--fg);text-decoration:underline;text-decoration-color:var(--text-faint);text-underline-offset:4px">{{ p.title }}</a></h3>
+              <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">{{ p.line }}</p>
+              <p style="margin:auto 0 0;font-size:var(--fs-caption);color:var(--text-subtle)">{{ p.meta }}</p>
+            </li>
+          </sc-for>
+        </ul>
+        <sc-if value="{{ showMore }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:var(--space-6)">
+            <button type="button" onClick="{{ expand }}" style="display:inline-flex;align-items:center;min-height:44px;padding:0 var(--space-5);border:1px solid var(--text-faint);border-radius:var(--radius-pill);background:transparent;color:var(--fg);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-body);cursor:pointer" style-hover="border-color:var(--fg)">{{ moreLabel }}</button>
+          </div>
+        </sc-if>
+      </x-import>
+    </div>
+    </div>
+
+    <div id="j3">
+      <x-import component-from-global-scope="Unbarrier.Section" ground="well" space="loose" labelledBy="closing" hint-size="100%,360px">
+        <h2 id="closing" style="margin:0 0 var(--space-5);max-width:22ch">if one of these landed, there's a free next step.</h2>
+        <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">nine questions, ten minutes, no email needed. it tells you where to look first in your own setting.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+          <x-import component-from-global-scope="Unbarrier.Button" href="/readiness-check" color="var(--orchid-mist)" hint-size="auto,44px">take the free readiness check →</x-import>
+          <x-import component-from-global-scope="Unbarrier.Button" href="/hello" variant="ghost" hint-size="auto,44px">everything free, in one place →</x-import>
+        </div>
+      </x-import>
+      <div style="padding:var(--space-10) 0 var(--space-8)">
+        <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/blog" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. we don't sell the list." hint-size="100%,260px"></x-import>
+      </div>
+      <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;leadWith&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;default&quot;:&quot;mentioned&quot;,&quot;options&quot;:[&quot;mentioned&quot;,&quot;latest&quot;],&quot;tsType&quot;:&quot;'mentioned' | 'latest'&quot;,&quot;section&quot;:&quot;layout&quot;},&quot;showDraftNote&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;review&quot;}}">
+class Component extends DCLogic {
+  // real rows from notion → blog posts (status: published, 14 sep), minus loop breakers / never launch / mum holding it all (nici, 14 sep). title/excerpt/shape/date/readingMin/slug 1:1; casing lowered per site rule, proper nouns kept. no covers. each card shows one line: pullLine (from inside the post) where set, else the excerpt's first sentence. quote/cite = feedback for the "ones people bring up" band — still placeholders.
+  posts = [
+    { id: 'p01', slug: '800m-training-nobody-asked-about-the-child', shape: 'reality-check', featured: true, date: '2026-08-28', readingMin: 5,
+      title: '£800m of training. and nobody asked what changes for the child.',
+      excerpt: 'the dfe has confirmed a send and inclusion cpd framework worth up to £800m. we\'ve read the notice. it counts training delivered. it never asks whether anything reaches the child.',
+      pullLine: 'it counts training delivered. it never asks whether anything reaches the child.' },
+    { id: 'p02', slug: 'planned-is-not-the-same-as-received', shape: 'reality-check', date: '2026-08-21', readingMin: 7,
+      title: 'planned is not the same as received',
+      excerpt: 'inclusion is now graded by case sampling, which tests whether planned provision actually reached individual children. the gap between planned and received exists in every school. four things that close it, including the one nobody asks — the child.',
+      pullLine: 'not "is the provision good" but "did it arrive".',
+      quote: 'we ran the "follow one child" exercise the week after reading this. it changed what went in the strategy.', cite: 'a sendco, mainstream primary' },
+    { id: 'p03', slug: 'the-number-of-us-didnt-change', shape: 'reality-check', date: '2026-08-19', readingMin: 6,
+      title: 'the number of us didn\'t change. the waiting did.',
+      excerpt: 'the 2026 government review found adhd and autism prevalence broadly stable, while the waiting list grew thirteen times over. what that gap costs the people inside it.' },
+    { id: 'p04', slug: 'a-letter-to-our-fellow-doodlers', shape: 'reality-check', date: '2026-08-19', readingMin: 4,
+      title: 'a letter to our fellow doodlers',
+      excerpt: 'for years someone told you that you weren\'t listening. the best-known study on it found the doodlers remembered more. what that does and doesn\'t prove.' },
+    { id: 'p05', slug: 'lived-experience-of-the-market', shape: 'reality-check', date: '2026-08-16', readingMin: 5,
+      title: 'lived experience of the market, not of the barrier',
+      excerpt: 'the dfe convened a "lived experience board" for its edtech market report and gave all four seats to market expertise. nobody was there because a piece of technology had failed them. what that costs, and the three things a school can do about it without permission.' },
+    { id: 'p06', slug: 'menu-nobody-feels-allowed-to-order-from', shape: 'reality-check', featured: true, date: '2026-08-12', readingMin: 5,
+      title: 'a menu nobody feels allowed to order from',
+      excerpt: 'Universal Design for Learning is a promise of options. but a menu only works if you feel allowed to order from it — and that turns out to be a question about safety, not about software.',
+      pullLine: 'the menu had been there all along. somebody had to make it feel orderable.',
+      quote: 'the sue story is every school i\'ve worked in. i sent it to my whole slt.', cite: 'a digital lead, multi-academy trust' },
+    { id: 'p07', slug: 'apple-accessibility-ios-26-for-schools', shape: 'out-loud', date: '2026-08-10', readingMin: 3,
+      title: 'i stayed up for apple\'s accessibility webcast. here\'s what actually matters for schools.',
+      excerpt: 'apple just shipped a pile of accessibility features in ios 26 — and almost none of it is new hardware or costs anything. the barrier was never the tech.' },
+    { id: 'p08', slug: 'your-first-job-neurodivergent-rights', shape: 'reality-check', date: '2026-07-29', readingMin: 6,
+      title: 'your first job: what neurodivergent young people (and their parents) actually need to know',
+      excerpt: 'nobody hands you a manual for your first job. here\'s the one your child — or you — actually needed: what you\'re entitled to, whether you need a diagnosis, and what changes if it\'s a summer job or a permanent role.' },
+    { id: 'p09', slug: 'the-accessibility-widget-i-didnt-buy', shape: 'reality-check', date: '2026-07-26', readingMin: 4,
+      title: 'the accessibility widget i didn\'t buy',
+      excerpt: 'there is a button you can buy that promises to make your website accessible. we went looking for it, found it, and didn\'t buy it. here\'s what got built instead, and what it cost.',
+      pullLine: 'the widget is not the accessibility. the widget is the feeling of having done the accessibility.' },
+    { id: 'p10', slug: 'delivered-is-not-adopted', shape: 'reality-check', date: '2026-07-26', readingMin: 5,
+      title: 'delivered is not adopted',
+      excerpt: 'ninety-two percent delivered. four thousand units shipped. every one of those is a logistics number, and not one of them tells you whether a single lesson changed.' },
+    { id: 'p11', slug: 'udl-already-answered-the-question', shape: 'out-loud', date: '2026-07-17', readingMin: 3,
+      title: 'udl already answered the question england is still asking',
+      excerpt: 'while english schools race to write inclusion strategies by december, cast\'s udl-con and a growing evidence base on ai-driven assistive tech show what\'s already working elsewhere.' },
+    { id: 'p12', slug: 'ordinarily-available-provision-is-now-the-law', shape: 'reality-check', date: '2026-07-14', readingMin: 3,
+      title: 'ordinarily available provision is now the law. most schools haven\'t caught up.',
+      excerpt: 'the government has caught up on "ordinarily available provision." now schools need to make sure their december strategies change classrooms, not just websites.',
+      pullLine: 'a strategy on a website isn\'t the same as a classroom where a child feels safe enough to try.',
+      quote: 'this is the one i forward when someone asks what the december deadline actually means.', cite: 'a headteacher' },
+    { id: 'p13', slug: 'goodnotes-in-schools-installed-or-embedded', shape: 'invitations', featured: true, date: '2026-07-13', readingMin: 2,
+      title: 'installed, or embedded?',
+      excerpt: 'goodnotes in schools works when it\'s embedded in strategy, pedagogy and workflow — not just installed. a free september readiness check-in for uk digital leads.',
+      pullLine: 'installed is a technical job. embedded is a pedagogical one.' },
+    { id: 'p14', slug: 'i-didnt-win-i-showed-up-anyway', shape: 'stories', date: '2026-07-01', readingMin: 4,
+      title: 'i didn\'t win. i showed up anyway.',
+      excerpt: 'i sat in a room in liverpool, shortlisted for an award i didn\'t win. here\'s why that night changed how loud i\'m willing to be.' },
+    { id: 'p15', slug: 'you-were-not-empty-you-were-foggy', shape: 'honestly', featured: true, date: '2026-06-26', readingMin: 4,
+      title: 'you were not empty. you were foggy.',
+      excerpt: 'for weeks my ideas disappeared into nothing. here\'s what the fog was actually telling me — and the one thing i\'m doing differently now.' },
+    { id: 'p16', slug: 'making-things-process-emotion', shape: 'reality-check', date: '2026-06-12', readingMin: 4,
+      title: 'making things isn\'t avoidance. it\'s how you process emotion.',
+      excerpt: 'the pull to make something when a feeling is big isn\'t avoidance. for a lot of neurodivergent people, making is how emotion actually gets processed.' },
+    { id: 'p17', slug: 'england-classrooms-not-norway-send-bill', shape: 'out-loud', date: '2026-05-20', readingMin: 5,
+      title: 'England\'s classrooms are not Norway\'s. yet.',
+      excerpt: 'this week the education secretary pointed to Norway as the model for send reform. the ambition is right. the starting line is not. here\'s what Norway actually built — and where England\'s two-tier workforce is holding the gap together.' },
+    { id: 'p18', slug: 'should-vs-must-ehcp-section-f-send-provision', shape: 'out-loud', date: '2026-05-14', readingMin: 6,
+      title: 'the word "should" is doing a lot of heavy lifting',
+      excerpt: 'there\'s a single word doing more damage in send meetings than any other. not budget. not threshold. should. the difference between a child getting support and not getting it often comes down to one word, and most parents don\'t know to fight for the right one.' },
+    { id: 'p19', slug: 'sunday-spiral-adhd-coaching', shape: 'stories', date: '2026-05-11', readingMin: 6,
+      title: 'the sunday spiral that wasn\'t about money: what adhd coaching actually looks like',
+      excerpt: 'a client messaged me on a sunday, anxious about money. by the end of the session we\'d worked out the spiral wasn\'t about money — and the anxiety wasn\'t quite the story she\'d been told it was.' },
+    { id: 'p20', slug: 'the-system-wasnt-built-for-the-60-percent-in-the-middle', shape: 'honestly', date: '2026-05-03', readingMin: 6,
+      title: 'the system wasn\'t built for the 60% in the middle. i\'m building it differently.',
+      excerpt: 'inclusion specialist nici foote on why the system fails the 60% in the middle — and how she works with schools, families and edtech to fix it.' },
+    { id: 'p21', slug: 'mental-load-sbl-wellbeing-index-2026', shape: 'invitations', date: '2026-05-01', readingMin: 2,
+      title: 'it isn\'t the workload. it\'s the mental load.',
+      excerpt: 'the school business leader wellbeing index 2026 is out. page 48 is mine — and the real story isn\'t what most people think it is.' },
+    { id: 'p22', slug: 'one-of-the-694-percent', shape: 'reality-check', date: '2026-04-15', readingMin: 5,
+      title: 'i\'m one of the 694%: why i keep saying i have adhd out loud',
+      excerpt: 'recorded adhd events among adult women aged 31–49 in the uk have risen by 694% over five years. the number is being used as proof of overdiagnosis. it\'s actually proof of something else. here\'s why i keep saying i have adhd out loud.' },
+  ];
+  state = { shape: 'all', expanded: false };
+  renderVals() {
+    const { shape, expanded } = this.state;
+    const names = { 'out-loud': 'out loud', 'reality-check': 'reality check', honestly: 'honestly', stories: 'stories', invitations: 'invitations' };
+    const colors = { 'out-loud': 'var(--spring-green)', 'reality-check': 'var(--princeton-orange)', honestly: 'var(--orchid-mist)', stories: 'var(--pearl-aqua)', invitations: 'var(--school-bus-yellow)' };
+    const fmt = iso => new Date(iso).toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' });
+    const mentioned = this.posts.filter(p => p.quote).map(p => ({ ...p, href: '/blog/' + p.slug, color: colors[p.shape], readLabel: 'read: ' + p.title, meta: fmt(p.date) + ' · ' + p.readingMin + ' min read' }));
+    const sorted = [...this.posts].sort((a, b) => b.date.localeCompare(a.date));
+    const counts = {}; for (const p of sorted) counts[p.shape] = (counts[p.shape] ?? 0) + 1;
+    const chip = (key, label, count, dot) => ({ key, label, count, dot, active: shape === key,
+      bg: shape === key ? 'var(--fg)' : 'var(--ground-300)', fg: shape === key ? 'var(--amethyst)' : 'var(--fg)',
+      onClick: () => this.setState({ shape: key, expanded: false }) });
+    const chips = [chip('all', 'everything', sorted.length, 'var(--fg)'), ...Object.keys(names).map(k => chip(k, names[k], counts[k] ?? 0, colors[k]))];
+    const filtered = shape === 'all' ? sorted : sorted.filter(p => p.shape === shape);
+    const limit = 6;
+    const showMore = shape === 'all' && !expanded && filtered.length > limit;
+    const visible = (showMore ? filtered.slice(0, limit) : filtered).map(p => ({ ...p, href: '/blog/' + p.slug,
+      line: p.pullLine || p.excerpt.split(/(?<=[.?!])\s/)[0], meta: p.readingMin + ' min · ' + fmt(p.date) }));
+    const resultLine = filtered.length === 0 ? 'nothing in this shape yet. one\'s on the way.'
+      : shape === 'all' ? (showMore ? 'the ' + limit + ' newest of ' + sorted.length : 'all ' + sorted.length + ', newest first')
+      : filtered.length + ' in ' + names[shape];
+    return {
+      chips, visible, resultLine, showMore,
+      moreLabel: 'show all ' + sorted.length + ' →',
+      expand: () => this.setState({ expanded: true }),
+      posts: this.posts,
+      mentioned,
+      leadWithMentioned: (this.props.leadWith ?? 'mentioned') === 'mentioned',
+      showDraftNote: this.props.showDraftNote ?? true,
+    };
+  }
+}
+</script>
+</body>
+</html>
