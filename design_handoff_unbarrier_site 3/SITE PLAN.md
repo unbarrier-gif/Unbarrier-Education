@@ -39,7 +39,7 @@ one file: `Site.dc.html`, one screen per route behind `<sc-if>`. one chat per pa
 ## rules that travel with every page
 nici's identity block (photo · apls badge · led by nici foote · bio · scope line) appears once on home (b1) and once on /about (h1). every other page carries the ScopeLine + one line "led by nici foote · about →". the footer carries the company line. applied 13 sep: /access c1 and /inclusion-strategy d1 stripped; /about stubbed (h0–h2, copy not written — nici's).
 
-lowercase on the website (sentence case on the paper docs) · "we" · "learners" · never imply a school was careless · no client named · no day rate · one cta per page + subscribe · no live week-count · deadline is the dfe's, not ours · every figure with source + year · never cite: joyce & showers 5/95, £900m, 276,890, "sustained beats one-off".
+lowercase on the website (sentence case on the paper docs) · "we" · "learners" · never imply a school was careless · no client named · no day rate · one cta per page + subscribe · no live week-count · deadline is the dfe's, not ours · every figure with source + year · never cite: joyce & showers 5/95, £900m, 276,890, "sustained beats one-off". exceptions: /access "the gap" (13 sep) · £900m in the blog post "a menu nobody feels allowed to order from" (nici, 14 sep).
 
 ## copy-advice pattern
 apply approved copy; where it breaks a rule or contradicts another page, change it and list every change with the reason so nici can revert. open decisions go behind tweak props, not picked for her.
