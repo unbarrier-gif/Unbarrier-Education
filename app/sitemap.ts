@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllPublishedPosts } from '@/lib/notion';
+import { SITE_FLAGS } from '@/lib/site-flags';
 
 const SITE_URL = 'https://unbarrier.me';
 
@@ -38,6 +39,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // rendered QR codes and every sign-up route point here. The opposite of
     // /voice above.
     { url: 'https://www.unbarrier.me/notice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    // /kit joins the sitemap only when its go-live conditions are met — see
+    // SITE_FLAGS.kitPublic. Until then it is noindex, like /voice.
+    ...(SITE_FLAGS.kitPublic
+      ? [{ url: 'https://www.unbarrier.me/kit', lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 }]
+      : []),
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({

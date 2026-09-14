@@ -56,7 +56,8 @@ All env vars live in Vercel's project settings. Mirror the structure in `.env.ex
 | Variable | Public? | Notes |
 |---|---|---|
 | `MAILERLITE_API_KEY` | server-only | Bearer token for the MailerLite REST API |
-| `MAILERLITE_GROUP_ID` | server-only | `185831469000688733` (Loop Breakers list) |
+| `MAILERLITE_GROUP_ID` | server-only | `185831469000688733` — the notice list |
+| `MAILERLITE_KIT_GROUP_ID` | server-only | the `/kit` guides group. Its MailerLite automation sends the guides on join. The account also needs the custom text fields `kit_role` and `kit_source` (see `lib/mailerlite.ts`) |
 | `RESEND_API_KEY` | server-only | Bearer token for Resend |
 | `SAY_HI_FORWARD_TO` | server-only | Inbox the say-hi form posts to (`hello@unbarrier.me`) |
 | `NEXT_PUBLIC_PLAUSIBLE_DOMAIN` | public | `unbarrier.me` |
@@ -285,10 +286,18 @@ wrappers so a question can name a block.
 | 3 | `/access` | princeton orange | tiers from `lib/pricing.ts`; the trust tier and the retainer sit behind flags |
 | 4 | `/voice` | orchid mist | legal hold on the instrument: no delivered/tool split, no cohorts. Closes on "we agree how you will know it worked, and when we will check." Still noindex and out of the nav until `voicePublic`. |
 | 5 | `/hello`, `/hello/admin`, `/hello/sign-out` | spring green | public page shows the three live resources (`lib/hello-shelf.ts`) and the today block from Notion. Signed in (the ISP dashboard passcode, `/api/isp-audit/login`) Nici edits today's heading and order; both write back to the Notion "hello links" table. |
+| 6 | `/`, `/ndte` | spring green | the home reorder (`design_handoff_unbarrier_site 3`): the chooser moves above the inclusion-strategy band, the thesis section is cut and b2 becomes the one-line ndte strip. `/ndte` (`g0`…`g3`) is the sendable explainer — four steps, one pathway, one cta, no newsletter band. |
+| 7 | `/inclusion-strategy` | princeton orange | onto the ground ladder (`d0`…`d7`), the shared route sheet, one `.pull`. Step 01 is "a discovery day" (discovery = `/audit`). The identity block comes off here and on `/access`: `CredentialStrip variant="scope"` (scope line + "led by nici foote · about →") — the portrait, badge and byline appear on home and `/about` only. |
+| 8 | `/kit` | princeton orange | the seven free guides (`k0`…`k8`), from the Notion kit spec. One form (`components/kit/KitForm.tsx` → `app/kit/actions.ts`): the address joins the MailerLite kit group (`MAILERLITE_KIT_GROUP_ID`), whose automation sends the guides; the notice tick is separate, unticked, never required, and records its own wording (`KIT_CONSENT_WORDING`). **Built but not live:** `kitPublic` is off (noindex, out of the sitemap) until the privacy notice names the guides and `/accessibility` exists. |
+
+**Not carried over from the pack, on purpose.** `/resources` (the site plan's settled decision is that the free resources live on `/hello`; home's "everything free" ghost points there). The `/about` stub (`h0`…`h2`, "copy to come from nici") — the route already carries the approved 28 Aug copy. The `Neurodiversity Conversation` page (on the shelf as "url to confirm", not in the sequence). The `Voice.dc.html` plan layer says the legal hold on the instrument was lifted on 13 Sep and re-approves v3 (delivered / the tool) and v6 (founding cohorts); the site plan for the same day says the hold stands, so `/voice` is unchanged and `voicePublic` stays off — Nici's call.
 
 **Flags.** Every open decision from the handover is a flag in `lib/site-flags.ts`,
 never a hard-coded pick. Off and *not built* until decided in Notion:
 `emailStep`, `shareCode` (readiness check), `voicePublic`, `handsMoveOnHello`.
+Built but held: `kitPublic` (with `kitUnpaidRowText` and the review-only
+`kitDemoSponsorRow`). `showGhostCta` now gates the close's ghost on
+`/inclusion-strategy` as well as the hero's on home.
 **The figure rule (13 Sep 2026):** the only shared live figure on the site is
 £500, the discovery day. Every other statistic or price sits behind a flag.
 **Override, same day:** the handover published `/access` as built, so
@@ -341,6 +350,7 @@ into a source, kept so a re-issued prototype can be converted the same way.
 | CTA card click | `cta_click` | `{ card: 'tuesday' \| 'guest' \| 'coaching' \| 'schools' }` |
 | Newsletter signup success | `newsletter_signup` | — |
 | Say-hi success | `say_hi_sent` | — |
+| Kit form success | `kit_request` | — |
 
 Outbound links auto-track via the `script.outbound-links.tagged-events.js` Plausible loader. (TidyCal was retired as the booking surface on 21 Aug 2026; Loop Breakers is paused and `/loop-breakers/sessions` and `/guest-stage` 301 to the `/loop-breakers` holding page.)
 

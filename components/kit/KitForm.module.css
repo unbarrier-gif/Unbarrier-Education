@@ -1,0 +1,236 @@
+/* The /kit request form (k4). Same field treatment as the say-hi form and
+   the subscribe block — the 0.36 white boundary is a kept edge (form
+   controls keep theirs), the focus ring is the site's. Every value is a
+   token except the two field rgba values, which are the shipped ones. */
+
+.form {
+  display: grid;
+  gap: var(--space-5);
+  max-width: 560px;
+}
+
+.field {
+  display: grid;
+  gap: var(--space-2);
+}
+
+.label {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.input,
+.select {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 48px;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1.5px solid rgba(255, 255, 255, 0.36);
+  background: rgba(0, 0, 0, 0.3);
+  color: var(--fg);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+.input:focus-visible,
+.select:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+/* An invalid field carries the deadline colour on its edge as well as the
+   message under it — never colour alone. */
+.input[aria-invalid='true'],
+.select[aria-invalid='true'] {
+  border-color: var(--princeton-orange);
+}
+
+.fieldError {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--princeton-orange);
+  margin: 0;
+}
+
+/* The error summary: focus lands here, each line links to its field. */
+.summary {
+  padding: var(--space-4) var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--panel-orange);
+  outline: none;
+}
+
+.summaryHeading {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  color: var(--text);
+  margin: 0 0 var(--space-2);
+}
+
+.summaryList {
+  margin: 0;
+  padding-left: var(--space-5);
+  display: grid;
+  gap: var(--space-1);
+  color: var(--text-muted);
+}
+
+.summaryList a {
+  color: var(--text);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The consent row is the tap target: the whole line toggles the box. Starts
+   unticked, never required. */
+.consentRow {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  padding: var(--space-3) var(--space-4);
+  margin: 0 calc(-1 * var(--space-4));
+  border-radius: var(--radius-md);
+  cursor: pointer;
+}
+
+.consentRow:hover {
+  background: var(--panel-green);
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  margin: 2px 0 0;
+  flex: none;
+  accent-color: var(--spring-green);
+  cursor: pointer;
+}
+
+.checkbox:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.consentLabel {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+}
+
+.submitRow {
+  display: grid;
+  gap: var(--space-3);
+  justify-items: start;
+}
+
+/* The primary button, as components/Button renders it, on the page's
+   accent — a <button>, because it submits. */
+.submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 13px 28px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--princeton-orange);
+  color: var(--amethyst);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: opacity 150ms ease;
+}
+
+.submit:hover:not(:disabled) {
+  opacity: 0.88;
+}
+
+.submit:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.submit:focus-visible {
+  outline: 3px solid var(--focus-ring);
+  outline-offset: 2px;
+}
+
+.privacy {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+  color: var(--text-subtle);
+  max-width: 52ch;
+  margin: 0;
+}
+
+.privacy a {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* A genuine failure: the message and the human fallback. */
+.failure {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--text);
+  margin: 0;
+  max-width: 52ch;
+}
+
+.failure a {
+  color: var(--spring-green);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* The confirmation, in place of the form. Focus moves here. */
+.done {
+  max-width: 560px;
+  padding: var(--space-5);
+  border-radius: var(--radius-md);
+  background: var(--panel-green);
+  outline: none;
+}
+
+.doneHeading {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: var(--fs-h4);
+  color: var(--text);
+  margin: 0 0 var(--space-3);
+}
+
+.doneBody {
+  font-family: var(--font-body);
+  line-height: var(--lh-body);
+  color: var(--text-muted);
+  margin: 0;
+}
+
+.doneBody + .doneBody {
+  margin-top: var(--space-3);
+}
+
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  top: auto;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+/* ── high contrast ────────────────────────────────────────────────── */
+:global(html.contrast-high) .summary,
+:global(html.contrast-high) .done {
+  border: 1px solid var(--border-default);
+}

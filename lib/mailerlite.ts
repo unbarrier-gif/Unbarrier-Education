@@ -79,3 +79,82 @@ export async function addSubscriber(
     return { ok: false, status: 0, error: 'mailerlite-network' };
   }
 }
+
+/** What the /kit form collects alongside the address. */
+export type KitSubscriber = {
+  name: string;
+  school: string;
+  role: string;
+  /** The scrubbed `?from=` slug, or "direct". */
+  source: string;
+};
+
+/**
+ * The /kit request: the guides go to this address, so the subscriber joins
+ * the kit group (MAILERLITE_KIT_GROUP_ID — the automation that sends the
+ * guides hangs off that group). Only if the notice box was ticked does the
+ * address ALSO join the notice group, and only then are the consent fields
+ * written: a request for the guides is not consent to marketing, and the
+ * record must not claim one.
+ *
+ * `status` is 'unconfirmed' as on the subscribe block: MailerLite confirms
+ * the address before anything goes out, which is also what proves the
+ * address was theirs before we send the guides to it.
+ *
+ * FIELDS THAT MUST EXIST ON THE ACCOUNT: `name` and `company` are MailerLite
+ * defaults; `kit_role` and `kit_source` are custom text fields that have to
+ * be created in the MailerLite dashboard before /kit goes public. An unknown
+ * field key comes back as a 422, which this path treats as the failure it
+ * is (logged, and the person sees the retry message) — unlike the subscribe
+ * block, where a 422 is the already-subscribed case.
+ */
+export async function addKitSubscriber(
+  email: string,
+  kit: KitSubscriber,
+  consent: ConsentRecord | null,
+): Promise<Result> {
+  const apiKey = process.env.MAILERLITE_API_KEY;
+  const kitGroupId = process.env.MAILERLITE_KIT_GROUP_ID;
+  const noticeGroupId = process.env.MAILERLITE_GROUP_ID;
+
+  if (!apiKey || !kitGroupId || (consent && !noticeGroupId)) {
+    return { ok: false, status: 500, error: 'mailerlite-config-missing' };
+  }
+
+  const groups = consent ? [kitGroupId, noticeGroupId!] : [kitGroupId];
+  const fields: Record<string, string> = {
+    name: kit.name,
+    company: kit.school,
+    kit_role: kit.role,
+    kit_source: kit.source,
+  };
+  if (consent) {
+    fields.consent_date = consentTimestamp(new Date());
+    fields.consent_wording = consent.wording;
+    fields.consent_source = consent.source;
+    fields.consent_ip = consent.ip;
+  }
+
+  try {
+    const res = await fetch(MAILERLITE_ENDPOINT, {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'Content-Type': 'application/json',
+        Accept: 'application/json',
+      },
+      body: JSON.stringify({ email, groups, status: 'unconfirmed', fields }),
+      cache: 'no-store',
+    });
+
+    if (res.ok) return { ok: true };
+    if (res.status === 422) {
+      // Almost always a field key that does not exist on the account yet.
+      // Say so in the server log, where the fix is; never to the person.
+      console.error('[kit] mailerlite 422:', await res.text().catch(() => ''));
+    }
+    return { ok: false, status: res.status, error: `mailerlite-${res.status}` };
+  } catch {
+    return { ok: false, status: 0, error: 'mailerlite-network' };
+  }
+}
