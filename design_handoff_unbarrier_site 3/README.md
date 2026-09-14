@@ -1,150 +1,161 @@
-# handover: unbarrier.me rebuild — staged, seven pages
+# unbarrier — how to build with these components
 
-date: 13 september 2026 (rev 3, evening — home reorder + nici block rule + /about stub) · owner: nici (unbarrier education ltd) · for: claude code, working in the unbarrier.me next.js repo
+This is the website unbarrier.me, imported as-is: Next.js components, CSS Modules, and one token sheet (`app/globals.css`, shipped inside `_ds_bundle.css`). There is no utility-class system and no Tailwind. Read `styles.css` and its imports before styling anything; read `components/<group>/<Name>/<Name>.prompt.md` before using a component.
 
-## read this first
+## Setup: one wrapper, once
 
-the files in this bundle are **design references built in html** — prototypes showing the intended look, copy and behaviour. they are not production code to ship. the task is to **recreate each screen in the unbarrier.me next.js codebase** using its own components (the `unbarrier-education` react library — `PageGround`, `Nav`, `Section`, `Eyebrow`, `Button`, `CtaCard`, `NewsletterBand`, `Footer`, `SevenQuestions`, `ReadinessCheck`, `AdminLoginForm`, blog components) and its token sheet (`app/globals.css`). the design system bundled here IS that library, so component names, props and tokens map 1:1. never type a hex; every value is a `var(--token)`.
+Wrap the whole design in `PageGround` once, at the root. It paints the page ground (new world blue, `--bg`), sets the text colour (`--fg`) and the body face. Without it, text renders cream on white and vanishes. Never nest it.
 
-**fidelity: high.** copy is final where marked approved. layout, ground ladder, spacing and component choice are final. recreate faithfully; do not restyle.
+```jsx
+<PageGround>
+  <Nav active="audit" />
+  <main>
+    <Section measure="route" ground="second" labelledBy="the-gap">
+      <Eyebrow color="var(--pearl-aqua)">unbarrier.audit</Eyebrow>
+      <h2 id="the-gap">nobody audits whether the tech reached the child.</h2>
+      <p style={{ color: 'var(--fg-muted)', maxWidth: '60ch' }}>something can be bought well and configured well and still not reach the learner.</p>
+      <Button href="/readiness-check" color="var(--pearl-aqua)">take the free readiness check →</Button>
+    </Section>
+    <NewsletterBand route="/audit" weight="standard" />
+  </main>
+  <Footer variant="full" />
+</PageGround>
+```
 
-## how the prototypes are organised
+The ISP audit tool (`isp-audit` group) is a separate LIGHT theme. Wrap those components in `IspAuditLayout` instead of using them on the dark ground; it owns the `--ia-*` tokens they read.
 
-- `Site.dc.html` — one file, one screen per route behind `<sc-if value="{{ isX }}">`. the logic class at the bottom maps `/audit`, `/access`, `/voice`, `/hello`, `/readiness-check` … to screens. **each `<sc-if>` block = one next.js route.** ignore screens not in this handover (inclusion-strategy, kit, ndte, resources) — they are parked, not cancelled.
-- block ids inside each screen (`b0`…`b6`, `a0`…`a3`, `c0`…`c8`, `v0`…) are section anchors; use them in questions back to nici ("c3 heading").
-- `<x-import component-from-global-scope="Unbarrier.Button" …>` = `<Button …>` from the library. attributes are props (kebab → camelCase). `{{ }}` holes are values from the logic class.
-- `data-props` json on the `<script data-dc-script>` tag lists **tweak props** — these are nici's open decisions. each becomes either a feature flag or a content field, never a hard-coded pick. defaults given per stage below.
-- `.dc.html` files ending in "Baseline" / "Proposal" / "Discovery Day" are **printable A4 documents** (`doc-page` component, white paper, sentence case) — deliver as pdf, not as routes.
+## Styling idiom: tokens, not classes
 
-## rules that hold on every page (binding)
+Components carry their own styles. For your own layout glue write inline styles or your own CSS, and take every value from a token with `var(--name)`. Never type a hex. Never invent a class name: the component class names are hashed and private.
 
-lowercase on the website (brand names keep case; sentence case only on paper docs) · "we" never "i" · "learners" not "students" · never imply a school was careless · no client named · no day rate · **one cta per page** + the subscribe block · no live week-count (write "this term") · deadline is the dfe's, not ours · every figure with source + year · never cite: joyce & showers 5/95, £900m, 276,890, "sustained beats one-off" · every booking button links `/book` (nici owns the `/book` → calendar redirect; the library's `BOOKING_URL` constant still holds the calendar url — update it) · ground ladder separates sections, never lines: no borders, dividers or card outlines · every page closes on a primary `Button` (strand colour) + ghost `Button` · voice = seven *questions*; "domains" only for the six domains of inclusion.
+| need | tokens |
+|---|---|
+| grounds (new world blue only) | `--bg` (page), `--ground-500` `--ground-400` `--ground-300` `--ground-200` (the ladder; use `<Section ground="base|second|deep|well">`), `--bg-alt` |
+| text | `--fg`, `--fg-muted`, `--text-subtle`, `--text-faint` |
+| primaries | `--spring-green` (action, focus ring, the one full-strength block per page), `--amethyst` (the page), `--antique-white` (print and lockups only, never a screen ground) |
+| secondaries (never a ground, never lead a page) | `--pearl-aqua` (audit, evidence, numbers) · `--princeton-orange` (access, dates, deadlines) · `--orchid-mist` (voice, anything human) · `--pink-mist` (beside dark pink only) · `--school-bus-yellow` (pills and labels only) |
+| a lifted surface (an accent at 10%) | `--panel-green`, `--panel-lightblue`, `--panel-darkpink`, `--panel-orange`, `--panel-lightpink`, `--panel-yellow`, `--panel-aqua` |
+| semantic roles | `--action` `--action-fg` `--payoff` `--human` `--quiet` `--premium` `--focus-ring` |
+| type faces | `--font-heading` (Outfit: headings, impact text, the 01–07 numerals) · `--font-body` (Lexend: all body copy) · `--font-brand` (Comfortaa: wordmark and display only, never body) |
+| type scale | `--fs-display` `--fs-h1` `--fs-h2` `--fs-h3` `--fs-h4` `--fs-body` `--fs-body-lg` `--fs-small` `--fs-eyebrow` `--fs-caption`; line heights `--lh-tight` `--lh-snug` `--lh-body` `--lh-loose`; tracking `--ls-tight` `--ls-eyebrow` |
+| spacing | `--space-1` (4px) `--space-2` `--space-3` `--space-4` `--space-5` `--space-6` `--space-8` `--space-10` `--space-12` (96px) |
+| radii | `--radius-sm` `--radius-md` (site default) `--radius-lg` `--radius-xl` `--radius-pill` |
+| elevation | `--shadow-sm` `--shadow-md` `--shadow-lg`, `--glow-green` `--glow-orchid` `--glow-yellow` |
 
-## scope rule
+`h1`–`h4` and `p` are styled globally (Outfit 800, Lexend 1.75 line height): plain heading and paragraph elements are already on-brand. Do not tighten line height or letter spacing; the loose spacing is an accessibility decision.
 
-**if it is not decided in notion, it is out of scope.** anything below marked *open* is not built, not defaulted, not asked about — the developer ships without it and leaves a code-level flag off. nici decides later in notion; the developer picks it up on the next pass.
+## Rules that hold on every surface
 
-## delivery order
+- Sections are separated by ground, never by a line: no borders, no divider rules, no card outlines. Walk the ladder 400 → 300 → 500 and close on 200 with `<Section ground="well" space="loose">`.
+- A colour goes up, never down: never darken a brand colour toward black. One full-strength block per page (accent background, amethyst text).
+- Spring green never sits alone on a light ground.
+- Copy on the website is lowercase (brand names and proper nouns keep their case). Short sentences. Name the cost up front. No corporate language.
+- Every page ends on the closing pair: a primary `Button` (`color` = the page's strand colour, `external` for the booking link) and a ghost `Button` (`variant="ghost"`).
+- Icons (`Icon`) and the lockups (`StrandLockup`, `StraplineLockup`, `Mark`) are inline SVG in `currentColor` with a single spring-green accent path; icon plus text, always. Wrap a lockup in a box with an explicit width. `StraplineLockup` belongs in the footer only; `Wordmark` is the nav wordmark.
+- Links are plain anchors and forms resolve to their success state in this build (no server behind them); `Image` sources that start with `/` load from unbarrier.me.
 
-ship in this order. each stage is independently deployable; nothing in a later stage blocks an earlier one.
+# Unbarrier (unbarrier-education@0.1.0)
 
-| stage | route(s) | source in bundle | strand colour |
-|---|---|---|---|
-| 1 | `/` (home) | `Site.dc.html` → `isHome`, b0–b6 | spring green |
-| 2 | `/audit` + `/readiness-check` | `Site.dc.html` → `isAudit` a0–a3 · `Readiness Check.dc.html` | pearl aqua |
-| 3 | `/access` | `Site.dc.html` → `isAccess` c0–c8 | princeton orange |
-| 4 | `/voice` + baseline pdf | `Voice.dc.html` · `Voice Baseline.dc.html` · SevenQuestions data | orchid mist |
-| 5 | `/hello` (public + admin) | `Site.dc.html` → `isHello` e0–, e-login, e-admin | spring green |
-| 1b | `/about` | `Site.dc.html` → `isAbout` h0–h2 — **stub**, ship with stage 1 so the about link resolves | spring green |
-| — | `/blog` | **out of scope** — not designed, not decided; existing blog stays live untouched | — |
+This design system is the published unbarrier-education React library, bundled as a single
+browser global. All 45 components are the real upstream code.
 
----
+## Where things are
 
-## stage 1 — home `/`
+- `_ds_bundle.js` — the whole-DS bundle at the project root; loads every component to `window.Unbarrier`. First line is a `/* @ds-bundle: … */` metadata header.
+- `styles.css` — the single stylesheet entry: it `@import`s the tokens, fonts, and component styles (`_ds_bundle.css`). Link this one file.
+- `components/<group>/<Name>/<Name>.prompt.md` (example JSX + variants), `<Name>.d.ts` (types), `<Name>.html` (variant grid).
+- `tokens/*.css` — CSS custom properties, names verbatim from upstream.
+- `fonts/` — `@font-face` files + `fonts.css` (when the package ships fonts).
 
-**status: approved copy, ready.**
-source: `Site.dc.html` lines ~43–132 (`isHome`). notion: "website rebuild — approved page drafts (28 aug 2026)" → `/`.
+For a specific component, `read_file("components/<group>/<Name>/<Name>.prompt.md")`.
 
-structure (top → bottom), **reordered 13 sep evening — this order is final**: `Nav` (no active) → hero b0 (`Glow` spring green + orchid, `Eyebrow`, h1 "you bought it. nobody checked it reached the child.", lede, primary `Button` → `/readiness-check`, ghost → `#b4`) → b1 nici block (ground-400: portrait `image-slot` 132px circle, `AplsBadge ground="amethyst"`, "led by nici foote", one-line bio, `ScopeLine`) → **b3 `IAmChooser`** (`Section ground="base"` — the route system, first fork after the hero) → **b1a `InclusionStrategyBand`** (the dated route; copy unchanged, keep the component as is) → **b2 ndte strip** (ground-300, one row: "however you come in, it runs the same way." + four `Icon`s `ndte-notice|design|try|embed` with bold labels + ghost `Button` "how the work runs →" → `/ndte`) → b4 `SevenQuestions heading="what it asks — the seven questions" ground="second"` (`--route-accent: pearl aqua`) → b5 free-resources (`Section ground="deep"`, `Eyebrow` "free, and yours", three `CtaCard`s seven_questions / belonging_check / receipts, ghost → `/resources`) → b6 close (`Section ground="well" space="loose"`, "forty-five minutes. no deck, no pitch, no pipeline.", primary "book a discovery call →" → `/book` external, ghost → `/audit`) → `NewsletterBand route="/" heading="notice"` → `Footer variant="full"`.
+## Loading
 
-**cut 13 sep:** the former b2 `Section ground="deep"` ("nobody audits whether the tech reached the child." + paragraph) — it duplicated the hero. do not rebuild it. if nici reverts, it sits between b3 and b4 (see `SITE PLAN.md` → "home reorder").
+Add these two lines to your page once (React must be on the page first):
 
-**nici identity block (b1) — placement rule (approved 13 sep):** appears on home (b1) and `/about` (h1) only. every other page carries a slim strip: `ScopeLine` + one line "led by nici foote · about →" (see `/access` c1, `/inclusion-strategy` d1 — already applied in `Site.dc.html`). build the full block once as a shared component (`NiciBlock`, say) and the slim strip as its `variant="slim"`.
+```html
+<link rel="stylesheet" href="styles.css">
+<script src="_ds_bundle.js"></script>
+```
 
-**`/about` — stub only (h0–h2).** route exists so the "about →" link resolves: hero (eyebrow "about", h1 "who is asking.", placeholder lede), full nici block, close (book + ghost → `/`), footer. **copy is not written** — ship the route with the block and the close; the lede is nici's to write in notion. no newsletter band.
+Components are then available at `window.Unbarrier.*`. Mount into a dedicated child node (e.g. `<div id="ds-root">`), not the host page's own React root, so the two trees don't collide:
 
-tweaks → flags: `showFigures` (default on), `showGhostCta` (default on). hero `hero` prop (site / statement / billboard) is a design exploration — ship `site`.
+```jsx
+const { AdminLoginForm } = window.Unbarrier;
+ReactDOM.createRoot(document.getElementById('ds-root')).render(<AdminLoginForm />);
+```
 
-ctas: hero → `/readiness-check` (ghost → `#b4`). close primary → `/book` (external), ghost → `/audit`. ndte strip ghost → `/ndte`.
+Wrap the tree in the provider — most components read theme/i18n from context:
 
-## stage 2 — audit `/audit` + readiness check `/readiness-check`
+```jsx
+<PageGround>{children}</PageGround>
+```
 
-**status: approved, ready. `Readiness Check.dc.html` supersedes the library's `ReadinessCheck` result screen — read `PLAN - readiness check.md` in full before touching the engine.**
+## Tokens
 
-`/audit` (a0–a3): hero → a1 "the gap" → a2 **pointer block** "what the check asks" linking `/readiness-check` (the embedded engine was removed from this page — do not re-embed) → a3 close: primary `start the free readiness check →` (`/readiness-check`, pearl aqua), ghost `book a discovery call →` (`/book`). links doc 1 (`Discovery Day - what it is and why -mainstream-.dc.html`) as the discovery-day explainer — provide as pdf at a stable url, `bookingUrl` tweak = `unbarrier.me/book`, qr off. discovery day = the paid "notice" step inside unbarrier.audit; no separate route. the £500 day price on this page is the decided price (notion, /audit approved draft); the partnership proposal's £1k is a separate document and does not touch this route.
+119 CSS custom properties from unbarrier-education. Names are
+preserved verbatim from upstream. They are declared inside `_ds_bundle.css` (this DS ships one compiled stylesheet rather than separate token files).
 
-`/readiness-check` (own route, own nav/footer; `Nav active="audit"`):
-- nine questions verbatim from the engine's `readiness-check-v1` set (wording not signed off as final — keep it editable). seven dimensions: provision · access · design · capability · belonging · trust · evidence.
-- scale: the engine's six points **plus a seventh "i don't know"** — scored as unanswered, reported as a finding ("you couldn't say — that is a finding").
-- scoring copied 1:1: mean × 20 per dimension; bands ≥65 reaching · 50–64 patchy · <50 not reaching (engine's `scoreBand` thresholds, renamed). **no overall score, no radar, no numbers shown** — band word only.
-- lowest dimension → "start here" + one sentence (the seven `START` sentences in the logic class — new copy, nici-read pending).
-- closing line: "so far only a [role] has answered. the picture is one seat wide."
-- three separate consents, none required, all unticked: email-me-the-result (purpose 1) · `yes, send me notice. i can unsubscribe from any email.` (purpose 2, exact `CONSENT_WORDING`) · `help build the picture.` (sector layer → setting type · size band · role).
-- `copy as text` button: result as plain sentences (the forward-upwards path).
-- onward: primary `start with a discovery day →` (`/audit`), ghost `book a discovery call →` (`/book`). no newsletter band on this page.
-- **flags:** `emailStep` **OFF** — the email field and result-email send are *open* (privacy notice does not name them) → not built. `shareCode` *open* → not built. `bandWords` — ship learner.
-- wiring to build: sector-layer row write only (nine answers + three fields + date) — the existing engine consent, already covered.
+- **color** (20): `--text-muted`, `--text-subtle`, `--text-faint`, …
+- **spacing** (16): `--space-1`, `--space-2`, `--space-3`, …
+- **typography** (6): `--font-heading`, `--font-body`, `--font-brand`, …
+- **radius** (6): `--radius-sm`, `--radius-md`, `--radius-lg`, …
+- **shadow** (4): `--shadow-sm`, `--shadow-md`, `--shadow-lg`, …
+- **other** (67): `--spring-green`, `--amethyst`, `--antique-white`, …
 
-## stage 3 — access `/access`
+## Components
 
-**status: approved, ready.** source: `Site.dc.html` ~190–420 (`isAccess`). notion: approved page drafts → `/access`.
+### isp-audit
+- `AdminLoginForm`
+- `AuditForm`
+- `CatalogueChips`
+- `DownloadResultsButton`
+- `Heatmap`
+- `IspAuditLayout`
+- `IspAuditShell` — The self-contained LIGHT chrome for every /isp-audit page: a light header
+- `PlatformSelect`
+- `RadarChart`
+- `ScaleSelector`
 
-c0 hero (orange glow) → c1 credential strip → c2 → c3 **`SevenQuestions` component** (the library component, data fixed to the 1 sep set — do not hand-build) → c4 the four-step block (notice → design → try → embed) → c5 pricing tiers → c5b groups block (lowercased) → c6–c7 → c8 close: primary `/book` (orange) + ghost.
+### general
+- `AplsBadge`
+- `Button`
+- `ContrastToggle`
+- `CredentialStrip`
+- `CtaCard`
+- `Eyebrow`
+- `Footer`
+- `Glow`
+- `Icon`
+- `InclusionStrategyBand`
+- `Mark` — The monochrome mark on its own, as decoration. It is aria-hidden here
+- `MobileNavDrawer`
+- `Nav`
+- `NewsletterBand`
+- `ReadingControls`
+- `SayHiForm`
+- `ScopeLine`
+- `Section`
+- `SevenQuestions`
+- `StrandLockup` — The sub-brand lockup  mark  unbarrier  full stop  strand name. Labelled,
+- `StraplineLockup` — The full lockup with the strapline. Footer only.
+- `TodayBlock` — The your stuff from today panel.
+- `Wordmark`
 
-tweaks → flags/content: `pricing` enum `two tiers` (default) · `all tiers` (adds trust tier) · `in conversation` (hides prices) — ship `two tiers`. `retainerPublic` **default off** — the retainer card + paragraph stay proposal-only until sold once. `showFundingLine` default on (names principle 7, never declares eligibility).
+### blog
+- `BlogCard`
+- `BlogHero`
+- `BlogIndex`
+- `NotionRenderer`
+- `PostFooter`
+- `PostHero`
+- `PostMeta`
+- `PreviewBanner`
+- `PullQuote`
+- `ShapeTag`
 
-## stage 4 — voice `/voice` + baseline one-pager + seven questions
+### home
+- `IAmChooser`
 
-**status: approved 13 sep. ⚠ legal hold on the instrument.**
-
-`/voice`: `Voice.dc.html` (mounted in Site via `<dc-import name="Voice" embedded>`; ship with `showPlan=false` — the plan block is an internal review panel, never public). orchid mist strand. v0 hero → sections → close: primary `/book`, ghost → `/readiness-check` (`closeGhost` prop). `NewsletterBand route="/voice"`.
-
-**legal hold (binding):** do not sell the instrument. no "delivered / the tool" split, no self-serve tool, no founding cohorts. close on *"we agree how you will know it worked, and when we will check."*
-
-seven questions: the library's `SevenQuestions` data = the 1 sep set (provision · access · design · capability · belonging · trust · evidence). the `Voice Baseline.dc.html` copy is now canonical for voice on paper (incl. "the child" ×4 in the questions). sync the library data to it if they differ.
-
-**`Voice Baseline.dc.html`** — two A4 pages, sentence case, white paper → deliver as pdf. `showConsents` block default on pending legal sign-off. sections "where it sits" / "how a baseline is taken" approved 13 sep.
-
-optional: `Voice Report Pages.dc.html` — three light-theme sample report pages (sample school, 24 learners) for the proposal. illustration only; not a route, not a client deliverable yet.
-
-## stage 5 — hello `/hello`
-
-**status: structure ready. ship the public page with the three live resources only.** the one-thing template, the neurodiversity conversation and why-your-hands-move are *open* (no confirmed url / no copy) → not shown. source: `Site.dc.html` ~758–903 (`isHello`), three states via `helloState`: `public` · `login` · `signed in`.
-
-public (e0–): spring-green strand. hero → `TodayBlock` ("your stuff from today" — heading + ordered links; heading and order editable by nici when signed in) → "three to read" `CtaCard` row → resources shelf.
-
-login (`e-login`): `IspAuditLayout` (light) wrapping `AdminLoginForm`; the prototype swallows the submit — in the repo this POSTs to `/api/isp-audit/login` (existing auth). `/hello/sign-out` returns to login.
-
-signed in (`e-admin`): edit today's heading (text field), reorder today's links (up/down), view the shelf with status pills (live · revamp pending · held for blog · url to confirm). persist heading + order — source of truth = notion "website → hello links" table.
-
-resource list (live urls):
-- the belonging check — https://www.unbarrier.me/belonging-check
-- the takeaway — the seven questions — https://www.unbarrier.me/the-takeaway.html
-- the receipts — https://www.unbarrier.me/the-receipts.html
-- the one-thing template — live, revamp pending
-- the neurodiversity conversation — live, url to confirm (`Neurodiversity Conversation.dc.html` in this bundle is its design)
-- why your hands move — `handsMoveOnHello` default **off**; held for the blog.
-
-card copy for the three live resources = title + the existing page's own first line. nothing new written. privacy notice v1.1 and `/accessibility` statement: build if drafts exist in notion; otherwise ship without the subscribe consent box on this page (the `NewsletterBand` already carries the decided consent wording).
-
-## blog, about
-
-**out of scope.** the existing notion-backed blog stays live as-is. no `/about` route. nothing to build.
-
----
-
-## tokens
-
-all from `_ds/…/_ds_bundle.css` (= `app/globals.css`). grounds `--bg`, `--ground-500/400/300/200` · text `--fg`, `--fg-muted`, `--text-subtle` · primaries `--spring-green`, `--amethyst` · strands `--pearl-aqua` (audit) `--princeton-orange` (access) `--orchid-mist` (voice) · panels `--panel-*` · type `--font-heading` (outfit) `--font-body` (lexend) `--font-brand` (comfortaa, wordmark only) · scale `--fs-*`, `--lh-*` (never tighten — accessibility decision) · spacing `--space-1…12` · radii `--radius-*`.
-
-## files in this bundle
-
-- `Site.dc.html` — home, audit, access, hello (+ parked screens)
-- `Readiness Check.dc.html` — /readiness-check
-- `Voice.dc.html` — /voice
-- `Voice Baseline.dc.html` — A4 doc, stage 4
-- `Voice Report Pages.dc.html` — optional sample report, stage 4
-- `Discovery Day - what it is and why -mainstream-.dc.html` — A4 doc linked from /audit
-- `Neurodiversity Conversation.dc.html` — hello resource design
-- `Readiness Check.dc.html` depends on `support.js`, `doc-page.js`, `image-slot.js`, `browser-window.jsx`, `icons/` — included so the prototypes open in a browser
-- `_ds/` — the design-system bundle (the library, compiled)
-- `SITE PLAN.md`, `PLAN - readiness check.md`, `HANDOVER - inclusion-strategy page.md` — decisions and rationale
-
-## open items — parked, not blocking
-
-not built in this pass. the developer does not ask about these; nici decides in notion when ready.
-
-1. readiness check email step + share code (needs privacy notice paragraph).
-2. /hello: three held resources; `/accessibility` statement.
-3. voice baseline consents block (legal sign-off) — pdf ships with the block on, as approved 13 sep.
-4. blog redesign, about page.
+### readiness-check
+- `ReadinessCheck`
