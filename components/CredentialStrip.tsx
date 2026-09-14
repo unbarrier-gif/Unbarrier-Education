@@ -1,16 +1,23 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import { AplsBadge } from './AplsBadge';
 import { ScopeLine } from './ScopeLine';
 import styles from './CredentialStrip.module.css';
 
 // The credential strip — under the hero, on every route.
 //
-// Two variants:
+// Three variants:
 //   `line`     the two-line strip that has run under the hero since 28 Aug.
-//   `portrait` the b1 / c1 block from the 13 Sep design handover: nici's
+//   `portrait` the b1 / h1 block from the 13 Sep design handover: nici's
 //              portrait, the APLS badge, the byline, one line of credentials,
 //              and the scope line under all of it. It sits on --ground-400 as
 //              its own band, full bleed, 900px measure.
+//   `scope`    the same band with the identity taken out: the scope line and
+//              one line, "led by nici foote · about →". THE RULE (handover,
+//              13 Sep 2026): the identity block appears once on home (b1) and
+//              once on /about (h1). Every other page carries this variant
+//              (/access c1, /inclusion-strategy d1) so the portrait and the
+//              badge are not repeated down the site.
 //
 // APLS stays attached to nici's name (individual accreditation), and the badge
 // is Apple's mark served as supplied — see AplsBadge.tsx.
@@ -27,12 +34,28 @@ const PORTRAIT_LINE =
   'dyslexic, dyscalculic and adhd educator · 26 years in classrooms · digital inclusion specialist';
 
 type Props = {
-  variant?: 'line' | 'portrait';
+  variant?: 'line' | 'portrait' | 'scope';
   /** Block id, so the section can be named in a question back ("b1"). */
   id?: string;
 };
 
 export function CredentialStrip({ variant = 'line', id }: Props) {
+  if (variant === 'scope') {
+    return (
+      <div id={id} className={`${styles.band} ${styles.scopeBand}`}>
+        <div className={`${styles.bandInner} ${styles.scopeInner}`}>
+          <ScopeLine />
+          <p className={styles.ledBy}>
+            led by nici foote ·{' '}
+            <Link href="/about" className={styles.ledByLink}>
+              about →
+            </Link>
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (variant === 'portrait') {
     return (
       <div id={id} className={styles.band}>

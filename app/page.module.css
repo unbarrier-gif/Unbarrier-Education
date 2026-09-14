@@ -3,8 +3,8 @@
    Same token vocabulary as app/route-page.module.css; its own file because
    home reads at the 900px measure and has the hero and card row the route
    pages don't. Every value is a token. No drawn edges: the ground ladder
-   separates the sections (b1 ground-400 · b2 deep · b3 base · b4 second ·
-   b5 deep · b6 well).
+   separates the sections (b1 ground-400 · b3 base · b1a · b2 ground-300 ·
+   b4 second · b5 deep · b6 well).
    ======================================================================== */
 
 .main {
@@ -85,6 +85,32 @@
   color: var(--fg-muted);
   max-width: 58ch;
   margin: 0 0 var(--space-6);
+}
+
+/* ── b2 the ndte strip ────────────────────────────────────────────── */
+/* One line, the four words, and a ghost to /ndte, in a row that wraps.
+   ground-300, tighter than a Section: it is a strip, not a section. */
+.strip {
+  background: var(--ground-300);
+  padding: var(--space-6) clamp(20px, 5vw, 64px);
+}
+
+.stripInner {
+  max-width: 900px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-5) var(--space-6);
+}
+
+.stripLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--fg-muted);
+  max-width: 34ch;
+  margin: 0;
 }
 
 /* b2 — the four ndte words, icon plus text, in a row that wraps. */

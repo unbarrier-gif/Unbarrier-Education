@@ -1,5 +1,6 @@
 import type { MetadataRoute } from 'next';
 import { getAllPublishedPosts } from '@/lib/notion';
+import { SITE_FLAGS } from '@/lib/site-flags';
 
 const SITE_URL = 'https://unbarrier.me';
 
@@ -25,17 +26,23 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // in the home chooser, so it is a landing page in its own right.
     { url: 'https://www.unbarrier.me/readiness-check', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     { url: 'https://www.unbarrier.me/edtech', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    // The sendable explainer of how the work runs (stage 6, 13 Sep 2026).
+    { url: 'https://www.unbarrier.me/ndte', lastModified: now, changeFrequency: 'monthly', priority: 0.6 },
     { url: 'https://www.unbarrier.me/about', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
     { url: 'https://www.unbarrier.me/faq', lastModified: now, changeFrequency: 'monthly', priority: 0.7 },
-    // /voice was held out of the sitemap (and noindex, and unlinked) until
-    // legal signed off the retention period and the two-purpose privacy
-    // notice. Signed off 14 Sep 2026 — it is indexable now, gated on
-    // SITE_FLAGS.voicePublic like the nav and the page's robots tag.
+    // /voice: public since 14 Sep 2026, when the legal hold on the
+    // instrument was lifted for good. The measurement layer under the two
+    // strands above, so it carries their weight.
     { url: 'https://www.unbarrier.me/voice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
     { url: 'https://www.unbarrier.me/goodnotes', lastModified: now, changeFrequency: 'monthly', priority: 0.9 },
     // The sign-up page for notice. Indexed and linkable on purpose — three
     // rendered QR codes and every sign-up route point here.
     { url: 'https://www.unbarrier.me/notice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    // /kit joins the sitemap only when its go-live conditions are met — see
+    // SITE_FLAGS.kitPublic. Until then it is noindex.
+    ...(SITE_FLAGS.kitPublic
+      ? [{ url: 'https://www.unbarrier.me/kit', lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 }]
+      : []),
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({

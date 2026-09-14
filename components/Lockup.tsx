@@ -14,9 +14,9 @@
 // data-strand attribute on the group that wraps them — the rules live next to
 // the .accent rules in globals.css. Do not put a hex back in here.
 //
-// lockup-voice.svg is not inlined yet: /voice went public 14 Sep 2026
-// (lib/site-flags.ts `voicePublic`) but nothing renders its lockup; add it here
-// when a page needs it. lockup-hub.svg is not inlined: there is no /hub route.
+// lockup-voice.svg is not inlined: no page renders it yet — the rebuilt
+// routes carry a text eyebrow, not the lockup (add the strand here when one
+// does). lockup-hub.svg is not inlined: there is no /hub route.
 // lockup-me.svg and wordmark.svg are not inlined: the nav wordmark is
 // components/Wordmark.tsx, and the strapline lockup is the one place the full
 // lockup belongs (the footer).

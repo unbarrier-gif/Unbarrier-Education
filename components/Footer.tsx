@@ -15,11 +15,9 @@ type Props = {
 // is /audit (singular, not the /audits the old note guessed at) and it now
 // exists, so the link is back in the Services group below.
 //
-// `unbarrier.voice` was held out of the footer until legal signed off the
-// retention period and the two-purpose privacy notice — the footer is global,
-// so one entry here links the route from every page. Signed off 14 Sep 2026;
-// the link is back in the Services group below, after access to match the
-// nav order (see lib/site-flags.ts `voicePublic`).
+// `unbarrier.voice` is back in Services (14 Sep 2026): the legal hold on the
+// instrument was lifted for good, so the route is public — see
+// app/voice/page.tsx.
 // 28 Aug 2026: `unbarrier.loop-breakers` removed from Services — the strand
 // is retired and /loop-breakers is now a holding page. The route stays live
 // and indexable so existing bookmarks don't 404; it just isn't advertised

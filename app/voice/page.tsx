@@ -13,35 +13,36 @@ import { NewsletterBand } from '@/components/NewsletterBand';
 import { Section } from '@/components/Section';
 import { SevenQuestions } from '@/components/SevenQuestions';
 import { BOOKING_LABEL, BOOKING_URL } from '@/lib/booking';
+import { PRICE_DISCOVERY_DAY } from '@/lib/pricing';
 import { READINESS_CHECK_HREF } from '@/lib/readiness-check';
-import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from '@/app/route-page.module.css';
 import voice from './page.module.css';
 
 // /voice — unbarrier.voice, the measurement layer. Stage 4 of the 13 Sep 2026
 // rebuild, from Voice.dc.html with showPlan=false (the plan block is an
-// internal review panel and is never public). The block ids stay on the
-// wrappers.
+// internal review panel and is never public); completed as stage 9 on 14 Sep
+// 2026 when the legal hold on the instrument was lifted. The block ids stay
+// on the wrappers.
 //
 //   v0  hero (orchid glow) · primary /book · ghost → the seven-questions one-pager
 //   v1  the layer under the work (ground-400)
 //   v2  the seven questions (second) — the library component, 1 Sep set · the one-pager card under it
+//   v3  two ways to run it (deep) — delivered · the tool
 //   v4  what a baseline is (base)
 //   v4b what you get back (second) — three cards; report images when present
 //   v5  two purposes, two consents (base)
+//   v6  founding cohorts (deep) — the page's one .pull
 //   v7  close (well, loose) · newsletter band · footer
 //
-// LEGAL HOLD ON THE INSTRUMENT (handover, 13 Sep 2026, binding): do not sell
-// it. The prototype's v3 ("delivered / the tool" split) and v6 ("founding
-// cohorts") are NOT built. The page closes on "we agree how you will know it
-// worked, and when we will check."
+// THE LEGAL HOLD IS LIFTED (Nici, 14 Sep 2026, permanent). The instrument can
+// be sold. v3 and v6 are built from the approved 28 Aug copy; the route is
+// indexed, in the sitemap, in the nav and in the footer. There is no flag
+// for this and there must not be one: a hold that has been lifted for good
+// is not an open decision. The two things the 13 Sep plan layer kept —
+// no price for voice on its own, no date on the cohorts — still hold.
 //
 // "the child" in the h1 is deliberate and the only place on this page it
 // appears — the instrument's founding claim. Everything below says learners.
-//
-// The route is indexed and in the nav while SITE_FLAGS.voicePublic is on
-// (legal hold on publishing the route lifted 14 Sep 2026). The hold on
-// SELLING the instrument above is separate and still stands.
 
 const CANONICAL = 'https://www.unbarrier.me/voice';
 
@@ -50,9 +51,6 @@ export const metadata: Metadata = {
   description:
     'every readiness tool scores the organisation. unbarrier.voice measures the one thing they skip: whether the technology, the access and the communication actually reach the learner they were bought for.',
   alternates: { canonical: CANONICAL },
-  robots: SITE_FLAGS.voicePublic
-    ? undefined
-    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   openGraph: {
     title: 'unbarrier.voice — the audit that starts with the child and works backwards.',
     description:
@@ -117,6 +115,31 @@ const WHAT_YOU_GET_BACK = [
   },
 ];
 
+// v3 — two ways to run it. Approved 28 Aug 2026. No price for voice on its
+// own: the only figure is the discovery day, which is the delivered version.
+const TWO_WAYS: Array<{
+  lead: string;
+  body: string;
+  aside: string;
+  href: string;
+  label: string;
+}> = [
+  {
+    lead: 'delivered',
+    body: 'nici in the room. an apple professional learning specialist watching what a survey cannot see: the workaround a learner has invented, the setting nobody turned on, the moment an adult steps in three seconds too early. learner data captured alongside it.',
+    aside: 'very few people can put an accessibility specialist in your classrooms for a day. that is where the value sits.',
+    href: '/audit',
+    label: `the ${PRICE_DISCOVERY_DAY} discovery day →`,
+  },
+  {
+    lead: 'the tool',
+    body: 'self-serve. your own staff and learners complete it, and the picture builds itself. scalable across a trust, and it runs without anyone from unbarrier in the building.',
+    aside: 'the backbone.',
+    href: '#v6',
+    label: 'founding cohorts →',
+  },
+];
+
 const CONSENTS = [
   {
     lead: 'your result is yours',
@@ -171,7 +194,7 @@ export default function VoicePage() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(SERVICE_SCHEMA) }}
       />
 
-      <Nav active={SITE_FLAGS.voicePublic ? 'voice' : undefined} />
+      <Nav active="voice" />
 
       <main
         className={styles.main}
@@ -262,6 +285,29 @@ export default function VoicePage() {
           </Section>
         </div>
 
+        {/* v3 — two ways to run it */}
+        <Section id="v3" measure="route" ground="deep" labelledBy="two-ways">
+          <h2 id="two-ways" className={`${styles.sectionHeading} ${styles.spaceBelow}`}>
+            two ways to run it
+          </h2>
+          <div className={voice.ways}>
+            {TWO_WAYS.map((way) => (
+              <div key={way.lead} className={voice.way}>
+                <p className={voice.wayLead}>{way.lead}</p>
+                <p className={voice.wayBody}>{way.body}</p>
+                <p className={voice.wayAside}>{way.aside}</p>
+                <Button href={way.href} variant="ghost">
+                  {way.label}
+                </Button>
+              </div>
+            ))}
+          </div>
+          <p className={`${styles.body} ${styles.spaceAbove}`}>
+            most schools use both: the tool for breadth, a delivered visit for
+            depth.
+          </p>
+        </Section>
+
         {/* v4 — what a baseline is */}
         <Section id="v4" measure="route" ground="base" labelledBy="baseline">
           <h2 id="baseline" className={styles.sectionHeading}>
@@ -339,6 +385,40 @@ export default function VoicePage() {
           <p className={`${styles.body} ${styles.spaceAbove}`}>
             that isn&rsquo;t a legal footnote. it is the whole point of an
             instrument built to be trusted.
+          </p>
+        </Section>
+
+        {/* v6 — founding cohorts. No date promised, nothing to pay: the
+            approved wording, and the reason there is no form here. */}
+        <Section id="v6" measure="route" ground="deep" labelledBy="cohorts">
+          <h2 id="cohorts" className={styles.sectionHeading}>
+            delivered is available now. the tool is being built with the first
+            schools who want it.
+          </h2>
+          <div className={voice.twoCol}>
+            <p className={styles.body}>
+              <strong className={styles.strong}>
+                you can have the delivered version today.
+              </strong>{' '}
+              nici in your classrooms, observing what a survey cannot see, with
+              learner data captured alongside it. that needs no software and it
+              is the part with the most value in it.
+            </p>
+            <p className={styles.body}>
+              <strong className={styles.strong}>
+                the self-serve tool is being built with its first schools, not
+                for them.
+              </strong>{' '}
+              we are looking for three founding cohorts. research runs this
+              autumn and feeds directly into what the instrument asks and how it
+              reports &mdash; so the schools who join now shape it around a real
+              setting rather than an imagined one.
+            </p>
+          </div>
+          {/* The page's one full-strength block. */}
+          <p className={`${styles.pull} ${styles.spaceAbove}`}>
+            if that is you, tell us about your setting. no date promised, and
+            nothing to pay.
           </p>
         </Section>
 

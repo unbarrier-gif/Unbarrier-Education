@@ -21,10 +21,9 @@ import styles from '@/app/route-page.module.css';
 // sitewide strip and once inline under the hero cta. It renders once here, via
 // the component. The duplicated body line is dropped.
 //
-// "unbarrier.voice" appears in body copy below as plain text inside a card
-// body string. It was kept unlinked while /voice was on legal hold; that hold
-// lifted 14 Sep 2026 (lib/site-flags.ts `voicePublic`), so it may be linked
-// to /voice next time this card is restructured.
+// "unbarrier.voice" appears in body copy below as text: the approved copy
+// carries no link there, and /voice is one click away in the nav and the
+// footer since the hold on the instrument was lifted (14 Sep 2026).
 //
 // /edtech is not one of the three strands, so it takes no strand colour.
 // spring-green is the site's default action colour; borrowing pearl-aqua,
