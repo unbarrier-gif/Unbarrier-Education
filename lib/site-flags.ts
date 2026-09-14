@@ -23,8 +23,11 @@
 // the flag exists so the code has a place to hang it, and it stays off.
 
 export const SITE_FLAGS = {
-  // ── home ──────────────────────────────────────────────────────────────
-  /** The hero's ghost button (scrolls to the seven questions). Default on. */
+  // ── home · /inclusion-strategy ────────────────────────────────────────
+  /** The secondary ghost: on home the hero's (scrolls to the seven
+   *  questions); on /inclusion-strategy the close's ("check your readiness
+   *  first" — the sideways route, Nici's yes/no pending in Notion, "wobble
+   *  2"). Default on, as the handover set it. */
   showGhostCta: true,
 
   // ── /access ───────────────────────────────────────────────────────────
