@@ -61,15 +61,21 @@ export function CredentialStrip({ variant = 'line', id }: Props) {
       <div id={id} className={styles.band}>
         <div className={styles.bandInner}>
           <div className={styles.person}>
-            {/* Decorative — the byline beside it names her. */}
-            <Image
-              src="/assets/nici-avatar.png"
-              alt=""
-              aria-hidden="true"
-              width={132}
-              height={132}
-              className={styles.portrait}
-            />
+            {/* Decorative — the byline beside it names her. The edufuturists
+                portrait (14 Sep 2026) is 4:5 with the face top-right and the
+                award card filling the left half, so a plain cover crop shows
+                a small face beside a card nobody can read at 132px. The
+                wrapper is the circle; the image is scaled and offset inside
+                it so the face fills the circle — see `.portraitImage`. */}
+            <span className={styles.portrait} aria-hidden="true">
+              <Image
+                src="/assets/portraits/nici-foote-profile-edufuturist.png"
+                alt=""
+                width={240}
+                height={300}
+                className={styles.portraitImage}
+              />
+            </span>
             <div className={styles.personText}>
               <p className={styles.badgeRow}>
                 <AplsBadge ground="amethyst" />
