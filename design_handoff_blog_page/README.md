@@ -1,161 +1,128 @@
-# unbarrier — how to build with these components
+# handoff: /blog — unbarrier.me
 
-This is the website unbarrier.me, imported as-is: Next.js components, CSS Modules, and one token sheet (`app/globals.css`, shipped inside `_ds_bundle.css`). There is no utility-class system and no Tailwind. Read `styles.css` and its imports before styling anything; read `components/<group>/<Name>/<Name>.prompt.md` before using a component.
+## overview
+the blog index for unbarrier.me. replaces the current blog page. one route (`/blog`); the post page (`/blog/[slug]`) is out of scope here except where noted.
 
-## Setup: one wrapper, once
+design goals, in order: accessible by design (dyslexic and screen-reader readers), not overwhelming, leads with nici's voice. every decision below serves one of those.
 
-Wrap the whole design in `PageGround` once, at the root. It paints the page ground (new world blue, `--bg`), sets the text colour (`--fg`) and the body face. Without it, text renders cream on white and vanishes. Never nest it.
+## about the design file
+`Blog.dc.html` is a **design reference built in HTML** — it shows intended look and behaviour. it is not production code. recreate it in the unbarrier.me next.js codebase using the existing `unbarrier-education` components and `app/globals.css` tokens. where a design-system component didn't fit, this file hand-builds the element and says so; those are the sync items listed at the end.
 
-```jsx
-<PageGround>
-  <Nav active="audit" />
-  <main>
-    <Section measure="route" ground="second" labelledBy="the-gap">
-      <Eyebrow color="var(--pearl-aqua)">unbarrier.audit</Eyebrow>
-      <h2 id="the-gap">nobody audits whether the tech reached the child.</h2>
-      <p style={{ color: 'var(--fg-muted)', maxWidth: '60ch' }}>something can be bought well and configured well and still not reach the learner.</p>
-      <Button href="/readiness-check" color="var(--pearl-aqua)">take the free readiness check →</Button>
-    </Section>
-    <NewsletterBand route="/audit" weight="standard" />
-  </main>
-  <Footer variant="full" />
-</PageGround>
-```
+## fidelity
+**high-fidelity.** colours, type, spacing and copy are final. every value is a token from `globals.css` — no hex anywhere. match it 1:1.
 
-The ISP audit tool (`isp-audit` group) is a separate LIGHT theme. Wrap those components in `IspAuditLayout` instead of using them on the dark ground; it owns the `--ia-*` tokens they read.
+## data source
+notion → `📝 Blog Posts` (data source `b81fe8cd-39c5-40cc-8034-a9000a52a37e`). schema after the 14 sep changes:
 
-## Styling idiom: tokens, not classes
+| property | type | use on /blog |
+|---|---|---|
+| Title | title | card h3 (lowercase per site rule; proper nouns keep case) |
+| Slug | text | `/blog/{slug}` |
+| Shape | select: out-loud · reality-check · honestly · stories · invitations | ShapeTag + chip filter |
+| Status | Draft / Published | only Published renders |
+| **Show on unbarrier** | checkbox (new) | **must be ticked** to appear. lets loop breakers / coaching posts stay in the db but off this site |
+| Date | date | meta line, sort key (newest first) |
+| Reading min | number | meta line — **first**, before the date |
+| Excerpt | text | not shown on the card unless `Pull line` is empty → first sentence of Excerpt. use as `<meta description>` on the post page |
+| **Pull line** | text (new) | the one line under the title. quoted from inside the post |
+| Featured | checkbox | not used on /blog any more (no hero card). keep for social |
+| **Mentioned** | checkbox (new) | pins the post into "the ones people bring up" band. max 3 |
+| **Feedback quote** | text (new) | what a real person said about the post — the PullQuote in that band |
+| **Feedback from** | text (new) | role + setting, no names — the PullQuote cite |
+| Cover / Cover Alt | file / text | **not used.** the redesign has no images |
 
-Components carry their own styles. For your own layout glue write inline styles or your own CSS, and take every value from a token with `var(--name)`. Never type a hex. Never invent a class name: the component class names are hashed and private.
+query: `Status = Published AND Show on unbarrier = true`, sort `Date desc`.
 
-| need | tokens |
-|---|---|
-| grounds (new world blue only) | `--bg` (page), `--ground-500` `--ground-400` `--ground-300` `--ground-200` (the ladder; use `<Section ground="base|second|deep|well">`), `--bg-alt` |
-| text | `--fg`, `--fg-muted`, `--text-subtle`, `--text-faint` |
-| primaries | `--spring-green` (action, focus ring, the one full-strength block per page), `--amethyst` (the page), `--antique-white` (print and lockups only, never a screen ground) |
-| secondaries (never a ground, never lead a page) | `--pearl-aqua` (audit, evidence, numbers) · `--princeton-orange` (access, dates, deadlines) · `--orchid-mist` (voice, anything human) · `--pink-mist` (beside dark pink only) · `--school-bus-yellow` (pills and labels only) |
-| a lifted surface (an accent at 10%) | `--panel-green`, `--panel-lightblue`, `--panel-darkpink`, `--panel-orange`, `--panel-lightpink`, `--panel-yellow`, `--panel-aqua` |
-| semantic roles | `--action` `--action-fg` `--payoff` `--human` `--quiet` `--premium` `--focus-ring` |
-| type faces | `--font-heading` (Outfit: headings, impact text, the 01–07 numerals) · `--font-body` (Lexend: all body copy) · `--font-brand` (Comfortaa: wordmark and display only, never body) |
-| type scale | `--fs-display` `--fs-h1` `--fs-h2` `--fs-h3` `--fs-h4` `--fs-body` `--fs-body-lg` `--fs-small` `--fs-eyebrow` `--fs-caption`; line heights `--lh-tight` `--lh-snug` `--lh-body` `--lh-loose`; tracking `--ls-tight` `--ls-eyebrow` |
-| spacing | `--space-1` (4px) `--space-2` `--space-3` `--space-4` `--space-5` `--space-6` `--space-8` `--space-10` `--space-12` (96px) |
-| radii | `--radius-sm` `--radius-md` (site default) `--radius-lg` `--radius-xl` `--radius-pill` |
-| elevation | `--shadow-sm` `--shadow-md` `--shadow-lg`, `--glow-green` `--glow-orchid` `--glow-yellow` |
+## page structure (top → bottom)
+route accent for this page: `--orchid-mist` (voice / anything human). ground ladder: hero (`--bg`) → `--ground-400` → `--ground-400` → base → `well`.
 
-`h1`–`h4` and `p` are styled globally (Outfit 800, Lexend 1.75 line height): plain heading and paragraph elements are already on-brand. Do not tighten line height or letter spacing; the loose spacing is an accessibility decision.
+### j0 · hero
+- `<Nav />` (no active item)
+- padding `calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10)`, `overflow:hidden`, two `<Glow>`s: orchid-mist left -8% top 2% size 560 opacity .09; spring-green right -12% top -16% size 520 opacity .07
+- inner column `max-width:900px`, flex column, `gap:var(--space-5)`
+- `<Eyebrow color="var(--orchid-mist)">unbarrier.blog</Eyebrow>`
+- `h1` (global style) `max-width:18ch`: **said out loud, then typed down.**
+- `p` `--fg-muted`, `--fs-body-lg`, `max-width:54ch`: *you bought it. nobody checked it reached the child. these are the notes from finding out why — short ones, honest ones, full arguments, and stories from people who get it.*
+- nothing else. no tag row, no buttons.
 
-## Rules that hold on every surface
+### j0a · reading controls
+- band `background:var(--ground-400)`, padding `var(--space-5) clamp(20px,5vw,64px)`, inner `max-width:900px`
+- `<ReadingControls scopeId="blog-main" />` — listen / text size / spacing. `blog-main` wraps everything below this band down to (not including) the close.
 
-- Sections are separated by ground, never by a line: no borders, no divider rules, no card outlines. Walk the ladder 400 → 300 → 500 and close on 200 with `<Section ground="well" space="loose">`.
-- A colour goes up, never down: never darken a brand colour toward black. One full-strength block per page (accent background, amethyst text).
-- Spring green never sits alone on a light ground.
-- Copy on the website is lowercase (brand names and proper nouns keep their case). Short sentences. Name the cost up front. No corporate language.
-- Every page ends on the closing pair: a primary `Button` (`color` = the page's strand colour, `external` for the booking link) and a ghost `Button` (`variant="ghost"`).
-- Icons (`Icon`) and the lockups (`StrandLockup`, `StraplineLockup`, `Mark`) are inline SVG in `currentColor` with a single spring-green accent path; icon plus text, always. Wrap a lockup in a box with an explicit width. `StraplineLockup` belongs in the footer only; `Wordmark` is the nav wordmark.
-- Links are plain anchors and forms resolve to their success state in this build (no server behind them); `Image` sources that start with `/` load from unbarrier.me.
+### j1 · the ones people bring up  *(tweak `leadWith`: "mentioned" | "latest"; default mentioned. "latest" hides this band)*
+- band `background:var(--ground-400)`, padding `var(--space-8) clamp(20px,5vw,64px)`, inner `max-width:1100px`, flex column `gap:var(--space-6)`
+- header: `<Eyebrow color="var(--orchid-mist)">start here</Eyebrow>` · `h2` `max-width:22ch`: **the ones people bring up.** · `p` `--fg-muted` `max-width:54ch`: *not the newest. the ones that come back to us in emails, on calls, and in the corridor after a discovery day — with what people said about them.*
+- grid `repeat(auto-fit, minmax(280px, 1fr))`, `gap:var(--space-5)`; one `<article>` per post with `Mentioned = true` (max 3):
+  - `padding:var(--space-5)`, `border-radius:var(--radius-md)`, `background:var(--ground-300)`, flex column `gap:var(--space-4)`
+  - `<ShapeTag shape size="sm" solid />`
+  - `h3` `--fs-h4`; the title is an `<a href="/blog/{slug}">` in `--fg`, underlined with `text-decoration-color:var(--text-faint)`, `text-underline-offset:4px`
+  - meta `p` `--fs-small` `--text-subtle`: `{date, en-GB "21 Aug 2026"} · {readingMin} min read`
+  - `<PullQuote color={shapeColour} cite={Feedback from}>{Feedback quote}</PullQuote>` — wrapped in a div with `margin: calc(var(--space-6) * -1) 0` to cancel PullQuote's own outer spacing inside the card
+  - `<a href="/blog/{slug}" aria-label="read: {title}">read →</a>` — `--font-heading` 800, `--orchid-mist`
+- **the three quotes in the design file are placeholders.** real ones come from notion `Feedback quote` / `Feedback from`. if fewer than one post has `Mentioned`, hide the band.
 
-# Unbarrier (unbarrier-education@0.1.0)
+### j2 · the index
+- `<Section ground="base" labelledBy="everything">`
+- `h2#everything` `max-width:22ch`: **pick a shape. or read the newest.**
+- **chips** — `role="toolbar" aria-label="filter by shape"`, flex wrap `gap:var(--space-2)`, `margin-bottom:var(--space-6)`. six `<button type="button" aria-pressed>`: everything · out loud · reality check · honestly · stories · invitations, each with a count.
+  - `min-height:44px`, `padding:0 var(--space-4)`, `border:0`, `border-radius:var(--radius-pill)`, `--font-body`, `--fs-small`, inline-flex `gap:var(--space-2)`
+  - 10px dot in the shape colour (everything = `--fg`), label, count at `opacity:.7`
+  - inactive: `background:var(--ground-300)`, `color:var(--fg)`. active: `background:var(--fg)`, `color:var(--amethyst)`
+  - shape colours: out-loud `--spring-green` · reality-check `--princeton-orange` · honestly `--orchid-mist` · stories `--pearl-aqua` · invitations `--school-bus-yellow` (these are the `SHAPES` constants in the design system)
+- **result line** — `p aria-live="polite"`, `--fs-small` `--text-subtle`, `margin-bottom:var(--space-4)`: "the 6 newest of 22" / "all 22, newest first" / "5 in honestly" / "nothing in this shape yet. one's on the way."
+- **cards** — `<ul>` (list-style none) grid `repeat(auto-fill, minmax(280px, 1fr))` `gap:var(--space-4)`; each `<li>`:
+  - `padding:var(--space-5)`, `border-radius:var(--radius-md)`, `background:var(--ground-400)`, flex column `align-items:flex-start` `gap:var(--space-3)`
+  - `<ShapeTag shape size="sm" solid />`
+  - `h3` `--fs-h4`, title as underlined `<a>` (same style as j1)
+  - `p` `--fs-small` `--fg-muted`: `Pull line`, else first sentence of `Excerpt`
+  - `p` `--fs-caption` `--text-subtle` `margin-top:auto`: `{readingMin} min · {date en-GB}`
+  - **no image, no excerpt, no "read →"** — the title is the link. one line per card. this is deliberate: two reads for one decision is the thing dyslexic readers give up on.
+- **show more** — when "everything" is selected and not expanded, show 6 newest + a `<button type="button">show all 22 →</button>`: `min-height:44px`, `padding:0 var(--space-5)`, `border:1px solid var(--text-faint)` (hover `--fg`), `border-radius:var(--radius-pill)`, transparent, `--fg`, `--font-heading` 800, `--fs-body`. clicking expands in place (no navigation). selecting a shape shows all posts in that shape, no limit.
+- **lowercase**: the design-system `ShapeTag` names ("Reality Check") and any "Read →" text render in title case. site rule is lowercase — fix the constants at sync, not with `text-transform`.
 
-This design system is the published unbarrier-education React library, bundled as a single
-browser global. All 45 components are the real upstream code.
+### j3 · close
+- `<Section ground="well" space="loose" labelledBy="closing">`
+- `h2#closing` `max-width:22ch`: **if one of these landed, there's a free next step.**
+- `p` `--fg-muted` `max-width:54ch` `margin-bottom:var(--space-6)`: *nine questions, ten minutes, no email needed. it tells you where to look first in your own setting.*
+- buttons flex wrap `gap:var(--space-4)`: `<Button href="/readiness-check" color="var(--orchid-mist)">take the free readiness check →</Button>` · `<Button href="/hello" variant="ghost">everything free, in one place →</Button>`
+- then `<NewsletterBand route="/blog" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. we don't sell the list." />` inside a div `padding:var(--space-10) 0 var(--space-8)`
+- `<Footer variant="full" />`
 
-## Where things are
+## interactions & state
+- `shape: 'all' | ShapeKey` — chip click sets it and resets `expanded` to false
+- `expanded: boolean` — "show all" sets true
+- no url state needed; if you add it, use `?shape=` and keep the chips as the source of truth
+- chips are buttons with `aria-pressed`; the result line is the live region — don't add a second one
+- reading controls: `scopeId` must point at a content wrapper, never the page (the design-system prompt says so)
+- no hover effects beyond the design system's own; underline offset on titles is the affordance
 
-- `_ds_bundle.js` — the whole-DS bundle at the project root; loads every component to `window.Unbarrier`. First line is a `/* @ds-bundle: … */` metadata header.
-- `styles.css` — the single stylesheet entry: it `@import`s the tokens, fonts, and component styles (`_ds_bundle.css`). Link this one file.
-- `components/<group>/<Name>/<Name>.prompt.md` (example JSX + variants), `<Name>.d.ts` (types), `<Name>.html` (variant grid).
-- `tokens/*.css` — CSS custom properties, names verbatim from upstream.
-- `fonts/` — `@font-face` files + `fonts.css` (when the package ships fonts).
+## accessibility decisions (keep these)
+- every interactive target ≥ 44px
+- titles are real links, visibly underlined; "read →" only appears in j1 and carries `aria-label="read: {title}"` so a links list reads sensibly
+- one line of copy per card; reading time before date
+- 6 posts shown by default; the rest behind an explicit action
+- no images, no decorative tiles
+- global `h1–h4`/`p` line heights untouched (the loose spacing is an accessibility decision)
+- lowercase everywhere except proper nouns
 
-For a specific component, `read_file("components/<group>/<Name>/<Name>.prompt.md")`.
+## post page (`/blog/[slug]`) — not designed here, but binding
+- `<ReadingControls scopeId="post-body" />` above the first paragraph — mandatory
+- `<PostHero>`, `<PostMeta>`, `<NotionRenderer>`, `<PostFooter>` from the design system
+- `Excerpt` → `<meta name="description">`
+- the £900m figure appears in "a menu nobody feels allowed to order from" — the site rules say never cite it. flag to nici before the post is linked from the new nav.
 
-## Loading
+## tokens used
+all from `globals.css`: `--bg` `--ground-400` `--ground-300` `--fg` `--fg-muted` `--text-subtle` `--text-faint` `--amethyst` `--orchid-mist` `--spring-green` `--princeton-orange` `--pearl-aqua` `--school-bus-yellow` · `--font-heading` `--font-body` · `--fs-h4` `--fs-body` `--fs-body-lg` `--fs-small` `--fs-caption` · `--space-2/3/4/5/6/8/10` · `--radius-md` `--radius-pill` · `--nav-height`. no hex values anywhere.
 
-Add these two lines to your page once (React must be on the page first):
+## design-system sync items (do these in `unbarrier-education`, then delete the hand-built bits)
+1. `SHAPES[*].name` → lowercase ("out loud", "reality check"…)
+2. `BlogCard`: add a `compact` variant = tag · title-link · one line · meta. no media, no excerpt, no cta. add `post.pullLine` to the `Post` type
+3. `BlogIndex`: chips as `aria-pressed` buttons (already), 44px min-height, active = `--fg`/`--amethyst`; add `limit` + "show all" behaviour; add a live result line; accept the compact card
+4. `Button`: forward `onClick` (currently dropped — the design file had to use a raw `<button>` for "show all")
+5. `BlogHero`: the fixed copy ("Notes from Nici", "The unbarrier blog.") is superseded by the j0 copy above; make heading/lede props or retire it
+6. `BOOKING_URL` still holds the calendar link; site uses `/book`
 
-```html
-<link rel="stylesheet" href="styles.css">
-<script src="_ds_bundle.js"></script>
-```
-
-Components are then available at `window.Unbarrier.*`. Mount into a dedicated child node (e.g. `<div id="ds-root">`), not the host page's own React root, so the two trees don't collide:
-
-```jsx
-const { AdminLoginForm } = window.Unbarrier;
-ReactDOM.createRoot(document.getElementById('ds-root')).render(<AdminLoginForm />);
-```
-
-Wrap the tree in the provider — most components read theme/i18n from context:
-
-```jsx
-<PageGround>{children}</PageGround>
-```
-
-## Tokens
-
-119 CSS custom properties from unbarrier-education. Names are
-preserved verbatim from upstream. They are declared inside `_ds_bundle.css` (this DS ships one compiled stylesheet rather than separate token files).
-
-- **color** (20): `--text-muted`, `--text-subtle`, `--text-faint`, …
-- **spacing** (16): `--space-1`, `--space-2`, `--space-3`, …
-- **typography** (6): `--font-heading`, `--font-body`, `--font-brand`, …
-- **radius** (6): `--radius-sm`, `--radius-md`, `--radius-lg`, …
-- **shadow** (4): `--shadow-sm`, `--shadow-md`, `--shadow-lg`, …
-- **other** (67): `--spring-green`, `--amethyst`, `--antique-white`, …
-
-## Components
-
-### isp-audit
-- `AdminLoginForm`
-- `AuditForm`
-- `CatalogueChips`
-- `DownloadResultsButton`
-- `Heatmap`
-- `IspAuditLayout`
-- `IspAuditShell` — The self-contained LIGHT chrome for every /isp-audit page: a light header
-- `PlatformSelect`
-- `RadarChart`
-- `ScaleSelector`
-
-### general
-- `AplsBadge`
-- `Button`
-- `ContrastToggle`
-- `CredentialStrip`
-- `CtaCard`
-- `Eyebrow`
-- `Footer`
-- `Glow`
-- `Icon`
-- `InclusionStrategyBand`
-- `Mark` — The monochrome mark on its own, as decoration. It is aria-hidden here
-- `MobileNavDrawer`
-- `Nav`
-- `NewsletterBand`
-- `ReadingControls`
-- `SayHiForm`
-- `ScopeLine`
-- `Section`
-- `SevenQuestions`
-- `StrandLockup` — The sub-brand lockup  mark  unbarrier  full stop  strand name. Labelled,
-- `StraplineLockup` — The full lockup with the strapline. Footer only.
-- `TodayBlock` — The your stuff from today panel.
-- `Wordmark`
-
-### blog
-- `BlogCard`
-- `BlogHero`
-- `BlogIndex`
-- `NotionRenderer`
-- `PostFooter`
-- `PostHero`
-- `PostMeta`
-- `PreviewBanner`
-- `PullQuote`
-- `ShapeTag`
-
-### home
-- `IAmChooser`
-
-### readiness-check
-- `ReadinessCheck`
+## files in this folder
+- `Blog.dc.html` — the design reference (open in a browser; needs `support.js` + `_ds/` beside it)
+- `support.js`, `_ds/` — runtime + the bound design-system bundle so the file renders standalone
+- `SITE PLAN.md` — the wider rebuild plan; this page is step 6
