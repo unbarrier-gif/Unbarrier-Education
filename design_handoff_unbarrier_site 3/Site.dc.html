@@ -1,0 +1,1247 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/styles.css">
+<script src="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.js"></script>
+<script src="./image-slot.js"></script>
+<style>
+html,body{margin:0;background:#210a33;color:#f0ebe5}
+body{font-family:var(--font-body)}
+::-webkit-scrollbar{width:10px}
+::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:99px}
+::-webkit-scrollbar-track{background:transparent}
+a{color:var(--spring-green)}
+a:hover{color:var(--pearl-aqua)}
+/* browsers give <legend> its own box outside the fieldset padding, so the
+   statement rendered flush with the card's top edge. float it back into flow. */
+fieldset > legend{float:left;width:100%}
+fieldset > legend + *{clear:both}
+/* the ndte glyphs on the three take-away cards: CtaCard only optimises
+   site-hosted images, so the initial tile carries the glyph as a background. */
+[data-card="seven_questions"] [class*="CtaCard_initial"],[data-card="belonging_check"] [class*="CtaCard_initial"],[data-card="receipts"] [class*="CtaCard_initial"]{font-size:0;line-height:0;width:100%;height:100%;background-repeat:no-repeat;background-position:center;background-size:26px 26px}
+[data-card="seven_questions"] [class*="CtaCard_initial"]{background-image:url(icons/ndte-notice.svg)}
+[data-card="belonging_check"] [class*="CtaCard_initial"]{background-image:url(icons/ndte-try.svg)}
+[data-card="receipts"] [class*="CtaCard_initial"]{background-image:url(icons/ndte-embed.svg)}
+/* /hello login mock: the isp-audit shell brings its own header + tabs; hide them under the site nav. handover: build a hello-specific light gate on the same --ia-* tokens */
+#e-login [class*="IspAuditShell_header"],#e-login [class*="IspAuditShell_tabs"],#e-login [class*="IspAuditShell_footer"]{display:none}
+#e-login [class*="layout_root"]{min-height:calc(100vh - var(--nav-height))}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg)">
+  <x-import component-from-global-scope="Unbarrier.Nav" active="{{ navActive }}" hint-size="100%,90px"></x-import>
+
+  <sc-if value="{{ isHome }}" hint-placeholder-val="{{ true }}">
+    <main>
+      <div id="b0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--spring-green)" left="-8%" top="2%" size="{{ 560 }}" opacity="{{ 0.09 }}" hint-size="0,0"></x-import>
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--orchid-mist)" right="-12%" top="-16%" size="{{ 520 }}" opacity="{{ 0.08 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--spring-green)" hint-size="auto,16px">unbarrier.me</x-import>
+          <h1 style="margin:0;max-width:16ch;font-size:{{ heroSize }};line-height:{{ heroLh }}">you bought it. nobody checked it reached the child.</h1>
+          <p style="margin:0;max-width:54ch;color:var(--fg-muted);font-size:{{ ledeSize }}">the invoice cleared. the licences are live. the training happened. and the child it was bought for still can't use it. we find out where that broke and we say so — including when the answer is you.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-2)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/readiness-check" color="var(--spring-green)" hint-size="auto,44px">take the free readiness check →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="#b4" variant="ghost" hint-size="auto,44px">see what it asks before you give us anything →</x-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="b1" style="background:var(--ground-400);padding:var(--space-8) clamp(20px,5vw,64px)">
+        <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-5) var(--space-6)">
+            <image-slot id="nici-portrait" shape="circle" style="width:132px;height:132px;flex:none" placeholder="drop a photo of nici"></image-slot>
+            <div style="min-width:240px">
+              <div style="font-size:17px;line-height:0;margin:0 0 var(--space-4) calc(var(--space-3) * -1)">
+                <x-import component-from-global-scope="Unbarrier.AplsBadge" ground="amethyst" hint-size="290px,38px"></x-import>
+              </div>
+              <p style="margin:0;font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h4)">led by nici foote</p>
+              <p style="margin:var(--space-2) 0 0;font-size:var(--fs-small);line-height:1.7;color:var(--fg-muted);max-width:34ch">dyslexic, dyscalculic and adhd educator · 26 years in classrooms · digital inclusion specialist</p>
+            </div>
+          </div>
+          <x-import component-from-global-scope="Unbarrier.ScopeLine" hint-size="100%,28px"></x-import>
+        </div>
+      </div>
+
+      <div id="b3">
+        <x-import component-from-global-scope="Unbarrier.Section" ground="base" hint-size="100%,520px">
+          <x-import component-from-global-scope="Unbarrier.IAmChooser" hint-size="100%,460px"></x-import>
+        </x-import>
+      </div>
+
+      <div id="b1a">
+        <x-import component-from-global-scope="Unbarrier.InclusionStrategyBand" hint-size="100%,200px"></x-import>
+      </div>
+
+      <div id="b2" style="background:var(--ground-300);padding:var(--space-6) clamp(20px,5vw,64px)">
+        <div style="max-width:900px;margin:0 auto;display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-5) var(--space-6)">
+          <p style="margin:0;color:var(--fg-muted);max-width:34ch">however you come in, it runs the same way.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:center">
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-notice" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>notice</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-design" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>design</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-try" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>try</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-embed" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>embed</strong></p>
+          </div>
+          <x-import component-from-global-scope="Unbarrier.Button" href="/ndte" variant="ghost" hint-size="auto,44px">how the work runs →</x-import>
+        </div>
+      </div>
+
+      <div id="b4" style="--route-accent:var(--pearl-aqua)">
+        <x-import component-from-global-scope="Unbarrier.SevenQuestions" id="seven-questions" heading="what it asks — the seven questions" ground="second" hint-size="100%,520px"></x-import>
+      </div>
+
+      <div id="b5">
+        <x-import component-from-global-scope="Unbarrier.Section" ground="deep" labelledBy="take-away" hint-size="100%,440px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">free, and yours</x-import>
+          <h2 id="take-away" style="margin:0 0 var(--space-5);max-width:22ch">take it and use it. you don't have to pay us to fix this.</h2>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="seven_questions" title="the seven questions" meta="the instrument, on one page. take it into your next planning meeting." href="https://www.unbarrier.me/the-takeaway.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="belonging_check" title="the belonging check" meta="ten minutes with a class you already teach." href="https://www.unbarrier.me/belonging-check" external="{{ true }}" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="receipts" title="the receipts" meta="what the evidence actually says, with sources — including where it says we're wrong." href="https://www.unbarrier.me/the-receipts.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+          </div>
+          <div style="margin-top:var(--space-6)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/resources" variant="ghost" hint-size="auto,44px">everything free, in one place →</x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="b6">
+        <x-import component-from-global-scope="Unbarrier.Section" ground="well" space="loose" labelledBy="closing" hint-size="100%,360px">
+          <h2 id="closing" style="margin:0 0 var(--space-5);max-width:20ch">forty-five minutes. no deck, no pitch, no pipeline.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">bring one thing you bought and aren't sure about. you'll leave knowing where to look first. if we're not the right people for it, we'll tell you on the call rather than after the invoice.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--spring-green)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not ready to talk? → check your readiness first</x-import>
+          </div>
+        </x-import>
+        <div style="padding:var(--space-10) 0 var(--space-8)">
+          <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+        </div>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isAudit }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--pearl-aqua)">
+      <div id="a0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--pearl-aqua)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">unbarrier.audit</x-import>
+          <h1 style="margin:0;max-width:16ch">a day in your school, and the receipts to take to your board.</h1>
+          <p style="margin:0;max-width:54ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">we start with the learner, not the licence list. we watch a lesson, we ask seven questions of everyone in the chain, and we hand you a written picture of where the thing you bought stops reaching the child. it names the break. it doesn't flatter anybody.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-2)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/readiness-check" color="var(--pearl-aqua)" hint-size="auto,44px">take the free readiness check →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/" variant="ghost" hint-size="auto,44px">← back to the start</x-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="a1">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="what-happens" hint-size="100%,420px">
+          <h2 id="what-happens" style="margin:0 0 var(--space-6);max-width:22ch">what actually happens, and what it costs you.</h2>
+          <div style="display:grid;gap:var(--space-5);max-width:640px">
+            <p style="margin:0;display:flex;gap:var(--space-3);align-items:flex-start"><span aria-hidden="true" style="flex:0 0 auto;width:32px;height:32px;border-radius:var(--radius-pill);background:var(--pearl-aqua);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-small);display:inline-flex;align-items:center;justify-content:center;margin-top:2px">01</span><span><strong style="color:var(--pearl-aqua)">one day on site.</strong> lessons, not meetings. we sit where the learner sits.</span></p>
+            <p style="margin:0;display:flex;gap:var(--space-3);align-items:flex-start"><span aria-hidden="true" style="flex:0 0 auto;width:32px;height:32px;border-radius:var(--radius-pill);background:var(--pearl-aqua);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-small);display:inline-flex;align-items:center;justify-content:center;margin-top:2px">02</span><span><strong style="color:var(--pearl-aqua)">the seven questions,</strong> asked of the child, the ta, the teacher, the it lead and the person who signed the order. all five, or it isn't an audit.</span></p>
+            <p style="margin:0;display:flex;gap:var(--space-3);align-items:flex-start"><span aria-hidden="true" style="flex:0 0 auto;width:32px;height:32px;border-radius:var(--radius-pill);background:var(--pearl-aqua);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-small);display:inline-flex;align-items:center;justify-content:center;margin-top:2px">03</span><span><strong style="color:var(--pearl-aqua)">a written baseline inside two weeks</strong> — what reached the child, what didn't, and the three things to change before you spend anything else.</span></p>
+            <p style="margin:0;color:var(--fg-muted);font-size:var(--fs-small)">the cost to you: one day of access, and the discomfort of hearing it. most of what we find was free to fix.</p>
+          </div>
+          <div style="margin-top:var(--space-8);max-width:620px;display:grid;gap:var(--space-3)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">on paper, for the leadership meeting</x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="discovery_day_paper" title="the discovery day — what it is and why" meta="two sides, sourced, no price on it. print it and take it in." detail="a4 · two sides · mainstream setting" href="Discovery Day - what it is and why -mainstream-.dc.html" external="{{ false }}" accent="var(--pearl-aqua)" accent-rgb="105, 217, 209" initial="¶" hint-size="100%,108px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="discovery_day_paper_send" title="the discovery day — for SEND settings" meta="the same two sides, written for special schools and specialist provision." detail="a4 · two sides · SEND setting" href="Discovery Day - what it is and why -SEND settings-.dc.html" external="{{ false }}" accent="var(--pearl-aqua)" accent-rgb="105, 217, 209" initial="¶" hint-size="100%,108px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="discovery_day_planner" title="planning your day" meta="what to have ready, who we need to see, and how the day runs hour by hour." detail="a4 · one side · for the person hosting us" href="Discovery Day - planning your day.dc.html" external="{{ false }}" accent="var(--pearl-aqua)" accent-rgb="105, 217, 209" initial="→" hint-size="100%,108px"></x-import>
+          </div>
+        </x-import><x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="rc-heading" hint-size="100%,360px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">free · five minutes · no email needed</x-import>
+          <h2 id="rc-heading" style="margin:0 0 var(--space-5);max-width:22ch">not sure the day is worth having? there's a smaller version.</h2>
+          <p style="margin:0 0 var(--space-4);max-width:56ch;color:var(--fg-muted)">the readiness check is the same seven questions, asked of one person, about one thing you already bought. it scores nothing about you and everything about the chain.</p>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted)">no number at the end — three words per question, and the one to start with. a result you can forward upwards. if it comes back clean, you don't need the day. if it doesn't, you'll know which day to book.</p>
+        </x-import>
+      </div>
+
+      <div id="a2">
+        
+      </div>
+
+      <div id="a3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="a-closing" hint-size="100%,340px">
+          <h2 id="a-closing" style="margin:0 0 var(--space-5);max-width:20ch">so start with the five minutes. the day comes after, if it's needed.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">free, no email, and nothing to sit through. if you already know the answer, skip it and book the day.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/readiness-check" color="var(--pearl-aqua)" hint-size="auto,44px">take the free readiness check →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" variant="ghost" external="{{ true }}" hint-size="auto,44px">already know? → book a discovery call</x-import>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isReadiness }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="Readiness Check" embedded="{{ true }}" email-step="{{ emailStep }}" hint-size="100%,2400px"></dc-import>
+    <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+  </sc-if>
+
+  <sc-if value="{{ isAccess }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--princeton-orange)" data-screen-label="access">
+      <div id="c0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--princeton-orange)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">unbarrier.access</x-import>
+          <h1 style="margin:0;max-width:18ch">you know what isn't reaching learners. a partnership year is what happens next.</h1>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">three terms alongside your staff: noticing what is really happening, designing the change with them, modelling it in classrooms, and making it hold after we have gone.</p>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted)">one number for a defined outcome. quoted as a year, invoiced by term.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-2)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="#c5" variant="ghost" hint-size="auto,44px">what a year costs →</x-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="c1" style="background:var(--ground-400);padding:var(--space-6) clamp(20px,5vw,64px)">
+        <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-4)">
+          <x-import component-from-global-scope="Unbarrier.ScopeLine" hint-size="100%,28px"></x-import>
+          <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">led by nici foote · <a href="/about" style="color:var(--fg)">about →</a></p>
+        </div>
+      </div>
+      </div>
+
+      <div id="c2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="the-gap" hint-size="100%,560px">
+          <h2 id="the-gap" style="margin:0;max-width:22ch">the spend is real. the question was never on the form.</h2>
+          <sc-if value="{{ showFigures }}" hint-placeholder-val="{{ true }}">
+            <ul style="list-style:none;margin:var(--space-6) 0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)">
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <p style="margin:0 0 var(--space-3);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:var(--lh-tight);color:var(--princeton-orange)">£900m</p>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">annual edtech spend by english schools, with no statutory requirement for any product in it to show measurable educational benefit in advance.</p>
+                <p style="margin:var(--space-3) 0 0;font-size:var(--fs-caption);line-height:1.6;color:var(--text-subtle);font-style:italic">written evidence to a parliamentary committee, april 2026</p>
+              </li>
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <p style="margin:0 0 var(--space-3);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:var(--lh-tight);color:var(--princeton-orange)">276,890</p>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">usage records from a single trust, analysed in the dfe's own june 2026 market assessment to tell the difference between products bought and products actually used.</p>
+                <p style="margin:var(--space-3) 0 0;font-size:var(--fs-caption);line-height:1.6;color:var(--text-subtle);font-style:italic">dfe, assessment of the education technology market in england, june 2026</p>
+              </li>
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <p style="margin:0 0 var(--space-3);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.6rem,3.6vw,2.2rem);line-height:var(--lh-tight);color:var(--princeton-orange)">not asked</p>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">readiness tools score the adults: staff confidence, leadership vision, infrastructure. all worth knowing. none ask whether the technology, the access or the communication landed with the learner it was meant for.</p>
+              </li>
+            </ul>
+          </sc-if>
+          <p style="margin:var(--space-6) 0 0;max-width:58ch;color:var(--fg-muted)">the spend gets justified by the rollout, and the rollout gets justified by the spend. nobody is being careless. the question was never on the form — and a question that isn't asked can't be answered, funded, or defended to a governing body.</p>
+        </x-import>
+      </div>
+
+      <div id="c3">
+        <x-import component-from-global-scope="Unbarrier.SevenQuestions" id="seven-q" heading="what's missing — the seven questions" intro="this is unbarrier.voice, the measurement layer under everything we do. pick any moment in a lesson, and ask all seven of it." ground="base" hint-size="100%,900px"></x-import>
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="seven-q-paper" hint-size="100%,180px">
+          <div style="max-width:620px;display:grid;gap:var(--space-3);margin-top:calc(var(--space-10) * -1)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px"><span id="seven-q-paper">take the seven questions with you</span></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="seven_questions_paper" title="the seven questions" meta="the instrument, on one page. take it into your next planning meeting." detail="a4 · one side · free, no email" href="https://www.unbarrier.me/the-takeaway.html" external="{{ true }}" accent="var(--pearl-aqua)" accent-rgb="105, 217, 209" hint-size="100%,108px"></x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="c4">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="method" hint-size="100%,520px">
+          <h2 id="method" style="margin:0 0 var(--space-5);max-width:22ch">notice → design → try → embed.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">a partnership year runs the cycle three times, once a term. notice what is really happening, with voice. design the change with your team. try it and model it in classrooms. embed it so it holds after we have gone — then notice again, and find out whether it did.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;margin-bottom:var(--space-6)">
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-notice" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>notice</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-design" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>design</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-try" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>try</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-embed" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>embed</strong></p>
+          </div>
+          <p style="margin:0;max-width:34ch;padding:var(--space-5);border-radius:var(--radius-md);background:var(--spring-green);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.3">most inclusion work stops at try. embed is where you find out whether any of it worked.</p>
+          <h3 style="margin:var(--space-10) 0 var(--space-4);max-width:24ch">how the work runs</h3>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">six parts to every engagement: online scoping · bespoke build · strategy with your team · training · modelling in class · reflection and a resource pack.</p>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)">a day covers two of the six. a partnership covers all six — which is why the work is sold as a year, not a stack of day invoices. you get one number for a defined outcome, not an invoice that grows every time someone asks a question.</p>
+        </x-import>
+      </div>
+
+      <div id="c5">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="cost" hint-size="100%,720px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">quoted as a year · invoiced by term · three terms</x-import>
+          <h2 id="cost" style="margin:0;max-width:22ch">what a year costs</h2>
+          <sc-if value="{{ showPrices }}" hint-placeholder-val="{{ true }}">
+            <ul style="list-style:none;margin:var(--space-6) 0;padding:0;display:grid;gap:var(--space-4)">
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2) var(--space-4);margin:0 0 var(--space-3)">
+                  <span style="font-family:var(--font-heading);font-weight:700;font-size:1.08rem">advisory</span>
+                  <span style="font-family:var(--font-heading);font-weight:800;font-size:1.08rem;color:var(--princeton-orange)">£2,250 a year · £750 a term</span>
+                </div>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">a monthly strategy call, an async question line, the voice baseline and endline, a termly governor-ready note, and the template library. no on-site time.</p>
+                <p style="margin:var(--space-3) 0 0;font-size:.95rem;color:var(--text-subtle);font-style:italic">for the school with more will than budget. it keeps the work moving between visits you can't yet fund.</p>
+              </li>
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2) var(--space-4);margin:0 0 var(--space-3)">
+                  <span style="font-family:var(--font-heading);font-weight:700;font-size:1.08rem">partner · single school</span>
+                  <span style="font-family:var(--font-heading);font-weight:800;font-size:1.08rem;color:var(--princeton-orange)">£6,000 a year · £2,000 a term</span>
+                </div>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">everything in advisory, plus six on-site half-days of classroom modelling, a whole-staff twilight, coaching for your own leads, and an end-of-year reflection that maps the next one.</p>
+                <p style="margin:var(--space-3) 0 0;font-size:.95rem;color:var(--text-subtle);font-style:italic">the core offer.</p>
+              </li>
+              <sc-if value="{{ showTrustTier }}" hint-placeholder-val="{{ false }}">
+                <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                  <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2) var(--space-4);margin:0 0 var(--space-3)">
+                    <span style="font-family:var(--font-heading);font-weight:700;font-size:1.08rem">trust partner</span>
+                    <span style="font-family:var(--font-heading);font-weight:800;font-size:1.08rem;color:var(--princeton-orange)">from £18,000 a year · £6,000 a term · up to six schools</span>
+                  </div>
+                  <p style="margin:0;font-size:1rem;color:var(--text-muted)">a digital-lead cohort programme, trust-level strategy each term, voice across every school with a trust-level view, and twelve pooled on-site half-days. additional schools £2,000 each.</p>
+                  <p style="margin:var(--space-3) 0 0;font-size:.95rem;color:var(--text-subtle);font-style:italic">at six schools that is £3,000 a school. half the single-school price.</p>
+                </li>
+              </sc-if>
+            </ul>
+          </sc-if>
+          <sc-if value="{{ hidePrices }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:var(--space-6) 0;max-width:58ch;color:var(--fg-muted)">two tiers: advisory, with no on-site time, and a single-school partnership with six half-days of classroom modelling. both are quoted as one number for the year and invoiced by term. we will tell you the number before you commit to anything.</p>
+          </sc-if>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)"><strong>edtech companies:</strong> blocks are scoped per cohort — <a href="/edtech" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">the edtech page</a> says how. <strong>trusts and groups:</strong> <a href="#c5b" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">the partnership</a>, below.</p>
+          <h3 style="margin:var(--space-10) 0 var(--space-4)">on every quote</h3>
+          <ul style="margin:0;padding:0 0 0 1.2em;max-width:58ch;color:var(--fg-muted);display:grid;gap:var(--space-2)">
+            <li>50% on order, 50% at the midpoint.</li>
+            <li>uk b2b late payment terms apply.</li>
+            <li>intellectual property is licensed to you, never assigned.</li>
+            <li>no free scoping. the £500 discovery day is the scoping, priced honestly.</li>
+          </ul>
+        </x-import>
+      </div>
+
+      <div id="c5b">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="groups" hint-size="100%,900px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">trusts and school groups</x-import>
+          <h2 id="groups" style="margin:0 0 var(--space-5);max-width:22ch">partnership with unbarrier</h2>
+          <div style="padding:var(--space-5);background:var(--panel-orange);border-radius:var(--radius-md);max-width:64ch">
+            <h3 style="margin:0 0 var(--space-3);color:var(--princeton-orange)">what you don't get</h3>
+            <p style="margin:0;color:var(--fg-muted)">we're not providing leads. we're not endorsing or placing products. we're not a tool you can list in your inclusion strategy statement. that's by design.</p>
+          </div>
+          <h3 style="margin:var(--space-8) 0 var(--space-3)">what you do get</h3>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">when we partner with you on your inclusion strategy, we bring three things: clarity on what you actually need, evidence of where your investment is landing, and the confidence that your procurement decisions are sound.</p>
+          <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)">
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:1;color:var(--princeton-orange)">01</p>
+              <h4 style="margin:0 0 var(--space-3)">discovery</h4>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">we start by listening. a structured conversation about your group — where you are, what's stretched, where your money's going. we analyse what we hear and come back with a clear picture: this is what's working, this is what's missing, here's what comes next.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:1;color:var(--princeton-orange)">02</p>
+              <h4 style="margin:0 0 var(--space-3)">professional learning</h4>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">if it fits, we move into your schools. we work with your teams on what works — not in theory, but in the classroom with real learners. we're there at the start to set the tone, then again six months in to make sure it's held. the work is measurable. you'll see the difference.</p>
+            </li>
+            <sc-if value="{{ retainerPublic }}" hint-placeholder-val="{{ false }}">
+              <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:1;color:var(--princeton-orange)">03</p>
+                <h4 style="margin:0 0 var(--space-3)">the retainer</h4>
+                <p style="margin:0;font-size:1rem;color:var(--text-muted)">after that, we're on tap. when your procurement team has a question, when your leadership needs to validate a decision, when your governors want evidence — you know who to call. a fixed monthly fee. direct access. no project work bundled in. you know exactly what it costs and what you get.</p>
+                <p style="margin:var(--space-3) 0 0;font-size:.95rem;color:var(--text-subtle);font-style:italic">priced in the proposal, not on the page.</p>
+              </li>
+            </sc-if>
+          </ol>
+          <h3 style="margin:var(--space-8) 0 var(--space-3)">why this model works for groups</h3>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">if you're sending technology to multiple schools, managing procurement across regions, or making the second round of spend land where the first didn't, you need someone who already knows your system, knows your schools, and can move quickly.</p>
+          <sc-if value="{{ retainerPublic }}" hint-placeholder-val="{{ false }}">
+            <p style="margin:0;max-width:58ch;color:var(--fg-muted)">that's what the retainer does. it protects your investment. it tells your procurement team: we've validated this. it tells your schools: there's someone who understands what you need. and it tells your board that you're spending money in the right way.</p>
+          </sc-if>
+          <sc-if value="{{ retainerHeld }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0;max-width:58ch;color:var(--fg-muted)">that's what the partnership does. it protects your investment. it tells your procurement team: we've validated this. it tells your schools: there's someone who understands what you need. and it tells your board that you're spending money in the right way.</p>
+          </sc-if>
+        </x-import>
+      </div>
+
+      <div id="c6">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="upfront" hint-size="100%,560px">
+          <h2 id="upfront" style="margin:0 0 var(--space-5);max-width:22ch">your questions, answered up front</h2>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">schools decide before the first conversation. so this page carries what you would otherwise have to ask for:</p>
+          <ul style="margin:0 0 var(--space-8);padding:0 0 0 1.2em;max-width:58ch;color:var(--fg-muted);display:grid;gap:var(--space-2)">
+            <li>what actually happens across a partnership year — <a href="#c4" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">the method</a>.</li>
+            <li>how much of your staff's time it takes — six half-days on site, one twilight, and a monthly call. that is the whole ask.</li>
+            <li>what it costs — <a href="#c5" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">the tiers</a>, in full, before you ask.</li>
+            <li>proof it has worked elsewhere — <a href="#c7" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">what stands behind it</a>, and what doesn't yet.</li>
+          </ul>
+          <h3 style="margin:0 0 var(--space-4)">what it looks like over time</h3>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);max-width:820px">
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">onboarding</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">the voice baseline, and the first plan we agree together.</dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">six months</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">modelling in classrooms, and the first movement you can see.</dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">the end of the year</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">the endline against the baseline. capacity built in your own leads, so it holds without us in the room.</dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">after that</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">renewal on evidence, not goodwill. if the numbers didn't move, that is the conversation we have first.</dd>
+            </div>
+          </dl>
+        </x-import>
+      </div>
+
+      <div id="c7">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="proof" hint-size="100%,640px">
+          <h2 id="proof" style="margin:0 0 var(--space-5);max-width:22ch">the partnership year is new. here is what isn't.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">we are not going to show you a testimonial for something nobody has bought yet. what follows is what actually stands behind it.</p>
+          <div style="display:grid;gap:var(--space-5);max-width:640px">
+            <p style="margin:0"><strong style="font-family:var(--font-heading);color:var(--princeton-orange)">a platform pays for our school training. &nbsp;</strong>goodnotes funds it, so there is no invoice to the school. <span style="color:var(--fg-muted)">not a testimonial. a commercial fact, and a harder one to fake.</span></p>
+            <p style="margin:0"><strong style="font-family:var(--font-heading);color:var(--princeton-orange)">the accreditation. &nbsp;</strong>apple professional learning specialist, and 26 years in classrooms as a send specialist across uk state and international schools. <span style="color:var(--fg-muted)">the work is not a career change.</span></p>
+            <p style="margin:0"><strong style="font-family:var(--font-heading);color:var(--princeton-orange)">what we are building right now. &nbsp;</strong>a device and digital inclusion instrument for an international schools group, with a technology partner. <span style="color:var(--fg-muted)">in progress, not finished — and we would rather say that than imply otherwise.</span></p>
+            <p style="margin:0"><strong style="font-family:var(--font-heading);color:var(--princeton-orange)">how we name people. &nbsp;</strong>schools and trusts by shape and scale, never by name without written permission asked for at contracting. <span style="color:var(--fg-muted)">if we would not name you without asking, we will not name anyone else to you either.</span></p>
+          </div>
+          <p style="margin:var(--space-8) 0 0;max-width:58ch"><strong>and the thing we would rather you judged us on:</strong> book the discovery day. £500, one day, no lock-in, and you will know inside a fortnight whether we are any good. that is a cheaper test than any case study.</p>
+          <div style="margin-top:var(--space-6)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="https://www.goodnotes.com" variant="ghost" external="{{ true }}" hint-size="auto,44px">see the goodnotes hub →</x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="c8">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="c-closing" hint-size="100%,340px">
+          <h2 id="c-closing" style="margin:0 0 var(--space-5);max-width:22ch">tell us what you're working with.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">if we can help, we'll say how. if we can't, we'll point you to someone who can.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not there yet? → start with a discovery day</x-import>
+          </div>
+        </x-import>
+        <div style="padding:var(--space-10) 0 var(--space-8)">
+          <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/access" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+        </div>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isInclusionStrategy }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--princeton-orange)" data-screen-label="inclusion-strategy">
+      <div id="d0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--princeton-orange)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">for schools with inclusive mainstream funding</x-import>
+          <h1 style="margin:0;max-width:18ch">your inclusion strategy has to be published by 31 december. and it has to be yours.</h1>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">we help schools write it — guided, not done for you. you finish the term with a document your staff recognise, because your staff wrote it.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-2)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="#d5" variant="ghost" hint-size="auto,44px">what it costs →</x-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="d1" style="background:var(--ground-400);padding:var(--space-6) clamp(20px,5vw,64px)">
+        <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-4)">
+          <x-import component-from-global-scope="Unbarrier.ScopeLine" hint-size="100%,28px"></x-import>
+          <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">led by nici foote · <a href="/about" style="color:var(--fg)">about →</a></p>
+        </div>
+      </div>
+      </div>
+
+      <div id="d2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="per-school" hint-size="100%,440px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">the thing most people have not noticed yet</x-import>
+          <h2 id="per-school" style="margin:0 0 var(--space-5);max-width:22ch">every school has to publish its own, on its own website.</h2>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">not one strategy authored centrally and issued across the group. each school publishes its own document, on its own site.</p>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)">for a trust that is a scheduling problem: several schools, each needing to author something real, in one term. the trust may hold the budget, but the document has to come from the building it describes. for a single school it is simpler and harder — there is nobody to inherit it from.</p>
+        </x-import>
+      </div>
+
+      <div id="d3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="co-write" hint-size="100%,760px">
+          <h2 id="co-write" style="margin:0 0 var(--space-5);max-width:22ch">what we actually do — a guided co-write.</h2>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">we don't write your strategy. a strategy written by a consultant reads like a consultant wrote it, and every member of staff can tell within a paragraph.</p>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)"><strong style="color:var(--fg)">the guidance agrees with us.</strong> it says developing the strategy "should be a shared responsibility across your whole leadership team". it does not mention engaging anyone to write it for you. so the model is the school owning the words and a specialist asking the questions.</p>
+          <ol style="list-style:none;margin:0 0 var(--space-6);padding:0;display:grid;gap:var(--space-4);max-width:62ch">
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:700;font-size:1.02rem;color:var(--princeton-orange)">01 &nbsp;a discovery day</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">one day in your setting: what is actually reaching learners now, across the seven questions. <em>you cannot write an honest strategy from an impression.</em></p>
+            </li>
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:700;font-size:1.02rem;color:var(--princeton-orange)">02 &nbsp;modelling in classrooms</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">we work alongside your staff in real lessons, so the strategy describes practice that exists rather than practice you hope for. <em>this is the part that makes the document survive its first term.</em></p>
+            </li>
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:700;font-size:1.02rem;color:var(--princeton-orange)">03 &nbsp;a guided writing session</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">your leadership team in a room, writing it, with us asking the questions and holding the structure. <em>you leave with the document. the words are yours.</em></p>
+            </li>
+          </ol>
+          <p style="margin:0 0 var(--space-5);max-width:58ch;color:var(--fg-muted)">it is the ndte cycle on a single term: notice, design, try, and a document that says how you will embed it.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center">
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-notice" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>notice</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-design" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>design</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-try" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>try</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-embed" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>embed</strong></p>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="d4">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="annual" hint-size="100%,420px">
+          <h2 id="annual" style="margin:0 0 var(--space-5);max-width:22ch">it is not a one-off document.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">the requirement is to publish an updated inclusion strategy statement <strong style="color:var(--fg)">annually</strong>, and one of the four things it must contain is a review of the previous academic year.</p>
+          <p style="margin:0 0 var(--space-6);max-width:34ch;padding:var(--space-5);border-radius:var(--radius-md);background:var(--spring-green);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.3">december is not the finish line. it is the first one.</p>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)">whatever you write this term, you will be reporting against it next october — which is worth knowing before you write something you cannot evidence.</p>
+        </x-import>
+      </div>
+
+      <div id="d5">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="is-cost" hint-size="100%,480px">
+          <h2 id="is-cost" style="margin:0 0 var(--space-5);max-width:22ch">what it costs</h2>
+          <div style="max-width:62ch;padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);margin:0 0 var(--space-6)">
+            <div style="display:flex;flex-wrap:wrap;align-items:baseline;gap:var(--space-2) var(--space-4);margin:0 0 var(--space-3)">
+              <span style="font-family:var(--font-heading);font-weight:700;font-size:1.08rem">a discovery day</span>
+              <span style="font-family:var(--font-heading);font-weight:800;font-size:1.08rem;color:var(--princeton-orange)">£500 · one day · no lock-in</span>
+            </div>
+            <p style="margin:0;font-size:1rem;color:var(--text-muted)">the honest first step. you get three things from it: a picture of what is reaching learners now, the specific gaps named in language a governor accepts, and a roadmap for the strategy you have to publish.</p>
+          </div>
+          <p style="margin:0 0 var(--space-4);max-width:58ch;color:var(--fg-muted)">what comes after that is scoped to your setting and costed as one number for a defined outcome. we will tell you what it is before you commit to anything.</p>
+          <sc-if value="{{ showFundingLine }}" hint-placeholder-val="{{ true }}">
+            <p style="margin:0;max-width:58ch;color:var(--fg-muted)"><strong style="color:var(--fg)">on funding:</strong> schools fund this from their inclusive mainstream fund allocation under principle 7 — inclusive environments with continuous improvements to accessibility.</p>
+          </sc-if>
+        </x-import>
+      </div>
+
+      <div id="d6">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="who-for" hint-size="100%,400px">
+          <h2 id="who-for" style="margin:0 0 var(--space-5);max-width:22ch">who this is for</h2>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4);max-width:820px">
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">schools</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">with inclusive mainstream funding and a document to publish by 31 december.</dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">trusts</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">who have realised they cannot do this once and copy it across.</dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">senco and inclusion leads</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">who know what the strategy should say and have no time to write it.</dd>
+            </div>
+          </dl>
+        </x-import>
+      </div>
+
+      <div id="d7">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="d-closing" hint-size="100%,340px">
+          <h2 id="d-closing" style="margin:0 0 var(--space-6);max-width:24ch">tell us what you're working with and we will tell you honestly whether we can help in the time.</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <sc-if value="{{ showGhostCta }}" hint-placeholder-val="{{ true }}">
+              <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not ready to talk? → check your readiness first</x-import>
+            </sc-if>
+          </div>
+        </x-import>
+        <div style="padding:var(--space-10) 0 var(--space-8)">
+          <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/inclusion-strategy" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+        </div>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isVoice }}" hint-placeholder-val="{{ false }}">
+    <dc-import name="Voice" show-plan="{{ false }}" embedded="{{ true }}" hint-size="100%,3200px"></dc-import>
+  </sc-if>
+
+  <sc-if value="{{ isKit }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--princeton-orange)" data-screen-label="kit">
+      <div id="k0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--princeton-orange)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">the kit · seven free guides · england, mainstream</x-import>
+          <h1 style="margin:0;max-width:18ch">your inclusion strategy is due on 31 december</h1>
+          <p style="margin:0;max-width:52ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">seven guides for writing one that still holds up a year after you publish it.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4);margin-top:var(--space-2)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="#k4" color="var(--princeton-orange)" hint-size="auto,44px">get the guides →</x-import>
+          </div>
+        </div>
+      </div>
+
+      <div id="k1" style="background:var(--ground-400);padding:var(--space-10) clamp(20px,5vw,64px)">
+        <div style="max-width:820px;margin:0 auto;display:grid;gap:var(--space-6)">
+          <h2 style="margin:0;max-width:22ch">three things to know before you start</h2>
+          <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--space-4)">
+            <li style="padding:var(--space-5);background:var(--panel-orange);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-2)">
+              <p style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:clamp(2rem,4vw,2.6rem);line-height:1;color:var(--princeton-orange)">31 dec</p>
+              <p style="margin:0;font-family:var(--font-heading);font-weight:700">the deadline</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">every mainstream school in england publishes an inclusion strategy by then.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-orange);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-2)">
+              <p style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:clamp(2rem,4vw,2.6rem);line-height:1;color:var(--princeton-orange)">step 1</p>
+              <p style="margin:0;font-family:var(--font-heading);font-weight:700">a cohort-level barrier audit</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">most schools have never been asked to do one and have no instrument for it.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-orange);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-2)">
+              <p style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:clamp(2rem,4vw,2.6rem);line-height:1;color:var(--princeton-orange)">yearly</p>
+              <p style="margin:0;font-family:var(--font-heading);font-weight:700">not a one-off</p>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">you republish every academic year with a review of the last one. what you write this december is the baseline every future review is measured against.</p>
+            </li>
+          </ol>
+          <div style="max-width:30ch;padding:var(--space-5);border-radius:var(--radius-md);background:var(--princeton-orange);color:var(--amethyst);display:flex;flex-direction:column;gap:var(--space-2)">
+            <p style="margin:0;color:var(--amethyst);font-family:var(--font-heading);font-weight:900;font-size:clamp(2.6rem,6vw,3.6rem);line-height:1;letter-spacing:-0.02em">2026</p>
+            <p style="margin:0;color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.3">has no previous year. this document sets the line.</p>
+          </div>
+          <blockquote style="margin:0;padding:0 0 0 var(--space-5);max-width:58ch;color:var(--fg);font-size:var(--fs-body-lg)">this is demand management wearing an inclusion coat. the universal-offer logic is right, but the driver is the deficit, not the child. you already knew that. the guides are written for people who know that.</blockquote>
+        </div>
+      </div>
+
+      <div id="k2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="what-kit" hint-size="100%,420px">
+          <h2 id="what-kit" style="margin:0 0 var(--space-5);max-width:22ch">what the kit is</h2>
+          <p style="margin:0 0 var(--space-5);max-width:58ch;color:var(--fg-muted)">seven guides, one per principle. each one gives you three things:</p>
+          <ol style="list-style:none;margin:0 0 var(--space-6);padding:0;display:grid;gap:var(--space-3);max-width:62ch">
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;gap:var(--space-4)"><span style="font-family:var(--font-heading);font-weight:800;color:var(--princeton-orange);flex:none">01</span><p style="margin:0;font-size:1rem;color:var(--text-muted)">what the guidance actually asks for, in plain language</p></li>
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;gap:var(--space-4)"><span style="font-family:var(--font-heading);font-weight:800;color:var(--princeton-orange);flex:none">02</span><p style="margin:0;font-size:1rem;color:var(--text-muted)">what a good version looks like, and what an off-guidance one looks like</p></li>
+            <li style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;gap:var(--space-4)"><span style="font-family:var(--font-heading);font-weight:800;color:var(--princeton-orange);flex:none">03</span><p style="margin:0;font-size:1rem;color:var(--text-muted)">one activity you can run this term, with a baseline that can fail</p></li>
+          </ol>
+          <p style="margin:0;max-width:58ch;color:var(--fg)"><strong>no template to fill in. no tool to buy. no badge at the end.</strong></p>
+        </x-import>
+      </div>
+
+      <div id="k3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="contents" hint-size="100%,760px">
+          <h2 id="contents" style="margin:0 0 var(--space-5);max-width:22ch">the contents</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">two are ready now. five follow this term, in build order. you get each one the day it lands.</p>
+          <ol style="list-style:none;margin:0;padding:0;display:grid;gap:var(--space-3);max-width:820px">
+            <sc-for list="{{ principles }}" as="p" hint-placeholder-count="7">
+              <li style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--space-2) var(--space-4);align-items:start;padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:1;color:var(--princeton-orange);padding-top:2px">{{ p.n }}</span>
+                <div style="display:grid;gap:var(--space-2)">
+                  <div style="display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-3);align-items:center">
+                    <p style="margin:0;font-family:var(--font-heading);font-weight:700;font-size:1.02rem">principle {{ p.num }} · {{ p.name }}</p>
+                    <sc-if value="{{ p.ready }}" hint-placeholder-val="{{ false }}">
+                      <span style="background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">ready now</span>
+                    </sc-if>
+                    <sc-if value="{{ p.coming }}" hint-placeholder-val="{{ false }}">
+                      <span style="color:var(--text-subtle);font-size:var(--fs-caption);font-weight:700;font-family:var(--font-heading)">this term</span>
+                    </sc-if>
+                  </div>
+                  <sc-if value="{{ p.showSponsor }}" hint-placeholder-val="{{ false }}">
+                    <p style="margin:0;display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-2) var(--space-3);font-size:var(--fs-small);color:var(--fg-muted)">
+                      <span>{{ p.sponsorLine }}</span>
+                      <sc-if value="{{ p.logo }}" hint-placeholder-val="{{ false }}">
+                        <span style="display:inline-block;width:96px;height:28px;border-radius:var(--radius-sm);overflow:hidden"><x-import component-from-global-scope="image-slot" id="kit-logo-{{ p.n }}" shape="rounded" placeholder="logo" hint-size="96px,28px"></x-import></span>
+                      </sc-if>
+                    </p>
+                  </sc-if>
+                </div>
+              </li>
+            </sc-for>
+          </ol>
+          <p style="margin:var(--space-5) 0 0;max-width:58ch;font-size:var(--fs-small);color:var(--text-subtle)">principle names are the conditions of grant wording. a sponsor's name against a principle means they paid for that guide to be free. it does not mean they wrote it, and it does not mean we recommend them.</p>
+        </x-import>
+      </div>
+
+      <div id="k4">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="get-guides" hint-size="100%,820px">
+          <h2 id="get-guides" style="margin:0 0 var(--space-5);max-width:22ch">get the guides</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">the two that are ready go to your inbox now. the other five follow as they land.</p>
+          <sc-for list="{{ kitFormA }}" as="f" hint-placeholder-count="1">
+            <sc-if value="{{ f.done }}" hint-placeholder-val="{{ false }}">
+              <div id="kit-done-{{ f.id }}" tabIndex="{{ -1 }}" role="status" style="max-width:560px;padding:var(--space-5);border-radius:var(--radius-md);background:var(--panel-green);outline:none">
+                <p style="margin:0 0 var(--space-3);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h4)">check your inbox.</p>
+                <p style="margin:0;color:var(--fg-muted)">if it isn't there in five minutes, look in junk, and mark it not junk so the rest arrive.</p>
+                <sc-if value="{{ f.consented }}" hint-placeholder-val="{{ false }}"><p style="margin:var(--space-3) 0 0;color:var(--fg-muted)">you're on notice too. one click unsubscribes, any time.</p></sc-if>
+              </div>
+            </sc-if>
+            <sc-if value="{{ f.open }}" hint-placeholder-val="{{ true }}">
+              <form id="kit-form-{{ f.id }}" noValidate="{{ true }}" onSubmit="{{ submitKit }}" data-form="{{ f.id }}" style="display:grid;gap:var(--space-5);max-width:560px">
+                <sc-if value="{{ f.hasErrors }}" hint-placeholder-val="{{ false }}">
+                  <div id="kit-errors-{{ f.id }}" tabIndex="{{ -1 }}" role="alert" style="padding:var(--space-4) var(--space-5);border-radius:var(--radius-md);background:var(--panel-orange);outline:none">
+                    <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:700">a few things to fix before we can send them:</p>
+                    <ul style="margin:0;padding-left:var(--space-5);display:grid;gap:var(--space-1)">
+                      <sc-for list="{{ f.errors }}" as="er" hint-placeholder-count="1"><li><a href="#{{ er.id }}" style="color:var(--fg)">{{ er.text }}</a></li></sc-for>
+                    </ul>
+                  </div>
+                </sc-if>
+                <div style="display:grid;gap:var(--space-2)">
+                  <label for="kit-name-{{ f.id }}" style="font-family:var(--font-heading);font-weight:700">name</label>
+                  <input id="kit-name-{{ f.id }}" name="name" type="text" autoComplete="name" aria-invalid="{{ f.nameBad }}" style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.36);background:rgba(0,0,0,0.3);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-body)" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                  <sc-if value="{{ f.nameBad }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--fs-small);color:var(--princeton-orange)">we need a name to address the email to.</p></sc-if>
+                </div>
+                <div style="display:grid;gap:var(--space-2)">
+                  <label for="kit-school-{{ f.id }}" style="font-family:var(--font-heading);font-weight:700">school</label>
+                  <input id="kit-school-{{ f.id }}" name="school" type="text" autoComplete="organization" aria-invalid="{{ f.schoolBad }}" style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.36);background:rgba(0,0,0,0.3);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-body)" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                  <sc-if value="{{ f.schoolBad }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--fs-small);color:var(--princeton-orange)">which school is this for?</p></sc-if>
+                </div>
+                <div style="display:grid;gap:var(--space-2)">
+                  <label for="kit-role-{{ f.id }}" style="font-family:var(--font-heading);font-weight:700">role</label>
+                  <select id="kit-role-{{ f.id }}" name="role" defaultValue="" aria-invalid="{{ f.roleBad }}" style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.36);background:rgba(0,0,0,0.3);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-body)" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                    <option value="" disabled="{{ true }}">choose one</option>
+                    <option value="headteacher">headteacher</option>
+                    <option value="deputy or assistant head">deputy or assistant head</option>
+                    <option value="senco or inclusion lead">senco or inclusion lead</option>
+                    <option value="trust or mat role">trust or mat role</option>
+                    <option value="governor">governor</option>
+                    <option value="other">other</option>
+                  </select>
+                  <sc-if value="{{ f.roleBad }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--fs-small);color:var(--princeton-orange)">pick the one closest to your job.</p></sc-if>
+                </div>
+                <div style="display:grid;gap:var(--space-2)">
+                  <label for="kit-email-{{ f.id }}" style="font-family:var(--font-heading);font-weight:700">email</label>
+                  <input id="kit-email-{{ f.id }}" name="email" type="email" autoComplete="email" inputMode="email" aria-invalid="{{ f.emailBad }}" style="width:100%;box-sizing:border-box;min-height:48px;padding:12px 16px;border-radius:12px;border:1.5px solid rgba(255,255,255,0.36);background:rgba(0,0,0,0.3);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-body)" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                  <sc-if value="{{ f.emailBad }}" hint-placeholder-val="{{ false }}"><p style="margin:0;font-size:var(--fs-small);color:var(--princeton-orange)">that doesn't look like an email address. any address works, including a personal one.</p></sc-if>
+                </div>
+                <input type="hidden" name="source" value="{{ source }}">
+                <label for="kit-consent-{{ f.id }}" style="display:flex;gap:var(--space-3);align-items:flex-start;padding:var(--space-3) var(--space-4);margin:0 calc(-1 * var(--space-4));border-radius:var(--radius-md);cursor:pointer" style-hover="background:var(--panel-green)">
+                  <input id="kit-consent-{{ f.id }}" name="consent" type="checkbox" style="width:24px;height:24px;margin:2px 0 0;flex:none;accent-color:var(--spring-green);cursor:pointer" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                  <span style="font-size:var(--fs-body)">send me <strong>notice</strong> — a fortnightly email for school leaders on inclusion that actually reaches the child. unsubscribe any time.</span>
+                </label>
+                <div style="display:grid;gap:var(--space-3);justify-items:start">
+                  <button type="submit" class="Button_btn Button_primary" style="background:var(--princeton-orange)" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">get the guides</button>
+                  <p style="margin:0;max-width:52ch;font-size:var(--fs-small);color:var(--text-subtle)">we'll send the guides to that address. we won't sell your details, share them with a sponsor, or add you to anything you didn't tick. <a href="https://www.unbarrier.me/privacy" style="color:var(--spring-green)">how we handle your data →</a></p>
+                </div>
+              </form>
+            </sc-if>
+          </sc-for>
+        </x-import>
+      </div>
+
+      <div id="k5">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="scope" hint-size="100%,300px">
+          <h2 id="scope" style="margin:0 0 var(--space-5);max-width:22ch">who this is for</h2>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)"><strong style="color:var(--fg)">england, mainstream.</strong> wales runs the aln act, and specialist settings have a different job. if that's you, the guides will still read, but the deadline and the duty are not yours.</p>
+        </x-import>
+      </div>
+
+      <div id="k6">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="who-wrote" hint-size="100%,340px">
+          <h2 id="who-wrote" style="margin:0 0 var(--space-5);max-width:22ch">who wrote them</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-5);align-items:flex-start;max-width:820px">
+            <div style="width:120px;height:120px;flex:none;border-radius:var(--radius-pill);overflow:hidden"><x-import component-from-global-scope="image-slot" id="kit-portrait" shape="circle" placeholder="portrait" hint-size="120px,120px"></x-import></div>
+            <div style="flex:1 1 300px;display:grid;gap:var(--space-3)">
+              <p style="margin:0;max-width:52ch;color:var(--fg-muted)">nici, unbarrier's founder. 26 years in classrooms — qts, send, uk state and international.</p>
+              <p style="margin:0;max-width:52ch;color:var(--fg-muted)">the guides say what we would say in your staffroom. they are not a sales document, and nothing in them needs us to be in the room.</p>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="k7">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="k-access" hint-size="100%,260px">
+          <h2 id="k-access" style="margin:0 0 var(--space-5);max-width:22ch">reading them</h2>
+          <p style="margin:0;max-width:58ch;color:var(--fg-muted)">these guides are tagged, screen-reader tested, and written to be read. if you need a different format, ask and you'll get one. <a href="https://www.unbarrier.me/accessibility" style="color:var(--spring-green)">full statement →</a></p>
+        </x-import>
+      </div>
+
+      <div id="k8">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="k-closing" hint-size="100%,340px">
+          <h2 id="k-closing" style="margin:0 0 var(--space-5);max-width:24ch">the next step</h2>
+          
+          <div style="display:grid;gap:var(--space-5)">
+            <p style="margin:0;max-width:56ch;color:var(--fg-muted)">the guide is free. a 45-minute call is free. the moment we open your strategy, it's a discovery day.</p>
+            <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+              <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book 45 minutes →</x-import>
+              <x-import component-from-global-scope="Unbarrier.Button" href="#k4" variant="ghost" hint-size="auto,44px">not yet — get the guides first ↑</x-import>
+            </div>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isHello }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--spring-green)" data-screen-label="hello">
+      <sc-if value="{{ helloPublic }}" hint-placeholder-val="{{ true }}">
+      <div id="e0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-8);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--spring-green)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--spring-green)" hint-size="auto,16px">hello</x-import>
+          <h1 style="margin:0;max-width:16ch">everything i said i'd send.</h1>
+          <p style="margin:0;max-width:50ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">free. no sign-up. each one says what it is and how long it takes.</p>
+        </div>
+      </div>
+
+      <div id="e1" style="padding:0 clamp(20px,5vw,64px) var(--space-10)">
+        <div style="max-width:820px;margin:0 auto">
+          <x-import component-from-global-scope="Unbarrier.TodayBlock" heading="{{ todayHeading }}" links="{{ todayLinks }}" hint-size="100%,300px"></x-import>
+        </div>
+      </div>
+
+      <div id="e2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="hello-ask" hint-size="100%,420px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">things to ask</x-import>
+          <h2 id="hello-ask" style="margin:var(--space-3) 0 var(--space-2);max-width:22ch">two question sets.</h2>
+          <p style="margin:0 0 var(--space-5);max-width:50ch;color:var(--fg-muted)">take one into a meeting you already have.</p>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="seven_questions" title="the takeaway — the seven questions" meta="the talk, on one page. seven questions to take back to your school. pick one. ask it monday." href="https://www.unbarrier.me/the-takeaway.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">2 min read</span>
+            </div>
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="belonging_check" title="the belonging check" meta="a prompt that builds a five-minute form for your people. does your setting have a belonging problem?" href="https://www.unbarrier.me/belonging-check" external="{{ true }}" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">5 min read</span>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="e2b">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="hello-read" hint-size="100%,620px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">things to read</x-import>
+          <h2 id="hello-read" style="margin:var(--space-3) 0 var(--space-2);max-width:22ch">{{ readHeading }}</h2>
+          <p style="margin:0 0 var(--space-5);max-width:50ch;color:var(--fg-muted)">on screen, not print. forward the link.</p>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="receipts" title="the receipts" meta="six numbers under the talk, each with its source and year." href="https://www.unbarrier.me/the-receipts.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">3 min read</span>
+            </div>
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="one_thing_template" title="the one-thing template" meta="one page for busy brains: what matters for your next step, and the one thing to do about it." href="https://www.unbarrier.me/one-thing-template.html" external="{{ true }}" accent="var(--school-bus-yellow)" accent-rgb="255, 194, 3" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">10 min read</span>
+            </div>
+            <sc-if value="{{ handsMoveOnHello }}" hint-placeholder-val="{{ false }}">
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="why_your_hands_move" title="why your hands move" meta="a read, not a tool: what the body does before the words arrive, and why it matters for access." href="https://www.unbarrier.me/why-your-hands-move.html" external="{{ true }}" accent="var(--orchid-mist)" accent-rgb="219, 125, 204" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">6 min read</span>
+            </div>
+            </sc-if>
+            <div style="display:grid;gap:var(--space-2)">
+              <x-import component-from-global-scope="Unbarrier.CtaCard" card="neurodiversity_conversation" title="the neurodiversity conversation, without the scaremongering" meta="the headlines, answered in plain english. every figure with its source and year. a living page." href="https://www.unbarrier.me/neurodiversity-conversation.html" external="{{ true }}" accent="var(--pearl-aqua)" accent-rgb="128, 222, 234" initial="n" hint-size="100%,92px"></x-import>
+              <span style="justify-self:start;background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill)">25 min read</span>
+            </div>
+          </div>
+        </x-import>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ helloLogin }}" hint-placeholder-val="{{ false }}">
+      <div id="e-login" data-screen-label="hello · login" style="padding-top:var(--nav-height)">
+        <x-import component-from-global-scope="Unbarrier.IspAuditLayout" hint-size="100%,600px">
+          <main style="padding:var(--ia-space-6) var(--ia-space-4) var(--ia-space-8)">
+            <x-import component-from-global-scope="Unbarrier.AdminLoginForm" hint-size="100%,260px"></x-import>
+            <p style="max-width:420px;margin:0 auto;color:var(--fg-muted);font-size:var(--fs-small)">design mock — any passcode signs you in. no real check behind this yet.</p>
+          </main>
+        </x-import>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ helloSignedIn }}" hint-placeholder-val="{{ false }}">
+      <div id="e-admin" data-screen-label="hello · signed in" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-8);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--orchid-mist)" left="60%" top="-10%" size="{{ 480 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">signed in · nici</x-import>
+          <h1 style="margin:0;max-width:16ch">what /hello shows right now.</h1>
+          <p style="margin:0;max-width:50ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">the rows ticked <em>today</em> in notion → hello links land in this block. everything else sits on the standing shelf below it.</p>
+        </div>
+      </div>
+      <div id="e-admin-today" style="padding:0 clamp(20px,5vw,64px) var(--space-8)">
+        <div style="max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.TodayBlock" heading="{{ todayHeading }}" links="{{ todayLinks }}" hint-size="100%,300px"></x-import>
+          <div style="display:grid;gap:var(--space-5);padding:var(--space-5);background:var(--panel-lightpink);border-radius:var(--radius-lg)">
+            <div style="display:grid;gap:var(--space-2)">
+              <label for="today-heading" style="font-family:var(--font-heading);font-weight:700;font-size:var(--fs-small)">event heading</label>
+              <input id="today-heading" value="{{ todayHeading }}" onChange="{{ setTodayHeading }}" style="width:100%;box-sizing:border-box;padding:var(--space-3) var(--space-4);border:0;border-radius:var(--radius-md);background:var(--ground-400);color:var(--fg);font-family:var(--font-body);font-size:var(--fs-body);outline-color:var(--focus-ring)">
+              <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">what the room sees above today's links.</p>
+            </div>
+            <div style="display:grid;gap:var(--space-2)">
+              <p style="margin:0;font-family:var(--font-heading);font-weight:700;font-size:var(--fs-small)">today's links — order</p>
+              <sc-for list="{{ todayRows }}" as="l" hint-placeholder-count="3">
+                <div style="display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:var(--space-2);align-items:center;padding:var(--space-2) 0">
+                  <span style="font-family:var(--font-heading);font-weight:700">{{ l.title }}</span>
+                  <button type="button" onClick="{{ l.up }}" aria-label="move up" style="min-width:44px;min-height:44px;border:0;border-radius:var(--radius-md);background:var(--ground-400);color:var(--fg);font-size:var(--fs-body);cursor:pointer">↑</button>
+                  <button type="button" onClick="{{ l.down }}" aria-label="move down" style="min-width:44px;min-height:44px;border:0;border-radius:var(--radius-md);background:var(--ground-400);color:var(--fg);font-size:var(--fs-body);cursor:pointer">↓</button>
+                </div>
+              </sc-for>
+              <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">mock — order and heading live in the notion hello links database. this screen writes back to it in the real build.</p>
+            </div>
+          </div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="https://www.notion.so" color="var(--orchid-mist)" external="{{ true }}" hint-size="auto,44px">edit today's links in notion →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/hello" variant="ghost" hint-size="auto,44px">view as a visitor</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/hello/sign-out" variant="ghost" hint-size="auto,44px">sign out</x-import>
+          </div>
+        </div>
+      </div>
+      <div id="e-admin-shelf">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="admin-shelf" hint-size="100%,520px">
+          <h2 id="admin-shelf" style="margin:0 0 var(--space-2);max-width:22ch">the standing shelf.</h2>
+          <p style="margin:0 0 var(--space-5);max-width:50ch;color:var(--fg-muted)">{{ shelfNote }}</p>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <sc-for list="{{ shelf }}" as="r" hint-placeholder-count="6">
+              <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3);align-items:baseline;padding:var(--space-3) 0">
+                <span style="font-family:var(--font-heading);font-weight:800">{{ r.title }}</span>
+                <span style="font-size:var(--fs-small);color:{{ r.statusColor }}">{{ r.status }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </x-import>
+      </div>
+      </sc-if>
+
+      <sc-if value="{{ helloPublic }}" hint-placeholder-val="{{ true }}">
+      <div id="e3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="e-closing" hint-size="100%,340px">
+          <h2 id="e-closing" style="margin:0 0 var(--space-5);max-width:22ch">if you want to talk about your setting — that's what we actually do.</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--spring-green)" external="{{ true }}" hint-size="auto,44px">start a conversation →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not ready to talk? → check your readiness first</x-import>
+          </div>
+        </x-import>
+        <div style="padding:var(--space-10) 0 var(--space-8)">
+          <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/hello" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+        </div>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+      </sc-if>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isResources }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--pearl-aqua)" data-screen-label="resources">
+      <div id="f0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--pearl-aqua)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">free, and yours</x-import>
+          <h1 style="margin:0;max-width:18ch">take it and use it. you don't have to pay us to fix this.</h1>
+          <p style="margin:0;max-width:54ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">the question sets and one-pagers from the talks, in one place. no sign-up, no gate.</p>
+        </div>
+      </div>
+
+      <div id="f1">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="for-schools" hint-size="100%,560px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">for schools</x-import>
+          <h2 id="for-schools" style="margin:0 0 var(--space-5);max-width:22ch">the question sets</h2>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="three_questions" title="three questions before you start" meta="for schools weighing up new tech. ten minutes, no right answers." href="https://www.unbarrier.me/three-questions" external="{{ true }}" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="goodnotes" title="Goodnotes in your school" meta="start here. setup, training, and what changes for the child." href="https://www.unbarrier.me/goodnotes" external="{{ true }}" accent="var(--spring-green)" accent-rgb="56, 255, 153" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="seven_questions" title="the seven questions" meta="the talk, on one page. pick one. ask it monday." href="https://www.unbarrier.me/the-takeaway.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="belonging_check" title="the belonging check" meta="a prompt to build a 5-minute form for your people. does your setting have a belonging problem?" href="https://www.unbarrier.me/belonging-check" external="{{ true }}" hint-size="100%,92px"></x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="f2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="for-you" hint-size="100%,380px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">for you</x-import>
+          <h2 id="for-you" style="margin:0 0 var(--space-5);max-width:22ch">the one-pagers</h2>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="hands_move" title="why your hands move" meta="on stimming, fidgeting, and what your body is already telling you." href="https://www.unbarrier.me/why-your-hands-move.html" external="{{ true }}" accent="var(--school-bus-yellow)" accent-rgb="255, 194, 3" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="one_thing" title="the one thing template" meta="when everything is urgent and nothing is moving. one page." href="https://www.unbarrier.me/one-thing-template.html" external="{{ true }}" accent="var(--princeton-orange)" accent-rgb="255, 138, 28" hint-size="100%,92px"></x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="f3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="read-talk" hint-size="100%,380px">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">read and talk</x-import>
+          <h2 id="read-talk" style="margin:0 0 var(--space-5);max-width:22ch">the evidence</h2>
+          <div style="display:grid;gap:var(--space-3);max-width:620px">
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="one_read" title="one read" meta="£800m of training, and nobody asked what changes for the child." href="https://www.unbarrier.me/blog/800m-training-nobody-asked-about-the-child" external="{{ true }}" hint-size="100%,92px"></x-import>
+            <x-import component-from-global-scope="Unbarrier.CtaCard" card="receipts" title="the receipts" meta="six numbers under the talk. the belonging fact sheet." href="https://www.unbarrier.me/the-receipts.html" external="{{ true }}" hint-size="100%,92px"></x-import>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="f4">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="f-closing" hint-size="100%,340px">
+          <h2 id="f-closing" style="margin:0 0 var(--space-5);max-width:22ch">tell us what you're working with.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">if we can help, we'll say how. if we can't, we'll point you to someone who can.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--pearl-aqua)" external="{{ true }}" hint-size="auto,44px">start a conversation →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not ready to talk? → check your readiness first</x-import>
+          </div>
+        </x-import>
+        <div style="padding:var(--space-10) 0 var(--space-8)">
+          <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/resources" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+        </div>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isAbout }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--spring-green)" data-screen-label="about">
+      <div id="h0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-8);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--orchid-mist)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">about</x-import>
+          <h1 style="margin:0;max-width:18ch">who is asking.</h1>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">stub — the longer story lives here and only here. copy to come from nici; not in the approved drafts.</p>
+        </div>
+      </div>
+      <div id="h1" style="background:var(--ground-400);padding:var(--space-8) clamp(20px,5vw,64px)">
+        <div style="max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-6)">
+          <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-5) var(--space-6)">
+            <image-slot id="nici-portrait-about" shape="circle" style="width:132px;height:132px;flex:none" placeholder="drop a photo of nici"></image-slot>
+            <div style="min-width:240px">
+              <div style="font-size:17px;line-height:0;margin:0 0 var(--space-4) calc(var(--space-3) * -1)">
+                <x-import component-from-global-scope="Unbarrier.AplsBadge" ground="amethyst" hint-size="290px,38px"></x-import>
+              </div>
+              <p style="margin:0;font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h4)">led by nici foote</p>
+              <p style="margin:var(--space-2) 0 0;font-size:var(--fs-small);line-height:1.7;color:var(--fg-muted);max-width:34ch">dyslexic, dyscalculic and adhd educator · 26 years in classrooms · digital inclusion specialist</p>
+            </div>
+          </div>
+          <x-import component-from-global-scope="Unbarrier.ScopeLine" hint-size="100%,28px"></x-import>
+        </div>
+
+      <div id="h2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="h-closing" hint-size="100%,300px">
+          <h2 id="h-closing" style="margin:0 0 var(--space-5);max-width:22ch">forty-five minutes. no deck, no pitch, no pipeline.</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--spring-green)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/" variant="ghost" hint-size="auto,44px">back to the start →</x-import>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+
+  <sc-if value="{{ isNdte }}" hint-placeholder-val="{{ false }}">
+    <main style="--route-accent:var(--spring-green)" data-screen-label="ndte">
+      <div id="g0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+        <x-import component-from-global-scope="Unbarrier.Glow" color="var(--spring-green)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.12 }}" hint-size="0,0"></x-import>
+        <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">how the work runs</x-import>
+          <h1 style="margin:0;max-width:16ch">notice <span style="color:var(--spring-green)">→</span> design <span style="color:var(--spring-green)">→</span> try <span style="color:var(--spring-green)">→</span> embed.</h1>
+          <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">however you come in, it runs the same way. four words, and you can hold a whole year against them.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-6);align-items:center;margin-top:var(--space-2)">
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-notice" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>notice</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-design" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>design</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-try" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>try</strong></p>
+            <p style="margin:0;display:flex;align-items:center;gap:var(--space-3);font-size:var(--fs-small)"><x-import component-from-global-scope="Unbarrier.Icon" name="ndte-embed" size="{{ 26 }}" hint-size="26px,26px"></x-import><strong>embed</strong></p>
+          </div>
+        </div>
+      </div>
+
+      <div id="g1">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="the-four" hint-size="100%,720px">
+          <h2 id="the-four" style="margin:0 0 var(--space-6);max-width:22ch">the four steps</h2>
+          <ol style="list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)">
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-3)">
+              <x-import component-from-global-scope="Unbarrier.Icon" name="ndte-notice" size="{{ 36 }}" hint-size="36px,36px"></x-import>
+              <h3 style="margin:0;font-size:1.15rem">notice</h3>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">find out what is actually happening for learners, not what the strategy says should be.</p>
+              <p style="margin:0;font-size:.95rem;color:var(--text-subtle);font-style:italic">this is where unbarrier.voice does its work.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-3)">
+              <x-import component-from-global-scope="Unbarrier.Icon" name="ndte-design" size="{{ 36 }}" hint-size="36px,36px"></x-import>
+              <h3 style="margin:0;font-size:1.15rem">design</h3>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">build the change with your team, not for them. the people who have to run it on a tuesday are in the room when it is designed.</p>
+              <p style="margin:0;font-size:.95rem;color:var(--text-subtle);font-style:italic">otherwise it is your plan, not theirs.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-3)">
+              <x-import component-from-global-scope="Unbarrier.Icon" name="ndte-try" size="{{ 36 }}" hint-size="36px,36px"></x-import>
+              <h3 style="margin:0;font-size:1.15rem">try</h3>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">model it in real classrooms, with real learners, while your staff watch.</p>
+              <p style="margin:0;font-size:.95rem;color:var(--text-subtle);font-style:italic">not a twilight. not a slide deck.</p>
+            </li>
+            <li style="padding:var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md);display:flex;flex-direction:column;gap:var(--space-3)">
+              <x-import component-from-global-scope="Unbarrier.Icon" name="ndte-embed" size="{{ 36 }}" hint-size="36px,36px"></x-import>
+              <h3 style="margin:0;font-size:1.15rem">embed</h3>
+              <p style="margin:0;font-size:1rem;color:var(--text-muted)">make it hold after we have gone.</p>
+              <p style="margin:0;font-size:.95rem;color:var(--text-subtle);font-style:italic">that is the whole test, and it is the step most consultancy skips because it is the one you cannot invoice twice.</p>
+            </li>
+          </ol>
+          <p style="margin:var(--space-8) 0 0;max-width:34ch;padding:var(--space-5);border-radius:var(--radius-md);background:var(--spring-green);color:var(--amethyst);font-family:var(--font-heading);font-weight:800;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.3">most inclusion work stops at try. embed is where you find out whether any of it worked.</p>
+        </x-import>
+      </div>
+
+      <div id="g2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="one-pathway" hint-size="100%,420px">
+          <h2 id="one-pathway" style="margin:0 0 var(--space-5);max-width:22ch">one pathway, not three products.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:58ch;color:var(--fg-muted)">a discovery day is <strong>notice</strong>, done properly. unbarrier.voice is what makes <strong>notice</strong> and <strong>embed</strong> measurable instead of felt. a partnership year is all four, three terms running — then notice again, and find out whether it did.</p>
+          <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:var(--space-4);max-width:820px">
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">a discovery day</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">notice. one day in your setting, and a roadmap for what comes next. <a href="/audit" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">unbarrier.audit</a></dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">a partnership year</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">the whole cycle, once a term, three terms. <a href="/access" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">unbarrier.access</a></dd>
+            </div>
+            <div style="padding:var(--space-4) var(--space-5);background:var(--panel-lightblue);border-radius:var(--radius-md)">
+              <dt style="font-family:var(--font-heading);font-weight:700;color:var(--princeton-orange);margin:0 0 var(--space-2)">an inclusion strategy</dt>
+              <dd style="margin:0;font-size:1rem;color:var(--text-muted)">the cycle on a single term, and a document that says how you will embed it. <a href="/inclusion-strategy" style="color:var(--princeton-orange);text-decoration:underline;text-underline-offset:3px">inclusion strategy</a></dd>
+            </div>
+          </dl>
+        </x-import>
+      </div>
+
+      <div id="g3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="g-closing" hint-size="100%,300px">
+          <h2 id="g-closing" style="margin:0 0 var(--space-5);max-width:22ch">tell us what you're working with.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:54ch;color:var(--fg-muted)">if we can help, we'll say how. if we can't, we'll point you to someone who can.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--princeton-orange)" external="{{ true }}" hint-size="auto,44px">book a discovery call →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" variant="ghost" hint-size="auto,44px">not there yet? → start with a discovery day</x-import>
+          </div>
+        </x-import>
+        <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+      </div>
+    </main>
+  </sc-if>
+</div>
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;startScreen&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;home&quot;,&quot;audit&quot;,&quot;access&quot;,&quot;voice&quot;,&quot;inclusion-strategy&quot;,&quot;hello&quot;,&quot;resources&quot;,&quot;ndte&quot;,&quot;about&quot;,&quot;readiness-check&quot;,&quot;kit&quot;],&quot;default&quot;:&quot;access&quot;,&quot;tsType&quot;:&quot;'home'|'audit'|'access'|'voice'|'inclusion-strategy'|'hello'|'resources'|'ndte'|'readiness-check'|'kit'&quot;,&quot;section&quot;:&quot;page&quot;},&quot;emailStep&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;readiness check&quot;},&quot;pricing&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;two tiers&quot;,&quot;all tiers&quot;,&quot;in conversation&quot;],&quot;default&quot;:&quot;two tiers&quot;,&quot;tsType&quot;:&quot;'two tiers'|'all tiers'|'in conversation'&quot;,&quot;section&quot;:&quot;access page&quot;},&quot;showFigures&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;access page&quot;},&quot;retainerPublic&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;access page&quot;},&quot;showFundingLine&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;inclusion-strategy page&quot;},&quot;showGhostCta&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;inclusion-strategy page&quot;},&quot;helloState&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;public&quot;,&quot;login&quot;,&quot;signed in&quot;],&quot;default&quot;:&quot;public&quot;,&quot;tsType&quot;:&quot;'public'|'login'|'signed in'&quot;,&quot;section&quot;:&quot;hello page&quot;},&quot;sponsorRows&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;none sold yet&quot;,&quot;demo paid row&quot;],&quot;default&quot;:&quot;demo paid row&quot;,&quot;tsType&quot;:&quot;'none sold yet'|'demo paid row'&quot;,&quot;section&quot;:&quot;kit page&quot;},&quot;unpaidRowText&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;blank&quot;,&quot;open to a sponsor&quot;],&quot;default&quot;:&quot;blank&quot;,&quot;tsType&quot;:&quot;'blank'|'open to a sponsor'&quot;,&quot;section&quot;:&quot;kit page&quot;},&quot;handsMoveOnHello&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;hello page&quot;},&quot;todayHeading&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;inclusion beyond send — university of surrey, 17 september&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;hello page&quot;}}">
+class Component extends DCLogic {
+  state = { screen: (typeof location !== 'undefined' && /^#(access|audit|voice|inclusion-strategy|hello|resources|ndte|readiness-check|kit|about)$/.test(location.hash)) ? location.hash.slice(1) : (typeof window !== 'undefined' && window.parent === window ? 'kit' : 'home'), hero: 'site' };
+
+  componentDidMount() {
+    document.addEventListener('click', this.onClick, true);
+    document.addEventListener('submit', this.onSubmit, true);
+    window.addEventListener('message', this.onMsg);
+    this.post();
+  }
+  componentWillUnmount() {
+    document.removeEventListener('click', this.onClick, true);
+    document.removeEventListener('submit', this.onSubmit, true);
+    window.removeEventListener('message', this.onMsg);
+  }
+
+  onMsg = (e) => {
+    const d = e.data || {};
+    if (d.from === 'site') return;
+    if (d.type === 'site:hero' && d.hero) { this.setState({ hero: d.hero }); return; }
+    if (d.type === 'site:screen' && d.screen && d.screen !== this.state.screen) this.go(d.screen);
+  };
+
+  onClick = (e) => {
+    const a = e.target.closest && e.target.closest('a[href]');
+    if (!a) return;
+    const href = a.getAttribute('href') || '';
+    if (href.startsWith('http') || a.target === '_blank') return;
+    if (href === '/hello/sign-out') { e.preventDefault(); this.setState({ helloView: 'login' }); window.scrollTo({ top: 0 }); return; }
+    if (href === '/hello' && this.state.screen === 'hello') { e.preventDefault(); this.setState({ helloView: 'public' }); window.scrollTo({ top: 0 }); return; }
+    if (href.startsWith('#')) {
+      const el = document.getElementById(href.slice(1));
+      if (el) { e.preventDefault(); window.scrollTo({ top: el.offsetTop, behavior: 'smooth' }); }
+      return;
+    }
+    e.preventDefault();
+    this.go(href.startsWith('/kit') ? 'kit' : href.startsWith('/readiness-check') ? 'readiness-check' : href.startsWith('/access') ? 'access' : href.startsWith('/voice') ? 'voice' : href.startsWith('/audit') ? 'audit' : href.startsWith('/inclusion-strategy') ? 'inclusion-strategy' : href.startsWith('/hello') ? 'hello' : href.startsWith('/resources') ? 'resources' : href.startsWith('/ndte') ? 'ndte' : href.startsWith('/about') ? 'about' : 'home');
+  };
+
+  // mock: swallow the AdminLoginForm submit (it would POST to /api/isp-audit/login) and resolve to signed-in
+  onSubmit = (e) => {
+    const box = e.target.closest && e.target.closest('#e-login');
+    if (!box) return;
+    e.preventDefault(); e.stopPropagation();
+    this.setState({ helloView: 'signed in' }, () => window.scrollTo({ top: 0 }));
+  };
+
+  // /kit form: validate, name errors in text, move focus to the summary or the confirmation. no server here — mailerlite is wired in the build.
+  submitKit = (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    const id = form.getAttribute('data-form');
+    const fd = new FormData(form);
+    const v = (k) => String(fd.get(k) || '').trim();
+    const errors = [];
+    if (!v('name')) errors.push({ id: 'kit-name-' + id, key: 'name', text: 'add your name' });
+    if (!v('school')) errors.push({ id: 'kit-school-' + id, key: 'school', text: 'add your school' });
+    if (!v('role')) errors.push({ id: 'kit-role-' + id, key: 'role', text: 'choose a role' });
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v('email'))) errors.push({ id: 'kit-email-' + id, key: 'email', text: 'check the email address' });
+    if (errors.length) {
+      this.setState({ kitErrors: { ...(this.state.kitErrors || {}), [id]: errors } }, () => { const el = document.getElementById('kit-errors-' + id); if (el) el.focus(); });
+      return;
+    }
+    this.setState({ kitDone: true, kitConsent: fd.get('consent') === 'on', kitErrors: {} }, () => { const el = document.getElementById('kit-done-' + id); if (el) { el.focus(); window.scrollTo({ top: el.offsetTop - 120 }); } });
+  };
+
+  go(screen) {
+    this.setState({ screen }, () => {
+      window.scrollTo({ top: 0 });
+      this.post();
+    });
+  }
+
+  post() {
+    try { window.parent.postMessage({ type: 'site:screen', screen: this.state.screen, from: 'site' }, '*'); } catch (err) {}
+  }
+
+  renderVals() {
+    const s = this.state.screen;
+    const HERO = {
+      site: { size: 'var(--fs-h1)', lh: 'var(--lh-tight)', lede: 'var(--fs-body-lg)' },
+      statement: { size: 'clamp(3rem, 6.6vw, 5rem)', lh: '1.02', lede: '1.22rem' },
+      billboard: { size: 'clamp(3.6rem, 8.4vw, 6.4rem)', lh: '0.98', lede: '1.35rem' },
+    };
+    const h = HERO[this.state.hero] || HERO.site;
+    const pricing = this.props.pricing ?? 'two tiers';
+    const start = this.props.startScreen;
+    if (start && start !== this._lastStart) { this._lastStart = start; if (start !== s) setTimeout(() => this.go(start), 0); }
+    const helloProp = this.props.helloState ?? 'public';
+    if (helloProp !== this._lastHello) { this._lastHello = helloProp; if (this.state.helloView && this.state.helloView !== helloProp) setTimeout(() => this.setState({ helloView: null }), 0); }
+    const hv = this.state.helloView || helloProp;
+    const hands = this.props.handsMoveOnHello ?? false;
+    const baseLinks = [
+        { id: 1, slug: 'belonging_check', title: 'the belonging check', href: 'https://www.unbarrier.me/belonging-check', accent: 'var(--orchid-mist)', external: true },
+        { id: 2, slug: 'seven_questions', title: 'the takeaway — the seven questions', href: 'https://www.unbarrier.me/the-takeaway.html', accent: 'var(--pearl-aqua)', external: true },
+        { id: 3, slug: 'receipts', title: 'the receipts', href: 'https://www.unbarrier.me/the-receipts.html', accent: 'var(--princeton-orange)', external: true },
+    ];
+    const order = this.state.todayOrder || baseLinks.map(l => l.id);
+    const todayLinks = order.map(id => baseLinks.find(l => l.id === id));
+    const move = (i, d) => () => { const o = order.slice(); const j = i + d; if (j < 0 || j >= o.length) return; [o[i], o[j]] = [o[j], o[i]]; this.setState({ todayOrder: o }); };
+    const todayHeading = this.state.todayHeading ?? (this.props.todayHeading ?? 'inclusion beyond send — university of surrey, 17 september');
+    const live = 'live';
+    // /kit
+    const sponsorRows = this.props.sponsorRows ?? 'demo paid row';
+    const unpaid = this.props.unpaidRowText ?? 'blank';
+    const PR = [
+      { n: '05', num: '5', name: 'a safe and respectful culture fostering belonging, attendance and participation', ready: true },
+      { n: '07', num: '7', name: 'inclusive environments with continuous improvements to accessibility', ready: true, paid: sponsorRows === 'demo paid row' },
+      { n: '03', num: '3', name: 'high-quality adaptive teaching with curriculum designed for all learners' },
+      { n: '04', num: '4', name: 'enriching provision beyond the classroom that all children can access' },
+      { n: '02', num: '2', name: 'evidence-based support prioritising early intervention' },
+      { n: '06', num: '6', name: 'strong partnerships with families and wider services' },
+      { n: '01', num: '1', name: 'ambitious leadership and governance that embeds inclusion', own: true },
+    ];
+    const principles = PR.map(p => {
+      let sponsorLine = '', logo = false;
+      if (p.own) sponsorLine = "unbarrier's own. this one is never sponsored.";
+      else if (p.paid) { sponsorLine = 'free because of'; logo = true; }
+      else if (unpaid === 'open to a sponsor') sponsorLine = 'open to a sponsor';
+      return { ...p, ready: !!p.ready, coming: !p.ready, sponsorLine, logo, showSponsor: !!sponsorLine };
+    });
+    const src = (typeof location !== 'undefined' && new URLSearchParams(location.search).get('from')) || 'direct';
+    const kitForm = (id) => {
+      const errors = (this.state.kitErrors || {})[id] || [];
+      const bad = (k) => errors.some(er => er.key === k);
+      return { id, done: !!this.state.kitDone, open: !this.state.kitDone, consented: !!this.state.kitConsent, errors, hasErrors: errors.length > 0, nameBad: bad('name'), schoolBad: bad('school'), roleBad: bad('role'), emailBad: bad('email') };
+    };
+    return {
+      principles, source: src, kitFormA: [kitForm('1')], submitKit: this.submitKit,
+      helloPublic: hv === 'public', helloLogin: hv === 'login', helloSignedIn: hv === 'signed in',
+      handsMoveOnHello: hands,
+      readHeading: hands ? 'four to read.' : 'three to read.',
+      shelfNote: hands ? 'six cards, all live.' : 'five cards, all live. why your hands move is held for the blog (tweak: handsMoveOnHello).',
+      todayRows: todayLinks.map((l, i) => ({ title: l.title, up: move(i, -1), down: move(i, 1) })),
+      setTodayHeading: (e) => this.setState({ todayHeading: e.target.value }),
+      shelf: [
+        { title: 'the takeaway — the seven questions', status: live, statusColor: 'var(--spring-green)' },
+        { title: 'the belonging check', status: live, statusColor: 'var(--spring-green)' },
+        { title: 'the receipts', status: live, statusColor: 'var(--spring-green)' },
+        { title: 'the one-thing template', status: 'live · revamp pending', statusColor: 'var(--school-bus-yellow)' },
+        { title: 'why your hands move', status: hands ? live : 'held for blog', statusColor: hands ? 'var(--spring-green)' : 'var(--princeton-orange)' },
+        { title: 'the neurodiversity conversation', status: 'live · url to confirm', statusColor: 'var(--school-bus-yellow)' },
+      ],
+      todayHeading, todayLinks,
+      isHome: s === 'home', isAudit: s === 'audit', isAccess: s === 'access', isInclusionStrategy: s === 'inclusion-strategy', isHello: s === 'hello', isResources: s === 'resources', isNdte: s === 'ndte', isAbout: s === 'about', isReadiness: s === 'readiness-check', isKit: s === 'kit', isVoice: s === 'voice',
+      emailStep: this.props.emailStep ?? false,
+      navActive: (s === 'home' || s === 'hello' || s === 'resources' || s === 'ndte' || s === 'kit' || s === 'about') ? undefined : s === 'readiness-check' ? 'audit' : s,
+      showFundingLine: this.props.showFundingLine ?? true,
+      showGhostCta: this.props.showGhostCta ?? true,
+      showFigures: this.props.showFigures ?? true,
+      showPrices: pricing !== 'in conversation', hidePrices: pricing === 'in conversation', showTrustTier: pricing === 'all tiers',
+      retainerPublic: this.props.retainerPublic ?? false, retainerHeld: !(this.props.retainerPublic ?? false),
+      heroSize: h.size, heroLh: h.lh, ledeSize: h.lede,
+    };
+  }
+}
+
+</script>
+</body>
+</html>

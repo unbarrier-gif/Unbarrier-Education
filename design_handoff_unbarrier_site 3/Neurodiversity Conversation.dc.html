@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/styles.css">
+<script src="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:#210a33;color:#f0ebe5}
+body{font-family:var(--font-body)}
+a{color:var(--spring-green)}
+a:hover{color:var(--pearl-aqua)}
+details > summary{list-style:none;cursor:pointer}
+details > summary::-webkit-details-marker{display:none}
+/* full-strength accent blocks: every text node reads amethyst, whatever the global p/h rules say */
+[data-ink="amethyst"],[data-ink="amethyst"] p,[data-ink="amethyst"] h2,[data-ink="amethyst"] h3,[data-ink="amethyst"] span,[data-ink="amethyst"] strong,[data-ink="amethyst"] em{color:var(--amethyst)}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg)">
+  <x-import component-from-global-scope="Unbarrier.Nav" hint-size="100%,90px"></x-import>
+  <main style="--route-accent:var(--pearl-aqua)">
+
+    <div id="n0" data-screen-label="hero" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-8);overflow:hidden">
+      <x-import component-from-global-scope="Unbarrier.Glow" color="var(--pearl-aqua)" left="-8%" top="0%" size="{{ 560 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+      <div style="position:relative;max-width:900px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">a plain-terms briefing · august 2026</x-import>
+        <h1 style="margin:0;max-width:16ch">the neurodiversity conversation, without the scaremongering</h1>
+        <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">everyone is discussing autism and adhd right now. very few people doing the discussing are actual experts — or the neurodivergent community with lived experience. this page holds the nuance: what we know, what's being distorted, and how to answer the generalisations in plain english, with the data underneath.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-2) var(--space-5);font-size:var(--fs-small);color:var(--fg-muted)">
+          <span>last reviewed · {{ reviewed }}</span><span>a living page · built over time</span><span>evidence-led · both sides represented</span>
+        </div>
+      </div>
+    </div>
+
+    <div id="n1" data-screen-label="stat rail" style="background:var(--ground-400);padding:var(--space-8) clamp(20px,5vw,64px)">
+      <div style="max-width:900px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:var(--space-6)">
+        <sc-for list="{{ stats }}" as="s" hint-placeholder-count="4">
+          <div style="display:flex;flex-direction:column;gap:var(--space-2)">
+            <span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h2);line-height:1;color:var(--pearl-aqua)">{{ s.n }}</span>
+            <p style="margin:0;font-size:var(--fs-small)">{{ s.text }}</p>
+            <span style="font-family:var(--font-heading);font-size:var(--fs-caption);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-subtle)">{{ s.src }}</span>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+
+    <div id="n2" data-screen-label="two things measured">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="n2-h" hint-size="100%,520px">
+        <h2 id="n2-h" style="margin:0 0 var(--space-3);max-width:24ch">so how do these fit together? if the rate isn't rising, why are more people coming forward?</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">this is the question that trips everyone up. it feels like a contradiction — but it isn't. two different things are being measured.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-4)">
+          <div style="background:var(--panel-aqua);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <h3 style="margin:0 0 var(--space-2)">prevalence = how many people have it</h3>
+            <p style="margin:0">this is the underlying rate in the population. it's stayed roughly steady for decades. autism and adhd aren't becoming more common.</p>
+          </div>
+          <div style="background:var(--panel-orange);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <h3 style="margin:0 0 var(--space-2)">the waiting list = how many are asking to be seen</h3>
+            <p style="margin:0">this is demand for assessment. it's rising fast — because people who were always neurodivergent are finally coming forward to be recognised.</p>
+          </div>
+        </div>
+        <p style="margin:var(--space-6) 0 0;max-width:60ch">for decades, most autistic and adhd people — especially women and girls, adults, and anyone who didn't fit the 1980s "young boy" picture — were simply never identified. they didn't appear in the numbers. they were always there. so the queue isn't full of <em>new</em> neurodivergent people. it's full of people who were always neurodivergent and are only now being counted.</p>
+        <blockquote data-ink="amethyst" style="margin:var(--space-6) 0 0;padding:var(--space-6);border-radius:var(--radius-lg);background:var(--spring-green);color:var(--amethyst)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--amethyst)" hint-size="auto,16px">the plain version</x-import>
+          <p style="margin:var(--space-3) 0 0;max-width:30ch;font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:var(--lh-snug);color:var(--amethyst)">turning a brighter light on in a room doesn't create more furniture. you just finally see what was there all along.</p>
+          <p style="margin:var(--space-4) 0 0;max-width:50ch;color:var(--amethyst)">recognition is catching up with reality — it hasn't overtaken it.</p>
+        </blockquote>
+      </x-import>
+    </div>
+
+    <div id="n3" data-screen-label="one paper, one distorted headline">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="n3-h" hint-size="100%,640px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">what set this off</x-import>
+        <h2 id="n3-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">one paper, one distorted headline</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">on 4 august 2026 a senior autism researcher argued that the autism label has "become too broad to be useful." within hours it was on the radio, in the tabloids, and on daytime tv, mostly debated by presenters and pundits rather than clinicians or autistic people.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4)">
+          <div style="background:var(--panel-darkpink);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">the headline version</x-import>
+            <h3 style="margin:var(--space-3) 0 var(--space-3)">"anyone can have autism now"</h3>
+            <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2)">
+              <li>run as proof that diagnosis is a fashion, a trend, an identity people pick up.</li>
+              <li>folded straight into the welfare-cost story — "the benefits bill", "sicknote britain".</li>
+              <li>debated in studio two-handers and radio phone-ins where no clinician or autistic adult is in the room.</li>
+              <li>the nuance — subtyping, precision, provision — gets stripped out for the culture-war frame.</li>
+            </ul>
+          </div>
+          <div style="background:var(--panel-aqua);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">what the paper argued</x-import>
+            <h3 style="margin:var(--space-3) 0 var(--space-3)">a precision argument, not a denial</h3>
+            <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2)">
+              <li>one label now stretches from a non-speaking person needing round-the-clock care to an independent adult diagnosed at 40.</li>
+              <li>the fix it proposes is better sub-typing and sharper diagnosis — matching support to the person — not deciding fewer people are really autistic.</li>
+              <li>there is no biological test, so a wrong diagnosis can mean the wrong help — or none.</li>
+              <li>this is the same instinct behind the lancet commission — a live scientific debate, steel-manned, not a dismissal.</li>
+            </ul>
+          </div>
+        </div>
+        <blockquote style="margin:var(--space-6) 0 0;padding:var(--space-5);border-radius:var(--radius-lg);background:var(--ground-400)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--spring-green)" hint-size="auto,16px">verified quote · ucl, august 2026</x-import>
+          <p style="margin:var(--space-3) 0 0;font-family:var(--font-heading);font-weight:700;font-size:var(--fs-h4)">"this matters because diagnoses shape treatment, identity, and support. a wrong diagnosis can lead to the wrong help — or no help at all."</p>
+          <p style="margin:var(--space-3) 0 0;font-size:var(--fs-small);color:var(--fg-muted)">dame uta frith · emeritus professor of cognitive development, ucl institute of cognitive neuroscience</p>
+          <p style="margin:var(--space-3) 0 0;max-width:56ch">the quote is about matching help to need. that's the bit the headlines lost.</p>
+        </blockquote>
+        <h3 style="margin:var(--space-8) 0 var(--space-2)">the clip you saw — and why it matters</h3>
+        <p style="margin:0;max-width:60ch;color:var(--fg-muted)">the specific clip in circulation — an itv <em>this morning</em> debate the same week, with an lbc breakfast host as one voice opposite a parent — is a textbook example of the pattern. commentary formats reach for pundits; the actual experts and lived-experience voices get reduced to a reaction quote. the gap between the two columns above is the whole story, and it's the gap this page exists to fill.</p>
+      </x-import>
+    </div>
+
+    <div id="n4" data-screen-label="six claims">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="n4-h" hint-size="100%,900px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">the generalisations, answered</x-import>
+        <h2 id="n4-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">six claims — and what we actually know</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">the lines you'll hear at the school gate, in the comments, on the radio. each one, met in plain english, with the evidence underneath. fair to the real argument, firm on the facts.</p>
+        <div style="display:grid;gap:var(--space-3)">
+          <sc-for list="{{ claims }}" as="c" hint-placeholder-count="6">
+            <details open="{{ claimsOpen }}" style="background:var(--ground-400);border-radius:var(--radius-lg);padding:var(--space-5)">
+              <summary style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--space-4);align-items:baseline">
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);color:var(--pearl-aqua)">{{ c.num }}</span>
+                <span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h4)">{{ c.claim }}</span>
+              </summary>
+              <div style="margin-top:var(--space-4);display:grid;gap:var(--space-3)">
+                <p style="margin:0;font-weight:600;max-width:60ch">{{ c.answer }}</p>
+                <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2);color:var(--fg-muted)">
+                  <sc-for list="{{ c.points }}" as="p" hint-placeholder-count="3"><li>{{ p }}</li></sc-for>
+                </ul>
+              </div>
+            </details>
+          </sc-for>
+        </div>
+      </x-import>
+    </div>
+
+    <div id="n5" data-screen-label="two charts">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="n5-h" hint-size="100%,640px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">the picture in two charts</x-import>
+        <h2 id="n5-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">diagnoses are climbing. the underlying rate isn't.</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">the single most useful thing to understand: "more diagnoses" and "more autistic people" are not the same claim. one line is going up steeply. the other has been roughly flat for decades.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4)">
+          <div style="background:var(--ground-400);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <h3 style="margin:0">the waiting list, not the population</h3>
+            <p style="margin:var(--space-1) 0 var(--space-5);font-size:var(--fs-small);color:var(--fg-muted)">adhd assessment waiting list, england</p>
+            <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-2) var(--space-3);align-items:center;font-size:var(--fs-small)">
+              <span>apr 2019</span><div style="height:18px;border-radius:var(--radius-pill);background:var(--princeton-orange);width:8%"></div><strong style="font-family:var(--font-heading)">21k</strong>
+              <span>dec 2025</span><div style="height:18px;border-radius:var(--radius-pill);background:var(--princeton-orange);width:100%"></div><strong style="font-family:var(--font-heading)">270k</strong>
+            </div>
+            <p style="margin:var(--space-5) 0 0;font-size:var(--fs-small);color:var(--fg-muted)">a ~13-fold rise in people <em>waiting</em>. meanwhile adhd prevalence itself is estimated stable at ~5% of children and ~2–3% of adults. — fonagy review, 2026</p>
+          </div>
+          <div style="background:var(--ground-400);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <h3 style="margin:0">prevalence has barely moved</h3>
+            <p style="margin:var(--space-1) 0 var(--space-5);font-size:var(--fs-small);color:var(--fg-muted)">adult autism prevalence by age band, england (apms)</p>
+            <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-2) var(--space-3);align-items:center;font-size:var(--fs-small)">
+              <span>age 16–44</span><div style="height:18px;border-radius:var(--radius-pill);background:var(--pearl-aqua);width:100%"></div><strong style="font-family:var(--font-heading)">~1.0%</strong>
+              <span>age 45–74</span><div style="height:18px;border-radius:var(--radius-pill);background:var(--pearl-aqua);width:90%"></div><strong style="font-family:var(--font-heading)">~0.9%</strong>
+              <span>age 75+</span><div style="height:18px;border-radius:var(--radius-pill);background:var(--pearl-aqua);width:90%"></div><strong style="font-family:var(--font-heading)">~0.9%</strong>
+            </div>
+            <p style="margin:var(--space-5) 0 0;font-size:var(--fs-small);color:var(--fg-muted)">if autism were a modern "epidemic", older generations would show far lower rates. they don't. the older cohorts were simply never diagnosed. — brugha et al, apms 2011</p>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div id="n6" data-screen-label="timeline">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="n6-h" hint-size="100%,900px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">how we got here</x-import>
+        <h2 id="n6-h" style="margin:var(--space-3) 0 var(--space-3);max-width:24ch">a timeline: when the understanding — and the criteria — changed</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">much of the "explosion" is explained by this line. every time the definition widened, the research caught up, or the paperwork changed, more people became visible. the people didn't change; the criteria did.</p>
+        <div style="display:grid;gap:var(--space-5)">
+          <sc-for list="{{ timeline }}" as="t" hint-placeholder-count="7">
+            <div style="display:grid;grid-template-columns:minmax(96px,140px) minmax(0,1fr);gap:var(--space-4)">
+              <span style="font-family:var(--font-heading);font-weight:800;color:var(--pearl-aqua)">{{ t.when }}</span>
+              <div><h3 style="margin:0 0 var(--space-1)">{{ t.title }}</h3><p style="margin:0;color:var(--fg-muted)">{{ t.text }}</p></div>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:var(--space-6) 0 0;font-size:var(--fs-small);color:var(--text-subtle);max-width:60ch">timeline compiled from apa (dsm editions), uk legislation (children and families act 2014 / send code of practice 2015), and the sources listed at the foot of this page. dates are diagnostic-manual and legislative milestones, not the moment individuals changed.</p>
+      </x-import>
+    </div>
+
+    <div id="n7" data-screen-label="media map">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="n7-h" hint-size="100%,900px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">who's framing it, and how</x-import>
+        <h2 id="n7-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">the media map</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">the coverage splits cleanly into two camps. knowing which frame you're reading is half the battle. neither camp is where most of the actual clinicians and autistic people sit — which is the gap this page exists to fill.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:var(--space-4)">
+          <div style="background:var(--panel-orange);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--princeton-orange)" hint-size="auto,16px">the "gone too far" frame</x-import>
+            <p style="margin:var(--space-2) 0 var(--space-3);font-size:var(--fs-small);color:var(--fg-muted)">sceptical · culture-war · welfare-cost</p>
+            <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2)">
+              <li><strong>telegraph</strong> — "anyone can have autism now"; heavy on the benefits-bill angle.</li>
+              <li><strong>daily mail</strong> — the "worried well", social awkwardness rebadged as autism.</li>
+              <li><strong>the times</strong> — data-led, over-pathologising, cost to the welfare state.</li>
+              <li><strong>spiked / gb news</strong> — the hardest "overdiagnosis is real, and it's costing us" line.</li>
+            </ul>
+          </div>
+          <div style="background:var(--panel-aqua);border-radius:var(--radius-lg);padding:var(--space-5)">
+            <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">the "system failure" frame</x-import>
+            <p style="margin:var(--space-2) 0 var(--space-3);font-size:var(--fs-small);color:var(--fg-muted)">sympathetic · corrective · structural</p>
+            <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2)">
+              <li><strong>the independent</strong> — "experts rubbish claim adhd is overdiagnosed"; leads with prevalence data.</li>
+              <li><strong>the guardian</strong> — waiting lists, underfunding, first-person neurodivergent voices.</li>
+              <li><strong>the i / big issue / huffpost</strong> — explanatory: it's under-support, not fashion.</li>
+              <li><strong>itv news</strong> — a genuinely expert- and family-led piece on <em>under</em>-diagnosis in south asian children.</li>
+            </ul>
+          </div>
+        </div>
+        <h3 style="margin:var(--space-8) 0 var(--space-2)">recurring scaremongering themes — by how prominent they are</h3>
+        <p style="margin:0 0 var(--space-5);max-width:60ch;font-size:var(--fs-small);color:var(--fg-muted)">these bands show relative prominence across the uk coverage we reviewed — an editorial read of which narratives dominate, not a counted frequency. a map of the loudest themes, not a precise statistic.</p>
+        <div style="display:grid;gap:var(--space-3)">
+          <sc-for list="{{ themes }}" as="t" hint-placeholder-count="7">
+            <div style="display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:var(--space-4);align-items:start;padding:var(--space-3) 0">
+              <span style="font-family:var(--font-heading);font-weight:800;color:var(--pearl-aqua)">{{ t.n }}</span>
+              <div><p style="margin:0;font-family:var(--font-heading);font-weight:700">{{ t.title }}</p><p style="margin:var(--space-1) 0 0;font-size:var(--fs-small);color:var(--fg-muted)">{{ t.text }}</p></div>
+              <span style="background:var(--school-bus-yellow);color:var(--amethyst);font-family:var(--font-heading);font-weight:700;font-size:var(--fs-caption);line-height:1;padding:6px 10px;border-radius:var(--radius-pill);white-space:nowrap">{{ t.level }}</span>
+            </div>
+          </sc-for>
+        </div>
+      </x-import>
+    </div>
+
+    <div id="n8" data-screen-label="public voice">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="n8-h" hint-size="100%,800px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--orchid-mist)" hint-size="auto,16px">what parents and the public are actually saying</x-import>
+        <h2 id="n8-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">the public voice — both sides, fairly</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">drawn from reddit, facebook parent and send groups, and instagram advocacy. paraphrased recurring themes, not fabricated quotes. the debate is hotter and more nuanced than the headlines suggest.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-4)">
+          <sc-for list="{{ voices }}" as="v" hint-placeholder-count="3">
+            <div style="background:var(--ground-400);border-radius:var(--radius-lg);padding:var(--space-5)">
+              <h3 style="margin:0">{{ v.title }}</h3>
+              <p style="margin:var(--space-1) 0 var(--space-4);font-size:var(--fs-caption);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-subtle);font-family:var(--font-heading)">{{ v.tone }}</p>
+              <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2);font-size:var(--fs-small)">
+                <sc-for list="{{ v.lines }}" as="l" hint-placeholder-count="4"><li>{{ l }}</li></sc-for>
+              </ul>
+            </div>
+          </sc-for>
+        </div>
+        <div style="margin-top:var(--space-6);background:var(--panel-lightpink);border-radius:var(--radius-lg);padding:var(--space-5)">
+          <h3 style="margin:0 0 var(--space-2)">a nuance the headlines miss</h3>
+          <p style="margin:0;max-width:64ch">some of the sharpest "the category is too broad" criticism comes from inside the community — parents of profoundly autistic and non-speaking children who feel spoken over. they reach a similar conclusion to the paper, but from the opposite motive: not to deny anyone support, but so their children stop being invisible. treating them as "anti-neurodiversity" misreads them badly.</p>
+        </div>
+        <h3 style="margin:var(--space-8) 0 var(--space-4)">where both sides quietly agree</h3>
+        <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-3)">
+          <sc-for list="{{ agree }}" as="a" hint-placeholder-count="6">
+            <li style="display:grid;grid-template-columns:auto minmax(0,1fr);gap:var(--space-3)"><span style="color:var(--spring-green);font-weight:700">✓</span><span>{{ a }}</span></li>
+          </sc-for>
+        </ul>
+      </x-import>
+    </div>
+
+    <div id="n9" data-screen-label="evidence table">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="n9-h" hint-size="100%,800px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">the numbers in one place</x-import>
+        <h2 id="n9-h" style="margin:var(--space-3) 0 var(--space-3)">the evidence table</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">every figure with its year and source, so you can quote it with confidence. verified against cdc, nhs england, dfe, the ifs, the lancet commission and the government's fonagy review.</p>
+        <div style="display:grid;gap:var(--space-2)">
+          <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto minmax(0,1fr);gap:var(--space-3);padding:var(--space-2) 0;font-family:var(--font-heading);font-size:var(--fs-caption);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--text-subtle)"><span>what</span><span>figure</span><span>year</span><span>source</span></div>
+          <sc-for list="{{ evidence }}" as="e" hint-placeholder-count="10">
+            <div style="display:grid;grid-template-columns:minmax(0,2fr) minmax(0,1fr) auto minmax(0,1fr);gap:var(--space-3);padding:var(--space-3) 0;background:var(--ground-400);border-radius:var(--radius-md);padding:var(--space-3) var(--space-4);font-size:var(--fs-small)">
+              <span>{{ e.what }}</span><strong style="font-family:var(--font-heading);color:var(--pearl-aqua)">{{ e.fig }}</strong><span>{{ e.year }}</span><span style="color:var(--fg-muted)">{{ e.src }}</span>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:var(--space-5) 0 0;font-size:var(--fs-small);color:var(--text-subtle);max-width:64ch">pip / adhd benefit figures circulating in the press (~100,000 claimants) come from secondary reporting of dwp data and should be checked against dwp stat-xplore before quoting.</p>
+      </x-import>
+    </div>
+
+    <div id="n10" data-screen-label="where unbarrier stands">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="n10-h" hint-size="100%,760px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--spring-green)" hint-size="auto,16px">where unbarrier stands</x-import>
+        <h2 id="n10-h" style="margin:var(--space-3) 0 var(--space-3);max-width:22ch">hold all three truths at once</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">the media storm collapses everything into one false trade-off: "if diagnoses are rising, they must be fake, and cutting them will save money." the evidence says the opposite. three things are true together, and they do not contradict each other.</p>
+        <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4)">
+          <div style="background:var(--panel-green);border-radius:var(--radius-lg);padding:var(--space-5)"><span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h2);color:var(--spring-green)">1</span><h3 style="margin:var(--space-2) 0">the category is real</h3><p style="margin:0">autism and adhd are valid, well-evidenced conditions. rising diagnoses are recognition catching up with people always there — women, adults, minority-ethnic groups. this is not fashion.</p></div>
+          <div style="background:var(--panel-aqua);border-radius:var(--radius-lg);padding:var(--space-5)"><span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h2);color:var(--pearl-aqua)">2</span><h3 style="margin:var(--space-2) 0">the heterogeneity is real</h3><p style="margin:0">the same label spans someone needing 24-hour care and an independent adult diagnosed at 40. that's a genuine scientific problem — the answer is sharper subtyping, not deciding the milder end is fake.</p></div>
+          <div style="background:var(--panel-orange);border-radius:var(--radius-lg);padding:var(--space-5)"><span style="font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h2);color:var(--princeton-orange)">3</span><h3 style="margin:var(--space-2) 0">the support is failing</h3><p style="margin:0">multi-year waits, ~£8bn of council deficits, and diagnosis-as-gatekeeper mean people get too little, too late. that's under-support — not over-diagnosis.</p></div>
+        </div>
+        <div data-ink="amethyst" style="margin-top:var(--space-6);background:var(--spring-green);color:var(--amethyst);border-radius:var(--radius-lg);padding:var(--space-6);display:grid;gap:var(--space-5)">
+          <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--amethyst)" hint-size="auto,16px">the honest position</x-import>
+          <p style="margin:0;max-width:24ch;font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3);line-height:var(--lh-snug);color:var(--amethyst)">brains genuinely vary. both kinds of need are real.</p>
+          <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:var(--space-4);max-width:70ch">
+            <p style="margin:0;color:var(--amethyst)">it isn't "everyone has it" or "no one really does." some people need lifelong high support. others need targeted accommodations. and the system is failing to match support to need.</p>
+            <p style="margin:0;color:var(--amethyst)">it's the argument unbarrier is built on. you don't start with the label and hand out a generic package. you start with the child, or the adult, and work backwards to what actually reaches them. nobody audits whether the support reached the person. that's the gap. that's the work.</p>
+          </div>
+        </div>
+      </x-import>
+    </div>
+
+    <div id="n11" data-screen-label="glossary">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="n11-h" hint-size="100%,700px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">plain-language guide</x-import>
+        <h2 id="n11-h" style="margin:var(--space-3) 0 var(--space-3)">the words, explained</h2>
+        <p style="margin:0 0 var(--space-6);max-width:60ch;color:var(--fg-muted)">the debate is full of technical terms used loosely. here's what they actually mean, in plain english.</p>
+        <dl style="margin:0;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--space-5)">
+          <sc-for list="{{ glossary }}" as="g" hint-placeholder-count="10">
+            <div><dt style="font-family:var(--font-heading);font-weight:800;margin:0 0 var(--space-1)">{{ g.term }}</dt><dd style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">{{ g.text }}</dd></div>
+          </sc-for>
+        </dl>
+      </x-import>
+    </div>
+
+    <div id="n12" data-screen-label="sources + close">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="n12-h" hint-size="100%,700px">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">sources &amp; method</x-import>
+        <h2 id="n12-h" style="margin:var(--space-3) 0 var(--space-3)">where this comes from</h2>
+        <p style="margin:0 0 var(--space-5);max-width:60ch;color:var(--fg-muted)">compiled from primary data and authoritative bodies. press and social framing captured evenhandedly.</p>
+        <ul style="margin:0;padding-left:1.2em;display:grid;gap:var(--space-2);font-size:var(--fs-small);max-width:70ch">
+          <sc-for list="{{ sources }}" as="s" hint-placeholder-count="10"><li>{{ s }}</li></sc-for>
+        </ul>
+        <p style="margin:var(--space-5) 0 0;font-size:var(--fs-small);color:var(--text-subtle);max-width:70ch"><strong>a note on confidence.</strong> the data figures are verified against the named sources and carry their year. the press and social-media framing is captured from the wider indexed discourse and represents recurring patterns, not a count of every article or thread — the "prominence" bands are an editorial read, not a measured statistic. the paper's argument is presented as it was made — a call for precision and subtyping — separately from the tabloid distortion of it. this is a living page: it will be corrected and extended as the conversation develops.</p>
+        <h2 style="margin:var(--space-10) 0 var(--space-5);max-width:22ch">if you want to talk about your setting — that's what we actually do.</h2>
+        <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+          <x-import component-from-global-scope="Unbarrier.Button" href="/book" color="var(--pearl-aqua)" external="{{ true }}" hint-size="auto,44px">start a conversation →</x-import>
+          <x-import component-from-global-scope="Unbarrier.Button" href="/hello" variant="ghost" hint-size="auto,44px">← back to everything free</x-import>
+        </div>
+      </x-import>
+      <div style="padding:var(--space-10) 0 var(--space-8)">
+        <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/neurodiversity-conversation" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+      </div>
+      <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+    </div>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;reviewed&quot;:{&quot;editor&quot;:&quot;text&quot;,&quot;default&quot;:&quot;5 august 2026&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;page&quot;},&quot;claimsOpen&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;page&quot;}}">
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      reviewed: this.props.reviewed ?? '5 august 2026',
+      claimsOpen: this.props.claimsOpen ?? true,
+      stats: [
+        { n: '~1 in 100', text: "adult autism prevalence in england — and it's steady across every age group up to the 80s.", src: 'brugha et al · apms 2007/2011' },
+        { n: '227,813', text: 'people waiting for an nhs autism assessment in england. 90% waited longer than the target.', src: 'nhs england · to sept 2025' },
+        { n: '21k → 270k', text: 'adhd assessment waiting list, apr 2019 to dec 2025 — prevalence itself held steady.', src: 'fonagy review · 2026' },
+        { n: '~1 in 4', text: 'at the profound end of the spectrum — minimal or no speech, needing 24-hour support. the spectrum genuinely spans very different needs.', src: 'cdc 2023 (26.7%)' },
+      ],
+      claims: [
+        { num: '01', claim: '"everyone has it now — it\'s just fashionable"', answer: 'recorded diagnoses are rising fast. the true underlying prevalence looks broadly stable. the climb is recognition catching up with people who were always there — women and girls, adults, and minority-ethnic groups the old system missed.', points: [
+          'in the largest english adult study, autism prevalence was the same across every age band up to the 80s — no epidemic curve. not one adult in that study had a prior diagnosis. — brugha et al, apms 2011',
+          'gender is central: the criteria were built around boys, so girls and women were systematically missed. a 2023 systematic review confirms a diagnostic bias toward males — girls who meet the criteria are still less likely to be diagnosed. — neuropsychology review, 2023',
+          'where child rates rose, the rise is concentrated in previously under-identified groups: by 2020 us data, asian, hispanic and black children were identified more often than white children — a reversal of the old pattern. — cdc addm, 2023',
+          'the government\'s own review: "relatively stable underlying prevalence can coexist with rapidly rising diagnosis." — fonagy review, 2026' ] },
+        { num: '02', claim: '"the spectrum\'s so broad it means nothing"', answer: 'that\'s a precision argument, not a reason to dismiss anyone. the heterogeneity — the sheer variety within one label — is genuinely a scientific problem, and the field is already working on it.', points: [
+          'the 2021 lancet commission formally recognised "profound autism" — minimally verbal or non-verbal, needing 24-hour care. the cdc puts this at ~1 in 4 autistic people (studies range 18–48%), on the same spectrum as independent late-diagnosed adults. — lord et al, 2021; cdc, 2023',
+          'part of the "broadening" was a deliberate definitional change: dsm-5 merged asperger\'s and related categories into one "autism spectrum disorder" in 2013. — apa, dsm-5',
+          'the answer is better subtyping and needs-led support — not deciding the milder end is fake.' ] },
+        { num: '03', claim: '"it\'s all tiktok self-diagnosis"', answer: 'self-identification is a symptom of a broken assessment pipeline — not a shortcut past it. people self-identify while waiting for the door to open.', points: [
+          '227,813 people had an open autism referral in england; 90% had already waited longer than the 13-week target, average wait over 16 months. — nhs england / nas, 2025',
+          'adhd waiting lists grew from ~21,000 to ~270,000 in six years. — fonagy review, 2026',
+          'parent-reported autism rose ~25% (2022–24) while diagnostic prevalence stayed stable — help-seeking is outrunning the system\'s capacity to assess. — fonagy review, 2026' ] },
+        { num: '04', claim: '"overdiagnosis is draining benefits and school budgets"', answer: 'the costs are real — but the driver is under-support and diagnosis-as-gatekeeper, not frivolous diagnosis. families are forced to fight for a label to unlock any help.', points: [
+          'ehc plans reached 483,000 (5.3% of pupils), up ~11% in a year and ~80% since 2018. — dfe, 2024/25',
+          'council send deficits are projected at ~£8bn by march 2027; placements in independent specialist schools tripled (10k→30k) at ~£62k each — driven by scarcity of provision, not over-diagnosis. — institute for fiscal studies, 2025',
+          'the review\'s own steer: cutting diagnosis won\'t cut costs — it wastes money already spent on urgent support.' ] },
+        { num: '05', claim: '"if you\'re high-functioning you don\'t really need support — save it for the severe cases"', answer: 'this is the one that hurts most people, and it collapses two real truths into a false trade-off. low visible support-need does not mean low suffering — and profound autism is real and badly under-served. both are true at once.', points: [
+          'the people who look "barely autistic" are often masking — holding it together at serious cost, then crashing in private. invisibility isn\'t absence of need.',
+          'at the same time, up to a quarter of autistic people have profound autism and are genuinely spoken over in a debate dominated by articulate advocates. — cdc 2023 / lancet commission 2021',
+          'the honest answer isn\'t rationing by label. it\'s needs-led precision — start with this person, match the support to them.' ] },
+        { num: '06', claim: '"everyone\'s a bit neurodiverse though, aren\'t they?"', answer: 'four different things are being collapsed into one word. untangle them and most of the "everyone has it" confusion dissolves.', points: [
+          'neurodiversity = a fact about the whole population: human brains vary (like biodiversity). everyone is part of it. — term popularised by judy singer, late 1990s',
+          'neurodivergent = an individual whose neurocognition is an outlier (autism, adhd, dyslexia…). not itself a diagnosis.',
+          'clinical diagnosis = a medical determination against dsm-5 / icd-11 criteria, tied to real, impairing difference. accepting neurodiversity doesn\'t deny that profound need exists.' ] },
+      ],
+      timeline: [
+        { when: '1943–44', title: 'autism first described', text: 'leo kanner and hans asperger describe autism — a small group of children with severe difficulties in communication and social interaction. this narrow picture shaped everything that followed.' },
+        { when: '1980', title: 'autism becomes an official diagnosis', text: 'dsm-iii lists "infantile autism" as a distinct diagnosis for the first time, and introduces attention deficit disorder (add). a formal starting line for counting.' },
+        { when: '1994', title: "asperger's syndrome is added", text: "dsm-iv adds asperger's syndrome as a separate diagnosis. suddenly people without intellectual disability or language delay — a huge, previously invisible group — could be recognised. a major step up in numbers, and in understanding." },
+        { when: '2013', title: 'dsm-5 — three big shifts at once', text: 'asperger\'s, autistic disorder and pdd-nos are merged into one "autism spectrum disorder"; for the first time autism and adhd can be diagnosed together (previously banned) — so comorbidity is finally recognised; and adhd\'s age-of-onset is relaxed (before-7 to before-12) with adult adhd better acknowledged.' },
+        { when: '2014–15 · uk', title: 'the send system is rebuilt', text: 'the children and families act 2014 and the send code of practice (jan 2015) replace "statements" with education, health & care plans (ehcps), covering ages 0–25. this reshapes who qualifies for what — and makes a diagnosis the gateway to funded support.' },
+        { when: '2010s onward', title: 'girls and women finally come into view', text: 'research on the female presentation and masking exposes decades of under-diagnosis: the old criteria were built around boys. women and girls — for both autism and adhd — begin to be recognised, often as adults. this is a large part of the recent rise, and it\'s recognition, not inflation.' },
+        { when: '2024–26', title: 'demand surges, and the backlash lands', text: 'adult self-referral and awareness climb; waiting lists hit record highs. the government commissions the fonagy review into "overdiagnosis" (2026), and a ucl paper asks whether the spectrum has grown too broad — sparking the debate this page responds to.' },
+      ],
+      themes: [
+        { n: '1', title: '"the explosion in diagnoses"', text: 'the 40-fold rise / "1 in 57" figure, framed as implausible growth. anchors nearly every sceptical piece.', level: 'very high' },
+        { n: '2', title: '"the diagnosis has become meaningless"', text: 'the watering-down of "real" autism — the core august 2026 theme, borrowed from the paper and stripped of nuance.', level: 'very high' },
+        { n: '3', title: '"the benefits bill / gaming the system"', text: 'adhd pip claims, "sicknote britain". the sharpest political heat in the whole debate.', level: 'high' },
+        { n: '4', title: '"over-medicalising normal life"', text: 'ordinary shyness, distractibility, personality turned into lifelong labels — the "worried well".', level: 'medium' },
+        { n: '5', title: '"tiktok / social-media self-diagnosis"', text: 'influencers driving young people and midlife women to self-identify.', level: 'medium' },
+        { n: '6', title: '"fashion / identity / pop culture"', text: 'neurodivergence as a lifestyle badge rather than a medical reality.', level: 'medium' },
+        { n: '7', title: '"the send system is being gamed"', text: 'record ehcps, "middle-class parents seeking an advantage". subtext more than verified fact.', level: 'lower' },
+      ],
+      voices: [
+        { title: 'defending diagnosis', tone: 'confident · weary · protective', lines: [
+          '"rising numbers are us catching up after decades of being missed — the real crisis is under-diagnosis."',
+          '"a late diagnosis is validating, not fashionable. it gave me a word for a lifetime of self-blame."',
+          '"masking is real and exhausting. don\'t tell me i \'don\'t seem autistic\'."',
+          '"self-diagnosis is a rational response to a two-to-eight-year wait."',
+          '"this is being weaponised to justify benefit and ehcp cuts."' ] },
+        { title: 'the sceptics', tone: 'dismissive · concerned · politicised', lines: [
+          '"it\'s a trend — everyone\'s a bit autistic now, the words have lost meaning."',
+          '"we\'re over-medicalising normal childhood and personality."',
+          '"diagnosis inflation spreads finite support too thin."',
+          '"there\'s gaming of ehcps and benefits going on."',
+          '"in my day none of this had a label."' ] },
+        { title: 'the voice in the middle', tone: 'grave · grief-inflected · often overlooked', lines: [
+          '"my non-speaking child is being erased by a debate dominated by independent, articulate advocates."',
+          '"when \'autism\' means everything, profound autism means nothing."',
+          '"i agree the category is too broad — but so my child is seen, not so anyone is denied."',
+          '"we need severity / subtype recognition to get services to the highest-need group."' ] },
+      ],
+      agree: [
+        'the waiting lists are broken — 2-to-8-year waits are indefensible.',
+        'support is chronically underfunded and rationed.',
+        'diagnosis has become the only gateway to help — and that\'s the real problem.',
+        'assessment quality is uneven; misdiagnosis is not the same as overdiagnosis.',
+        'the loudest media voices aren\'t the right experts.',
+        'most of the rise is awareness and identification, not a true epidemic.',
+      ],
+      evidence: [
+        { what: 'adult autism prevalence, england — stable across all ages', fig: '~1 in 100', year: '2007/2011', src: 'brugha et al · apms' },
+        { what: 'us child autism identification (climbing)', fig: '1 in 44 → 1 in 31', year: '2018→2022', src: 'cdc addm' },
+        { what: 'adhd prevalence — stable despite rising diagnoses', fig: '~5% children · 2–3% adults', year: '2026', src: 'fonagy review' },
+        { what: 'profound autism as a share of autistic people', fig: '~1 in 4 (26.7%)', year: '2023', src: 'cdc (range 18–48%, lancet 2021)' },
+        { what: 'people waiting for an autism assessment, england', fig: '227,813', year: 'to sept 2025', src: 'nhs england / nas' },
+        { what: 'adhd assessment waiting list growth', fig: '21k → 270k', year: '2019→2025', src: 'fonagy review' },
+        { what: 'pupils with send in england', fig: '1.7m+ (19.5%)', year: '2024/25', src: 'dfe' },
+        { what: 'pupils with an ehc plan', fig: '483,000 (5.3%)', year: '2024/25', src: 'dfe' },
+        { what: 'ehcps naming autism as the primary need', fig: '1 in 3 (33.6%)', year: '2024/25', src: 'dfe' },
+        { what: 'projected council send deficits', fig: '~£8bn', year: 'by mar 2027', src: 'institute for fiscal studies' },
+        { what: "dsm-5 merges asperger's / pdd-nos into one \"asd\"", fig: 'definitional change', year: '2013', src: 'apa · dsm-5' },
+      ],
+      glossary: [
+        { term: 'prevalence', text: 'the share of a population who actually have a condition. not the same as how many are diagnosed — prevalence can hold steady while diagnoses rise.' },
+        { term: 'heterogeneity', text: '"lots of variety within one group." autistic people differ hugely from one another, so a single label covers very different needs.' },
+        { term: 'the spectrum', text: 'not a line from "a bit" to "a lot". a spread of very different profiles — strengths and difficulties in different combinations for each person.' },
+        { term: 'profound autism', text: 'a term (lancet commission, 2021) for autistic people who are minimally verbal or non-verbal and need 24-hour care. the cdc estimates ~1 in 4 autistic people.' },
+        { term: 'masking', text: 'hiding neurodivergent traits to fit in — copying social scripts, suppressing stims. exhausting, and linked to burnout. invisible effort, real cost.' },
+        { term: 'comorbidity / co-occurring', text: 'having more than one condition at once (e.g. autism + adhd). only recognised together in diagnosis since 2013.' },
+        { term: 'neurodiversity', text: 'a fact about the whole population: human brains vary, like biodiversity. everyone is part of it.' },
+        { term: 'neurodivergent', text: 'an individual whose brain works differently from the "typical" — autism, adhd, dyslexia and more. a description, not itself a diagnosis.' },
+        { term: 'dsm-5 / diagnostic criteria', text: 'the manual and checklist clinicians use to decide who meets a diagnosis. widen the checklist and more people qualify — without anyone changing.' },
+        { term: 'ehcp', text: 'education, health & care plan — the legal document in england that unlocks funded send support. introduced in 2014 to replace "statements".' },
+      ],
+      sources: [
+        'ucl news — "has autism become too broad to be useful?" (aug 2026) — source of the verified quote',
+        'fonagy review — independent review into adhd, autism & mental health, interim report (gov.uk, june 2026)',
+        'lancet commission — "profound autism" definition (lord et al, 2021)',
+        'cdc addm — us child autism + profound autism prevalence (2023: 26.7%)',
+        'brugha et al — adult autism prevalence, apms (arch gen psychiatry, 2011)',
+        'neuropsychology review — male diagnostic bias / female under-diagnosis meta-analysis (2023)',
+        'nhs england autism statistics + national autistic society waiting-time analysis (nov 2025)',
+        'dfe — special educational needs in england 2024/25',
+        'institute for fiscal studies — england\'s send crisis (2025)',
+        'apa dsm editions; children and families act 2014 / send code of practice 2015 (timeline)',
+      ],
+    };
+  }
+}
+</script>
+</body>
+</html>

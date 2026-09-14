@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/styles.css">
+<script src="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:#210a33;color:#f0ebe5}
+body{font-family:var(--font-body)}
+a{color:var(--spring-green)}
+a:hover{color:var(--pearl-aqua)}
+</style>
+</helmet>
+
+<div style="padding:var(--space-8) clamp(20px,5vw,64px);display:flex;flex-direction:column;gap:var(--space-6)">
+  <div>
+    <p style="margin:0 0 var(--space-2);font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h3)">voice report pages — mocked, sample data</p>
+    <p style="margin:0;color:var(--fg-muted);max-width:60ch">three pages of one illustrative baseline report. each is a 4:3 artboard, exported to the three image slots on /voice → what you get back. swap for a real anonymised report when one exists.</p>
+  </div>
+
+  <div class="layout_root" style="background:transparent;display:flex;flex-wrap:wrap;gap:var(--space-6);justify-content:flex-start;font-family:var(--font-body)">
+
+      <div id="page-01" style="width:800px;height:600px;flex:none;background:var(--ia-bg-alt);box-shadow:var(--ia-card-shadow);padding:40px 48px;display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;box-sizing:border-box;overflow:hidden">
+        <div style="display:flex;flex-direction:column;gap:12px;min-width:0">
+          <p style="margin:0;font-size:0.78rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">unbarrier.voice · baseline · sample school</p>
+          <h2 style="margin:0;color:var(--ia-accent);font-size:1.6rem;line-height:1.15">where access reaches learners, and where it doesn't</h2>
+          <p style="margin:0;color:var(--ia-fg-muted);font-size:0.95rem;line-height:1.6">seven questions, asked of the learners the technology was bought for. scored 0–100 by how many said yes, without help.</p>
+          <p style="margin:auto 0 0;font-size:0.72rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">reach by question · 24 learners</p>
+          <div style="display:grid;gap:8px">
+            <sc-for list="{{ reach }}" as="r" hint-placeholder-count="7">
+              <div style="display:grid;grid-template-columns:120px minmax(0,1fr) auto;align-items:center;gap:12px;font-size:0.82rem;line-height:1.2">
+                <span style="color:var(--ia-fg)">{{ r.name }}</span>
+                <span style="height:10px;background:var(--ia-border);border-radius:5px;overflow:hidden"><span style="display:block;height:100%;width:{{ r.pct }};background:{{ r.bar }}"></span></span>
+                <span style="font-family:var(--font-heading);font-weight:700;color:var(--ia-fg);min-width:2.5ch;text-align:right">{{ r.score }}</span>
+              </div>
+            </sc-for>
+          </div>
+        </div>
+        <div style="align-self:center;transform:scale(1.35);transform-origin:center">
+          <x-import component-from-global-scope="Unbarrier.RadarChart" scores="{{ scores }}" title="reach by question, baseline" hint-size="320px,340px"></x-import>
+        </div>
+      </div>
+
+      <div id="page-02" style="width:800px;height:600px;flex:none;background:var(--ia-bg-alt);box-shadow:var(--ia-card-shadow);padding:40px 48px;display:flex;flex-direction:column;gap:20px;box-sizing:border-box;overflow:hidden">
+        <p style="margin:0;font-size:0.78rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">unbarrier.voice · baseline · sample school · page 2</p>
+        <h2 style="margin:0;color:var(--ia-accent);font-size:1.6rem;line-height:1.15">the gaps, named</h2>
+        <div style="display:grid;gap:14px;margin-top:4px">
+          <sc-for list="{{ gaps }}" as="g" hint-placeholder-count="3">
+            <div style="display:grid;grid-template-columns:auto 1fr auto;gap:18px;align-items:start;padding:16px 18px;border-radius:var(--radius-md);background:var(--ia-bg);border:1px solid var(--ia-border)">
+              <span style="font-family:var(--font-heading);font-weight:900;font-size:1.5rem;line-height:1;color:var(--ia-accent)">{{ g.n }}</span>
+              <div style="display:grid;gap:4px">
+                <p style="margin:0;font-family:var(--font-heading);font-weight:700;font-size:1.02rem;color:var(--ia-fg)">{{ g.title }}</p>
+                <p style="margin:0;font-size:0.88rem;line-height:1.5;color:var(--ia-fg-muted)">{{ g.body }}</p>
+                <p style="margin:2px 0 0;font-size:0.85rem;color:var(--ia-fg)"><strong>next step:</strong> {{ g.next }}</p>
+              </div>
+              <div style="text-align:right;min-width:9ch">
+                <p style="margin:0;font-size:0.72rem;text-transform:uppercase;letter-spacing:var(--ls-eyebrow);color:var(--ia-fg-muted)">cost</p>
+                <p style="margin:0;font-family:var(--font-heading);font-weight:700;color:var(--ia-fg)">{{ g.cost }}</p>
+              </div>
+            </div>
+          </sc-for>
+        </div>
+        <p style="margin:auto 0 0;font-size:0.82rem;color:var(--ia-fg-muted)">written for the governing body. one page, no acronyms.</p>
+      </div>
+
+      <div id="page-03" style="width:800px;height:600px;flex:none;background:var(--ia-bg-alt);box-shadow:var(--ia-card-shadow);padding:40px 48px;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden">
+        <p style="margin:0;font-size:0.78rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">unbarrier.voice · baseline · sample school · page 3</p>
+        <h2 style="margin:16px 0 0;color:var(--ia-accent);font-size:1.6rem;line-height:1.15">a number you can measure again</h2>
+        <div style="flex:1;display:grid;grid-template-columns:1fr 1fr;gap:32px;align-items:center;margin-top:12px">
+          <div>
+            <p style="margin:0;font-size:0.82rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">baseline · autumn term</p>
+            <p style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:9rem;line-height:1;color:var(--ia-accent)">41</p>
+            <p style="margin:4px 0 0;font-size:0.95rem;color:var(--ia-fg-muted)">of every 100 learners said the access reached them, without help.</p>
+          </div>
+          <div style="border-left:2px dashed var(--ia-border);padding-left:32px">
+            <p style="margin:0;font-size:0.82rem;letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--ia-fg-muted)">endline · summer term</p>
+            <p style="margin:0;font-family:var(--font-heading);font-weight:900;font-size:9rem;line-height:1;color:var(--ia-border)">—</p>
+            <p style="margin:4px 0 0;font-size:0.95rem;color:var(--ia-fg-muted)">same seven questions, same learners. the difference is the impact.</p>
+          </div>
+        </div>
+      </div>
+
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  renderVals() {
+    const names = ['find it', 'start alone', 'works here', 'know why', 'ask help', 'fits me', 'use again'];
+    const vals = [62, 38, 71, 29, 55, 24, 46];
+    const scores = names.map((name, i) => ({ id: 'q' + (i + 1), name, score: vals[i], answered: 24 }));
+    const reach = scores.map(s => ({ name: s.name, score: s.score, pct: s.score + '%', bar: s.score >= 50 ? 'var(--ia-accent)' : 'var(--ia-fg-muted)' }));
+    const gaps = [
+      { n: '01', title: 'learners cannot start the reader alone', body: '29 in 100 knew what the reading tool was for; 38 could open it without an adult.', next: 'a ten-minute walkthrough in every form group, once, this half term.', cost: 'staff time' },
+      { n: '02', title: 'the tool does not fit how a quarter of them learn', body: '24 in 100 said it fits how they learn. lowest of the seven. the licence is paid; the reach is not.', next: 'switch the default voice and reading speed; retest with the same 24 learners.', cost: '£0' },
+      { n: '03', title: 'nobody knows who to ask', body: '55 in 100 could name someone to ask for help. in year 9, 31.', next: 'one named adult per year group, on the wall by the door.', cost: '£0' },
+    ];
+    return { scores, reach, gaps };
+  }
+}
+</script>
+</body>
+</html>

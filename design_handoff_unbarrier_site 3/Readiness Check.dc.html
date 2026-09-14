@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/fonts/fonts.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.css">
+<link rel="stylesheet" href="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/styles.css">
+<script src="_ds/02-26-unbarrier-me-website-e0ed2706-2c06-4d17-8bae-fbb847fa55fe/_ds_bundle.js"></script>
+<style>
+html,body{margin:0;background:#210a33;color:#f0ebe5}
+body{font-family:var(--font-body)}
+a{color:var(--spring-green)}
+a:hover{color:var(--pearl-aqua)}
+fieldset > legend{float:left;width:100%}
+fieldset > legend + *{clear:both}
+</style>
+</helmet>
+
+<div style="min-height:100vh;background:var(--bg)">
+  <sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+    <x-import component-from-global-scope="Unbarrier.Nav" active="audit" hint-size="100%,90px"></x-import>
+  </sc-if>
+
+  <main style="--route-accent:var(--pearl-aqua)" data-screen-label="readiness-check">
+    <div id="rc0" style="position:relative;padding:calc(var(--nav-height) + var(--space-10)) clamp(20px,5vw,64px) var(--space-10);overflow:hidden">
+      <x-import component-from-global-scope="Unbarrier.Glow" color="var(--pearl-aqua)" left="-8%" top="0%" size="{{ 540 }}" opacity="{{ 0.1 }}" hint-size="0,0"></x-import>
+      <div style="position:relative;max-width:820px;margin:0 auto;display:flex;flex-direction:column;gap:var(--space-5)">
+        <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">the readiness check · free · five minutes · no email needed</x-import>
+        <h1 style="margin:0;max-width:18ch">you can see what isn't working. <span style="color:var(--spring-green)">you don't hold the budget.</span> start here.</h1>
+        <p style="margin:0;max-width:56ch;color:var(--fg-muted);font-size:var(--fs-body-lg)">this is not a finding about your school. it is one person's read on one day, and we would rather say that than let you carry it into a meeting as though it were.</p>
+      </div>
+    </div>
+
+    <div id="rc1">
+      <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="second" labelledBy="rc-questions" hint-size="100%,1600px">
+        <h2 id="rc-questions" style="margin:0 0 var(--space-4);max-width:24ch">rate each one as it actually is, not as it should be.</h2>
+        <p style="margin:0 0 var(--space-8);max-width:58ch;color:var(--fg-muted)">answer for one setting you know well, and for one thing it already bought. if you genuinely can't say, say so — "i don't know" is reported as a finding, not counted as a nought. anything you skip is left out.</p>
+        <ol style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:var(--space-6);max-width:760px">
+          <sc-for list="{{ questions }}" as="q" hint-placeholder-count="9">
+            <li>
+              <fieldset style="margin:0;padding:var(--space-5);border:0;border-radius:var(--radius-md);background:var(--panel-aqua)">
+                <legend style="padding:0;margin:0 0 var(--space-4);display:flex;flex-direction:column;gap:var(--space-2)">
+                  <span style="font-family:var(--font-heading);font-weight:700;font-size:var(--fs-eyebrow);letter-spacing:var(--ls-eyebrow);text-transform:uppercase;color:var(--pearl-aqua)">{{ q.number }} · {{ q.dimension }}</span>
+                  <span style="font-size:var(--fs-body-lg);line-height:var(--lh-snug)">{{ q.prompt }}</span>
+                </legend>
+                <div style="display:flex;flex-wrap:wrap;gap:var(--space-2)">
+                  <sc-for list="{{ q.options }}" as="o" hint-placeholder-count="7">
+                    <label style="{{ o.style }}">
+                      <input type="radio" name="{{ q.id }}" value="{{ o.value }}" checked="{{ o.checked }}" onChange="{{ o.pick }}" style="appearance:none;position:absolute;inset:0;margin:0;border-radius:var(--radius-pill);cursor:pointer;outline:none" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                      <span>{{ o.label }}</span>
+                    </label>
+                  </sc-for>
+                </div>
+              </fieldset>
+            </li>
+          </sc-for>
+        </ol>
+        <sc-if value="{{ notShown }}" hint-placeholder-val="{{ true }}">
+          <div style="margin-top:var(--space-8);display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4) var(--space-6)">
+            <button type="button" onClick="{{ show }}" disabled="{{ noneAnswered }}" style="{{ showStyle }}">see my result →</button>
+            <p style="margin:0;color:var(--fg-muted);font-size:var(--fs-small);max-width:44ch" aria-live="polite">{{ progressText }}</p>
+          </div>
+        </sc-if>
+      </x-import>
+    </div>
+
+    <sc-if value="{{ shown }}" hint-placeholder-val="{{ false }}">
+      <div id="rc2">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="deep" labelledBy="rc-result" hint-size="100%,900px">
+          <div tabIndex="{{ minusOne }}" ref="{{ resultRef }}" style="outline:none;display:flex;flex-direction:column;gap:var(--space-6);max-width:760px">
+            <div style="display:flex;flex-direction:column;gap:var(--space-4)">
+              <x-import component-from-global-scope="Unbarrier.Eyebrow" color="var(--pearl-aqua)" hint-size="auto,16px">your readiness check</x-import>
+              <h2 id="rc-result" style="margin:0;max-width:22ch">seven questions. three words.</h2>
+              <p style="margin:0;max-width:58ch;color:var(--fg-muted)">this is a five-minute snapshot from one person on one day. it is not a finding about your setting, and we would rather say that than let you carry it into a meeting as though it were.</p>
+            </div>
+
+            <dl style="margin:0;display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--space-3) var(--space-6);align-items:baseline">
+              <sc-for list="{{ bands }}" as="b" hint-placeholder-count="7">
+                <dt style="margin:0;font-family:var(--font-heading);font-weight:700;font-size:var(--fs-h4)">{{ b.name }}</dt>
+                <dd style="{{ b.style }}">{{ b.word }}</dd>
+              </sc-for>
+            </dl>
+
+            <sc-if value="{{ hasStart }}" hint-placeholder-val="{{ true }}">
+              <div style="padding:var(--space-5);border-radius:var(--radius-md);background:var(--spring-green);color:var(--amethyst);display:flex;flex-direction:column;gap:var(--space-2)">
+                <p style="margin:0;font-family:var(--font-heading);font-weight:700;font-size:var(--fs-eyebrow);letter-spacing:var(--ls-eyebrow);text-transform:uppercase">start here · {{ start.name }}</p>
+                <p style="margin:0;font-family:var(--font-heading);font-weight:800;font-size:clamp(1.2rem,2.4vw,1.5rem);line-height:1.3">{{ start.lead }}</p>
+                <p style="margin:0;font-size:1rem;line-height:var(--lh-body)">{{ start.sentence }}</p>
+              </div>
+            </sc-if>
+
+            <sc-if value="{{ hasStrongest }}" hint-placeholder-val="{{ true }}">
+              <p style="margin:0;max-width:58ch">across what you answered, <strong>{{ strongest.name }}</strong> is holding up best. the gap between that and <strong>{{ start.name }}</strong> is the useful part — not a number, which is why there isn't one.</p>
+            </sc-if>
+
+            <sc-if value="{{ hasUnknown }}" hint-placeholder-val="{{ false }}">
+              <p style="margin:0;max-width:58ch;padding:var(--space-4) var(--space-5);border-radius:var(--radius-md);background:var(--panel-lightpink)"><strong>you couldn't say for {{ unknownList }}.</strong> that is a finding, not a gap: nobody in the room can currently tell whether it is in place. it is also the cheapest thing on this page to find out.</p>
+            </sc-if>
+
+            <p style="margin:0;max-width:58ch;color:var(--fg-muted)">one person has answered. the learner, the ta, the teacher, the it lead and the person who signed the order have not. the picture is one seat wide until they do.</p>
+
+            <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4) var(--space-5)">
+              <button type="button" onClick="{{ copyText }}" style="{{ copyStyle }}">{{ copyLabel }}</button>
+              <p style="margin:0;color:var(--fg-muted);font-size:var(--fs-small);max-width:40ch">plain sentences, no numbers. paste it into an email to whoever holds the budget.</p>
+            </div>
+          </div>
+        </x-import>
+      </div>
+
+      <div id="rc3">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="base" labelledBy="rc-follow" hint-size="100%,700px">
+          <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+            <form onSubmit="{{ submit }}" style="display:flex;flex-direction:column;gap:var(--space-6);max-width:640px">
+              <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                <h2 id="rc-follow" style="margin:0;max-width:22ch">one thing you can do with it. optional.</h2>
+                <p style="margin:0;color:var(--fg-muted);max-width:56ch">your result is above and it stays there whether you tick anything here or not. none of this is a condition of it.</p>
+              </div>
+
+              <sc-if value="{{ emailStep }}" hint-placeholder-val="{{ false }}">
+                <div style="display:flex;flex-direction:column;gap:var(--space-3)">
+                  <label for="rc-email" style="font-family:var(--font-heading);font-weight:700">send me this result</label>
+                  <input id="rc-email" type="email" name="email" autoComplete="email" placeholder="email address" value="{{ email }}" onChange="{{ setEmail }}" style="width:100%;max-width:420px;padding:var(--space-3) var(--space-4);border-radius:var(--radius-md);border:0;background:var(--ground-300);color:var(--fg);font:inherit;font-size:1rem;outline:none" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                  <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted);max-width:56ch">unbarrier education ltd (company no. 16603630) will use this address once, to send you the result. it is not stored with your answers and it does not sign you up to anything.</p>
+                </div>
+                <label style="display:flex;gap:var(--space-3);align-items:flex-start;cursor:pointer;max-width:56ch">
+                  <input type="checkbox" checked="{{ notice }}" onChange="{{ toggleNotice }}" style="margin:6px 0 0;width:20px;height:20px;flex:none;accent-color:var(--spring-green)">
+                  <span>yes, send me notice. i can unsubscribe from any email.</span>
+                </label>
+              </sc-if>
+
+              <label style="display:flex;gap:var(--space-3);align-items:flex-start;cursor:pointer;max-width:56ch">
+                <input type="checkbox" checked="{{ research }}" onChange="{{ toggleResearch }}" style="margin:6px 0 0;width:20px;height:20px;flex:none;accent-color:var(--spring-green)">
+                <span><strong>help build the picture.</strong> add your answers to the sector data, anonymously.</span>
+              </label>
+
+              <sc-if value="{{ research }}" hint-placeholder-val="{{ false }}">
+                <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:var(--space-4)">
+                  <label style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--fs-small)">what kind of setting?
+                    <select name="settingType" style="padding:var(--space-3);border-radius:var(--radius-md);border:0;background:var(--ground-300);color:var(--fg);font:inherit;font-size:1rem" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                      <option value="">choose</option><option value="primary">primary</option><option value="secondary">secondary</option><option value="special">special</option><option value="alternative-provision">alternative provision</option><option value="all-through">all-through</option><option value="independent">independent</option><option value="international">international</option><option value="other">something else</option>
+                    </select>
+                  </label>
+                  <label style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--fs-small)">roughly how many on roll?
+                    <select name="sizeBand" style="padding:var(--space-3);border-radius:var(--radius-md);border:0;background:var(--ground-300);color:var(--fg);font:inherit;font-size:1rem" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                      <option value="">choose</option><option value="under-200">under 200</option><option value="200-599">200 to 599</option><option value="600-1199">600 to 1,199</option><option value="1200-plus">1,200 or more</option>
+                    </select>
+                  </label>
+                  <label style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--fs-small)">and you are?
+                    <select name="respondentRole" style="padding:var(--space-3);border-radius:var(--radius-md);border:0;background:var(--ground-300);color:var(--fg);font:inherit;font-size:1rem" style-focus="outline:3px solid var(--focus-ring);outline-offset:2px">
+                      <option value="">choose</option><option value="teacher">teacher</option><option value="senco-or-inclusion-lead">senco or inclusion lead</option><option value="senior-leader">senior leader</option><option value="trust-or-group">trust or group</option><option value="other">something else</option>
+                    </select>
+                  </label>
+                </div>
+              </sc-if>
+
+              <div style="padding:var(--space-5);border-radius:var(--radius-md);background:var(--panel-aqua);display:flex;flex-direction:column;gap:var(--space-3)">
+                <p style="margin:0;font-family:var(--font-heading);font-weight:800;font-size:var(--fs-h4)">we think the seven questions will show something. we might be wrong.</p>
+                <p style="margin:0;font-size:1rem">our belief is that settings score well on <strong>provision</strong> — the thing that got bought — and worse on <strong>belonging</strong> and <strong>trust</strong>, the part nobody checks. we have no proof of that. nobody does, because nobody has collected it.</p>
+                <p style="margin:0;font-size:1rem">if the pattern isn't there, we need to know before we sell it harder than we already do. a dataset you can only ever agree with isn't proof, it's decoration.</p>
+                <p style="margin:0;font-size:var(--fs-small);color:var(--fg-muted)">stored, if you tick the box: your nine answers, the setting type, the size band, your role, and the date. not the time. no school name, no free text, nothing that could be traced back to you or to a learner.</p>
+              </div>
+
+              <div style="display:flex;flex-wrap:wrap;align-items:center;gap:var(--space-4)">
+                <button type="submit" disabled="{{ nothingTicked }}" style="{{ submitStyle }}">{{ submitLabel }}</button>
+                <p style="margin:0;color:var(--fg-muted);font-size:var(--fs-small)">{{ submitHint }}</p>
+              </div>
+            </form>
+          </sc-if>
+          <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+            <div style="display:flex;flex-direction:column;gap:var(--space-3);max-width:56ch">
+              <h2 id="rc-follow" style="margin:0">{{ doneHeading }}</h2>
+              <p style="margin:0;color:var(--fg-muted)">{{ doneText }}</p>
+            </div>
+          </sc-if>
+        </x-import>
+      </div>
+
+      <div id="rc4">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="rc-closing" hint-size="100%,340px">
+          <h2 id="rc-closing" style="margin:0 0 var(--space-5);max-width:22ch">if the check made you uncomfortable, that's the conversation.</h2>
+          <p style="margin:0 0 var(--space-6);max-width:56ch;color:var(--fg-muted)">the next rung is a day in your setting, asking the same seven questions of everyone in the chain.</p>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" color="var(--pearl-aqua)" hint-size="auto,44px">start with a discovery day →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" variant="ghost" external="{{ true }}" hint-size="auto,44px">ready to talk? → book a discovery call</x-import>
+          </div>
+        </x-import>
+      </div>
+    </sc-if>
+
+    <sc-if value="{{ notShown }}" hint-placeholder-val="{{ true }}">
+      <div id="rc4b">
+        <x-import component-from-global-scope="Unbarrier.Section" measure="route" ground="well" space="loose" labelledBy="rc-closing-b" hint-size="100%,300px">
+          <h2 id="rc-closing-b" style="margin:0 0 var(--space-5);max-width:22ch">already know where it breaks?</h2>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-4)">
+            <x-import component-from-global-scope="Unbarrier.Button" href="/audit" color="var(--pearl-aqua)" hint-size="auto,44px">start with a discovery day →</x-import>
+            <x-import component-from-global-scope="Unbarrier.Button" href="/book" variant="ghost" external="{{ true }}" hint-size="auto,44px">ready to talk? → book a discovery call</x-import>
+          </div>
+        </x-import>
+      </div>
+    </sc-if>
+
+    <div style="padding:var(--space-10) 0 var(--space-8)">
+      <x-import component-from-global-scope="Unbarrier.NewsletterBand" route="/readiness-check" weight="standard" heading="notice" sub="one email when there is something worth saying. nothing when there isn't. written for people who don't have time to read it twice." email-label="email address" button-label="subscribe →" privacy="unbarrier education ltd (company no. 16603630) will use your email address only to send you notice. we won't pass it to anyone else, and every email has a one-click unsubscribe." privacy-link-label="privacy notice" hint-size="100%,280px"></x-import>
+    </div>
+  </main>
+
+  <sc-if value="{{ standalone }}" hint-placeholder-val="{{ true }}">
+    <x-import component-from-global-scope="Unbarrier.Footer" variant="full" hint-size="100%,320px"></x-import>
+  </sc-if>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;emailStep&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;consent&quot;},&quot;bandWords&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;learner language&quot;,&quot;engine&quot;],&quot;default&quot;:&quot;learner language&quot;,&quot;tsType&quot;:&quot;'learner language'|'engine'&quot;,&quot;section&quot;:&quot;result&quot;},&quot;embedded&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:false,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;embedding&quot;}}">
+// question set copied verbatim from the bundle's readiness-check-v1 (lib/readiness-check/questions.ts). wording not signed off as final — do not edit here.
+const DIMENSIONS = [
+  { id: 'provision', name: 'provision', questions: [{ id: 'provision-0', prompt: 'the tools a learner needs are in the room, charged and working when the lesson starts.' }] },
+  { id: 'access', name: 'access', questions: [
+    { id: 'access-0', prompt: 'a learner can get into their tools on their own, without an adult beside them.' },
+    { id: 'access-1', prompt: 'the support features are switched on and set up for the learners who need them, not just available.' }] },
+  { id: 'design', name: 'design', questions: [{ id: 'design-0', prompt: 'materials are built with more than one way in, before anyone has to ask for an adjustment.' }] },
+  { id: 'capability', name: 'capability', questions: [{ id: 'capability-0', prompt: 'staff can set it up on a tuesday, and it holds when the person who champions it is away.' }] },
+  { id: 'belonging', name: 'belonging', questions: [{ id: 'belonging-0', prompt: 'learners take part without being asked, and can get back in when something goes wrong.' }] },
+  { id: 'trust', name: 'trust', questions: [{ id: 'trust-0', prompt: 'learners, families and staff believe it will work when it matters, and that their data is safe.' }] },
+  { id: 'evidence', name: 'evidence', questions: [
+    { id: 'evidence-0', prompt: 'you can show a parent or a governor what actually changed, without reaching for the word \u201Cengagement\u201D.' },
+    { id: 'evidence-1', prompt: 'you could measure the same thing again next year and know whether it moved.' }] },
+];
+const SCALE = [
+  { value: 0, label: 'not in place at all' }, { value: 1, label: 'barely' }, { value: 2, label: 'in places' },
+  { value: 3, label: 'about half the time' }, { value: 4, label: 'mostly' }, { value: 5, label: 'fully in place and working' },
+  { value: 'dk', label: "i don't know" },
+];
+// start-here reads. one per dimension. name the gap, never the neglect.
+const START = {
+  provision: { lead: 'the thing that was bought is not reliably in the room when the lesson starts.', sentence: 'before anything else is bought, find out where it is at nine o\'clock: charged, working, and with the learner it was bought for.' },
+  access: { lead: 'learners are not yet getting into their tools without an adult beside them.', sentence: 'the support features exist. the work is switching them on for the learners who need them, and teaching each learner to open their own door.' },
+  design: { lead: 'materials are built one way and adjusted afterwards.', sentence: 'the lever is upstream: more than one way in, built before anyone has to ask. it is the only lever left where the law cannot reach.' },
+  capability: { lead: 'it works when one person is in the building.', sentence: 'the next step is making it hold across teachers, subjects and rooms on an ordinary tuesday, with the champion away.' },
+  belonging: { lead: 'learners are present but not yet choosing to take part.', sentence: 'access without belonging is attendance. the work is what happens when something goes wrong, and whether the learner gets back in.' },
+  trust: { lead: 'learners, families or staff do not yet believe it will work when it matters.', sentence: 'a tool that fails twice in front of a class is not opened again. trust is rebuilt in small, kept promises, not in another rollout.' },
+  evidence: { lead: 'what changed cannot yet be shown without the word "engagement".', sentence: 'agree now what you will measure and how, so that next year you can say whether it moved.' },
+};
+const BAND_WORDS = { learner: ['reaching', 'patchy', 'not reaching'], engine: ['high', 'medium', 'low'] };
+const BAND_COLOR = ['var(--pearl-aqua)', 'var(--school-bus-yellow)', 'var(--princeton-orange)'];
+const BTN = 'padding:var(--space-3) var(--space-5);border:0;border-radius:var(--radius-pill);font-family:var(--font-heading);font-weight:700;font-size:1rem;cursor:pointer;';
+
+class Component extends DCLogic {
+  state = { scores: {}, shown: false, research: false, notice: false, email: '', submitted: false, copied: false };
+  resultRef = React.createRef();
+
+  pick(id, value) { this.setState(s => ({ scores: { ...s.scores, [id]: value } })); }
+
+  compute() {
+    const { scores } = this.state;
+    const per = DIMENSIONS.map(d => {
+      let sum = 0, n = 0, dk = 0;
+      for (const q of d.questions) {
+        const v = scores[q.id];
+        if (v === 'dk') dk++; else if (v !== undefined) { sum += v; n++; }
+      }
+      const score = n ? Math.round(sum / n * 20) : 0; // same arithmetic as lib/isp-audit/summary domainScores
+      const band = n ? (score >= 65 ? 0 : score >= 50 ? 1 : 2) : null; // scoreBand thresholds, renamed
+      return { id: d.id, name: d.name, score, answered: n, dk, band };
+    });
+    const rated = per.filter(d => d.answered > 0);
+    const weakest = rated.length ? [...rated].sort((a, b) => a.score - b.score)[0] : null;
+    const strongest = rated.length > 1 ? [...rated].sort((a, b) => b.score - a.score)[0] : null;
+    const unknown = per.filter(d => d.answered === 0 && d.dk > 0);
+    return { per, weakest, strongest: strongest && strongest.id !== weakest.id ? strongest : null, unknown };
+  }
+
+  plainText(words) {
+    const { per, weakest, unknown } = this.compute();
+    const L = ['the readiness check — unbarrier.me/readiness-check', "one person's read on one day. not a finding about the school.", ''];
+    per.forEach(d => L.push(`${d.name}: ${d.band === null ? (d.dk ? "couldn't say" : 'not answered') : words[d.band]}`));
+    if (weakest) L.push('', `start here: ${weakest.name}. ${START[weakest.id].lead} ${START[weakest.id].sentence}`);
+    if (unknown.length) L.push('', `couldn't say for ${unknown.map(d => d.name).join(', ')}. that is a finding: nobody in the room can currently tell whether it is in place.`);
+    L.push('', 'one person has answered. the learner, the ta, the teacher, the it lead and the person who signed the order have not.');
+    return L.join('\n');
+  }
+
+  renderVals() {
+    const s = this.state;
+    const emailStep = this.props.emailStep ?? false;
+    const words = BAND_WORDS[(this.props.bandWords ?? 'learner language') === 'engine' ? 'engine' : 'learner'];
+    const standalone = !(this.props.embedded ?? false);
+    let n = 0;
+    const questions = DIMENSIONS.flatMap(d => d.questions.map(q => ({
+      id: q.id, prompt: q.prompt, dimension: d.name, number: String(++n).padStart(2, '0'),
+      options: SCALE.map(o => {
+        const checked = s.scores[q.id] === o.value;
+        return { value: o.value, label: o.label, checked, pick: () => this.pick(q.id, o.value),
+          style: `position:relative;display:inline-flex;align-items:center;padding:var(--space-2) var(--space-4);border-radius:var(--radius-pill);font-size:var(--fs-small);line-height:1.3;cursor:pointer;user-select:none;background:${checked ? 'var(--pearl-aqua)' : 'var(--ground-300)'};color:${checked ? 'var(--amethyst)' : 'var(--fg)'};font-weight:${checked ? 700 : 400}${o.value === 'dk' ? ';font-style:italic' : ''}` };
+      }),
+    })));
+    const responded = Object.keys(s.scores).length;
+    const total = questions.length;
+    const { per, weakest, strongest, unknown } = this.compute();
+    const bands = per.map(d => ({ name: d.name,
+      word: d.band === null ? (d.dk ? "couldn't say" : 'not answered') : words[d.band],
+      style: `margin:0;font-family:var(--font-heading);font-weight:700;font-size:var(--fs-h4);text-align:right;color:${d.band === null ? 'var(--fg-muted)' : BAND_COLOR[d.band]};${d.band === null ? 'font-style:italic;font-weight:400' : ''}` }));
+    const ticked = s.research || (emailStep && (s.email.trim().length > 3 || s.notice));
+    const wantsEmail = emailStep && s.email.trim().length > 3;
+    return {
+      standalone, emailStep, questions, bands,
+      shown: s.shown, notShown: !s.shown, noneAnswered: responded === 0,
+      show: () => this.setState({ shown: true }, () => requestAnimationFrame(() => { const el = this.resultRef.current; if (el) { window.scrollTo({ top: el.getBoundingClientRect().top + window.scrollY - 120, behavior: 'smooth' }); el.focus({ preventScroll: true }); } })),
+      showStyle: BTN + (responded === 0 ? 'background:var(--ground-300);color:var(--fg-muted);cursor:not-allowed' : 'background:var(--pearl-aqua);color:var(--amethyst)'),
+      progressText: responded === 0 ? `${total} questions. answer one and you can see a result.` : responded === total ? 'all nine answered.' : `${responded} of ${total} answered. you can see a result at any point — the ones you skip are left out rather than counted as nought.`,
+      minusOne: -1, resultRef: this.resultRef,
+      hasStart: !!weakest, start: weakest ? { name: weakest.name, ...START[weakest.id] } : { name: '', lead: '', sentence: '' },
+      hasStrongest: !!strongest, strongest: strongest || { name: '' },
+      hasUnknown: unknown.length > 0, unknownList: unknown.map(d => d.name).join(', ').replace(/, ([^,]*)$/, ' and $1'),
+      copyText: () => { const t = this.plainText(words); const done = () => { this.setState({ copied: true }); setTimeout(() => this.setState({ copied: false }), 2400); }; if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, done); else done(); },
+      copyLabel: s.copied ? 'copied ✓' : 'copy as text →',
+      copyStyle: BTN + 'background:var(--ground-300);color:var(--fg)',
+      research: s.research, toggleResearch: e => this.setState({ research: e.target.checked }),
+      notice: s.notice, toggleNotice: e => this.setState({ notice: e.target.checked }),
+      email: s.email, setEmail: e => this.setState({ email: e.target.value }),
+      notSubmitted: !s.submitted, submitted: s.submitted, nothingTicked: !ticked,
+      submitLabel: wantsEmail ? 'send it →' : 'add my answers →',
+      submitHint: ticked ? 'nothing here changes the result above.' : 'tick something, or just take the result with you.',
+      submitStyle: BTN + (ticked ? 'background:var(--pearl-aqua);color:var(--amethyst)' : 'background:var(--ground-300);color:var(--fg-muted);cursor:not-allowed'),
+      submit: e => { e.preventDefault(); if (ticked) this.setState({ submitted: true }); },
+      doneHeading: wantsEmail ? 'on its way.' : 'thank you. it is in the picture.',
+      doneText: [wantsEmail ? 'the result is in your inbox, as plain sentences.' : '', s.notice ? 'notice: check your inbox for one email asking you to confirm. nothing arrives until you do.' : '', s.research ? 'your nine answers, the setting type, the size band, your role and the date are in the sector data. if the pattern isn\'t there, you\'ll read it in notice first.' : ''].filter(Boolean).join(' '),
+    };
+  }
+}
+</script>
+</body>
+</html>
