@@ -1,6 +1,6 @@
 // The standing shelf on /hello — every free resource, with its status.
 //
-// The public page shows only the LIVE ones (13 Sep 2026: three). The held
+// The public page shows only the LIVE ones (16 Sep 2026: four). The held
 // ones stay in this list so the signed-in shelf can show their status pill and
 // so switching one on is a one-word change here, not a rebuild. Card copy for
 // a live resource = its title + the existing page's own first line. Nothing
@@ -65,6 +65,18 @@ export const HELLO_SHELF: ShelfItem[] = [
     shelf: 'read',
     status: 'live',
     live: true,
+  },
+  {
+    card: 'prompting_for_inclusion',
+    title: 'prompting for inclusion',
+    meta: 'getting more out of the AI you already have',
+    href: 'https://www.unbarrier.me/prompting-for-inclusion.html',
+    minutes: 10,
+    shelf: 'read',
+    status: 'live',
+    live: true,
+    accent: 'var(--spring-green)',
+    accentRgb: '56, 255, 153',
   },
   // OPEN — held until the revamp lands. Not shown.
   {
