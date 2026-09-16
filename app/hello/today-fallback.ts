@@ -1,6 +1,6 @@
-// The today block when Notion cannot answer — the three live resources, in
-// the order the 13 Sep 2026 prototype gives them. Stale beats absent on the
-// page Nici reads out from a stage.
+// The today block when Notion cannot answer — the four live resources, the
+// 17 Sep 2026 pack first, then the order the 13 Sep 2026 prototype gives
+// them. Stale beats absent on the page Nici reads out from a stage.
 
 import type { HelloLink } from '@/lib/hello-links';
 import { HELLO_SHELF } from '@/lib/hello-shelf';
@@ -9,9 +9,15 @@ import { HELLO_SHELF } from '@/lib/hello-shelf';
 export const DEFAULT_TODAY_HEADING =
   'inclusion beyond send — university of surrey, 17 september';
 
-const TODAY_ORDER = ['belonging_check', 'seven_questions', 'receipts'];
+const TODAY_ORDER = [
+  'prompting_for_inclusion',
+  'belonging_check',
+  'seven_questions',
+  'receipts',
+];
 
 const ACCENT: Record<string, [string, string]> = {
+  prompting_for_inclusion: ['var(--spring-green)', '56, 255, 153'],
   belonging_check: ['var(--orchid-mist)', '219, 125, 204'],
   seven_questions: ['var(--pearl-aqua)', '105, 217, 209'],
   receipts: ['var(--princeton-orange)', '255, 138, 28'],
