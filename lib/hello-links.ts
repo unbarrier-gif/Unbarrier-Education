@@ -20,7 +20,8 @@
 //                            legacy, still valid: "today" | "for schools" |
 //                            "for you" | "read and talk"
 //   Order    (number)       low first, within the group
-//   Show     (checkbox)     unticked rows never render
+//   Show     (checkbox)     unticked rows never render. "Showc" is accepted
+//                            too — see the note on showTicked() below.
 //   Image    (url)          card thumbnail; empty falls back to a tinted tile
 //   Accent   (select)       "green" | "aqua" | "orchid" | "yellow" | "orange" | "pink mist"
 //   New tab  (checkbox)
@@ -134,6 +135,23 @@ function checkbox(prop: unknown): boolean {
   return (prop as { checkbox?: boolean })?.checkbox === true;
 }
 
+// The live-or-not tick, under either spelling.
+//
+// The Notion API keys properties by their CURRENT NAME. A stray keystroke in
+// the rename box — the column is called "Showc" in the live table right now —
+// renames the property, every row's `Show` reads as undefined, every card is
+// dropped, and getHelloLinks() falls back silently. Nici has no way to see
+// that from Notion: the table looks exactly the same, the ticks are still
+// there, and the page just quietly stops listening to her.
+//
+// So match on the name loosely. A column whose name starts with "show" is the
+// tick. Anything else about the schema still has to be exact — this is the one
+// field where a typo costs the page.
+function showTicked(props: Record<string, unknown>): boolean {
+  const key = Object.keys(props).find((k) => k.trim().toLowerCase().startsWith('show'));
+  return key ? checkbox(props[key]) : false;
+}
+
 function slugify(s: string): string {
   return s
     .toLowerCase()
@@ -155,7 +173,7 @@ function toLink(page: PageObjectResponse): HelloLink | null {
 
   // A card with no title, no destination, or no group can't be rendered.
   if (!title || !href || !isGroup(group)) return null;
-  if (!checkbox(props.Show)) return null;
+  if (!showTicked(props)) return null;
 
   const accentKey = selectName(props.Accent) || 'green';
 

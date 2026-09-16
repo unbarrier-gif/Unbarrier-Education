@@ -149,6 +149,60 @@ h1,h2,h3,h4{font-family:var(--font-heading);line-height:1.05;letter-spacing:-0.0
   .page{box-shadow:none;width:210mm;height:297mm;page-break-after:always;break-after:page;}
   .page:last-child{page-break-after:auto;break-after:auto;}
 }
+/* ── SCREEN · PHONES AND SMALL TABLETS ─────────────────────────────── */
+/* This sheet is a fixed A4 artefact: 210mm is ~794px, about twice a phone's
+   viewport, and .page clips whatever spills. So on a phone it ran off the
+   right-hand side and the rest was simply gone.
+   Below 820px the sheet flows instead — full width, height from content,
+   one column. Nothing above this block changes, and @media print still
+   restores 210mm x 297mm, so the printed/PDF version is untouched. */
+@media screen and (max-width:820px){
+  .stage{padding:20px 0 40px;gap:16px;}
+  .hint{padding:0 18px;max-width:none;}
+
+  .page{width:100%;height:auto;box-shadow:none;}
+  .pad{height:auto;padding:26px 20px 30px;}
+
+  .head{gap:12px;}
+  .head img.logo{height:34px;}
+  .wordmark img{height:30px;}
+
+  .hero{margin-top:26px;}
+  .hero .eyebrow{margin-bottom:18px;}
+  .hero-row{flex-direction:column;align-items:flex-start;gap:12px;}
+  .figbig{font-size:80pt;}
+  .hero-lead{max-width:none;padding-bottom:0;}
+  .hero-state{margin-top:22px;font-size:18pt;max-width:none;}
+
+  .statsblock{margin-top:28px;}
+  .statsblock .bar{margin-bottom:22px;}
+  .stats{grid-template-columns:1fr;gap:20px;}
+  .stat{padding:18px 0 0;border-left:none;border-top:1.4px solid var(--border-default);}
+  .stat:first-child{padding-top:0;border-top:none;}
+
+  .contrast{margin-top:24px;padding:20px;}
+  .contrast p{font-size:13pt;}
+
+  .foot{margin-top:28px;padding-top:20px;flex-direction:column;align-items:flex-start;gap:18px;}
+  .who .ro{max-width:none;}
+  .contact{text-align:left;}
+  .badges{flex-wrap:wrap;gap:14px;margin-top:16px;}
+  .badge-strip{flex-wrap:wrap;gap:12px;margin-top:18px;padding-top:16px;}
+
+  .back-title{margin-top:26px;}
+  .back-title h2{font-size:20pt;max-width:none;}
+  .back-intro{max-width:none;margin-top:14px;}
+
+  .acts{margin-top:24px;gap:14px;}
+  .act{padding:20px 18px;}
+  .act .num{position:static;width:32px;height:32px;margin-bottom:12px;}
+
+  .cta{margin-top:24px;padding:22px 20px;}
+  .cta .ct-l{max-width:none;}
+  .cta .ct-l .em{white-space:normal;font-size:12pt;}
+
+  .figure-wrap{position:static;width:130px;margin:22px auto 0;}
+}
 </style>
 </head>
 <body>
