@@ -1,105 +1,108 @@
-// /kit — the seven free guides to the inclusion strategy, one per principle
-// of the inclusive mainstream fund. Data for the landing page, in one place.
+// /kit — the landing page for the Inclusive Mainstream Fund guide (version 2,
+// from the "kit landing page v2" design). Everything the page says, and the
+// seven chapters, live in this one file.
 //
-// Source: the Notion "kit landing page — spec + copy draft" (5 Sep 2026) and
-// the 8 Sep amendment pass, as the 13 Sep design handover carried them.
+// NICI WRITES ALL THE COPY. A slot with `text: null` renders its placeholder
+// (components/kit/Slot.tsx), clearly marked. To fill one, set `text` — that is
+// the whole change; no component needs touching. The `placeholder` strings are
+// the spec's own, so the PR's copy sheet and the page say the same thing.
+//
+// Site copy is lowercase. The guide title and the chapter titles Nici named
+// keep their capitals, as supplied.
 
-import { SITE_FLAGS } from './site-flags';
-
-export type Principle = {
-  /** The 01–07 numeral shown on the row (Outfit, like every numeral). */
-  n: string;
-  /** The principle number as the guidance counts it. */
-  num: string;
-  /** The conditions-of-grant wording, verbatim. Not ours to edit. */
-  name: string;
-  /** Written and sendable now. The others follow this term, in build order. */
-  ready: boolean;
-  /**
-   * The sponsor state of the row, resolved from the flags:
-   *   `own`   principle 1 — unbarrier's own, never sponsored
-   *   `paid`  a sponsor paid for the guide to be free — carries a logo slot
-   *   `open`  no sponsor yet, said out loud (SITE_FLAGS.kitUnpaidRowText)
-   *   `none`  no sponsor yet, nothing said
-   */
-  sponsor: 'own' | 'paid' | 'open' | 'none';
+export type Copy = {
+  /** What shows until Nici's words arrive. */
+  placeholder: string;
+  /** The words. `null` = not written yet. */
+  text: string | null;
 };
 
-// BUILD ORDER, not principle order — the contents list runs in the order the
-// guides land. Two are ready; five follow this term.
-//
-// THE SPONSOR ROWS. The demo "paid" state on principle 7 is for review only
-// (SITE_FLAGS.kitDemoSponsorRow, off). A real sponsor is a data change here
-// — `sponsor: 'paid'` and the logo file — once one has actually paid.
-const RAW: Array<Omit<Principle, 'sponsor'> & { own?: boolean; demoPaid?: boolean }> = [
-  { n: '05', num: '5', name: 'a safe and respectful culture fostering belonging, attendance and participation', ready: true },
-  { n: '07', num: '7', name: 'inclusive environments with continuous improvements to accessibility', ready: true, demoPaid: true },
-  { n: '03', num: '3', name: 'high-quality adaptive teaching with curriculum designed for all learners', ready: false },
-  { n: '04', num: '4', name: 'enriching provision beyond the classroom that all children can access', ready: false },
-  { n: '02', num: '2', name: 'evidence-based support prioritising early intervention', ready: false },
-  { n: '06', num: '6', name: 'strong partnerships with families and wider services', ready: false },
-  { n: '01', num: '1', name: 'ambitious leadership and governance that embeds inclusion', ready: false, own: true },
-];
+const nici = (slot: string): Copy => ({
+  placeholder: `[${slot} · nici's words]`,
+  text: null,
+});
 
-export const PRINCIPLES: Principle[] = RAW.map(({ own, demoPaid, ...p }) => ({
-  ...p,
-  sponsor: own
-    ? 'own'
-    : demoPaid && SITE_FLAGS.kitDemoSponsorRow
-      ? 'paid'
-      : SITE_FLAGS.kitUnpaidRowText === 'open to a sponsor'
-        ? 'open'
-        : 'none',
-}));
+/** The guide title. Not a slot: it is given, and keeps its capitals. */
+export const GUIDE_TITLE =
+  'The Inclusive Mainstream Fund: what you need to understand before you act';
 
-/** The lines a row shows for each sponsor state. */
-export const SPONSOR_LINE: Record<Principle['sponsor'], string> = {
-  own: "unbarrier's own. this one is never sponsored.",
-  paid: 'free because of',
-  open: 'open to a sponsor',
-  none: '',
-};
+export const KIT_COPY = {
+  // header
+  headerButton: nici('button label'),
 
-/** The role select. The value is what MailerLite stores. */
-export const KIT_ROLES = [
-  'headteacher',
-  'deputy or assistant head',
-  'senco or inclusion lead',
-  'trust or mat role',
-  'governor',
-  'other',
-] as const;
+  // first screen · left
+  label: nici('label above title'),
+  guideLine: nici('one line: what the guide is'),
+  afterLine: nici('one line: what happens after you sign up'),
+  coverAlt: nici('guide cover alt text'),
 
-export type KitRole = (typeof KIT_ROLES)[number];
+  // first screen · right
+  formHeading: nici('form heading'),
+  detailsLine: nici('one line on what happens to their details'),
 
-// ⚠️ THIS CONSTANT IS A CONSENT RECORD — the same rule as CONSENT_WORDING in
-// lib/consent.ts. It is the label on the /kit notice checkbox AND the value
-// written to `consent_wording` when that box is ticked, so the record and the
-// screen cannot drift. It is deliberately NOT the site-wide CONSENT_WORDING:
-// the kit form shows different words (the 5 Sep spec), and a record has to
-// say what the person actually read. Changing it changes what future records
-// claim; never back-fill the old ones.
-//
-// The words are the spec's, near-verbatim. Two things in them are Nici's to
-// confirm: "fortnightly" (the subscribe block promises no cadence) and "the
-// child" (the site says learners everywhere but the two founding lines).
-export const KIT_CONSENT_WORDING =
-  'send me notice — a fortnightly email for school leaders on inclusion that actually reaches the child. unsubscribe any time.';
+  // contents
+  contentsHeading: nici('contents heading'),
 
-/** Which form the consent came from — see lib/consent.ts consentSource. */
-export const KIT_CONSENT_SOURCE = 'kit form · /kit';
+  // the next step
+  nextHeading: nici('heading'),
+  nextBody: nici('the call and the clinic'),
+  bookingButton: nici('booking button'),
+  backToForm: nici('back to the form'),
+
+  // <head>: the page is noindex, but the tab and any shared link still read these
+  metaDescription: nici('meta description'),
+} satisfies Record<string, Copy>;
 
 /**
- * The `?from=` on the url, scrubbed, so a link in a talk or a newsletter can
- * say where the request came from. Stored on the subscriber (kit_source).
- * Anything that is not a short slug becomes "direct".
+ * The guide cover. `src` stays null until amber supplies the image, and the
+ * page shows a placeholder box. Drop the file in /public/assets and set it.
  */
-export function kitSource(raw: string | string[] | undefined): string {
-  const value = Array.isArray(raw) ? raw[0] : raw;
-  const cleaned = (value ?? '')
-    .trim()
-    .toLowerCase()
-    .replace(/[^a-z0-9_-]/g, '')
-    .slice(0, 40);
-  return cleaned || 'direct';
-}
+export const KIT_COVER: { src: string | null; width: number; height: number } = {
+  src: null,
+  width: 600,
+  height: 800,
+};
+
+export type Chapter = {
+  /** 01–07, Outfit. */
+  n: string;
+  title: Copy;
+  /** The sponsor strip. Same line on every chapter until copy freeze. */
+  sponsor: Copy;
+  /** The chapter's tint, a token from app/globals.css. */
+  tint: string;
+};
+
+const chapterTitle = (text: string | null): Copy => ({
+  placeholder: '[chapter title]',
+  text,
+});
+
+const sponsor = (): Copy => ({
+  placeholder: '[sponsor · confirmed at copy freeze]',
+  text: null,
+});
+
+export const CHAPTERS: Chapter[] = [
+  { n: '01', title: chapterTitle('Leadership'), sponsor: sponsor(), tint: 'var(--kit-tint-01)' },
+  { n: '02', title: chapterTitle('Noticing'), sponsor: sponsor(), tint: 'var(--kit-tint-02)' },
+  { n: '03', title: chapterTitle('Designing'), sponsor: sponsor(), tint: 'var(--kit-tint-03)' },
+  { n: '04', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-04)' },
+  { n: '05', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-05)' },
+  { n: '06', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-06)' },
+  { n: '07', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-07)' },
+];
+
+/**
+ * The HubSpot form (amber's). The fields — name, school, role, email and the
+ * unticked notice box — live in HubSpot, not in our code. EU1 region.
+ */
+export const HUBSPOT = {
+  scriptSrc: 'https://js-eu1.hsforms.net/forms/embed/149444141.js',
+  region: 'eu1',
+  portalId: '149444141',
+  formId: '1a682a60-53c9-4981-9b89-147983a4dc48',
+} as const;
+
+/** The id the header button, the next-step card and the hash links jump to. */
+export const FORM_ID = 'form';

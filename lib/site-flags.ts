@@ -76,12 +76,6 @@ export const SITE_FLAGS = {
    *  exists — both are go-live conditions in the kit spec. The route is
    *  built and reachable meanwhile, noindex, like /voice. */
   kitPublic: false,
-  /** What an unsponsored contents row says. The spec's default is nothing. */
-  kitUnpaidRowText: 'blank' as 'blank' | 'open to a sponsor',
-  /** Review only: shows the paid sponsor state on principle 7 with an empty
-   *  logo slot, so the row can be seen before a sponsor exists. Never on in
-   *  production — a sponsor line with no sponsor behind it is a false claim. */
-  kitDemoSponsorRow: false,
 
   // ── /hello ────────────────────────────────────────────────────────────
   /** "why your hands move" on the /hello shelf. Held for the blog. */
