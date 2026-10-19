@@ -37,8 +37,8 @@ import styles from './page.module.css';
 // form, then the after-sign-up line and the cover. On a laptop the grid areas
 // put the form beside them. One source order, so the tab order matches both.
 //
-// COPY: none of it is written here. Every slot is in lib/kit.ts and shows a
-// marked placeholder until Nici's words are in. The chapter data is there too.
+// COPY: none of it is written here. Every slot is in lib/kit.ts, with stand-in
+// text for amber to write over. The chapter data is there too.
 //
 // STILL NOINDEX: SITE_FLAGS.kitPublic is off until Nici says it can go
 // public, and the sitemap keeps it out.
