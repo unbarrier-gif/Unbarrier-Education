@@ -1,9 +1,13 @@
 /* ========================================================================
-   /inclusive-mainstream — version 2. The page has one job: get a school leader to fill in the
-   form. Every colour is a token (the --kit-* surfaces are in app/globals.css);
-   text on a light surface is --text-inverse, the fixed new-world-blue, so it
-   holds in high contrast. Green is a ground only (the buttons) — never text,
-   never a line on white. No drawn edges. Touch targets are 44px or more.
+   /inclusive-mainstream — version 2. The page has one job: get a school
+   leader to fill in the form. Every colour is a token (the --kit-* surfaces
+   are in app/globals.css). Green is a ground or a line ON DARK here — never
+   text, never a line on white. No drawn edges. Touch targets are 44px or more.
+
+   THE ICEBERG. public/assets/iceberg.svg is 420 × 690 and its waterline sits
+   225 down from the top (32.6%). Wherever it appears it is placed so that
+   waterline lands on a green line: its top = line centre − height × 225 / 690.
+   The numbers live in lib/kit.ts (ICEBERG); the same two are used below.
    ======================================================================== */
 
 /* ── header ───────────────────────────────────────────────────────────── */
@@ -19,9 +23,9 @@
 }
 
 /* ── first screen ─────────────────────────────────────────────────────── */
-/* A laptop shows the whole card under the header without scrolling. It is a
-   minimum, not a height: a longer form (validation messages) grows the card
-   rather than clipping it. */
+/* A laptop shows the whole first screen under the header without scrolling.
+   It is a minimum, not a height: a longer form (validation messages) grows
+   the page rather than clipping it. The title sits straight on the ground. */
 .first {
   display: flex;
   min-height: calc(100dvh - 72px);
@@ -30,12 +34,15 @@
   margin: 0 auto;
 }
 
-.card {
+.stage {
+  /* the iceberg, measured off its own height */
+  --berg-h: 140px;                                   /* phone */
+  --berg-w: calc(var(--berg-h) * 420 / 690);
+  --berg-tip: calc(var(--berg-h) * 225 / 690);       /* above the waterline */
+  --berg-sub: calc(var(--berg-h) * 429 / 690);       /* drawn depth below it */
+  --line: 4px;
+
   flex: 1;
-  background: var(--kit-card);
-  color: var(--text-inverse);
-  border-radius: var(--kit-card-radius);
-  padding: var(--space-5) var(--space-4) var(--space-4);
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
@@ -44,11 +51,8 @@
 
 .label,
 .title,
-.line,
-.details,
-.panelHeading,
-.coverBox {
-  color: var(--text-inverse);
+.line {
+  color: var(--text);
 }
 
 .label {
@@ -65,9 +69,35 @@
   text-wrap: balance;
 }
 
+/* The line under the title: 4px of green across the whole title column. On
+   a phone the iceberg's tip needs somewhere to stand, so the line drops by
+   the height of the tip; on a laptop the title makes room instead. */
+.rule {
+  position: relative;
+  height: var(--line);
+  background: var(--spring-green);
+  margin-top: var(--berg-tip);
+}
+
+.berg {
+  position: absolute;
+  right: var(--space-3);
+  top: calc(var(--line) / 2 - var(--berg-tip));
+  height: var(--berg-h);
+  width: var(--berg-w);
+}
+
 .line {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
+}
+
+/* The text beside the iceberg's submerged part keeps clear of it, and the
+   guide line is at least as tall as that part, so nothing below it (the form
+   on a phone) lands on the iceberg. */
+.guide {
+  padding-right: calc(var(--berg-w) + var(--space-5));
+  min-height: calc(var(--berg-sub) - var(--line) / 2 - var(--space-4));
 }
 
 /* The lilac form panel. HubSpot styles what is inside it; the panel only
@@ -81,6 +111,11 @@
   flex-direction: column;
   gap: var(--space-4);
   scroll-margin-top: var(--space-4);
+}
+
+.panelHeading,
+.details {
+  color: var(--text-inverse);
 }
 
 .panelHeading {
@@ -109,6 +144,7 @@
   text-align: center;
   padding: var(--space-4);
   background: var(--kit-tint-01);
+  color: var(--text-inverse);
   border-radius: var(--radius-md);
   font-size: var(--fs-small);
 }
@@ -124,38 +160,67 @@
 /* Laptop and up: the form moves beside the text. Same DOM order, so the tab
    order and the phone order are one thing. */
 @media (min-width: 768px) {
-  .card {
+  .stage {
+    --berg-h: 230px;
     grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
     grid-template-areas:
       'label  panel'
       'title  panel'
-      'line   panel'
+      'rule   panel'
+      'guide  panel'
       'after  panel'
       'cover  panel';
-    grid-template-rows: auto auto auto auto minmax(120px, 1fr);
+    grid-template-rows: auto auto auto auto auto minmax(120px, 1fr);
     column-gap: var(--space-8);
     row-gap: var(--space-3);
-    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-8);
   }
 
-  .label { grid-area: label; margin-top: var(--space-6); }
-  .title { grid-area: title; }
-  .line { grid-area: line; }
+  .label { grid-area: label; margin-top: var(--space-4); }
+
+  /* The tip rises beside the last lines of the title, so the title keeps
+     clear of the iceberg's width. */
+  .title {
+    grid-area: title;
+    padding-right: calc(var(--berg-w) + var(--space-5));
+  }
+
+  .rule { grid-area: rule; margin-top: 0; }
+
+  /* The submerged part runs down beside the guide line and the after-sign-up
+     line, so each is at least half of it. The cover starts below it. */
+  .guide,
+  .after {
+    padding-right: calc(var(--berg-w) + var(--space-5));
+    min-height: calc((var(--berg-sub) - var(--line) / 2 - var(--space-3)) / 2);
+  }
+  .guide { grid-area: guide; }
   .after { grid-area: after; }
-  .cover { grid-area: cover; margin-bottom: var(--space-5); }
+
+  .cover { grid-area: cover; }
   .panel {
     grid-area: panel;
     padding: var(--space-6);
-    border-radius: calc(var(--kit-card-radius) - 4px);
   }
 }
 
 /* ── contents ─────────────────────────────────────────────────────────── */
+/* The chapter cards are new world blue, the same as the page, so the band
+   behind them steps down one rung of the ground ladder (--ground-300) to let
+   them read as cards. No drawn edge. */
+.band {
+  background: var(--ground-300);
+  margin-top: var(--space-8);
+}
+
 .contents,
 .next {
   max-width: 1280px;
   margin: 0 auto;
   padding: var(--space-8) var(--space-5) 0;
+}
+
+.contents {
+  padding-bottom: var(--space-8);
 }
 
 .sectionHeading {
@@ -177,37 +242,57 @@
   }
 }
 
+/* A chapter card, like the guide's chapter covers: new world blue, the
+   number, a 3px green line across the card with the iceberg standing on it
+   (decorative), the chapter name, and the tinted sponsor strip at the foot. */
 .chapter {
-  background: var(--kit-card);
-  color: var(--text-inverse);
+  --berg-h: 52px;
+  --berg-w: calc(var(--berg-h) * 420 / 690);
+  --berg-tip: calc(var(--berg-h) * 225 / 690);
+  --line: 3px;
+
+  background: var(--amethyst);
+  color: var(--text);
   border-radius: var(--kit-card-radius);
   overflow: hidden;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
 }
 
-.chapterBody {
-  padding: var(--space-5) var(--space-5) var(--space-4);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
-}
-
-/* Outfit, like every numeral on the site. Amethyst, not green: green never
-   carries information and never sits on white. */
+/* Outfit, like every numeral on the site. The tip of the iceberg rises beside
+   it, on the right, so the number keeps the left. */
 .numeral {
   font-family: var(--font-heading);
   font-weight: 800;
   font-size: 2.4rem;
   line-height: 1;
-  color: var(--text-inverse);
+  color: var(--text);
+  padding: var(--space-5) var(--space-5) 0;
+  margin-bottom: var(--space-5);
 }
 
+.chapterRule {
+  position: relative;
+  height: var(--line);
+  background: var(--spring-green);
+}
+
+.chapterBerg {
+  position: absolute;
+  right: var(--space-5);
+  top: calc(var(--line) / 2 - var(--berg-tip));
+  height: var(--berg-h);
+  width: var(--berg-w);
+}
+
+/* The name keeps clear of the iceberg's submerged part on the right. */
 .chapterTitle {
+  flex: 1;
   font-size: var(--fs-h4);
   line-height: var(--lh-snug);
-  color: var(--text-inverse);
+  color: var(--text);
+  padding: var(--space-4) calc(var(--berg-w) + var(--space-5) + var(--space-3))
+    var(--space-5) var(--space-5);
 }
 
 /* The sponsor strip takes the chapter's tint (inline, from lib/kit.ts). */

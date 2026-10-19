@@ -1,10 +1,8 @@
 import type { Copy } from '@/lib/kit';
-import styles from './Slot.module.css';
 
-// One piece of /inclusive-mainstream copy. Nici's words when they are in (lib/kit.ts), a
-// clearly marked placeholder when they are not. The placeholder is a visible
-// review aid, not a design: it comes out of the page the moment `text` is set.
+// One piece of /inclusive-mainstream copy, as plain text: the words in
+// lib/kit.ts, or the slot's placeholder where none are written yet. No
+// styling of its own — a slot reads like any other text on the page.
 export function Slot({ copy }: { copy: Copy }) {
-  if (copy.text !== null) return <>{copy.text}</>;
-  return <span className={styles.slot}>{copy.placeholder}</span>;
+  return <>{copy.text ?? copy.placeholder}</>;
 }

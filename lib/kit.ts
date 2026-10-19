@@ -2,24 +2,25 @@
 // from the "kit landing page v2" design). Everything the page says, and the
 // seven chapters, live in this one file.
 //
-// NICI WRITES ALL THE COPY. A slot with `text: null` renders its placeholder
-// (components/kit/Slot.tsx), clearly marked. To fill one, set `text` — that is
-// the whole change; no component needs touching. The `placeholder` strings are
-// the spec's own, so the PR's copy sheet and the page say the same thing.
+// THE COPY HERE IS STAND-IN, FOR AMBER TO WRITE OVER. It is not final: Nici
+// writes the real words and they replace these, in this file, with no
+// component touched. A slot whose `text` is null renders its `placeholder`
+// as plain text instead (components/kit/Slot.tsx) — today that is only the
+// cover alt text and the meta description, which have no stand-in yet.
 //
 // Site copy is lowercase. The guide title and the chapter titles Nici named
-// keep their capitals, as supplied.
+// (Leadership, Noticing, Designing) keep their capitals, as supplied.
 
 export type Copy = {
-  /** What shows until Nici's words arrive. */
+  /** What shows where `text` is still null. */
   placeholder: string;
   /** The words. `null` = not written yet. */
   text: string | null;
 };
 
-const nici = (slot: string): Copy => ({
-  placeholder: `[${slot} · nici's words]`,
-  text: null,
+const slot = (name: string, text: string | null = null): Copy => ({
+  placeholder: `[${name} · nici's words]`,
+  text,
 });
 
 /** The guide title. Not a slot: it is given, and keeps its capitals. */
@@ -28,29 +29,29 @@ export const GUIDE_TITLE =
 
 export const KIT_COPY = {
   // header
-  headerButton: nici('button label'),
+  headerButton: slot('button label', 'get the guide'),
 
   // first screen · left
-  label: nici('label above title'),
-  guideLine: nici('one line: what the guide is'),
-  afterLine: nici('one line: what happens after you sign up'),
-  coverAlt: nici('guide cover alt text'),
+  label: slot('label above title', 'a free guide for school leaders'),
+  guideLine: slot('one line: what the guide is', 'one guide, seven principles. what the department asks, and what to find out before you spend.'),
+  afterLine: slot('one line: what happens after you sign up', 'the guide lands in your inbox.'),
+  coverAlt: slot('guide cover alt text'),
 
   // first screen · right
-  formHeading: nici('form heading'),
-  detailsLine: nici('one line on what happens to their details'),
+  formHeading: slot('form heading', 'get your copy'),
+  detailsLine: slot('one line on what happens to their details', 'we use your details to send the guide. tick the box if you’d like notice too.'),
 
   // contents
-  contentsHeading: nici('contents heading'),
+  contentsHeading: slot('contents heading', 'what’s inside'),
 
   // the next step
-  nextHeading: nici('heading'),
-  nextBody: nici('the call and the clinic'),
-  bookingButton: nici('booking button'),
-  backToForm: nici('back to the form'),
+  nextHeading: slot('heading', 'the next step'),
+  nextBody: slot('the call and the clinic', 'the guide is free. so is a 45-minute call. if your trust wants to read its statements together, ask about a clinic.'),
+  bookingButton: slot('booking button', 'book 45 minutes'),
+  backToForm: slot('back to the form', 'get the guide first'),
 
   // <head>: the page is noindex, but the tab and any shared link still read these
-  metaDescription: nici('meta description'),
+  metaDescription: slot('meta description'),
 } satisfies Record<string, Copy>;
 
 /**
@@ -67,7 +68,7 @@ export type Chapter = {
   /** 01–07, Outfit. */
   n: string;
   title: Copy;
-  /** The sponsor strip. Same line on every chapter until copy freeze. */
+  /** The sponsor strip. Same stand-in on every chapter until copy freeze. */
   sponsor: Copy;
   /** The chapter's tint, a token from app/globals.css. */
   tint: string;
@@ -80,17 +81,17 @@ const chapterTitle = (text: string | null): Copy => ({
 
 const sponsor = (): Copy => ({
   placeholder: '[sponsor · confirmed at copy freeze]',
-  text: null,
+  text: 'sponsor name',
 });
 
 export const CHAPTERS: Chapter[] = [
   { n: '01', title: chapterTitle('Leadership'), sponsor: sponsor(), tint: 'var(--kit-tint-01)' },
   { n: '02', title: chapterTitle('Noticing'), sponsor: sponsor(), tint: 'var(--kit-tint-02)' },
   { n: '03', title: chapterTitle('Designing'), sponsor: sponsor(), tint: 'var(--kit-tint-03)' },
-  { n: '04', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-04)' },
-  { n: '05', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-05)' },
-  { n: '06', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-06)' },
-  { n: '07', title: chapterTitle(null), sponsor: sponsor(), tint: 'var(--kit-tint-07)' },
+  { n: '04', title: chapterTitle('enrichment'), sponsor: sponsor(), tint: 'var(--kit-tint-04)' },
+  { n: '05', title: chapterTitle('belonging'), sponsor: sponsor(), tint: 'var(--kit-tint-05)' },
+  { n: '06', title: chapterTitle('partnership'), sponsor: sponsor(), tint: 'var(--kit-tint-06)' },
+  { n: '07', title: chapterTitle('accessibility'), sponsor: sponsor(), tint: 'var(--kit-tint-07)' },
 ];
 
 /**
@@ -106,3 +107,21 @@ export const HUBSPOT = {
 
 /** The id the header button, the next-step card and the hash links jump to. */
 export const FORM_ID = 'form';
+
+/**
+ * The iceberg (public/assets/iceberg.svg). 420 × 690; the waterline sits 225
+ * down from the top, 32.6% of its height. The CSS reads the same two numbers
+ * (`calc(height * 225 / 690)`), so a re-issued file with a different waterline
+ * changes them here and in app/inclusive-mainstream/page.module.css, nowhere
+ * else.
+ */
+export const ICEBERG = {
+  src: '/assets/iceberg.svg',
+  width: 420,
+  height: 690,
+  waterline: 225,
+} as const;
+
+/** Alt text for the iceberg on the first screen. The chapter cards' copy is decorative: empty alt. */
+export const ICEBERG_ALT =
+  'an iceberg, a small tip above the waterline and most of it below';

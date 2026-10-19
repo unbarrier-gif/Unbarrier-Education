@@ -4,9 +4,17 @@ import { Button } from '@/components/Button';
 import { Footer } from '@/components/Footer';
 import { Wordmark } from '@/components/Wordmark';
 import { HubspotForm } from '@/components/kit/HubspotForm';
+import { Iceberg } from '@/components/kit/Iceberg';
 import { Slot } from '@/components/kit/Slot';
 import { BOOKING_URL } from '@/lib/booking';
-import { CHAPTERS, FORM_ID, GUIDE_TITLE, KIT_COPY, KIT_COVER } from '@/lib/kit';
+import {
+  CHAPTERS,
+  FORM_ID,
+  GUIDE_TITLE,
+  ICEBERG_ALT,
+  KIT_COPY,
+  KIT_COVER,
+} from '@/lib/kit';
 import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './page.module.css';
 
@@ -14,10 +22,11 @@ import styles from './page.module.css';
 // The page has one job: get a school leader to fill in the form.
 //
 //   header      wordmark · a button that jumps to the form
-//   first screen  white card on the page ground, no scroll on a laptop:
+//   first screen  straight on the page ground, no scroll on a laptop:
 //               left  label · title · guide line · after-sign-up line · cover
 //               right lilac panel · form heading · HubSpot form · details line
-//   contents    seven chapter cards, each with a sponsor strip in its tint
+//   contents    seven dark chapter cards: number · green line with the iceberg
+//               on it · name · a sponsor strip in the chapter's tint
 //   next step   dark card · the call and the clinic · book · back to the form
 //   footer      the site's own
 //
@@ -28,8 +37,8 @@ import styles from './page.module.css';
 // form, then the after-sign-up line and the cover. On a laptop the grid areas
 // put the form beside them. One source order, so the tab order matches both.
 //
-// COPY: none of it is written here. Every slot is in lib/kit.ts and shows a
-// marked placeholder until Nici's words are in. The chapter data is there too.
+// COPY: none of it is written here. Every slot is in lib/kit.ts, with stand-in
+// text for amber to write over. The chapter data is there too.
 //
 // STILL NOINDEX: SITE_FLAGS.kitPublic is off until Nici says it can go
 // public, and the sitemap keeps it out.
@@ -75,12 +84,17 @@ export default function KitPage() {
       <main className={styles.main}>
         {/* first screen */}
         <div className={styles.first}>
-          <div className={styles.card}>
+          <div className={styles.stage}>
             <p className={styles.label}>
               <Slot copy={KIT_COPY.label} />
             </p>
             <h1 className={styles.title}>{GUIDE_TITLE}</h1>
-            <p className={styles.line}>
+            {/* The green line under the title, across the title column. The
+                iceberg's waterline sits on it: the tip above, the rest below. */}
+            <div className={styles.rule}>
+              <Iceberg className={styles.berg} alt={ICEBERG_ALT} />
+            </div>
+            <p className={`${styles.line} ${styles.guide}`}>
               <Slot copy={KIT_COPY.guideLine} />
             </p>
 
@@ -120,27 +134,32 @@ export default function KitPage() {
         </div>
 
         {/* contents */}
-        <section className={styles.contents} aria-labelledby="contents-heading">
-          <h2 id="contents-heading" className={styles.sectionHeading}>
-            <Slot copy={KIT_COPY.contentsHeading} />
-          </h2>
-          <ol className={styles.chapters} role="list">
-            {CHAPTERS.map((chapter) => (
-              <li key={chapter.n} className={styles.chapter}>
-                <div className={styles.chapterBody}>
+        <section className={styles.band} aria-labelledby="contents-heading">
+          <div className={styles.contents}>
+            <h2 id="contents-heading" className={styles.sectionHeading}>
+              <Slot copy={KIT_COPY.contentsHeading} />
+            </h2>
+            <ol className={styles.chapters} role="list">
+              {CHAPTERS.map((chapter) => (
+                <li key={chapter.n} className={styles.chapter}>
                   <span className={styles.numeral} aria-hidden="true">
                     {chapter.n}
                   </span>
+                  {/* 3px green line across the card; the iceberg (decorative)
+                      sits on it by its waterline. */}
+                  <div className={styles.chapterRule}>
+                    <Iceberg className={styles.chapterBerg} />
+                  </div>
                   <h3 className={styles.chapterTitle}>
                     <Slot copy={chapter.title} />
                   </h3>
-                </div>
-                <p className={styles.sponsor} style={{ background: chapter.tint }}>
-                  <Slot copy={chapter.sponsor} />
-                </p>
-              </li>
-            ))}
-          </ol>
+                  <p className={styles.sponsor} style={{ background: chapter.tint }}>
+                    <Slot copy={chapter.sponsor} />
+                  </p>
+                </li>
+              ))}
+            </ol>
+          </div>
         </section>
 
         {/* the next step */}
