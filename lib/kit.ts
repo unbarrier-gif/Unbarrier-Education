@@ -106,3 +106,21 @@ export const HUBSPOT = {
 
 /** The id the header button, the next-step card and the hash links jump to. */
 export const FORM_ID = 'form';
+
+/**
+ * The iceberg (public/assets/iceberg.svg). 420 × 690; the waterline sits 225
+ * down from the top, 32.6% of its height. The CSS reads the same two numbers
+ * (`calc(height * 225 / 690)`), so a re-issued file with a different waterline
+ * changes them here and in app/inclusive-mainstream/page.module.css, nowhere
+ * else.
+ */
+export const ICEBERG = {
+  src: '/assets/iceberg.svg',
+  width: 420,
+  height: 690,
+  waterline: 225,
+} as const;
+
+/** Alt text for the iceberg on the first screen. The chapter cards' copy is decorative: empty alt. */
+export const ICEBERG_ALT =
+  'an iceberg, a small tip above the waterline and most of it below';
