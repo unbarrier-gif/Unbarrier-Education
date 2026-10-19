@@ -90,6 +90,15 @@ const nextConfig = {
         destination: '/loop-breakers',
         statusCode: 301,
       },
+      // /kit became /imf (Oct 2026). Permanent, so a link already shared
+      // keeps working and search engines move to the new path. Query strings
+      // (?from=…) pass through by default. /imf stays noindex until Nici says
+      // it can go public (SITE_FLAGS.kitPublic).
+      {
+        source: '/kit',
+        destination: '/imf',
+        permanent: true,
+      },
       // Stable, printable booking link for QR codes and PDFs. If the
       // calendar URL ever changes, only this destination needs updating —
       // nothing needs reprinting. 307 (temporary) on purpose so browsers

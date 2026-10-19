@@ -10,8 +10,9 @@ import { CHAPTERS, FORM_ID, GUIDE_TITLE, KIT_COPY, KIT_COVER } from '@/lib/kit';
 import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './page.module.css';
 
-// /kit — version 2, from the "kit landing page v2" design. The page has one
-// job: get a school leader to fill in the form.
+// /imf — version 2, from the "kit landing page v2" design. The page has one
+// job: get a school leader to fill in the form. It was /kit; /kit now 308s
+// here (next.config.js).
 //
 //   header      wordmark · a button that jumps to the form
 //   first screen  white card on the page ground, no scroll on a laptop:
@@ -34,7 +35,7 @@ import styles from './page.module.css';
 // STILL NOINDEX: SITE_FLAGS.kitPublic is off until Nici says it can go
 // public, and the sitemap keeps it out.
 
-const CANONICAL = 'https://www.unbarrier.me/kit';
+const CANONICAL = 'https://www.unbarrier.me/imf';
 
 export const metadata: Metadata = {
   title: `${GUIDE_TITLE} | unbarrier.me`,

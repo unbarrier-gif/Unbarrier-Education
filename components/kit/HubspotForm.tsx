@@ -11,7 +11,7 @@ import { HUBSPOT } from '@/lib/kit';
 // cannot reach hsforms.net, so the embed itself is checked on the Vercel
 // preview, not here.
 //
-// A client-side navigation INTO /kit would not re-run an already-loaded
+// A client-side navigation INTO /imf would not re-run an already-loaded
 // script, so nothing on the site links here with next/link. Keep it that way
 // or add a re-scan.
 export function HubspotForm() {

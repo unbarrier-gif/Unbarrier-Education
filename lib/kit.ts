@@ -1,4 +1,4 @@
-// /kit — the landing page for the Inclusive Mainstream Fund guide (version 2,
+// /imf — the landing page for the Inclusive Mainstream Fund guide (version 2,
 // from the "kit landing page v2" design). Everything the page says, and the
 // seven chapters, live in this one file.
 //

@@ -70,8 +70,8 @@ export const SITE_FLAGS = {
   // was lifted for good, so /voice is public — nav, footer, sitemap, indexed.
   // Do not bring the flag back; a lifted hold is not an open decision.
 
-  // ── /kit ──────────────────────────────────────────────────────────────
-  /** OPEN. Puts /kit in the sitemap and lets it be indexed. Off until the
+  // ── /imf ──────────────────────────────────────────────────────────────
+  /** OPEN. Puts /imf in the sitemap and lets it be indexed. Off until the
    *  privacy notice (v1.1) names the guides and the /accessibility statement
    *  exists — both are go-live conditions in the kit spec. The route is
    *  built and reachable meanwhile, noindex, like /voice. */
