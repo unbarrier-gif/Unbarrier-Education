@@ -98,6 +98,25 @@
      the ruled 10%-over-amethyst value above. New code uses the six names. */
   --panel-aqua:        var(--panel-lightblue);
 
+  /* ── GUIDE SURFACES — the IMF guide design system, on /inclusive-mainstream ─────────── */
+  /* The one place the site carries light surfaces: the /inclusive-mainstream landing page
+     mirrors the Inclusive Mainstream Fund guide, whose chapters each own a
+     tint. They are surfaces for cards that sit ON the page, never a ground
+     (the ladder above is unchanged) and never a text colour. Text on every
+     one of them is --text-inverse (#210a33, 14:1 or better on all nine).
+     --kit-tint-06 is --antique-white, reused rather than restated. Green
+     never appears on a light surface. */
+  --kit-card:          #ffffff;
+  --kit-card-radius:   14px;
+  --kit-panel:         #ece6f5;   /* lilac · the form panel                */
+  --kit-tint-01:       #daf6f4;   /* leadership                            */
+  --kit-tint-02:       #fff0c0;   /* noticing · also the placeholder mark  */
+  --kit-tint-03:       #ffe2c6;   /* designing                             */
+  --kit-tint-04:       #f8e8eb;
+  --kit-tint-05:       #ece6f5;
+  --kit-tint-06:       var(--antique-white);
+  --kit-tint-07:       #f6def2;
+
   /* ── BANNED MOVES — a future reader must be able to see these ──────── */
   /* • No tinted ground. Sections sit on the ladder above, nothing else —
        not an aqua or orchid "100" step, not a cream, not a light theme.

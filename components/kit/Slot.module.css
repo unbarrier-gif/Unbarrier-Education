@@ -1,0 +1,15 @@
+/* A copy placeholder. Dark ink on the pale-yellow tint reads the same on the
+   white card, the lilac panel, a chapter strip and the dark next-step card,
+   and it survives high contrast because neither colour is a text token. */
+.slot {
+  background: var(--kit-tint-02);
+  color: var(--text-inverse);
+  font-family: var(--font-body);
+  font-style: normal;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+  padding: 0 0.3em;
+  border-radius: var(--radius-sm);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

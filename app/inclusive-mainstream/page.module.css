@@ -1,0 +1,254 @@
+/* ========================================================================
+   /inclusive-mainstream — version 2. The page has one job: get a school leader to fill in the
+   form. Every colour is a token (the --kit-* surfaces are in app/globals.css);
+   text on a light surface is --text-inverse, the fixed new-world-blue, so it
+   holds in high contrast. Green is a ground only (the buttons) — never text,
+   never a line on white. No drawn edges. Touch targets are 44px or more.
+   ======================================================================== */
+
+/* ── header ───────────────────────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  min-height: 72px;
+  padding: var(--space-3) var(--space-5);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* ── first screen ─────────────────────────────────────────────────────── */
+/* A laptop shows the whole card under the header without scrolling. It is a
+   minimum, not a height: a longer form (validation messages) grows the card
+   rather than clipping it. */
+.first {
+  display: flex;
+  min-height: calc(100dvh - 72px);
+  padding: 0 var(--space-5) var(--space-5);
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+.card {
+  flex: 1;
+  background: var(--kit-card);
+  color: var(--text-inverse);
+  border-radius: var(--kit-card-radius);
+  padding: var(--space-5) var(--space-4) var(--space-4);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-content: start;
+  gap: var(--space-4);
+}
+
+.label,
+.title,
+.line,
+.details,
+.panelHeading,
+.coverBox {
+  color: var(--text-inverse);
+}
+
+.label {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+}
+
+.title {
+  font-size: clamp(1.6rem, 2.7vw, 2.5rem);
+  line-height: var(--lh-snug);
+  letter-spacing: var(--ls-tight);
+  text-wrap: balance;
+}
+
+.line {
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+}
+
+/* The lilac form panel. HubSpot styles what is inside it; the panel only
+   gives it a ground and room. */
+.panel {
+  background: var(--kit-panel);
+  color: var(--text-inverse);
+  border-radius: calc(var(--kit-card-radius) - 4px);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+  scroll-margin-top: var(--space-4);
+}
+
+.panelHeading {
+  font-size: var(--fs-h3);
+  line-height: var(--lh-snug);
+}
+
+.details {
+  font-size: var(--fs-small);
+  line-height: var(--lh-body);
+}
+
+.cover {
+  min-height: 0;
+  display: flex;
+}
+
+/* Until amber supplies the image: a plain box, same proportion as the cover. */
+.coverBox {
+  flex: 1;
+  margin: 0;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: var(--space-4);
+  background: var(--kit-tint-01);
+  border-radius: var(--radius-md);
+  font-size: var(--fs-small);
+}
+
+.coverImage {
+  height: 100%;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+  border-radius: var(--radius-md);
+}
+
+/* Laptop and up: the form moves beside the text. Same DOM order, so the tab
+   order and the phone order are one thing. */
+@media (min-width: 768px) {
+  .card {
+    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-areas:
+      'label  panel'
+      'title  panel'
+      'line   panel'
+      'after  panel'
+      'cover  panel';
+    grid-template-rows: auto auto auto auto minmax(120px, 1fr);
+    column-gap: var(--space-8);
+    row-gap: var(--space-3);
+    padding: var(--space-2) var(--space-2) var(--space-2) var(--space-8);
+  }
+
+  .label { grid-area: label; margin-top: var(--space-6); }
+  .title { grid-area: title; }
+  .line { grid-area: line; }
+  .after { grid-area: after; }
+  .cover { grid-area: cover; margin-bottom: var(--space-5); }
+  .panel {
+    grid-area: panel;
+    padding: var(--space-6);
+    border-radius: calc(var(--kit-card-radius) - 4px);
+  }
+}
+
+/* ── contents ─────────────────────────────────────────────────────────── */
+.contents,
+.next {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--space-8) var(--space-5) 0;
+}
+
+.sectionHeading {
+  margin-bottom: var(--space-5);
+}
+
+.chapters {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .chapters {
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  }
+}
+
+.chapter {
+  background: var(--kit-card);
+  color: var(--text-inverse);
+  border-radius: var(--kit-card-radius);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.chapterBody {
+  padding: var(--space-5) var(--space-5) var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* Outfit, like every numeral on the site. Amethyst, not green: green never
+   carries information and never sits on white. */
+.numeral {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: 2.4rem;
+  line-height: 1;
+  color: var(--text-inverse);
+}
+
+.chapterTitle {
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  color: var(--text-inverse);
+}
+
+/* The sponsor strip takes the chapter's tint (inline, from lib/kit.ts). */
+.sponsor {
+  margin: 0;
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  padding: var(--space-3) var(--space-5);
+  font-size: var(--fs-small);
+  line-height: var(--lh-snug);
+  color: var(--text-inverse);
+}
+
+/* ── the next step ────────────────────────────────────────────────────── */
+.next {
+  padding-bottom: var(--space-10);
+}
+
+.nextCard {
+  background: var(--amethyst-card);
+  border-radius: var(--kit-card-radius);
+  padding: var(--space-6) var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .nextCard {
+    padding: var(--space-8);
+  }
+}
+
+.nextBody {
+  color: var(--text-muted);
+  max-width: 62ch;
+}
+
+.nextActions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+}

@@ -70,18 +70,12 @@ export const SITE_FLAGS = {
   // was lifted for good, so /voice is public — nav, footer, sitemap, indexed.
   // Do not bring the flag back; a lifted hold is not an open decision.
 
-  // ── /kit ──────────────────────────────────────────────────────────────
-  /** OPEN. Puts /kit in the sitemap and lets it be indexed. Off until the
+  // ── /inclusive-mainstream ──────────────────────────────────────────────────────────────
+  /** OPEN. Puts /inclusive-mainstream in the sitemap and lets it be indexed. Off until the
    *  privacy notice (v1.1) names the guides and the /accessibility statement
    *  exists — both are go-live conditions in the kit spec. The route is
    *  built and reachable meanwhile, noindex, like /voice. */
   kitPublic: false,
-  /** What an unsponsored contents row says. The spec's default is nothing. */
-  kitUnpaidRowText: 'blank' as 'blank' | 'open to a sponsor',
-  /** Review only: shows the paid sponsor state on principle 7 with an empty
-   *  logo slot, so the row can be seen before a sponsor exists. Never on in
-   *  production — a sponsor line with no sponsor behind it is a false claim. */
-  kitDemoSponsorRow: false,
 
   // ── /hello ────────────────────────────────────────────────────────────
   /** "why your hands move" on the /hello shelf. Held for the blog. */
