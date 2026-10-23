@@ -35,7 +35,7 @@ export const KIT_COPY = {
   label: slot('label above title', 'a free guide for school leaders'),
   guideLine: slot('one line: what the guide is', 'one guide, seven principles. what the department asks, and what to find out before you spend.'),
   afterLine: slot('one line: what happens after you sign up', 'the guide lands in your inbox.'),
-  coverAlt: slot('guide cover alt text'),
+  coverAlt: slot('guide cover alt text', 'Download your copy to make a difference. A tablet showing the cover of The Inclusive Mainstream Fund: what you need to understand before you act.'),
 
   // first screen · right
   formHeading: slot('form heading', 'get your copy'),
@@ -59,9 +59,9 @@ export const KIT_COPY = {
  * page shows a placeholder box. Drop the file in /public/assets and set it.
  */
 export const KIT_COVER: { src: string | null; width: number; height: number } = {
-  src: null,
-  width: 600,
-  height: 800,
+  src: '/assets/inclusive-mainstream-download-banner.png',
+  width: 1200,
+  height: 600,
 };
 
 export type Chapter = {
