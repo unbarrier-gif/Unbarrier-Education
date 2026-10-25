@@ -1,5 +1,6 @@
 import Script from 'next/script';
 import { HUBSPOT } from '@/lib/kit';
+import { GuideDownloadEvent } from './GuideDownloadEvent';
 
 // amber's HubSpot form (embed v4, EU1). The script finds every
 // `.hs-form-frame` on the page and renders the form into it; the fields
@@ -18,6 +19,7 @@ export function HubspotForm() {
   return (
     <>
       <Script src={HUBSPOT.scriptSrc} strategy="afterInteractive" />
+      <GuideDownloadEvent />
       <div
         className="hs-form-frame"
         data-region={HUBSPOT.region}
