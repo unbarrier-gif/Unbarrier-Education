@@ -141,7 +141,7 @@ export const CHAPTERS: Chapter[] = [
   },
   {
     n: '07',
-    title: chapterTitle('Opening'),
+    title: chapterTitle('Reaching'),
     tint: 'var(--kit-tint-07)',
     sponsor: { name: 'skolon', logo: null }, // `${SPONSOR_DIR}/skolon.png`
   },
