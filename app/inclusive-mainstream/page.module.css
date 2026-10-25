@@ -295,25 +295,54 @@
     var(--space-5) var(--space-5);
 }
 
-/* The sponsor strip takes the chapter's tint (inline, from lib/kit.ts). */
+/* The sponsor strip takes the chapter's tint (inline, from lib/kit.ts). The
+   logos are height-matched at 28px, never width-matched. */
 .sponsor {
   margin: 0;
-  min-height: 44px;
+  min-height: 60px;
   display: flex;
   align-items: center;
-  padding: var(--space-3) var(--space-5);
+  padding: var(--space-2) var(--space-5);
   font-size: var(--fs-small);
   line-height: var(--lh-snug);
   color: var(--text-inverse);
 }
 
+.sponsorLogo {
+  height: 28px;
+  width: auto;
+  max-width: 100%;
+}
+
+.sponsorName {
+  font-weight: 600;
+}
+
+/* Card 01 only. The link fills the strip's height, so the touch target is
+   44px or more; the focus ring is the site's own (:focus-visible). */
+.sponsorLink {
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  color: var(--text-inverse);
+  text-decoration: none;
+}
+
+.sponsorLink:hover .sponsorLogo,
+.sponsorLink:hover .sponsorName {
+  opacity: 0.8;
+}
+
 /* ── the next step ────────────────────────────────────────────────────── */
+/* A soft purple card on the dark page, ink text throughout. Green appears
+   only as the button's ground. */
 .next {
   padding-bottom: var(--space-10);
 }
 
 .nextCard {
-  background: var(--amethyst-card);
+  background: var(--kit-panel);
+  color: var(--text-inverse);
   border-radius: var(--kit-card-radius);
   padding: var(--space-6) var(--space-5);
   display: flex;
@@ -327,13 +356,181 @@
   }
 }
 
-.nextBody {
-  color: var(--text-muted);
-  max-width: 62ch;
+.nextLabel,
+.buyingLabel,
+.columnLabel {
+  font-family: var(--font-heading);
+  font-size: var(--fs-small);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  margin: 0;
+}
+
+.nextLabel,
+.columnLabel {
+  color: var(--text-inverse);
+}
+
+.buyingLabel {
+  color: var(--text);
+}
+
+.nextHeading {
+  color: var(--text-inverse);
+  font-size: var(--fs-h2);
+  line-height: var(--lh-snug);
+  max-width: 28ch;
+  text-wrap: balance;
+}
+
+/* The dark band: ink ground, light text. */
+.buying {
+  background: var(--amethyst);
+  color: var(--text);
+  border-radius: var(--radius-md);
+  padding: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.buyingText {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-h4);
+  line-height: var(--lh-snug);
+  color: var(--text);
+  margin: 0;
+}
+
+.nextLine,
+.columnText,
+.columnList,
+.more,
+.clinic {
+  color: var(--text-inverse);
+  margin: 0;
+}
+
+/* The seven lenses: white pills, Outfit 600, in the guide's order. */
+.lenses {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.lens {
+  background: var(--kit-card);
+  color: var(--text-inverse);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: var(--fs-body);
+  line-height: var(--lh-snug);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-pill);
+}
+
+/* Stacked on a phone, two columns from 768px. Each has a 3px ink left rule. */
+.columns {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-5);
+}
+
+@media (min-width: 768px) {
+  .columns {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-6);
+  }
+}
+
+.column {
+  border-left: 3px solid var(--text-inverse);
+  padding-left: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+.columnList {
+  padding-left: var(--space-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+}
+
+/* --text-muted is for light-on-dark; on this card the muted line is ink at
+   a weight that still clears 4.5:1 (#210a33 at 80% over #ece6f5 is ~9:1). */
+.more,
+.clinic {
+  color: rgba(33, 10, 51, 0.8);
 }
 
 .nextActions {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
   gap: var(--space-3);
+}
+
+@media (min-width: 768px) {
+  .nextActions {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--space-5);
+  }
+}
+
+/* Green ground, ink text, pill. Full width on a phone. */
+.sendButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  padding: 13px 28px;
+  background: var(--spring-green);
+  color: var(--text-inverse);
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 15px;
+  text-decoration: none;
+  border-radius: var(--radius-pill);
+  transition: opacity 150ms ease;
+}
+
+.sendButton:hover {
+  opacity: 0.88;
+}
+
+/* A text link beside the button, under it on a phone. Ink and underlined:
+   never green. */
+.textLink {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 44px;
+  color: var(--text-inverse);
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.textLink:hover {
+  text-decoration-thickness: 2px;
+}
+
+.nextRule {
+  border: 0;
+  border-top: 1px solid rgba(33, 10, 51, 0.25);
+  margin: var(--space-2) 0 0;
+}
+
+/* The site's focus ring is green, which vanishes on a light surface. On the
+   light card and the tinted strips it is ink. */
+.nextCard :focus-visible,
+.sponsor :focus-visible {
+  outline-color: var(--text-inverse);
 }

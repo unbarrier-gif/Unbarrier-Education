@@ -8,8 +8,8 @@
 // as plain text instead (components/kit/Slot.tsx) — today that is only the
 // cover alt text and the meta description, which have no stand-in yet.
 //
-// Site copy is lowercase. The guide title and the chapter titles Nici named
-// (Leadership, Noticing, Designing) keep their capitals, as supplied.
+// Site copy is lowercase. The guide title and the seven chapter titles keep
+// their capitals: they are the guide's chapter names.
 
 export type Copy = {
   /** What shows where `text` is still null. */
@@ -44,12 +44,6 @@ export const KIT_COPY = {
   // contents
   contentsHeading: slot('contents heading', 'what’s inside'),
 
-  // the next step
-  nextHeading: slot('heading', 'the next step'),
-  nextBody: slot('the call and the clinic', 'the guide is free. so is a 45-minute call. if your trust wants to read its statements together, ask about a clinic.'),
-  bookingButton: slot('booking button', 'book 45 minutes'),
-  backToForm: slot('back to the form', 'get the guide first'),
-
   // <head>: the page is noindex, but the tab and any shared link still read these
   metaDescription: slot('meta description'),
 } satisfies Record<string, Copy>;
@@ -64,35 +58,130 @@ export const KIT_COVER: { src: string | null; width: number; height: number } = 
   height: 600,
 };
 
+/** A sponsor's logo file in /public. Height-matched in the strip, never width-matched. */
+export type SponsorLogo = {
+  src: string;
+  /** Intrinsic size of the file, for next/image. Only the ratio is used. */
+  width: number;
+  height: number;
+};
+
+export type Sponsor = {
+  /** Lowercase company name. It is the logo's alt text and the fallback text. */
+  name: string;
+  /**
+   * `null` until the logo file is in /public/assets/sponsors: the strip shows
+   * the name as text meanwhile. `'wordmark'` is the site's own component.
+   */
+  logo: SponsorLogo | 'wordmark' | null;
+  /** Only card 01 links out. */
+  link?: { href: string; label: string };
+};
+
 export type Chapter = {
   /** 01–07, Outfit. */
   n: string;
   title: Copy;
-  /** The sponsor strip. Same stand-in on every chapter until copy freeze. */
-  sponsor: Copy;
+  sponsor: Sponsor;
   /** The chapter's tint, a token from app/globals.css. */
   tint: string;
 };
 
-const chapterTitle = (text: string | null): Copy => ({
+const chapterTitle = (text: string): Copy => ({
   placeholder: '[chapter title]',
   text,
 });
 
-const sponsor = (): Copy => ({
-  placeholder: '[sponsor · confirmed at copy freeze]',
-  text: 'sponsor name',
-});
+const SPONSOR_DIR = '/assets/sponsors';
 
 export const CHAPTERS: Chapter[] = [
-  { n: '01', title: chapterTitle('Leadership'), sponsor: sponsor(), tint: 'var(--kit-tint-01)' },
-  { n: '02', title: chapterTitle('Noticing'), sponsor: sponsor(), tint: 'var(--kit-tint-02)' },
-  { n: '03', title: chapterTitle('Designing'), sponsor: sponsor(), tint: 'var(--kit-tint-03)' },
-  { n: '04', title: chapterTitle('enrichment'), sponsor: sponsor(), tint: 'var(--kit-tint-04)' },
-  { n: '05', title: chapterTitle('belonging'), sponsor: sponsor(), tint: 'var(--kit-tint-05)' },
-  { n: '06', title: chapterTitle('partnership'), sponsor: sponsor(), tint: 'var(--kit-tint-06)' },
-  { n: '07', title: chapterTitle('accessibility'), sponsor: sponsor(), tint: 'var(--kit-tint-07)' },
+  {
+    n: '01',
+    title: chapterTitle('Deciding'),
+    tint: 'var(--kit-tint-01)',
+    sponsor: {
+      name: 'kaleidoscope',
+      logo: null, // kaleidoscope, dark green: `${SPONSOR_DIR}/kaleidoscope.png`
+      link: {
+        href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026-1',
+        label: 'kaleidoscope, inclusion index autumn 2026',
+      },
+    },
+  },
+  {
+    n: '02',
+    title: chapterTitle('Noticing'),
+    tint: 'var(--kit-tint-02)',
+    // bloom is gaia learning's programme; the strip carries gaia learning's logo
+    sponsor: { name: 'bloom', logo: null }, // `${SPONSOR_DIR}/gaia-learning.png`
+  },
+  {
+    n: '03',
+    title: chapterTitle('Designing'),
+    tint: 'var(--kit-tint-03)',
+    sponsor: { name: 'talamo', logo: null }, // `${SPONSOR_DIR}/talamo.png`
+  },
+  {
+    n: '04',
+    title: chapterTitle('Joining'),
+    tint: 'var(--kit-tint-04)',
+    sponsor: { name: 'digit music', logo: null }, // black: `${SPONSOR_DIR}/digit-music.png`
+  },
+  {
+    n: '05',
+    title: chapterTitle('Belonging'),
+    tint: 'var(--kit-tint-05)',
+    sponsor: { name: 'cosmo', logo: null }, // svg, inlined with currentColor: `${SPONSOR_DIR}/cosmo.svg`
+  },
+  {
+    n: '06',
+    title: chapterTitle('Listening'),
+    tint: 'var(--kit-tint-06)',
+    sponsor: { name: 'unbarrier', logo: 'wordmark' },
+  },
+  {
+    n: '07',
+    title: chapterTitle('Opening'),
+    tint: 'var(--kit-tint-07)',
+    sponsor: { name: 'skolon', logo: null }, // `${SPONSOR_DIR}/skolon.png`
+  },
 ];
+
+/**
+ * The next-step block. FINAL COPY from nici, 25 oct 2026. Not a slot, not
+ * stand-in: do not edit a word without her.
+ */
+export const NEXT_STEP = {
+  label: 'the next step',
+  heading:
+    'you are about to spend fund money against a statement. find out what it missed first.',
+  buyingLabel: 'what you are buying',
+  buying:
+    'your inclusion strategy statement, read through the seven lenses in this guide, then one day in your school with the learners it was written for.',
+  lensesLine: 'every chapter of this guide reads the fund through one word.',
+  lenses: [
+    'failure',
+    'early',
+    'designed',
+    'reasonable adjustments',
+    'belonging',
+    'partnership',
+    'barrier',
+  ],
+  sendLine: 'send me your statement and i read it through all seven before i come.',
+  notLabel: 'what you do not get',
+  not: 'a report that sits in a drawer, or a list of things to buy.',
+  getLabel: 'what lands on your desk',
+  get: [
+    'your own statement back, with the gaps marked',
+    'what the learners said, in their words',
+    'the one thing to do next, and what not to buy yet',
+  ],
+  more: 'this is the first block of work. if you want more after it, the next block is built from what the day found.',
+  button: 'send your statement',
+  link: 'get the guide first',
+  clinic: 'if your trust wants to read its statements together, ask about a clinic.',
+} as const;
 
 /**
  * The HubSpot form (amber's). The fields — name, school, role, email and the
