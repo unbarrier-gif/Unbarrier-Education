@@ -94,6 +94,10 @@ const chapterTitle = (text: string): Copy => ({
 
 const SPONSOR_DIR = '/assets/sponsors';
 
+// TODO(nici asking the sponsors): gaia-learning (86x48), skolon (150x74) and talamo
+// (160x40) are small screenshots and look soft on retina. Swap in their own
+// high-res or svg files, same filenames, and update width/height below.
+
 export const CHAPTERS: Chapter[] = [
   {
     n: '01',
