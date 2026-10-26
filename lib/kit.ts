@@ -188,9 +188,9 @@ export const NEXT_STEP = {
 } as const;
 
 /**
- * The two new slots on the next-step block (v4, 26 oct 2026). Both come from
- * nici and neither has landed: `photo` stays null (a soft purple circle shows)
- * and `credit` stays a bracketed placeholder until she writes the final words.
+ * The two new slots on the next-step block (v4, 26 oct 2026). `photo` landed
+ * 26 oct (null would show a soft purple circle). `credit` is still a bracketed
+ * placeholder until nici writes the final words.
  * The quote itself is NEXT_STEP.sendLine, unchanged.
  */
 export const NEXT_STEP_PERSON: {
@@ -198,8 +198,8 @@ export const NEXT_STEP_PERSON: {
   photoAlt: string;
   credit: string;
 } = {
-  photo: null,
-  photoAlt: 'nici foote, who reads your statement before she comes',
+  photo: { src: '/assets/portraits/nici-next-step.webp', width: 400, height: 400 },
+  photoAlt: 'nici foote, smiling, holding her highly commended accessibility champion award',
   credit: '[nici · unbarrier]',
 };
 
