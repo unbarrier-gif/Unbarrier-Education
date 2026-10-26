@@ -336,45 +336,46 @@
 }
 
 /* ── the next step ────────────────────────────────────────────────────── */
-/* A soft purple card on the dark page, ink text throughout. Green appears
-   only as the button's ground. */
+/* v4: a white card inside the page's new-world-blue frame, ink text. The dark
+   "what you are buying" card carries the seven lenses. Green is a ground
+   (the pills, the send button), never text. Dark pink appears once, as the
+   dark card's label. */
 .next {
   padding-bottom: var(--space-10);
 }
 
 .nextCard {
-  background: var(--kit-panel);
+  background: var(--kit-card);
   color: var(--text-inverse);
   border-radius: var(--kit-card-radius);
   padding: var(--space-6) var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-6);
 }
 
 @media (min-width: 768px) {
   .nextCard {
-    padding: var(--space-8);
+    padding: 64px 72px;
+    gap: var(--space-8);
   }
 }
 
 .nextLabel,
 .buyingLabel,
-.columnLabel {
+.deskLabel,
+.quoteCredit {
   font-family: var(--font-heading);
-  font-size: var(--fs-small);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: var(--ls-eyebrow);
+  line-height: 1.3;
   margin: 0;
 }
 
 .nextLabel,
-.columnLabel {
-  color: var(--text-inverse);
-}
-
-.buyingLabel {
-  color: var(--text);
+.deskLabel {
+  color: var(--kit-ink-muted);
+  letter-spacing: 0.18em;
 }
 
 .nextHeading {
@@ -385,90 +386,201 @@
   text-wrap: balance;
 }
 
-/* The dark band: ink ground, light text. */
+/* The dark card: ink ground, light text, then the lenses under a 1px rule. */
 .buying {
   background: var(--amethyst);
-  color: var(--text);
-  border-radius: var(--radius-md);
-  padding: var(--space-5);
+  color: #ffffff;
+  border-radius: var(--kit-card-radius);
+  padding: var(--space-6) var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .buying {
+    padding: 44px 48px;
+    gap: var(--space-5);
+  }
+}
+
+/* Dark pink on the dark ground, 6.8:1. The only place it appears here. */
+.buyingLabel {
+  color: var(--orchid-mist);
+  letter-spacing: 0.18em;
 }
 
 .buyingText {
-  font-family: var(--font-heading);
-  font-weight: 600;
-  font-size: var(--fs-h4);
-  line-height: var(--lh-snug);
-  color: var(--text);
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-size: clamp(1.25rem, 2.4vw, 1.5rem);
+  line-height: 1.45;
+  max-width: 980px;
+  color: #ffffff;
   margin: 0;
 }
 
-.nextLine,
-.columnText,
-.columnList,
-.more,
-.clinic {
-  color: var(--text-inverse);
+.lensBlock {
+  border-top: 1px solid rgba(255, 255, 255, 0.18);
+  padding-top: var(--space-4);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+
+.lensLine {
+  color: #ffffff;
   margin: 0;
 }
 
-/* The seven lenses: white pills, Outfit 600, in the guide's order. */
+/* The seven lenses: green ground, ink text, Outfit 600, in the guide's order.
+   They wrap on a phone. */
 .lenses {
   list-style: none;
   margin: 0;
   padding: 0;
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-2);
+  gap: 10px;
 }
 
 .lens {
-  background: var(--kit-card);
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 0 20px;
+  background: var(--spring-green);
   color: var(--text-inverse);
   font-family: var(--font-heading);
   font-weight: 600;
-  font-size: var(--fs-body);
-  line-height: var(--lh-snug);
-  padding: var(--space-2) var(--space-4);
+  font-size: 17px;
+  line-height: 1.2;
   border-radius: var(--radius-pill);
 }
 
-/* Stacked on a phone, two columns from 768px. Each has a 3px ink left rule. */
-.columns {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: var(--space-5);
+/* The quote: a 4px green lead rule backed by a 4px ink rule (the guide's
+   lived-voice treatment), the photo to the left of the text at every width. */
+.quote {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding-left: var(--space-4);
+  border-left: 4px solid var(--spring-green);
+  box-shadow: inset 4px 0 0 var(--text-inverse);
 }
 
 @media (min-width: 768px) {
-  .columns {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-6);
+  .quote {
+    gap: var(--space-5);
+    padding-left: var(--space-5);
   }
 }
 
-.column {
-  border-left: 3px solid var(--text-inverse);
-  padding-left: var(--space-4);
+/* The real <img> when nici's file lands; until then a soft purple circle. */
+.quotePhoto {
+  flex-shrink: 0;
+  width: 72px;
+  height: 72px;
+  border-radius: 999px;
+  object-fit: cover;
+  background: var(--kit-panel);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-heading);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--kit-ink-muted);
+}
+
+.quoteText {
+  flex: 1;
+  min-width: 0;
   display: flex;
   flex-direction: column;
   gap: var(--space-2);
 }
 
-.columnList {
-  padding-left: var(--space-5);
-  display: flex;
-  flex-direction: column;
-  gap: var(--space-2);
+.quoteLine {
+  font-family: var(--font-body);
+  font-size: 22px;
+  line-height: 1.45;
+  color: var(--text-inverse);
+  margin: 0;
 }
 
-/* --text-muted is for light-on-dark; on this card the muted line is ink at
-   a weight that still clears 4.5:1 (#210a33 at 80% over #ece6f5 is ~9:1). */
+.quoteCredit {
+  color: var(--kit-ink-muted);
+  letter-spacing: 0.12em;
+}
+
+.quoteCredit cite {
+  font-style: normal;
+}
+
+.desk {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-5);
+}
+
+/* Three cards: one column on a phone, three from 768px. A real <ol>; the
+   numerals are presentational. */
+.deskCards {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-4);
+}
+
+@media (min-width: 768px) {
+  .deskCards {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: var(--space-5);
+  }
+}
+
+.deskCard {
+  background: var(--kit-panel);
+  border-radius: var(--kit-card-radius);
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  font-size: 18px;
+  line-height: 1.5;
+}
+
+.deskNumeral {
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 52px;
+  line-height: 0.9;
+  color: var(--text-inverse);
+}
+
+.notLine,
 .more,
 .clinic {
-  color: rgba(33, 10, 51, 0.8);
+  margin: 0;
+}
+
+.notLine,
+.clinic {
+  color: var(--kit-ink-muted);
+}
+
+.notLabel {
+  font-family: var(--font-heading);
+  font-weight: 600;
+  color: var(--text-inverse);
+}
+
+.more {
+  color: var(--text-inverse);
 }
 
 .nextActions {
@@ -482,52 +594,53 @@
   .nextActions {
     flex-direction: row;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--space-4);
   }
 }
 
-/* Green ground, ink text, pill. Full width on a phone. */
-.sendButton {
+/* Two 56px pills, full width and stacked on a phone, side by side from
+   768px. Green ground with ink text; white ground with a 2px ink border. */
+.sendButton,
+.guideButton {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-height: 44px;
-  padding: 13px 28px;
-  background: var(--spring-green);
+  min-height: 56px;
+  padding: 0 32px;
+  box-sizing: border-box;
   color: var(--text-inverse);
-  font-family: var(--font-body);
-  font-weight: 700;
-  font-size: 15px;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 18px;
   text-decoration: none;
   border-radius: var(--radius-pill);
   transition: opacity 150ms ease;
 }
 
-.sendButton:hover {
+.sendButton {
+  background: var(--spring-green);
+}
+
+.guideButton {
+  background: #ffffff;
+  border: 2px solid var(--text-inverse);
+}
+
+.sendButton:hover,
+.guideButton:hover {
   opacity: 0.88;
-}
-
-/* A text link beside the button, under it on a phone. Ink and underlined:
-   never green. */
-.textLink {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 44px;
-  color: var(--text-inverse);
-  font-weight: 600;
-  text-decoration: underline;
-  text-underline-offset: 3px;
-}
-
-.textLink:hover {
-  text-decoration-thickness: 2px;
 }
 
 .nextRule {
   border: 0;
-  border-top: 1px solid rgba(33, 10, 51, 0.25);
-  margin: var(--space-2) 0 0;
+  border-top: 1px solid var(--kit-panel);
+  margin: 0;
+}
+
+.clinic a {
+  color: var(--text-inverse);
+  text-decoration: underline;
+  text-underline-offset: 4px;
 }
 
 /* The site's focus ring is green, which vanishes on a light surface. On the

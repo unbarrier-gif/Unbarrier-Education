@@ -188,6 +188,22 @@ export const NEXT_STEP = {
 } as const;
 
 /**
+ * The two new slots on the next-step block (v4, 26 oct 2026). Both come from
+ * nici and neither has landed: `photo` stays null (a soft purple circle shows)
+ * and `credit` stays a bracketed placeholder until she writes the final words.
+ * The quote itself is NEXT_STEP.sendLine, unchanged.
+ */
+export const NEXT_STEP_PERSON: {
+  photo: { src: string; width: number; height: number } | null;
+  photoAlt: string;
+  credit: string;
+} = {
+  photo: null,
+  photoAlt: 'nici foote, who reads your statement before she comes',
+  credit: '[nici · unbarrier]',
+};
+
+/**
  * The HubSpot form (amber's). The fields — name, school, role, email and the
  * unticked notice box — live in HubSpot, not in our code. EU1 region.
  */
