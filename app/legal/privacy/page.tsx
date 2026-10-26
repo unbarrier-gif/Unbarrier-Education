@@ -404,6 +404,10 @@ export default function PrivacyPage() {
             <strong>newsletter</strong>: until you unsubscribe
           </li>
           <li>
+            <strong>guide download details</strong>: three years from your last
+            contact, then deleted
+          </li>
+          <li>
             <strong>analytics</strong>: anonymised, so not tied to you at all
           </li>
         </ul>
