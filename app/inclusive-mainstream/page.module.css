@@ -312,6 +312,8 @@
   height: 28px;
   width: auto;
   max-width: 100%;
+  /* some supplied logos are on white; multiply drops the white onto the tint */
+  mix-blend-mode: multiply;
 }
 
 .sponsorName {
