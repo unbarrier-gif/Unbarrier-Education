@@ -14,6 +14,7 @@ import {
   ICEBERG_ALT,
   KIT_COPY,
   KIT_COVER,
+  NEXT_STEP_PERSON,
   NEXT_STEP,
   type Sponsor,
 } from '@/lib/kit';
@@ -30,8 +31,9 @@ import styles from './page.module.css';
 //   contents    seven dark chapter cards: number · green line with the iceberg
 //               on it · name · a sponsor strip in the chapter's tint, with the
 //               sponsor's logo (card 01's strip links out, no other does)
-//   next step   soft purple card · what you are buying · the seven lenses ·
-//               what you do and do not get · send your statement (/book)
+//   next step   white card · dark "what you are buying" card holding the seven
+//               lenses · a quote from nici · three numbered cards ·
+//               send your statement (/book) and get the guide first (#form)
 //   footer      the site's own
 //
 // It has its own header instead of <Nav />: a landing page that offers the
@@ -187,49 +189,81 @@ export default function KitPage() {
             <div className={styles.buying}>
               <p className={styles.buyingLabel}>{NEXT_STEP.buyingLabel}</p>
               <p className={styles.buyingText}>{NEXT_STEP.buying}</p>
-            </div>
-
-            <p className={styles.nextLine}>{NEXT_STEP.lensesLine}</p>
-            <ul className={styles.lenses} role="list">
-              {NEXT_STEP.lenses.map((lens) => (
-                <li key={lens} className={styles.lens}>
-                  {lens}
-                </li>
-              ))}
-            </ul>
-            <p className={styles.nextLine}>{NEXT_STEP.sendLine}</p>
-
-            <div className={styles.columns}>
-              <div className={styles.column}>
-                <p className={styles.columnLabel}>{NEXT_STEP.notLabel}</p>
-                <p className={styles.columnText}>{NEXT_STEP.not}</p>
-              </div>
-              <div className={styles.column}>
-                <p className={styles.columnLabel}>{NEXT_STEP.getLabel}</p>
-                <ol className={styles.columnList}>
-                  {NEXT_STEP.get.map((item) => (
-                    <li key={item}>{item}</li>
+              <div className={styles.lensBlock}>
+                <p className={styles.lensLine}>{NEXT_STEP.lensesLine}</p>
+                <ul className={styles.lenses} role="list">
+                  {NEXT_STEP.lenses.map((lens) => (
+                    <li key={lens} className={styles.lens}>
+                      {lens}
+                    </li>
                   ))}
-                </ol>
+                </ul>
               </div>
             </div>
 
-            <p className={styles.more}>{NEXT_STEP.more}</p>
+            {/* A quote, so a screen reader hears it as one. The photo and the
+                credit are nici's (NEXT_STEP_PERSON); both are placeholders
+                until they land. */}
+            <blockquote className={styles.quote}>
+              {NEXT_STEP_PERSON.photo ? (
+                <Image
+                  src={NEXT_STEP_PERSON.photo.src}
+                  alt={NEXT_STEP_PERSON.photoAlt}
+                  width={NEXT_STEP_PERSON.photo.width}
+                  height={NEXT_STEP_PERSON.photo.height}
+                  className={styles.quotePhoto}
+                />
+              ) : (
+                <span className={styles.quotePhoto} aria-hidden="true">
+                  [photo]
+                </span>
+              )}
+              <div className={styles.quoteText}>
+                <p className={styles.quoteLine}>{NEXT_STEP.sendLine}</p>
+                <footer className={styles.quoteCredit}>
+                  <cite>{NEXT_STEP_PERSON.credit}</cite>
+                </footer>
+              </div>
+            </blockquote>
+
+            <div className={styles.desk}>
+              <p className={styles.deskLabel}>{NEXT_STEP.getLabel}</p>
+              <ol className={styles.deskCards} role="list">
+                {NEXT_STEP.get.map((item, i) => (
+                  <li key={item} className={styles.deskCard}>
+                    <span className={styles.deskNumeral} aria-hidden="true">
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ol>
+              <p className={styles.notLine}>
+                <span className={styles.notLabel}>{NEXT_STEP.notLabel}:</span>{' '}
+                {NEXT_STEP.not}
+              </p>
+              <p className={styles.more}>{NEXT_STEP.more}</p>
+            </div>
 
             <div className={styles.nextActions}>
               {/* One booking link for the whole site (lib/booking.ts). Not a
                   <Button>: that one is dark-ground clothes, and this card is
-                  light. Same pill, same 44px floor. */}
+                  light. Same pill, 56px. */}
               <a href={BOOKING_URL} className={styles.sendButton}>
                 {NEXT_STEP.button}
               </a>
-              <a href={`#${FORM_ID}`} className={styles.textLink}>
+              <a href={`#${FORM_ID}`} className={styles.guideButton}>
                 {NEXT_STEP.link}
               </a>
             </div>
 
             <hr className={styles.nextRule} />
-            <p className={styles.clinic}>{NEXT_STEP.clinic}</p>
+            {/* "ask about a clinic" is the link. The handover gives no target, so it
+                goes to the same booking route as the button (flagged in the PR). */}
+            <p className={styles.clinic}>
+              {NEXT_STEP.clinic.replace('ask about a clinic.', '')}
+              <a href={BOOKING_URL}>ask about a clinic</a>.
+            </p>
           </div>
         </section>
       </main>

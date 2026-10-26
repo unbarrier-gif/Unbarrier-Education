@@ -116,6 +116,7 @@
   --kit-tint-05:       #ece6f5;
   --kit-tint-06:       var(--antique-white);
   --kit-tint-07:       #f6def2;
+  --kit-ink-muted:     #5a4d6b;   /* muted ink on a white card · 7.9:1 */
 
   /* ── BANNED MOVES — a future reader must be able to see these ──────── */
   /* • No tinted ground. Sections sit on the ladder above, nothing else —

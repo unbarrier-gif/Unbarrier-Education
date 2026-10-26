@@ -188,6 +188,22 @@ export const NEXT_STEP = {
 } as const;
 
 /**
+ * The two new slots on the next-step block (v4, 26 oct 2026). `photo` landed
+ * 26 oct (null would show a soft purple circle). `credit` is still a bracketed
+ * placeholder until nici writes the final words.
+ * The quote itself is NEXT_STEP.sendLine, unchanged.
+ */
+export const NEXT_STEP_PERSON: {
+  photo: { src: string; width: number; height: number } | null;
+  photoAlt: string;
+  credit: string;
+} = {
+  photo: { src: '/assets/portraits/nici-next-step.webp', width: 400, height: 400 },
+  photoAlt: 'nici foote, smiling, holding her highly commended accessibility champion award',
+  credit: '[nici · unbarrier]',
+};
+
+/**
  * The HubSpot form (amber's). The fields — name, school, role, email and the
  * unticked notice box — live in HubSpot, not in our code. EU1 region.
  */
