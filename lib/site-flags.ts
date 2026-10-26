@@ -71,11 +71,9 @@ export const SITE_FLAGS = {
   // Do not bring the flag back; a lifted hold is not an open decision.
 
   // ── /inclusive-mainstream ──────────────────────────────────────────────────────────────
-  /** OPEN. Puts /inclusive-mainstream in the sitemap and lets it be indexed. Off until the
-   *  privacy notice (v1.1) names the guides and the /accessibility statement
-   *  exists — both are go-live conditions in the kit spec. The route is
-   *  built and reachable meanwhile, noindex, like /voice. */
-  kitPublic: false,
+  // `kitPublic` is GONE (26 Oct 2026): Nici said take noindex off, so
+  // /inclusive-mainstream is public — indexed, in the sitemap. Do not bring the
+  // flag back; a lifted hold is not an open decision (same as /voice).
 
   // ── /hello ────────────────────────────────────────────────────────────
   /** "why your hands move" on the /hello shelf. Held for the blog. */

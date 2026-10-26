@@ -18,7 +18,6 @@ import {
   NEXT_STEP,
   type Sponsor,
 } from '@/lib/kit';
-import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './page.module.css';
 
 // /inclusive-mainstream — version 2, top half redone in version 4 (26 Oct 2026).
@@ -51,8 +50,8 @@ import styles from './page.module.css';
 // COPY: none of it is written here. Every slot is in lib/kit.ts, with stand-in
 // text for amber to write over. The chapter data is there too.
 //
-// STILL NOINDEX: SITE_FLAGS.kitPublic is off until Nici says it can go
-// public, and the sitemap keeps it out.
+// PUBLIC: indexed and in the sitemap since 26 Oct 2026 (Nici's call; the old
+// kitPublic flag is deleted).
 
 const CANONICAL = 'https://www.unbarrier.me/inclusive-mainstream';
 
@@ -64,9 +63,6 @@ export const metadata: Metadata = {
     ? { description: KIT_COPY.metaDescription.text }
     : {}),
   alternates: { canonical: CANONICAL },
-  robots: SITE_FLAGS.kitPublic
-    ? undefined
-    : { index: false, follow: false, googleBot: { index: false, follow: false } },
   openGraph: {
     title: GUIDE_TITLE,
     url: CANONICAL,
