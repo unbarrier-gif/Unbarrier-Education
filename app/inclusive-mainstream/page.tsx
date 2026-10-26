@@ -64,14 +64,26 @@ export const metadata: Metadata = {
     title: GUIDE_TITLE,
     url: CANONICAL,
     type: 'website',
+    ...(KIT_COPY.metaDescription.text
+      ? { description: KIT_COPY.metaDescription.text }
+      : {}),
     images: [
       {
-        url: '/opengraph-image.png',
-        width: 1200,
-        height: 630,
-        alt: 'unbarrier — designed for difference. did it reach the child?',
+        url: KIT_COVER.src ?? '/opengraph-image.png',
+        width: KIT_COVER.width,
+        height: KIT_COVER.height,
+        alt: KIT_COPY.coverAlt.text ?? GUIDE_TITLE,
       },
     ],
+  },
+  // The root layout's twitter block names the site, not the guide; override it.
+  twitter: {
+    card: 'summary_large_image',
+    title: GUIDE_TITLE,
+    ...(KIT_COPY.metaDescription.text
+      ? { description: KIT_COPY.metaDescription.text }
+      : {}),
+    images: [KIT_COVER.src ?? '/opengraph-image.png'],
   },
 };
 
@@ -243,6 +255,7 @@ function SponsorStrip({ sponsor, tint }: { sponsor: Sponsor; tint: string }) {
         width={logo.width}
         height={logo.height}
         className={styles.sponsorLogo}
+        unoptimized={logo.src.endsWith('.svg')}
       />
     ) : (
       <span className={styles.sponsorName}>{name}</span>

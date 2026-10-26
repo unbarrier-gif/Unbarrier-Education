@@ -45,7 +45,7 @@ export const KIT_COPY = {
   contentsHeading: slot('contents heading', 'what’s inside'),
 
   // <head>: the page is noindex, but the tab and any shared link still read these
-  metaDescription: slot('meta description'),
+  metaDescription: slot('meta description', 'a free guide for school leaders. one guide, seven principles. what the department asks, and what to find out before you spend.'),
 } satisfies Record<string, Copy>;
 
 /**
@@ -94,6 +94,10 @@ const chapterTitle = (text: string): Copy => ({
 
 const SPONSOR_DIR = '/assets/sponsors';
 
+// TODO(nici asking the sponsors): gaia-learning (86x48), skolon (150x74) and talamo
+// (160x40) are small screenshots and look soft on retina. Swap in their own
+// high-res or svg files, same filenames, and update width/height below.
+
 export const CHAPTERS: Chapter[] = [
   {
     n: '01',
@@ -101,7 +105,7 @@ export const CHAPTERS: Chapter[] = [
     tint: 'var(--kit-tint-01)',
     sponsor: {
       name: 'kaleidoscope',
-      logo: null, // kaleidoscope, dark green: `${SPONSOR_DIR}/kaleidoscope.png`
+      logo: { src: `${SPONSOR_DIR}/kaleidoscope.png`, width: 800, height: 81 },
       link: {
         href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026-1',
         label: 'kaleidoscope, inclusion index autumn 2026',
@@ -113,37 +117,37 @@ export const CHAPTERS: Chapter[] = [
     title: chapterTitle('Noticing'),
     tint: 'var(--kit-tint-02)',
     // bloom is gaia learning's programme; the strip carries gaia learning's logo
-    sponsor: { name: 'bloom', logo: null }, // `${SPONSOR_DIR}/gaia-learning.png`
+    sponsor: { name: 'bloom', logo: { src: `${SPONSOR_DIR}/gaia-learning.png`, width: 86, height: 48 } },
   },
   {
     n: '03',
     title: chapterTitle('Designing'),
     tint: 'var(--kit-tint-03)',
-    sponsor: { name: 'talamo', logo: null }, // `${SPONSOR_DIR}/talamo.png`
+    sponsor: { name: 'talamo', logo: { src: `${SPONSOR_DIR}/talamo.png`, width: 160, height: 40 } },
   },
   {
     n: '04',
     title: chapterTitle('Joining'),
     tint: 'var(--kit-tint-04)',
-    sponsor: { name: 'digit music', logo: null }, // black: `${SPONSOR_DIR}/digit-music.png`
+    sponsor: { name: 'digit music', logo: { src: `${SPONSOR_DIR}/digit-music.png`, width: 600, height: 187 } },
   },
   {
     n: '05',
     title: chapterTitle('Belonging'),
     tint: 'var(--kit-tint-05)',
-    sponsor: { name: 'cosmo', logo: null }, // svg, inlined with currentColor: `${SPONSOR_DIR}/cosmo.svg`
+    sponsor: { name: 'cosmo', logo: { src: `${SPONSOR_DIR}/cosmo.svg`, width: 4300, height: 1120 } },
   },
   {
     n: '06',
     title: chapterTitle('Listening'),
     tint: 'var(--kit-tint-06)',
-    sponsor: { name: 'unbarrier', logo: 'wordmark' },
+    sponsor: { name: 'held by unbarrier', logo: null },
   },
   {
     n: '07',
     title: chapterTitle('Reaching'),
     tint: 'var(--kit-tint-07)',
-    sponsor: { name: 'skolon', logo: null }, // `${SPONSOR_DIR}/skolon.png`
+    sponsor: { name: 'skolon', logo: { src: `${SPONSOR_DIR}/skolon.png`, width: 150, height: 74 } },
   },
 ];
 
