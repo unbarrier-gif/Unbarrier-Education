@@ -38,11 +38,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // The sign-up page for notice. Indexed and linkable on purpose — three
     // rendered QR codes and every sign-up route point here.
     { url: 'https://www.unbarrier.me/notice', lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
-    // /inclusive-mainstream joins the sitemap only when its go-live conditions are met — see
-    // SITE_FLAGS.kitPublic. Until then it is noindex.
-    ...(SITE_FLAGS.kitPublic
-      ? [{ url: 'https://www.unbarrier.me/inclusive-mainstream', lastModified: now, changeFrequency: 'weekly' as const, priority: 0.8 }]
-      : []),
+    { url: 'https://www.unbarrier.me/inclusive-mainstream', lastModified: now, changeFrequency: 'weekly', priority: 0.8 },
   ];
 
   const postRoutes: MetadataRoute.Sitemap = posts.map((p) => ({
