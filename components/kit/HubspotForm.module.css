@@ -1,0 +1,110 @@
+/* ========================================================================
+   amber's HubSpot form, brought in line with the form card (v4, 26 Oct 2026).
+   The embed renders into the page itself, so the page's CSS reaches it. This
+   file is the one hook: everything is scoped under `.form` and targets
+   HubSpot's `hsfc-*` classes. The fields, their order, the label words and
+   the button label stay HubSpot settings.
+
+   NOT CHECKED AGAINST THE LIVE EMBED: the build sandbox cannot reach
+   hsforms.net. A selector that does not match is a no-op (the form just keeps
+   HubSpot's own look), so check this on the Vercel preview.
+   ======================================================================== */
+
+.form {
+  --field-ink: var(--text-inverse);
+  --field-muted: var(--kit-ink-muted);
+}
+
+/* Fields: rows of two (first · last, school · role), email full width. HubSpot
+   decides what sits in a row (the form builder's layout); this just gives each
+   row equal columns. One column on a phone. */
+.form :global(.hsfc-Row) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  gap: var(--space-4);
+}
+
+.form :global(.hsfc-Row) + :global(.hsfc-Row) {
+  margin-top: var(--space-4);
+}
+
+@media (max-width: 767px) {
+  .form :global(.hsfc-Row) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Labels: Lexend 14 / 600 in ink. */
+.form :global(.hsfc-FieldLabel) {
+  display: block;
+  margin: 0 0 6px;
+  font-family: var(--font-body);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--field-ink);
+}
+
+/* "(required)" in ink-muted regular, in place of the red star. The star's own
+   element is shrunk to nothing and the word is drawn after it. If HubSpot's
+   star is not in an element matching this, the star simply stays. */
+.form :global(.hsfc-FieldLabel) [class*='Required'] {
+  font-size: 0;
+  color: transparent;
+}
+
+.form :global(.hsfc-FieldLabel) [class*='Required']::after {
+  content: ' (required)';
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--field-muted);
+}
+
+/* Inputs: 48px, 1.5px ink-muted border, 8px radius, Lexend 16. */
+.form :global(.hsfc-TextInput) {
+  box-sizing: border-box;
+  width: 100%;
+  height: 48px;
+  padding: 0 14px;
+  border: 1.5px solid var(--field-muted);
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: none;
+  font-family: var(--font-body);
+  font-size: 16px;
+  color: var(--field-ink);
+}
+
+.form :global(.hsfc-TextInput):focus-visible {
+  outline: 3px solid var(--amethyst);
+  outline-offset: 2px;
+}
+
+/* The button: full width, 56px, green pill, ink text, Outfit 600 18. */
+.form :global(.hsfc-Button) {
+  box-sizing: border-box;
+  width: 100%;
+  height: 56px;
+  margin-top: var(--space-2);
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: var(--spring-green);
+  color: var(--text-inverse);
+  font-family: var(--font-heading);
+  font-size: 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.form :global(.hsfc-Button):focus-visible {
+  outline: 3px solid var(--amethyst);
+  outline-offset: 2px;
+}
+
+/* The notice box and the guide-delivery consent stay where HubSpot puts them
+   (second step); they only take the body face. */
+.form :global(.hsfc-CheckboxField),
+.form :global(.hsfc-RichText) {
+  font-family: var(--font-body);
+  color: var(--field-ink);
+}

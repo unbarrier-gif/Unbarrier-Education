@@ -1,6 +1,7 @@
 import Script from 'next/script';
 import { HUBSPOT } from '@/lib/kit';
 import { GuideDownloadEvent } from './GuideDownloadEvent';
+import styles from './HubspotForm.module.css';
 
 // amber's HubSpot form (embed v4, EU1). The script finds every
 // `.hs-form-frame` on the page and renders the form into it; the fields
@@ -12,6 +13,9 @@ import { GuideDownloadEvent } from './GuideDownloadEvent';
 // cannot reach hsforms.net, so the embed itself is checked on the Vercel
 // preview, not here.
 //
+// The wrapper's class is the CSS hook (HubspotForm.module.css): it styles the
+// embed to match the form card.
+//
 // A client-side navigation INTO /inclusive-mainstream would not re-run an already-loaded
 // script, so nothing on the site links here with next/link. Keep it that way
 // or add a re-scan.
@@ -20,12 +24,14 @@ export function HubspotForm() {
     <>
       <Script src={HUBSPOT.scriptSrc} strategy="afterInteractive" />
       <GuideDownloadEvent />
-      <div
-        className="hs-form-frame"
-        data-region={HUBSPOT.region}
-        data-form-id={HUBSPOT.formId}
-        data-portal-id={HUBSPOT.portalId}
-      />
+      <div className={styles.form}>
+        <div
+          className="hs-form-frame"
+          data-region={HUBSPOT.region}
+          data-form-id={HUBSPOT.formId}
+          data-portal-id={HUBSPOT.portalId}
+        />
+      </div>
     </>
   );
 }
