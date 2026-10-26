@@ -16,7 +16,7 @@ export default function PrivacyPage() {
         <Wordmark size="md" href="/hello" />
         <p className={styles.eyebrow}>01 · privacy</p>
         <h1 className={styles.title}>privacy notice</h1>
-        <p className={styles.meta}>Last updated: 29 August 2026 · Version 1.1</p>
+        <p className={styles.meta}>Last updated: 26 October 2026 · Version 1.2</p>
       </div>
 
       <section className={styles.section}>
@@ -233,6 +233,49 @@ export default function PrivacyPage() {
       </section>
 
       <section className={styles.section}>
+        <h2 className={styles.h3}>3a · the inclusive mainstream fund guide</h2>
+        <p>
+          when you ask for the guide, we collect your name, your school or
+          trust, your role and your email address. the form also asks three
+          short questions about your inclusion strategy and which of the seven
+          principles you plan to focus on. we ask them so the sector can learn
+          what schools are finding, and we use the answers only as numbers.
+        </p>
+        <p>
+          we use your details to send you the guide and to answer if you reply.
+          that is a service you asked for, so we do not need your consent for
+          it. we never publish or share an answer with a name, a school or an
+          email attached, and we never publish a figure drawn from fewer than
+          ten schools.
+        </p>
+        <p>
+          the guide has sponsors. they receive counts - how many people
+          downloaded, how many chose their principle - and nothing else. no
+          sponsor is given your name, your school or your email, and no sponsor
+          can contact you through us.
+        </p>
+        <p>
+          hubspot holds the form, your details and the email that sends you the
+          guide. your data sits on hubspot&rsquo;s servers in the european
+          union. hubspot is listed with our other suppliers in section 5.
+        </p>
+        <p>
+          if you tick the box for notice, our monthly letter for school
+          leaders, that is separate consent. you can withdraw it from any issue
+          with one click, and it does not affect the guide.
+        </p>
+        <p>
+          we keep your details for three years from your last contact with us,
+          then delete them. you can ask us to delete them sooner at any time:{' '}
+          <a href="mailto:nici@unbarrier.me">nici@unbarrier.me</a>.
+        </p>
+        <p>
+          your rights over this data are the same as for everything else in this
+          notice: see section 9.
+        </p>
+      </section>
+
+      <section className={styles.section}>
         <h2 className={styles.h3}>4 · where we get it</h2>
         <p>almost always directly from you. occasionally from:</p>
         <ul>
@@ -272,6 +315,10 @@ export default function PrivacyPage() {
           <li>
             <strong>Vercel</strong> · website hosting, and the database behind
             our assessment tools
+          </li>
+          <li>
+            <strong>HubSpot</strong> · form hosting, contact records and the
+            guide delivery email · eu data centre (eu1)
           </li>
           <li>
             <strong>Resend</strong> · transactional email
@@ -355,6 +402,10 @@ export default function PrivacyPage() {
           </li>
           <li>
             <strong>newsletter</strong>: until you unsubscribe
+          </li>
+          <li>
+            <strong>guide download details</strong>: three years from your last
+            contact, then deleted
           </li>
           <li>
             <strong>analytics</strong>: anonymised, so not tied to you at all
