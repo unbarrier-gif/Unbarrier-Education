@@ -141,7 +141,7 @@ export const CHAPTERS: Chapter[] = [
     n: '06',
     title: chapterTitle('Listening'),
     tint: 'var(--kit-tint-06)',
-    sponsor: { name: 'held by unbarrier', logo: null },
+    sponsor: { name: 'held by unbarrier', logo: { src: `${SPONSOR_DIR}/unbarrier-me.png`, width: 615, height: 136 } },
   },
   {
     n: '07',
