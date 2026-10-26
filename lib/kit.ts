@@ -34,7 +34,6 @@ export const KIT_COPY = {
   // first screen · left
   label: slot('label above title', 'a free guide for school leaders'),
   guideLine: slot('one line: what the guide is', 'one guide, seven principles. what the department asks, and what to find out before you spend.'),
-  afterLine: slot('one line: what happens after you sign up', 'the guide lands in your inbox.'),
   coverAlt: slot('guide cover alt text', 'Download your copy to make a difference. A tablet showing the cover of The Inclusive Mainstream Fund: what you need to understand before you act.'),
 
   // first screen · right
@@ -49,13 +48,27 @@ export const KIT_COPY = {
 } satisfies Record<string, Copy>;
 
 /**
- * The guide cover. `src` stays null until amber supplies the image, and the
- * page shows a placeholder box. Drop the file in /public/assets and set it.
+ * The tablet banner. Since v4 (26 oct 2026) it is only the share card
+ * (openGraph / twitter image in the page metadata); the page itself no longer
+ * shows it.
  */
 export const KIT_COVER: { src: string | null; width: number; height: number } = {
   src: '/assets/inclusive-mainstream-download-banner.png',
   width: 1200,
   height: 600,
+};
+
+/**
+ * The cover thumbnail in the form card's header (58 × 76 on the page). It needs
+ * a FLAT cover file, the cover alone. There is none in the repo (the tablet
+ * banner is a mockup), so `src` stays null and the slot renders nothing. Drop
+ * the file in /public/assets and set `src`; the page already handles the rest.
+ */
+export const KIT_THUMB: { src: string | null; width: number; height: number; alt: string } = {
+  src: null,
+  width: 58,
+  height: 76,
+  alt: 'the guide cover',
 };
 
 /** A sponsor's logo file in /public. Height-matched in the strip, never width-matched. */
@@ -218,8 +231,9 @@ export const HUBSPOT = {
 export const FORM_ID = 'form';
 
 /**
- * The iceberg (public/assets/iceberg.svg). 420 × 690; the waterline sits 225
- * down from the top, 32.6% of its height. The CSS reads the same two numbers
+ * The iceberg (public/assets/iceberg.svg), as the chapter cards use it (the
+ * first screen inlines its own copy: components/kit/HeroIceberg.tsx). 420 × 690;
+ * the waterline sits 225 down from the top, 32.6% of its height. The CSS reads the same two numbers
  * (`calc(height * 225 / 690)`), so a re-issued file with a different waterline
  * changes them here and in app/inclusive-mainstream/page.module.css, nowhere
  * else.
@@ -230,7 +244,3 @@ export const ICEBERG = {
   height: 690,
   waterline: 225,
 } as const;
-
-/** Alt text for the iceberg on the first screen. The chapter cards' copy is decorative: empty alt. */
-export const ICEBERG_ALT =
-  'an iceberg, a small tip above the waterline and most of it below';

@@ -1,13 +1,16 @@
 /* ========================================================================
-   /inclusive-mainstream — version 2. The page has one job: get a school
-   leader to fill in the form. Every colour is a token (the --kit-* surfaces
-   are in app/globals.css). Green is a ground or a line ON DARK here — never
-   text, never a line on white. No drawn edges. Touch targets are 44px or more.
+   /inclusive-mainstream — version 2, top half redone in version 4. The page
+   has one job: get a school leader to fill in the form. Every colour is a
+   token (the --kit-* surfaces are in app/globals.css). Green is a ground or a
+   line ON DARK here — never text, never a line on white. No drawn edges.
+   Touch targets are 44px or more.
 
-   THE ICEBERG. public/assets/iceberg.svg is 420 × 690 and its waterline sits
-   225 down from the top (32.6%). Wherever it appears it is placed so that
-   waterline lands on a green line: its top = line centre − height × 225 / 690.
-   The numbers live in lib/kit.ts (ICEBERG); the same two are used below.
+   THE CHAPTER ICEBERGS. public/assets/iceberg.svg is 420 × 690 and its
+   waterline sits 225 down from the top (32.6%). On a chapter card it is placed
+   so that waterline lands on the green line: its top = line centre − height ×
+   225 / 690. The numbers live in lib/kit.ts (ICEBERG). The first screen's
+   iceberg is a different thing: inlined, with its band as the hero's rule
+   (components/kit/HeroIceberg.tsx).
    ======================================================================== */
 
 /* ── header ───────────────────────────────────────────────────────────── */
@@ -22,6 +25,27 @@
   margin: 0 auto;
 }
 
+/* The green pill, 48px, ink text, Outfit 600. */
+.headerButton {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 48px;
+  padding: 0 var(--space-5);
+  border-radius: var(--radius-pill);
+  background: var(--spring-green);
+  color: var(--text-inverse);
+  font-family: var(--font-heading);
+  font-weight: 600;
+  font-size: 1.0625rem;
+  text-decoration: none;
+  transition: opacity 150ms ease;
+}
+
+.headerButton:hover {
+  opacity: 0.88;
+}
+
 /* ── first screen ─────────────────────────────────────────────────────── */
 /* A laptop shows the whole first screen under the header without scrolling.
    It is a minimum, not a height: a longer form (validation messages) grows
@@ -29,88 +53,83 @@
 .first {
   display: flex;
   min-height: calc(100dvh - 72px);
-  padding: 0 var(--space-5) var(--space-5);
+  padding: 0 var(--space-5) var(--space-8);
   max-width: 1280px;
   margin: 0 auto;
 }
 
 .stage {
-  /* the iceberg, measured off its own height */
-  --berg-h: 140px;                                   /* phone */
-  --berg-w: calc(var(--berg-h) * 420 / 690);
-  --berg-tip: calc(var(--berg-h) * 225 / 690);       /* above the waterline */
-  --berg-sub: calc(var(--berg-h) * 429 / 690);       /* drawn depth below it */
-  --line: 4px;
-
   flex: 1;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   align-content: start;
-  gap: var(--space-4);
+  gap: var(--space-5);
 }
 
 .label,
 .title,
 .line {
-  color: var(--text);
+  color: #ffffff;
 }
 
+/* Dark pink on the dark ground. */
 .label {
   font-family: var(--font-heading);
-  font-size: var(--fs-small);
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: var(--ls-eyebrow);
+  line-height: 1.3;
+  letter-spacing: 0.18em;
+  color: var(--orchid-mist);
 }
 
+/* The guide's capitals are kept. 56px on a laptop (--fs-display tops out
+   there), 620px at most. */
 .title {
-  font-size: clamp(1.6rem, 2.7vw, 2.5rem);
-  line-height: var(--lh-snug);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: var(--fs-display);
+  line-height: 1.08;
   letter-spacing: var(--ls-tight);
+  max-width: 620px;
   text-wrap: balance;
 }
 
-/* The line under the title: 4px of green across the whole title column. On
-   a phone the iceberg's tip needs somewhere to stand, so the line drops by
-   the height of the tip; on a laptop the title makes room instead. */
-.rule {
-  position: relative;
-  height: var(--line);
-  background: var(--spring-green);
-  margin-top: var(--berg-tip);
-}
-
+/* The iceberg and its waterline band: one object under the title. The band
+   runs the whole title column, the berg towards the right end of it. The
+   height sets the berg's size (150px on a laptop, down to 96px on a phone);
+   the svg crops the band's far end, never the berg. */
 .berg {
-  position: absolute;
-  right: var(--space-3);
-  top: calc(var(--line) / 2 - var(--berg-tip));
-  height: var(--berg-h);
-  width: var(--berg-w);
+  display: block;
+  width: 100%;
+  max-width: 620px;
+  height: clamp(96px, 24vw, 150px);
+  color: var(--spring-green);
 }
 
 .line {
-  font-size: var(--fs-body);
-  line-height: var(--lh-body);
+  font-size: 1.25rem;
+  line-height: 1.55;
+  max-width: 520px;
 }
 
-/* The text beside the iceberg's submerged part keeps clear of it, and the
-   guide line is at least as tall as that part, so nothing below it (the form
-   on a phone) lands on the iceberg. */
-.guide {
-  padding-right: calc(var(--berg-w) + var(--space-5));
-  min-height: calc(var(--berg-sub) - var(--line) / 2 - var(--space-4));
-}
-
-/* The lilac form panel. HubSpot styles what is inside it; the panel only
-   gives it a ground and room. */
+/* The form card: the one light object in the hero. HubSpot's own styling is
+   brought in line in components/kit/HubspotForm.module.css. */
 .panel {
-  background: var(--kit-panel);
+  background: var(--kit-card);
   color: var(--text-inverse);
-  border-radius: calc(var(--kit-card-radius) - 4px);
+  border-radius: var(--kit-card-radius);
   padding: var(--space-5);
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
+  gap: var(--space-5);
   scroll-margin-top: var(--space-4);
+}
+
+.panelHead {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
 }
 
 .panelHeading,
@@ -119,87 +138,52 @@
 }
 
 .panelHeading {
-  font-size: var(--fs-h3);
-  line-height: var(--lh-snug);
+  font-size: 1.875rem;
+  line-height: 1.1;
+  letter-spacing: var(--ls-tight);
+}
+
+/* The cover thumbnail: 58 × 76, right of the heading. */
+.thumb {
+  flex-shrink: 0;
+  width: 58px;
+  height: 76px;
+  object-fit: cover;
+  border-radius: 6px;
 }
 
 .details {
-  font-size: var(--fs-small);
-  line-height: var(--lh-body);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--kit-ink-muted);
 }
 
-.cover {
-  min-height: 0;
-  display: flex;
-}
-
-/* Until amber supplies the image: a plain box, same proportion as the cover. */
-.coverBox {
-  flex: 1;
-  margin: 0;
-  min-height: 160px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: var(--space-4);
-  background: var(--kit-tint-01);
-  color: var(--text-inverse);
-  border-radius: var(--radius-md);
-  font-size: var(--fs-small);
-}
-
-.coverImage {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  object-fit: contain;
-  border-radius: var(--radius-md);
-}
-
-/* Laptop and up: the form moves beside the text. Same DOM order, so the tab
-   order and the phone order are one thing. */
+/* Laptop and up: the form card moves beside the text. Same DOM order, so the
+   tab order and the phone order are one thing. */
 @media (min-width: 768px) {
   .stage {
-    --berg-h: 230px;
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
     grid-template-areas:
       'label  panel'
       'title  panel'
-      'rule   panel'
+      'berg   panel'
       'guide  panel'
-      'after  panel'
-      'cover  panel';
-    grid-template-rows: auto auto auto auto auto minmax(120px, 1fr);
-    column-gap: var(--space-8);
-    row-gap: var(--space-3);
+      '.      panel';
+    grid-template-rows: auto auto auto auto 1fr;
+    column-gap: var(--space-6);
+    row-gap: var(--space-5);
   }
 
-  .label { grid-area: label; margin-top: var(--space-4); }
-
-  /* The tip rises beside the last lines of the title, so the title keeps
-     clear of the iceberg's width. */
-  .title {
-    grid-area: title;
-    padding-right: calc(var(--berg-w) + var(--space-5));
-  }
-
-  .rule { grid-area: rule; margin-top: 0; }
-
-  /* The submerged part runs down beside the guide line and the after-sign-up
-     line, so each is at least half of it. The cover starts below it. */
-  .guide,
-  .after {
-    padding-right: calc(var(--berg-w) + var(--space-5));
-    min-height: calc((var(--berg-sub) - var(--line) / 2 - var(--space-3)) / 2);
-  }
+  .label { grid-area: label; margin-top: var(--space-5); }
+  .title { grid-area: title; }
+  .berg { grid-area: berg; }
   .guide { grid-area: guide; }
-  .after { grid-area: after; }
 
-  .cover { grid-area: cover; }
   .panel {
     grid-area: panel;
-    padding: var(--space-6);
+    align-self: start;
+    padding: 36px;
+    gap: 22px;
   }
 }
 

@@ -1,9 +1,9 @@
 import type { Metadata } from 'next';
 import Image from 'next/image';
-import { Button } from '@/components/Button';
 import { Footer } from '@/components/Footer';
 import { Wordmark } from '@/components/Wordmark';
 import { HubspotForm } from '@/components/kit/HubspotForm';
+import { HeroIceberg } from '@/components/kit/HeroIceberg';
 import { Iceberg } from '@/components/kit/Iceberg';
 import { Slot } from '@/components/kit/Slot';
 import { BOOKING_URL } from '@/lib/booking';
@@ -11,9 +11,9 @@ import {
   CHAPTERS,
   FORM_ID,
   GUIDE_TITLE,
-  ICEBERG_ALT,
   KIT_COPY,
   KIT_COVER,
+  KIT_THUMB,
   NEXT_STEP_PERSON,
   NEXT_STEP,
   type Sponsor,
@@ -21,13 +21,14 @@ import {
 import { SITE_FLAGS } from '@/lib/site-flags';
 import styles from './page.module.css';
 
-// /inclusive-mainstream — version 2, from the "kit landing page v2" design.
+// /inclusive-mainstream — version 2, top half redone in version 4 (26 Oct 2026).
 // The page has one job: get a school leader to fill in the form.
 //
 //   header      wordmark · a button that jumps to the form
 //   first screen  straight on the page ground, no scroll on a laptop:
-//               left  label · title · guide line · after-sign-up line · cover
-//               right lilac panel · form heading · HubSpot form · details line
+//               left  label · title · the iceberg on its waterline · guide line
+//               right white form card · heading + cover thumbnail · HubSpot
+//                     form · details line
 //   contents    seven dark chapter cards: number · green line with the iceberg
 //               on it · name · a sponsor strip in the chapter's tint, with the
 //               sponsor's logo (card 01's strip links out, no other does)
@@ -36,12 +37,16 @@ import styles from './page.module.css';
 //               send your statement (/book) and get the guide first (#form)
 //   footer      the site's own
 //
+// v4 says the ask once: the "download your copy" block and the "lands in your
+// inbox" hero line are gone, the form card is the one light object up here,
+// and the hero's iceberg is one inlined object whose band is the hero's rule.
+//
 // It has its own header instead of <Nav />: a landing page that offers the
 // whole site's menu gives the reader seven other jobs.
 //
-// PHONE (< 768px): the DOM order IS the phone order — title, guide line, the
-// form, then the after-sign-up line and the cover. On a laptop the grid areas
-// put the form beside them. One source order, so the tab order matches both.
+// PHONE (< 768px): the DOM order IS the phone order — label, title, iceberg,
+// guide line, then the form card. On a laptop the grid puts the card beside
+// them. One source order, so the tab order matches both.
 //
 // COPY: none of it is written here. Every slot is in lib/kit.ts, with stand-in
 // text for amber to write over. The chapter data is there too.
@@ -94,9 +99,10 @@ export default function KitPage() {
     <>
       <header className={styles.header}>
         <Wordmark size="md" href="/" ariaLabel="unbarrier.me home" />
-        <Button href={`#${FORM_ID}`}>
+        {/* Not <Button>: this one is 48px with Outfit type (v4). */}
+        <a href={`#${FORM_ID}`} className={styles.headerButton}>
           <Slot copy={KIT_COPY.headerButton} />
-        </Button>
+        </a>
       </header>
 
       <main className={styles.main}>
@@ -107,11 +113,9 @@ export default function KitPage() {
               <Slot copy={KIT_COPY.label} />
             </p>
             <h1 className={styles.title}>{GUIDE_TITLE}</h1>
-            {/* The green line under the title, across the title column. The
-                iceberg's waterline sits on it: the tip above, the rest below. */}
-            <div className={styles.rule}>
-              <Iceberg className={styles.berg} alt={ICEBERG_ALT} />
-            </div>
+            {/* The iceberg's own waterline band is the hero's rule: it runs the
+                width of the title column, the berg towards the right end. */}
+            <HeroIceberg className={styles.berg} />
             <p className={`${styles.line} ${styles.guide}`}>
               <Slot copy={KIT_COPY.guideLine} />
             </p>
@@ -121,33 +125,26 @@ export default function KitPage() {
               aria-labelledby="form-heading"
               className={styles.panel}
             >
-              <h2 id="form-heading" className={styles.panelHeading}>
-                <Slot copy={KIT_COPY.formHeading} />
-              </h2>
+              <div className={styles.panelHead}>
+                <h2 id="form-heading" className={styles.panelHeading}>
+                  <Slot copy={KIT_COPY.formHeading} />
+                </h2>
+                {/* Empty until a flat cover file lands (KIT_THUMB in lib/kit.ts). */}
+                {KIT_THUMB.src ? (
+                  <Image
+                    src={KIT_THUMB.src}
+                    alt={KIT_THUMB.alt}
+                    width={KIT_THUMB.width}
+                    height={KIT_THUMB.height}
+                    className={styles.thumb}
+                  />
+                ) : null}
+              </div>
               <HubspotForm />
               <p className={styles.details}>
                 <Slot copy={KIT_COPY.detailsLine} />
               </p>
             </section>
-
-            <p className={`${styles.line} ${styles.after}`}>
-              <Slot copy={KIT_COPY.afterLine} />
-            </p>
-            <div className={styles.cover}>
-              {KIT_COVER.src ? (
-                <Image
-                  src={KIT_COVER.src}
-                  alt={KIT_COPY.coverAlt.text ?? ''}
-                  width={KIT_COVER.width}
-                  height={KIT_COVER.height}
-                  className={styles.coverImage}
-                />
-              ) : (
-                <p className={styles.coverBox} aria-hidden="true">
-                  [guide cover · amber to supply]
-                </p>
-              )}
-            </div>
           </div>
         </div>
 
