@@ -96,6 +96,12 @@ export type Chapter = {
   n: string;
   title: Copy;
   sponsor: Sponsor;
+  /**
+   * One line under the sponsor strip, inside the card. It links to the same
+   * url as the strip (`sponsor.link`), so it renders only when both exist.
+   * Card 01 only; `null` on the other six. Final copy from nici, 25 Oct 2026.
+   */
+  partnerLine: string | null;
   /** The chapter's tint, a token from app/globals.css. */
   tint: string;
 };
@@ -120,10 +126,11 @@ export const CHAPTERS: Chapter[] = [
       name: 'kaleidoscope',
       logo: { src: `${SPONSOR_DIR}/kaleidoscope.png`, width: 800, height: 81 },
       link: {
-        href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026-1',
+        href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026',
         label: 'kaleidoscope, inclusion index autumn 2026',
       },
     },
+    partnerLine: "the research behind deciding: kaleidoscope's inclusion index, autumn 2026",
   },
   {
     n: '02',
@@ -131,36 +138,42 @@ export const CHAPTERS: Chapter[] = [
     tint: 'var(--kit-tint-02)',
     // bloom is gaia learning's programme; the strip carries gaia learning's logo
     sponsor: { name: 'bloom', logo: { src: `${SPONSOR_DIR}/gaia-learning.png`, width: 86, height: 48 } },
+    partnerLine: null,
   },
   {
     n: '03',
     title: chapterTitle('Designing'),
     tint: 'var(--kit-tint-03)',
     sponsor: { name: 'talamo', logo: { src: `${SPONSOR_DIR}/talamo.png`, width: 160, height: 40 } },
+    partnerLine: null,
   },
   {
     n: '04',
     title: chapterTitle('Joining'),
     tint: 'var(--kit-tint-04)',
     sponsor: { name: 'digit music', logo: { src: `${SPONSOR_DIR}/digit-music.png`, width: 600, height: 187 } },
+    partnerLine: null,
   },
   {
     n: '05',
     title: chapterTitle('Belonging'),
     tint: 'var(--kit-tint-05)',
     sponsor: { name: 'cosmo', logo: { src: `${SPONSOR_DIR}/cosmo.svg`, width: 4300, height: 1120 } },
+    partnerLine: null,
   },
   {
     n: '06',
     title: chapterTitle('Listening'),
     tint: 'var(--kit-tint-06)',
     sponsor: { name: 'held by unbarrier', logo: { src: `${SPONSOR_DIR}/unbarrier-me.png`, width: 615, height: 136 } },
+    partnerLine: null,
   },
   {
     n: '07',
     title: chapterTitle('Reaching'),
     tint: 'var(--kit-tint-07)',
     sponsor: { name: 'skolon', logo: { src: `${SPONSOR_DIR}/skolon.png`, width: 150, height: 74 } },
+    partnerLine: null,
   },
 ];
 

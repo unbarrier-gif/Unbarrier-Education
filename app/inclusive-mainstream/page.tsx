@@ -164,7 +164,7 @@ export default function KitPage() {
                   <h3 className={styles.chapterTitle}>
                     <Slot copy={chapter.title} />
                   </h3>
-                  <SponsorStrip sponsor={chapter.sponsor} tint={chapter.tint} />
+                  <SponsorStrip sponsor={chapter.sponsor} partnerLine={chapter.partnerLine} tint={chapter.tint} />
                 </li>
               ))}
             </ol>
@@ -268,8 +268,18 @@ export default function KitPage() {
 
 // The strip at the foot of a chapter card: the sponsor's logo in the chapter's
 // tint, or its name as text until the file is in. Logos are height-matched.
-// Only a sponsor with a `link` (card 01) is an <a>.
-function SponsorStrip({ sponsor, tint }: { sponsor: Sponsor; tint: string }) {
+// Only a sponsor with a `link` (card 01) is an <a>. Card 01 also carries one
+// line under the logo, inside the strip so it sits on the tint; it is a second
+// <a> to the same url, with the same target and rel.
+function SponsorStrip({
+  sponsor,
+  partnerLine,
+  tint,
+}: {
+  sponsor: Sponsor;
+  partnerLine: string | null;
+  tint: string;
+}) {
   const { name, logo, link } = sponsor;
 
   const mark =
@@ -289,7 +299,10 @@ function SponsorStrip({ sponsor, tint }: { sponsor: Sponsor; tint: string }) {
     );
 
   return (
-    <div className={styles.sponsor} style={{ background: tint }}>
+    <div
+      className={link && partnerLine ? `${styles.sponsor} ${styles.sponsorStacked}` : styles.sponsor}
+      style={{ background: tint }}
+    >
       {link ? (
         <a
           href={link.href}
@@ -303,6 +316,11 @@ function SponsorStrip({ sponsor, tint }: { sponsor: Sponsor; tint: string }) {
       ) : (
         mark
       )}
+      {link && partnerLine ? (
+        <a href={link.href} target="_blank" rel="noopener" className={styles.partnerLine}>
+          {partnerLine}
+        </a>
+      ) : null}
     </div>
   );
 }

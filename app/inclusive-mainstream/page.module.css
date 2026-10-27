@@ -292,6 +292,31 @@
   color: var(--text-inverse);
 }
 
+/* Card 01 only: the strip holds the logo, then one line under it. */
+.sponsorStacked {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+/* Lexend body size on the tint, in the muted ink (6.8:1 on #daf6f4). It is a
+   link, so it is underlined; the focus ring is ink, from `.sponsor :focus-visible`. */
+.partnerLine {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: var(--kit-ink-muted);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  display: flex;
+  align-items: center;
+  min-height: 44px;
+}
+
+.partnerLine:hover {
+  color: var(--text-inverse);
+}
+
 .sponsorLogo {
   height: 28px;
   width: auto;
