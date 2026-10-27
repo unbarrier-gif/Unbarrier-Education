@@ -120,7 +120,7 @@ export const CHAPTERS: Chapter[] = [
       name: 'kaleidoscope',
       logo: { src: `${SPONSOR_DIR}/kaleidoscope.png`, width: 800, height: 81 },
       link: {
-        href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026-1',
+        href: 'https://kaleidoscope-research.org/inclusion-index-autumn-2026',
         label: 'kaleidoscope, inclusion index autumn 2026',
       },
     },
