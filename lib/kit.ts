@@ -77,6 +77,11 @@ export type SponsorLogo = {
   /** Intrinsic size of the file, for next/image. Only the ratio is used. */
   width: number;
   height: number;
+  /**
+   * A round mark supplied on a white square (bloom). Shown 40px tall, clipped
+   * to a circle on screen, with no blend, so the file shows as supplied.
+   */
+  round?: boolean;
 };
 
 export type Sponsor = {
@@ -136,8 +141,8 @@ export const CHAPTERS: Chapter[] = [
     n: '02',
     title: chapterTitle('Noticing'),
     tint: 'var(--kit-tint-02)',
-    // bloom is gaia learning's programme; the strip carries gaia learning's logo
-    sponsor: { name: 'bloom', logo: { src: `${SPONSOR_DIR}/gaia-learning.png`, width: 86, height: 48 } },
+    // bloom.png is supplied on white; the circle is clipped in css (`round`) until a transparent file arrives
+    sponsor: { name: 'bloom', logo: { src: `${SPONSOR_DIR}/bloom.png`, width: 500, height: 500, round: true } },
     partnerLine: null,
   },
   {
