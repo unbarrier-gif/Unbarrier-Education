@@ -291,7 +291,7 @@ function SponsorStrip({
         alt={name}
         width={logo.width}
         height={logo.height}
-        className={styles.sponsorLogo}
+        className={logo.round ? `${styles.sponsorLogo} ${styles.sponsorLogoRound}` : styles.sponsorLogo}
         unoptimized={logo.src.endsWith('.svg')}
       />
     ) : (

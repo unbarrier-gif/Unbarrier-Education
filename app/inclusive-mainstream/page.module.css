@@ -325,6 +325,15 @@
   mix-blend-mode: multiply;
 }
 
+/* bloom: a round mark on a white square, shown as supplied. 40px tall so the
+   word reads; no multiply (it would recolour the white wordmark); the circle
+   clip hides the white corners until a transparent file replaces it. */
+.sponsorLogoRound {
+  height: 40px;
+  border-radius: 50%;
+  mix-blend-mode: normal;
+}
+
 .sponsorName {
   font-weight: 600;
 }
